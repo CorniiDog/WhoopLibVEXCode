@@ -3,7 +3,6 @@
 
 #include "vex.h"
 
-
 // Declaration of BufferNode class
 class WhoopMotor {
 protected:

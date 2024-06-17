@@ -45,10 +45,10 @@ int ComputeNode::task_runner(void* param) {
             try{
                 node->__step();
             }
-            catch(int num){
+            catch (const std::exception& e) {
                 Brain.Screen.clearLine(1);
                 Brain.Screen.setCursor(1, 1);
-                Brain.Screen.print("Error: %i", num);
+                Brain.Screen.print("Error: %s", e.what());
             }
         }
         else{

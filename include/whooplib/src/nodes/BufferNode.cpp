@@ -8,6 +8,7 @@
 #include <cerrno>  
 #include <stdio.h>
 #include <string>
+#include <functional>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Buffer Node Class for Extended Functionality
@@ -73,23 +74,42 @@ void BufferNode::__step(){
 
     ////////////////////////////////////////////////////////////////////////
     // Applying messages to registered streams
-    for (const std::string& stream : registered_streams) {
-        std::string latest_msg = get_latest_message_from_buffer(my_buffer, "[<" + stream + ">]", "&=" + stream + "*$");
+    for (size_t i = 0; i < registered_messengers.size(); ++i) {
+        std::string latest_msg = get_latest_message_from_buffer(my_buffer, "[<" + registered_messengers[i]->messenger_stream + ">]", "&=" + registered_messengers[i]->messenger_stream + "*$");
         if(latest_msg != ""){
             if (lock_ptr) lock_ptr->lock();  // Acquire the mutex
 
-            messages[stream] = strip(latest_msg);
+            messages[registered_messengers[i]->messenger_stream] = strip(latest_msg);
 
             if(lock_ptr) lock_ptr->unlock();  // Release the mutex
+            
+
+            for (size_t j = 0; j < registered_messengers[i]->callback_functions.size(); ++j) {
+                if (debug_mode){
+                    registered_messengers[i]->callback_functions[j](latest_msg);
+                }
+                else{
+                    try {
+                        registered_messengers[i]->callback_functions[j](latest_msg);
+                    }
+                    catch (const std::exception& e) {
+                        Brain.Screen.clearLine(1);
+                        Brain.Screen.setCursor(1, 1);
+                        Brain.Screen.print("Error: %s", e.what());
+                    } 
+                }
+            }
+
         }
     }
+
 }
 
-void BufferNode::register_stream(std::string stream){
+void BufferNode::register_stream(Messenger* messenger){
     /*
     This registers a stream (like "Arm" if the robot registers stream "Arm" too)
     */
-    registered_streams.push_back(stream);
+    registered_messengers.push_back(messenger);
 }
 
 std::string BufferNode::get_message(std::string stream, bool delete_after_read){
@@ -140,7 +160,7 @@ int BufferNode::send_message(std::string stream, std::string message, std::strin
 
 Messenger::Messenger(BufferNode* bufferSystem, std::string stream, bool deleteAfterRead) : messenger_stream(stream), delete_after_read(deleteAfterRead){
     buffer_system = bufferSystem;
-    buffer_system->register_stream(messenger_stream);
+    buffer_system->register_stream(this);
 }
 
 void Messenger::send(std::string message){
@@ -149,4 +169,8 @@ void Messenger::send(std::string message){
 
 std::string Messenger::read(){
     return buffer_system->get_message(messenger_stream, delete_after_read);
+}
+
+void Messenger::on_message(std::function<void(std::string)> callback){
+    callback_functions.push_back(callback);
 }

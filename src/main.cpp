@@ -18,9 +18,9 @@ using namespace vex;
 // A global instance of competition
 competition Competition;
 
-BufferNode buffer_system(256, true, "/dev/serial1"); // set to false for competition
+BufferNode buffer_system(256, false, "/dev/serial1"); // set to false for competition
 
-Messenger pose_messenger(&buffer_system, "P");
+Messenger pose_messenger(&buffer_system, "P", false);
 
 std::vector<ComputeNode*> nodes = {&buffer_system};
 ComputeManager manager(nodes);
@@ -53,11 +53,26 @@ controller Controller1(controllerType::primary);
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
+void test_received(std::string message){
+  Brain.Screen.clearLine(3);
+  Brain.Screen.setCursor(3, 1);
+  Brain.Screen.print("Pose: %s", message.c_str());
+}
+
 void pre_auton(void) {
+  pose_messenger.on_message(test_received);
+
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
   manager.start();
+
+  while(true){
+    Brain.Screen.clearLine(4);
+    Brain.Screen.setCursor(4, 1);
+    Brain.Screen.print("Pose (e): %s", pose_messenger.read().c_str());
+    wait(20, timeUnits::msec);
+  }
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
@@ -89,18 +104,14 @@ void autonomous(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
+
+
 void usercontrol(void) {
   // User control code here, inside the loop
   while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
-
-
-
-    //Brain.Screen.clearLine(3);
-    //Brain.Screen.setCursor(3, 1);
-    //Brain.Screen.print("Pose: %s", pose_messenger.read().c_str());
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
