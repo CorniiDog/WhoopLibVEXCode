@@ -89,6 +89,13 @@ std::string intToString(int value) {
     return ss.str();
 }
 
+std::string doubleToString(double value) {
+    std::stringstream ss;
+    ss << value;
+    return ss.str();
+}
+
+
 int stringToInt(const std::string& str) {
     std::stringstream ss(str);
     int result;

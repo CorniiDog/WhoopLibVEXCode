@@ -1,5 +1,5 @@
-#ifndef WHOOP_MOTOR_HPP
-#define WHOOP_MOTOR_HPP
+#ifndef WHOOP_INERTIAL_HPP
+#define WHOOP_INERTIAL_HPP
 
 #include "vex.h"
 
@@ -22,6 +22,9 @@ public:
     double get_yaw(); // Degrees is default
     double get_yaw_degrees();
     double get_yaw_radians();
+
+    // Calibrate
+    void calibrate();
 
     // Tare (reset)
     void tare();

@@ -25,6 +25,8 @@ Messenger pose_messenger(&buffer_system, "Pose");
 std::vector<ComputeNode*> nodes = {&buffer_system};
 ComputeManager manager(nodes);
 
+WhoopInertial Inertial(PORT7);
+
 // define your global instances of motors and other devices here
 
 /*---------------------------------------------------------------------------*/
@@ -42,12 +44,17 @@ void pre_auton(void) {
   vexcodeInit();
 
   manager.start();
+  Inertial.calibrate();
 
   while (true) {
     vex::wait(20, vex::timeUnits::msec);
     Brain.Screen.clearLine(3);
     Brain.Screen.setCursor(3, 1);
     Brain.Screen.print("Pose: %s", pose_messenger.read().c_str());
+
+    Brain.Screen.clearLine(4);
+    Brain.Screen.setCursor(4, 1);
+    Brain.Screen.print("Inertial: %s", doubleToString(Inertial.get_yaw_radians()).c_str());
   }
 
 
