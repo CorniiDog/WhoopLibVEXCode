@@ -20,7 +20,7 @@ competition Competition;
 
 BufferNode buffer_system(256, true, "/dev/serial1"); // set to false for competition
 
-Messenger pose_messenger(&buffer_system, "Pose");
+Messenger pose_messenger(&buffer_system, "P");
 
 std::vector<ComputeNode*> nodes = {&buffer_system};
 ComputeManager manager(nodes);

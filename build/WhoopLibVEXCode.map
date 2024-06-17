@@ -8686,38 +8686,39 @@ Linker script and memory map
  *(.rodata)
  *(.rodata.*)
  .rodata.str1.1
-                0x03805948       0x28 build/src/main.o
+                0x03805948       0x25 build/src/main.o
  .rodata.str1.1
-                0x03805970       0x46 build/include/whooplib/src/toolbox.o
+                0x0380596d       0x46 build/include/whooplib/src/toolbox.o
                                  0x47 (size before relaxing)
- *fill*         0x038059b6        0x2 
+ *fill*         0x038059b3        0x1 
  .rodata._ZTV11ComputeNode
-                0x038059b8        0xc build/include/whooplib/src/nodes/NodeManager.o
-                0x038059b8                vtable for ComputeNode
+                0x038059b4        0xc build/include/whooplib/src/nodes/NodeManager.o
+                0x038059b4                vtable for ComputeNode
  .rodata.str1.1
-                0x038059c4        0xa build/include/whooplib/src/nodes/NodeManager.o
+                0x038059c0        0xa build/include/whooplib/src/nodes/NodeManager.o
                                  0x26 (size before relaxing)
- *fill*         0x038059ce        0x2 
+ *fill*         0x038059ca        0x2 
  .rodata._ZTV10BufferNode
-                0x038059d0        0xc build/include/whooplib/src/nodes/BufferNode.o
-                0x038059d0                vtable for BufferNode
+                0x038059cc        0xc build/include/whooplib/src/nodes/BufferNode.o
+                0x038059cc                vtable for BufferNode
  .rodata.str1.1
-                0x038059dc       0x10 build/include/whooplib/src/nodes/BufferNode.o
+                0x038059d8       0x10 build/include/whooplib/src/nodes/BufferNode.o
                                  0x3c (size before relaxing)
  .rodata._ZStL19piecewise_construct
-                0x038059ec        0x1 build/include/whooplib/src/nodes/BufferNode.o
+                0x038059e8        0x1 build/include/whooplib/src/nodes/BufferNode.o
  .rodata.str1.1
-                0x038059ed       0x2e c:\Users\connorw\AppData\Roaming\Code\User\globalStorage\vexrobotics.vexcode\sdk\cpp\V5\V5_20240223_11_00_00/vexv5\libv5rt.a(v5_startup.c.obj)
- *fill*         0x03805a1b        0x1 
+                0x038059e9       0x2e c:\Users\connorw\AppData\Roaming\Code\User\globalStorage\vexrobotics.vexcode\sdk\cpp\V5\V5_20240223_11_00_00/vexv5\libv5rt.a(v5_startup.c.obj)
+ *fill*         0x03805a17        0x1 
  .rodata._ZN3vex4msecE
-                0x03805a1c        0x4 c:\Users\connorw\AppData\Roaming\Code\User\globalStorage\vexrobotics.vexcode\sdk\cpp\V5\V5_20240223_11_00_00/vexv5\libv5rt.a(vex_global.cpp.obj)
-                0x03805a1c                vex::msec
+                0x03805a18        0x4 c:\Users\connorw\AppData\Roaming\Code\User\globalStorage\vexrobotics.vexcode\sdk\cpp\V5\V5_20240223_11_00_00/vexv5\libv5rt.a(vex_global.cpp.obj)
+                0x03805a18                vex::msec
  .rodata._ZN3vex6PORT22E
-                0x03805a20        0x4 c:\Users\connorw\AppData\Roaming\Code\User\globalStorage\vexrobotics.vexcode\sdk\cpp\V5\V5_20240223_11_00_00/vexv5\libv5rt.a(vex_global.cpp.obj)
-                0x03805a20                vex::PORT22
+                0x03805a1c        0x4 c:\Users\connorw\AppData\Roaming\Code\User\globalStorage\vexrobotics.vexcode\sdk\cpp\V5\V5_20240223_11_00_00/vexv5\libv5rt.a(vex_global.cpp.obj)
+                0x03805a1c                vex::PORT22
  .rodata._ZN3vex5PORT7E
-                0x03805a24        0x4 c:\Users\connorw\AppData\Roaming\Code\User\globalStorage\vexrobotics.vexcode\sdk\cpp\V5\V5_20240223_11_00_00/vexv5\libv5rt.a(vex_global.cpp.obj)
-                0x03805a24                vex::PORT7
+                0x03805a20        0x4 c:\Users\connorw\AppData\Roaming\Code\User\globalStorage\vexrobotics.vexcode\sdk\cpp\V5\V5_20240223_11_00_00/vexv5\libv5rt.a(vex_global.cpp.obj)
+                0x03805a20                vex::PORT7
+ *fill*         0x03805a24        0x4 
  .rodata._ZTVN3vex8inertialE
                 0x03805a28       0x68 c:\Users\connorw\AppData\Roaming\Code\User\globalStorage\vexrobotics.vexcode\sdk\cpp\V5\V5_20240223_11_00_00/vexv5\libv5rt.a(vex_imu.cpp.obj)
                 0x03805a28                vtable for vex::inertial
