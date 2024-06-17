@@ -20,7 +20,6 @@ ComputeManager::ComputeManager(std::vector<ComputeNode*> nodes, bool debugMode):
     for (size_t i = 0; i < nodes.size(); ++i) {
         ComputeNode* node = nodes[i];
         add_compute_node(node);
-    // Do something with node
     }
 }
 

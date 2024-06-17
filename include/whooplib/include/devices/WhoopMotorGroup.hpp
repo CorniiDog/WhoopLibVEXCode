@@ -1,27 +1,27 @@
-#ifndef WHOOP_MOTOR_HPP
-#define WHOOP_MOTOR_HPP
+#ifndef WHOOP_MOTOR_GROUP_HPP
+#define WHOOP_MOTOR_GROUP_HPP
+
+#include "whooplib/include/devices/WhoopMotor.hpp"
 
 #include "vex.h"
+#include <vector>
 
 
 // Declaration of BufferNode class
-class WhoopMotor {
+class WhoopMotorGroup {
 protected:
     // Upon initialization
-    double pos_offset = 0;
+    std::vector<WhoopMotor*> whoop_motors;
 public:
-    // Upon initialization
-    motor vex_motor;
+
+    void add_motor(WhoopMotor* whoop_motor);
 
     // Initialization Constructors
-    WhoopMotor(std::int32_t port); 
-    WhoopMotor(std::int32_t port, bool reversed); 
-    WhoopMotor(std::int32_t port, vex::gearSetting gearRatio);
-    WhoopMotor(std::int32_t port, vex::gearSetting gearRatio, bool reversed);
+    WhoopMotorGroup(std::vector<WhoopMotor*> whoop_motors); 
 
     // Motor commands
     void spin(double volts);
-    void spin_unit(double unit); // Unit being -1 to 1, being 0 stopped
+    void spin_unit(double unit);
     void stop_hold();
     void stop_brake();
     void stop_coast();

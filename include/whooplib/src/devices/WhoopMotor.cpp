@@ -14,6 +14,10 @@ void WhoopMotor::spin(double volts){
     vex_motor.spin(fwd, volts, voltageUnits::volt);
 }
 
+void WhoopMotor::spin_unit(double unit){ // Unit being -1 to 1, being 0 stopped
+    vex_motor.spin(fwd, unit*12.0, voltageUnits::volt);
+}
+
 void WhoopMotor::stop_hold(){
     vex_motor.stop(brakeType::hold);
 }

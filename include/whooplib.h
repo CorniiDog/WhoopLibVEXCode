@@ -17,6 +17,8 @@
 
 // Devices
 #include "whooplib/include/devices/WhoopMotor.hpp"
+#include "whooplib/include/devices/WhoopMotorGroup.hpp"
 #include "whooplib/include/devices/WhoopInertial.hpp"
+
 
 #endif

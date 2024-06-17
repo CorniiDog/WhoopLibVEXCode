@@ -25,7 +25,21 @@ Messenger pose_messenger(&buffer_system, "P");
 std::vector<ComputeNode*> nodes = {&buffer_system};
 ComputeManager manager(nodes);
 
-WhoopInertial Inertial(PORT7);
+// Right drive motors
+WhoopMotor r1(PORT1, gearSetting::ratio6_1, false);
+WhoopMotor r2(PORT2, gearSetting::ratio6_1, false);
+WhoopMotor r3(PORT3, gearSetting::ratio6_1, false);
+WhoopMotor r4(PORT4, gearSetting::ratio6_1, false);
+WhoopMotorGroup left({&r1, &r2, &r3, &r4});
+
+// Left drive motors
+WhoopMotor l1(PORT12, gearSetting::ratio6_1, true);
+WhoopMotor l2(PORT13, gearSetting::ratio6_1, true);
+WhoopMotor l3(PORT14, gearSetting::ratio6_1, true);
+WhoopMotor l4(PORT15, gearSetting::ratio6_1, true);
+WhoopMotorGroup right({&l1, &l2, &l3, &l4});
+
+controller Controller1(controllerType::primary);
 
 // define your global instances of motors and other devices here
 
@@ -44,19 +58,6 @@ void pre_auton(void) {
   vexcodeInit();
 
   manager.start();
-  Inertial.calibrate();
-
-  while (true) {
-    vex::wait(20, vex::timeUnits::msec);
-    Brain.Screen.clearLine(3);
-    Brain.Screen.setCursor(3, 1);
-    Brain.Screen.print("Pose: %s", pose_messenger.read().c_str());
-
-    Brain.Screen.clearLine(4);
-    Brain.Screen.setCursor(4, 1);
-    Brain.Screen.print("Inertial: %s", doubleToString(Inertial.get_yaw_radians()).c_str());
-  }
-
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
@@ -95,10 +96,11 @@ void usercontrol(void) {
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
 
-    // ........................................................................
-    // Insert user code here. This is where you use the joystick values to
-    // update your motors, etc.
-    // ........................................................................
+
+
+    //Brain.Screen.clearLine(3);
+    //Brain.Screen.setCursor(3, 1);
+    //Brain.Screen.print("Pose: %s", pose_messenger.read().c_str());
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
