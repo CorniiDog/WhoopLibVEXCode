@@ -4,7 +4,7 @@
 
 WhoopMotor::WhoopMotor(std::int32_t port) : vex_motor(vex::motor(port)){}
 
-WhoopMotor::WhoopMotor(std::int32_t port, bool reversed) : vex_motor(vex::motor(port, vex::ratio36_1, reversed)){}
+WhoopMotor::WhoopMotor(std::int32_t port, bool reversed) : vex_motor(vex::motor(port, vex::ratio18_1, reversed)){}
 
 WhoopMotor::WhoopMotor(std::int32_t port, vex::gearSetting gearRatio) : vex_motor(vex::motor(port, gearRatio)){}
 

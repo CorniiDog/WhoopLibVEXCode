@@ -1,5 +1,9 @@
 # VEXcode makefile 2019_03_26_01
 
+# Clean all to ensure it functions correctly
+.PHONY: clean all
+all: clean build
+
 # show compiler output
 VERBOSE = 0
 
@@ -36,7 +40,8 @@ SRC_A  = makefile
 INC_F  = include
 
 # build targets
-all: $(BUILD)/$(PROJECT).bin
+#all: $(BUILD)/$(PROJECT).bin # removed and replaced with build
+build: $(BUILD)/$(PROJECT).bin
 
 # set compiler flags after including the environment to ensure they are not overridden
 CXX_FLAGS += -fexceptions
