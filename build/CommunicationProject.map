@@ -337,13 +337,13 @@ Discarded input sections
                 0x00000000        0x8 build/include/whooplib/src/nodes/BufferNode.o
  .group         0x00000000       0x10 build/include/whooplib/src/nodes/BufferNode.o
  .text._ZN10BufferNode12send_messageESsSsSs
-                0x00000000      0x360 build/include/whooplib/src/nodes/BufferNode.o
+                0x00000000      0x414 build/include/whooplib/src/nodes/BufferNode.o
  .ARM.extab.text._ZN10BufferNode12send_messageESsSsSs
-                0x00000000       0x34 build/include/whooplib/src/nodes/BufferNode.o
+                0x00000000       0x40 build/include/whooplib/src/nodes/BufferNode.o
  .ARM.exidx.text._ZN10BufferNode12send_messageESsSsSs
                 0x00000000        0x8 build/include/whooplib/src/nodes/BufferNode.o
  .text._ZN9Messenger4sendESs
-                0x00000000      0x1a0 build/include/whooplib/src/nodes/BufferNode.o
+                0x00000000      0x1a8 build/include/whooplib/src/nodes/BufferNode.o
  .ARM.extab.text._ZN9Messenger4sendESs
                 0x00000000       0x28 build/include/whooplib/src/nodes/BufferNode.o
  .ARM.exidx.text._ZN9Messenger4sendESs
