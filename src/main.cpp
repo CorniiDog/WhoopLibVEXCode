@@ -103,9 +103,9 @@ void usercontrol(void) {
   // User control code here, inside the loop
   while (1) {
 
-    Brain.Screen.clearLine(4);
-    Brain.Screen.setCursor(4, 1);
-    Brain.Screen.print("Pose: %f %f %f %f %f %f", robot_drivetrain.pose.x, robot_drivetrain.pose.y, robot_drivetrain.pose.z, robot_drivetrain.pose.pitch, robot_drivetrain.pose.roll, robot_drivetrain.pose.yaw);
+    Brain.Screen.clearLine(2);
+    Brain.Screen.setCursor(2, 1);
+    Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f", robot_drivetrain.pose.x, robot_drivetrain.pose.y, robot_drivetrain.pose.z, robot_drivetrain.pose.pitch, robot_drivetrain.pose.roll, robot_drivetrain.pose.yaw);
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
