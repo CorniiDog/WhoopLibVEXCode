@@ -38,11 +38,7 @@ WhoopMotor l4(PORT15, gearSetting::ratio6_1, reversed::no_reverse);
 std::string pose_channel = "P";
 WhoopDrivetrain robot_drivetrain(&buffer_system, pose_channel, &controller1, {&l1, &l2, &l3, &l4}, {&r1, &r2, &r3, &r4});
 
-std::vector<ComputeNode*> nodes = {&buffer_system, &robot_drivetrain};
-ComputeManager manager(nodes);
-
-
-// define your global instances of motors and other devices here
+ComputeManager manager({&buffer_system, &robot_drivetrain});
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -53,21 +49,19 @@ ComputeManager manager(nodes);
 /*  function is only called once after the V5 has been powered on and        */
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
-
 void pre_auton(void) {
-
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
   manager.start();
   robot_drivetrain.set_state(drivetrainState::mode_disabled);
 
-  /*while(true){
+  while(true){
     Brain.Screen.clearLine(4);
     Brain.Screen.setCursor(4, 1);
-    Brain.Screen.print("Pose (e): %s", pose_messenger.read().c_str());
+    Brain.Screen.print("Pose (e): %d", robot_drivetrain.pose.yaw);
     wait(20, timeUnits::msec);
-  }*/
+  }
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
@@ -85,9 +79,6 @@ void pre_auton(void) {
 
 void autonomous(void) {
   robot_drivetrain.set_state(drivetrainState::mode_autonomous);
-  // ..........................................................................
-  // Insert autonomous user code here.
-  // ..........................................................................
 }
 
 /*---------------------------------------------------------------------------*/
@@ -99,17 +90,15 @@ void autonomous(void) {
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
-
-
-
 void usercontrol(void) {
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 
   // User control code here, inside the loop
   while (1) {
-    // This is the main execution loop for the user control program.
-    // Each time through the loop your program should update motor + servo
-    // values based on feedback from the joysticks.
+
+    Brain.Screen.clearLine(4);
+    Brain.Screen.setCursor(4, 1);
+    Brain.Screen.print("Pose (e): %d", robot_drivetrain.pose.yaw);
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
@@ -120,15 +109,8 @@ void usercontrol(void) {
 // Main will set up the competition functions and callbacks.
 //
 int main() {
-  // Set up callbacks for autonomous and driver control periods.
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
-
-  // Run the pre-autonomous function.
   pre_auton();
-
-  // Prevent main from exiting with an infinite loop.
-  while (true) {
-    wait(100, msec);
-  }
+  while (true) wait(100, msec);
 }
