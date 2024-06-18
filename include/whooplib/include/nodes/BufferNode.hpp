@@ -6,6 +6,11 @@
 #include <string>
 #include <functional>
 
+enum deleteAfterRead{
+    no_delete=true,
+    yes_delete=false
+};
+
 class Messenger; // Forward declaration
 
 // Declaration of BufferNode class
@@ -38,7 +43,7 @@ public:
     bool delete_after_read;
     std::vector<std::function<void(std::string)>> callback_functions;
 
-    Messenger(BufferNode* bufferSystem, std::string stream, bool deleteAfterRead=false);
+    Messenger(BufferNode* bufferSystem, std::string stream, deleteAfterRead deleteAfterRead=deleteAfterRead::no_delete);
     void send(std::string message); // Send message to stream
     std::string read(); // Receive message from stream
     void on_message(std::function<void(std::string)> callback);

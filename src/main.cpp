@@ -20,23 +20,25 @@ competition Competition;
 
 BufferNode buffer_system(256, false, "/dev/serial1"); // set to false for competition
 
-Messenger pose_messenger(&buffer_system, "P", false);
+Messenger pose_messenger(&buffer_system, "P", deleteAfterRead::no_delete);
 
 std::vector<ComputeNode*> nodes = {&buffer_system};
 ComputeManager manager(nodes);
 
+WhoopController controller1(joystickMode::joystickmode_split_arcade);
+
 // Right drive motors
-WhoopMotor r1(PORT1, gearSetting::ratio6_1, false);
-WhoopMotor r2(PORT2, gearSetting::ratio6_1, false);
-WhoopMotor r3(PORT3, gearSetting::ratio6_1, false);
-WhoopMotor r4(PORT4, gearSetting::ratio6_1, false);
+WhoopMotor r1(PORT1, gearSetting::ratio6_1, reversed::no_reverse);
+WhoopMotor r2(PORT2, gearSetting::ratio6_1, reversed::no_reverse);
+WhoopMotor r3(PORT3, gearSetting::ratio6_1, reversed::no_reverse);
+WhoopMotor r4(PORT4, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotorGroup left({&r1, &r2, &r3, &r4});
 
 // Left drive motors
-WhoopMotor l1(PORT12, gearSetting::ratio6_1, true);
-WhoopMotor l2(PORT13, gearSetting::ratio6_1, true);
-WhoopMotor l3(PORT14, gearSetting::ratio6_1, true);
-WhoopMotor l4(PORT15, gearSetting::ratio6_1, true);
+WhoopMotor l1(PORT12, gearSetting::ratio6_1, reversed::yes_reverse);
+WhoopMotor l2(PORT13, gearSetting::ratio6_1, reversed::yes_reverse);
+WhoopMotor l3(PORT14, gearSetting::ratio6_1, reversed::yes_reverse);
+WhoopMotor l4(PORT15, gearSetting::ratio6_1, reversed::yes_reverse);
 WhoopMotorGroup right({&l1, &l2, &l3, &l4});
 
 controller Controller1(controllerType::primary);

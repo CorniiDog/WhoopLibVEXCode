@@ -4,7 +4,7 @@
 #include "vex.h"
 
 
-// Declaration of BufferNode class
+// Declaration of WhoopInertial class
 class WhoopInertial {
 protected:
     // Upon initialization

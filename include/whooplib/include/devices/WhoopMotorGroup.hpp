@@ -7,7 +7,7 @@
 #include <vector>
 
 
-// Declaration of BufferNode class
+// Declaration of WhoopMotorGroup class
 class WhoopMotorGroup {
 protected:
     // Upon initialization

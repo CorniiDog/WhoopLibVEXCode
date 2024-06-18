@@ -11,7 +11,7 @@
 #include <functional>
 
 ////////////////////////////////////////////////////////////////////////////////
-// Buffer Node Class for Extended Functionality
+// Buffer Node Class For Receiving Jetson Nano Stream
 ////////////////////////////////////////////////////////////////////////////////
 
 // BufferNode class methods
@@ -21,7 +21,7 @@ void BufferNode::__step(){
     ////////////////////////////////////////////////////////////////////////
     //Acquiring data
     //FILE *fp = fopen(serial_conn.c_str(), "r");
-    FILE *fp = fopen("/dev/serial1", "r");
+    FILE *fp = fopen(serial_conn.c_str(), "r");
     // If serial connection not established, don't continue
     if (!fp) {
         return;
@@ -106,9 +106,6 @@ void BufferNode::__step(){
 }
 
 void BufferNode::register_stream(Messenger* messenger){
-    /*
-    This registers a stream (like "Arm" if the robot registers stream "Arm" too)
-    */
     registered_messengers.push_back(messenger);
 }
 
@@ -131,11 +128,12 @@ int BufferNode::send_message(std::string stream, std::string message, std::strin
 
     if (lock_ptr) lock_ptr->lock();  // Acquire the mutex
 
-    FILE *fp = fopen("/dev/serial1", "w");
+    FILE *fp = fopen(serial_conn.c_str(), "w");
 
     // If serial connection not established, don't continue
     if (!fp) return 2;
 
+    // Writing to serial connection
     if (fwrite(msg.c_str(), 1, msg_size, fp) != msg_size) {
         fclose(fp); // Ensure the file is closed even if writing fails
         if (lock_ptr) lock_ptr->unlock();  // Release the mutex
@@ -158,7 +156,7 @@ int BufferNode::send_message(std::string stream, std::string message, std::strin
 // Messenger Class for Simplified Functionality
 ////////////////////////////////////////////////////////////////////////////////
 
-Messenger::Messenger(BufferNode* bufferSystem, std::string stream, bool deleteAfterRead) : messenger_stream(stream), delete_after_read(deleteAfterRead){
+Messenger::Messenger(BufferNode* bufferSystem, std::string stream, deleteAfterRead deleteAfterRead) : messenger_stream(stream), delete_after_read(deleteAfterRead){
     buffer_system = bufferSystem;
     buffer_system->register_stream(this);
 }

@@ -3,7 +3,12 @@
 
 #include "vex.h"
 
-// Declaration of BufferNode class
+enum reversed{
+    no_reverse=true,
+    yes_reverse=false
+};
+
+// Declaration of WhoopMotor class
 class WhoopMotor {
 protected:
     // Upon initialization
@@ -14,9 +19,9 @@ public:
 
     // Initialization Constructors
     WhoopMotor(std::int32_t port); 
-    WhoopMotor(std::int32_t port, bool reversed); 
+    WhoopMotor(std::int32_t port, reversed reversed); 
     WhoopMotor(std::int32_t port, vex::gearSetting gearRatio);
-    WhoopMotor(std::int32_t port, vex::gearSetting gearRatio, bool reversed);
+    WhoopMotor(std::int32_t port, vex::gearSetting gearRatio, reversed reversed);
 
     // Motor commands
     void spin(double volts);
