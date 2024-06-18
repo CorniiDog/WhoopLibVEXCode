@@ -8,16 +8,39 @@
 #include <memory> // For std::unique_ptr
 
 
-WhoopDrivetrain::WhoopDrivetrain(Messenger* messenger, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup) 
-: whoop_controller(controller), pose_messenger(messenger) {
-    left_motor_group = std::make_unique<WhoopMotorGroup>(*leftMotorGroup);
-    right_motor_group = std::make_unique<WhoopMotorGroup>(*rightMotorGroup);
+void WhoopDrivetrain::init_motor_groups(WhoopMotorGroup* leftGroup, WhoopMotorGroup* rightGroup) {
+    left_motor_group = std::make_unique<WhoopMotorGroup>(*leftGroup);
+    right_motor_group = std::make_unique<WhoopMotorGroup>(*rightGroup);
 }
 
-WhoopDrivetrain::WhoopDrivetrain(Messenger* messenger, WhoopController* controller, std::vector<WhoopMotor*> left_motors, std::vector<WhoopMotor*> right_motors)
-: whoop_controller(controller), pose_messenger(messenger) {
-    left_motor_group = std::make_unique<WhoopMotorGroup>(left_motors);
-    right_motor_group = std::make_unique<WhoopMotorGroup>(right_motors);
+void WhoopDrivetrain::init_motor_groups(const std::vector<WhoopMotor*>& leftMotors, const std::vector<WhoopMotor*>& rightMotors) {
+    left_motor_group = std::make_unique<WhoopMotorGroup>(leftMotors);
+    right_motor_group = std::make_unique<WhoopMotorGroup>(rightMotors);
+}
+
+void WhoopDrivetrain::setup_messenger(BufferNode* bufferSystem, const std::string& pose_stream) {
+    pose_messenger = std::make_unique<Messenger>(bufferSystem, pose_stream, deleteAfterRead::no_delete);
+    pose_messenger->on_message(std::bind(&WhoopDrivetrain::_update_pose, this, std::placeholders::_1));
+}
+
+WhoopDrivetrain::WhoopDrivetrain(WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
+: whoop_controller(controller) {
+    init_motor_groups(leftMotorGroup, rightMotorGroup);
+}
+
+WhoopDrivetrain::WhoopDrivetrain(WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
+: whoop_controller(controller) {
+    init_motor_groups(leftMotors, rightMotors);
+}
+
+WhoopDrivetrain::WhoopDrivetrain(BufferNode* bufferSystem, std::string pose_stream, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
+: WhoopDrivetrain(controller, leftMotors, rightMotors) {
+    setup_messenger(bufferSystem, pose_stream);
+}
+
+WhoopDrivetrain::WhoopDrivetrain(BufferNode* bufferSystem, std::string pose_stream, WhoopController* controller,  WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
+: WhoopDrivetrain(controller, leftMotorGroup, rightMotorGroup) {
+    setup_messenger(bufferSystem, pose_stream);
 }
 
 void WhoopDrivetrain::set_state(drivetrainState state){

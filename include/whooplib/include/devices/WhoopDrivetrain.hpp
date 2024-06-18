@@ -31,15 +31,23 @@ protected:
 
     drivetrainState drive_state = drivetrainState::mode_disabled;
 
-    Messenger* pose_messenger = nullptr;
+    std::unique_ptr<Messenger> pose_messenger = nullptr;
 
     // These functions are ran automatically
     void _update_pose(std::string pose_data);
+
+private:
+    void init_motor_groups(WhoopMotorGroup* leftGroup, WhoopMotorGroup* rightGroup);
+    void init_motor_groups(const std::vector<WhoopMotor*>& leftMotors, const std::vector<WhoopMotor*>& rightMotors);
+    void setup_messenger(BufferNode* bufferSystem, const std::string& pose_stream);
 public:
     Pose pose;
+
     // Initialization Constructors
-    WhoopDrivetrain(Messenger* messenger, WhoopController* controller,  WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup); 
-    WhoopDrivetrain(Messenger* messenger, WhoopController* controller, std::vector<WhoopMotor*> left_motors, std::vector<WhoopMotor*> right_motors); 
+    WhoopDrivetrain(WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup);
+    WhoopDrivetrain(WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors);
+    WhoopDrivetrain(BufferNode* bufferSystem, std::string pose_stream, WhoopController* controller,  WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup); 
+    WhoopDrivetrain(BufferNode* bufferSystem, std::string pose_stream, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors); 
 
     void set_state(drivetrainState state);
 
