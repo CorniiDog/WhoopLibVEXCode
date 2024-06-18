@@ -29,8 +29,6 @@ protected:
     std::unique_ptr<WhoopMotorGroup> left_motor_group;
     std::unique_ptr<WhoopMotorGroup> right_motor_group;
 
-    drivetrainState drive_state = drivetrainState::mode_disabled;
-
     std::unique_ptr<Messenger> pose_messenger = nullptr;
 
     // These functions are ran automatically
@@ -41,6 +39,7 @@ private:
     void init_motor_groups(const std::vector<WhoopMotor*>& leftMotors, const std::vector<WhoopMotor*>& rightMotors);
     void setup_messenger(BufferNode* bufferSystem, const std::string& pose_stream);
 public:
+    drivetrainState drive_state = drivetrainState::mode_disabled;
     Pose pose;
 
     // Initialization Constructors

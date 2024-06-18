@@ -12,6 +12,7 @@
 
 #include "whooplib.h"
 #include <iostream>
+#include <sstream>
 
 using namespace vex;
 
@@ -41,6 +42,9 @@ std::string pose_stream = "P";
 //Gear ratio on the drivetrain (If it's 32t driving 64t, it would be a 1.0/2.0 gear ratio, or 0.5)
 double gear_ratio = 1.0/2.0;
 
+// Wheel diameter (converted from inches to meters)
+double wheel_diameter = to_meters(2.9845); 
+
 WhoopDrivetrain robot_drivetrain(gear_ratio, &buffer_system, pose_stream, &controller1, {&l1, &l2, &l3, &l4}, {&r1, &r2, &r3, &r4});
 
 ComputeManager manager({&buffer_system, &robot_drivetrain});
@@ -61,11 +65,9 @@ void pre_auton(void) {
   manager.start();
   robot_drivetrain.set_state(drivetrainState::mode_disabled);
 
-  while(true){
-    Brain.Screen.clearLine(4);
-    Brain.Screen.setCursor(4, 1);
-    Brain.Screen.print("Pose (e): %d", robot_drivetrain.pose.yaw);
-    wait(20, timeUnits::msec);
+  while (robot_drivetrain.drive_state == drivetrainState::mode_disabled){
+    // Do stuff like calibrate IMU
+    wait(20, msec); // Sleep the task for a short amount of time to
   }
 
   // All activities that occur before the competition starts
@@ -103,7 +105,7 @@ void usercontrol(void) {
 
     Brain.Screen.clearLine(4);
     Brain.Screen.setCursor(4, 1);
-    Brain.Screen.print("Pose (e): %d", robot_drivetrain.pose.yaw);
+    Brain.Screen.print("Pose: %f %f %f %f %f %f", robot_drivetrain.pose.x, robot_drivetrain.pose.y, robot_drivetrain.pose.z, robot_drivetrain.pose.pitch, robot_drivetrain.pose.roll, robot_drivetrain.pose.yaw);
 
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

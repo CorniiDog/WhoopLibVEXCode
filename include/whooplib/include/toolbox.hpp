@@ -27,9 +27,14 @@ double intToDouble(int value);
 int doubleToInt(double value);
 bool intToBool(int value);
 int boolToInt(bool value);
+double stringToDouble(const std::string& str);
 
 // Degrees to Radians conversions
 double to_rad(double deg);
 double to_deg(double rad);
+
+// Inches to meters conversions
+double to_meters(double inches);
+double to_inches(double meters);
 
 #endif
