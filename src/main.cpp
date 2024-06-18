@@ -25,18 +25,22 @@ Messenger pose_messenger(&buffer_system, "P", deleteAfterRead::no_delete);
 WhoopController controller1(joystickMode::joystickmode_split_arcade);
 
 // Right drive motors
-WhoopMotor r1(PORT1, gearSetting::ratio6_1, reversed::no_reverse);
-WhoopMotor r2(PORT2, gearSetting::ratio6_1, reversed::no_reverse);
-WhoopMotor r3(PORT3, gearSetting::ratio6_1, reversed::no_reverse);
-WhoopMotor r4(PORT4, gearSetting::ratio6_1, reversed::no_reverse);
+WhoopMotor r1(PORT1, gearSetting::ratio6_1, reversed::yes_reverse);
+WhoopMotor r2(PORT2, gearSetting::ratio6_1, reversed::yes_reverse);
+WhoopMotor r3(PORT3, gearSetting::ratio6_1, reversed::yes_reverse);
+WhoopMotor r4(PORT4, gearSetting::ratio6_1, reversed::yes_reverse);
+std::vector<WhoopMotor*> right_motors = {&r1, &r2, &r3, &r4};
+WhoopMotorGroup right_group(right_motors);
 
 // Left drive motors
-WhoopMotor l1(PORT12, gearSetting::ratio6_1, reversed::yes_reverse);
-WhoopMotor l2(PORT13, gearSetting::ratio6_1, reversed::yes_reverse);
-WhoopMotor l3(PORT14, gearSetting::ratio6_1, reversed::yes_reverse);
-WhoopMotor l4(PORT15, gearSetting::ratio6_1, reversed::yes_reverse);
+WhoopMotor l1(PORT12, gearSetting::ratio6_1, reversed::no_reverse);
+WhoopMotor l2(PORT13, gearSetting::ratio6_1, reversed::no_reverse);
+WhoopMotor l3(PORT14, gearSetting::ratio6_1, reversed::no_reverse);
+WhoopMotor l4(PORT15, gearSetting::ratio6_1, reversed::no_reverse);
+std::vector<WhoopMotor*> left_motors = {&l1, &l2, &l3, &l4};
+WhoopMotorGroup left_group(left_motors);
 
-WhoopDrivetrain robot_drivetrain(&buffer_system, "P", &controller1, {&l1, &l2, &l3, &l4}, {&r1, &r2, &r3, &r4});
+WhoopDrivetrain robot_drivetrain(&pose_messenger, &controller1, &left_group, &right_group);
 
 std::vector<ComputeNode*> nodes = {&buffer_system, &robot_drivetrain};
 ComputeManager manager(nodes);
@@ -54,14 +58,7 @@ ComputeManager manager(nodes);
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 
-void test_received(std::string message){
-  Brain.Screen.clearLine(3);
-  Brain.Screen.setCursor(3, 1);
-  Brain.Screen.print("Pose: %s", message.c_str());
-}
-
 void pre_auton(void) {
-  pose_messenger.on_message(test_received);
 
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();

@@ -4,22 +4,10 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <memory> // For std::unique_ptr
 
 
-WhoopDrivetrain::WhoopDrivetrain(BufferNode* bufferSystem, std::string stream, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors) : whoop_controller(controller){
-    WhoopMotorGroup leftMotorGroup(leftMotors);
-    left_motor_group = &leftMotorGroup;
-
-    WhoopMotorGroup rightMotorGroup(rightMotors);
-    right_motor_group = &rightMotorGroup;
-
-    this->_assign_pose_stream(bufferSystem, stream);
-} 
-
-
-WhoopDrivetrain::WhoopDrivetrain(BufferNode* bufferSystem, std::string stream, WhoopController* controller,  WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup) : whoop_controller(controller), left_motor_group(leftMotorGroup), right_motor_group(rightMotorGroup){
-    this->_assign_pose_stream(bufferSystem, stream);
-}
+WhoopDrivetrain::WhoopDrivetrain(Messenger* messenger, WhoopController* controller,  WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup) : whoop_controller(controller), left_motor_group(leftMotorGroup), right_motor_group(rightMotorGroup), pose_messenger(messenger){}
 
 
 void WhoopDrivetrain::set_state(drivetrainState state){
@@ -31,18 +19,6 @@ void WhoopDrivetrain::_update_pose(std::string pose_data){
     iss >> robotPose.x >> robotPose.y >> robotPose.z >> robotPose.pitch >> robotPose.yaw >> robotPose.roll;
 }
 
-void WhoopDrivetrain::_assign_pose_stream(BufferNode* bufferSystem, std::string stream){
-    if(pose_messenger != nullptr){
-        throw ("Welp... You can only assign one pose stream to the drivetrain.");
-    }
-
-    Messenger messenger(bufferSystem, stream, deleteAfterRead::no_delete);
-    pose_messenger = &messenger;
-
-    // Create a bound function for callback
-    auto bound_function = std::bind(&WhoopDrivetrain::_update_pose, this, std::placeholders::_1);
-    messenger.on_message(bound_function);
-}
 
 Pose WhoopDrivetrain::get_pose(){
     return robotPose;
@@ -71,8 +47,9 @@ void WhoopDrivetrain::__step(){
     }
     
     //Disabled
-    if(drive_state == drivetrainState::mode_disabled){
+    else if(drive_state == drivetrainState::mode_disabled){
         left_motor_group->spin(0);
         right_motor_group->spin(0);
     }
+
 }

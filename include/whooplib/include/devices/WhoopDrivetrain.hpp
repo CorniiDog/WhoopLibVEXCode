@@ -35,11 +35,9 @@ protected:
 
     // These functions are ran automatically
     void _update_pose(std::string pose_data);
-    void _assign_pose_stream(BufferNode* bufferSystem, std::string stream);
 public:
     // Initialization Constructors
-    WhoopDrivetrain(BufferNode* bufferSystem, std::string stream, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors); 
-    WhoopDrivetrain(BufferNode* bufferSystem, std::string stream, WhoopController* controller,  WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup); 
+    WhoopDrivetrain(Messenger* messenger, WhoopController* controller,  WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup); 
 
     void set_state(drivetrainState state);
 
