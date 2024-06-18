@@ -21,6 +21,7 @@ std::string boolToString(bool b);
 std::string intToString(int value);
 std::string doubleToString(double value);
 int stringToInt(const std::string& str);
+double stringToDouble(const std::string& str);
 float intToFloat(int value);
 int floatToInt(float value);
 double intToDouble(int value);

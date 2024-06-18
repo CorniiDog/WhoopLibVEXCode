@@ -107,6 +107,16 @@ int stringToInt(const std::string& str) {
     return result;
 }
 
+double stringToDouble(const std::string& str) {
+    std::stringstream ss(str);
+    double result;
+    ss >> result;
+    if (ss.fail()) {
+        throw ("Conversion failed: stringToInt");
+    }
+    return result;
+}
+
 
 float intToFloat(int value) {
     std::stringstream ss;
@@ -162,38 +172,4 @@ double to_meters(double inches){
 
 double to_inches(double meters){
     return meters * 39.3700787402;
-}
-
-
-double stringToDouble(const std::string& str) {
-    double result = 0.0;   // The result number being built
-    bool negative = false; // Flag to detect negative numbers
-    bool decimalSeen = false; // Flag to check if a decimal point was seen
-    double decimalFactor = 0.1; // Multiplier for decimal places
-
-    // Process each character
-    for (size_t i = 0; i < str.length(); ++i) {
-        if (str[i] == '-' && i == 0) { // Check for a negative at the start of the string
-            negative = true;
-        } else if (str[i] == '.') { // Handle decimal point
-            decimalSeen = true;
-        } else if (str[i] >= '0' && str[i] <= '9') { // Process digits
-            if (!decimalSeen) {
-                result = result * 10 + (str[i] - '0'); // Multiply by 10 for each new digit before the decimal
-            } else {
-                result += (str[i] - '0') * decimalFactor; // Add on the decimal values incrementally
-                decimalFactor /= 10; // Shift the decimal place
-            }
-        } else {
-            // Handle unexpected characters by breaking out of the loop or throwing an error
-            throw std::invalid_argument("Invalid input for double conversion");
-        }
-    }
-
-    // Apply negative sign if necessary
-    if (negative) {
-        result = -result;
-    }
-
-    return result;
 }
