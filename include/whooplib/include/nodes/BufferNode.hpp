@@ -11,6 +11,11 @@ enum deleteAfterRead{
     yes_delete=false
 };
 
+enum debugMode{
+    debug_enabled=true,
+    debug_disabled=false
+};
+
 class Messenger; // Forward declaration
 
 // Declaration of BufferNode class
@@ -27,7 +32,7 @@ protected:
 public:
     bool debug_mode;
 
-    BufferNode(int maxBufferSize=512, bool debugMode=false, std::string connection="/dev/serial1");  // Constructor declaration
+    BufferNode(int maxBufferSize=512, debugMode debugMode=debugMode::debug_disabled, std::string connection="/dev/serial1");  // Constructor declaration
     void register_stream(Messenger* messenger); // Registers a stream for listening
     std::string get_message(std::string stream, bool delete_after_read=false); // Receive a message from a stream from USB (returns empty string if nothing)
     int send_message(std::string stream, std::string message, std::string end="\n"); // Sends a message to a stream over USB

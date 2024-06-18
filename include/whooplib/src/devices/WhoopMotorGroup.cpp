@@ -3,118 +3,115 @@
 #include "whooplib/include/devices/WhoopMotorGroup.hpp"
 #include "whooplib/include/toolbox.hpp"
 #include <cmath>
+#include <stdexcept>
+#include <algorithm> // Needed for std::max_element
 
-void WhoopMotorGroup::add_motor(WhoopMotor* motor){
+void WhoopMotorGroup::add_motor(WhoopMotor* motor) {
     whoop_motors.push_back(motor);
 }
 
-WhoopMotorGroup::WhoopMotorGroup(std::vector<WhoopMotor*> motors){
-    for (size_t i = 0; i < motors.size(); ++i) {
-        add_motor(motors[i]);
+WhoopMotorGroup::WhoopMotorGroup(std::vector<WhoopMotor*> motors) {
+    for (auto& motor : motors) {
+        add_motor(motor);
     }
 }
 
-void WhoopMotorGroup::spin(double volts){
-    for (size_t i = 0; i < whoop_motors.size(); ++i) {
-        whoop_motors[i]->spin(volts);
+void WhoopMotorGroup::apply_to_all(void (WhoopMotor::*func)(double), double value) {
+    for (auto& motor : whoop_motors) {
+        (motor->*func)(value);
     }
 }
 
-void WhoopMotorGroup::spin_percentage(double percentage){ // Percentage being -100 to 100
-    for (size_t i = 0; i < whoop_motors.size(); ++i) {
-        whoop_motors[i]->spin_percentage(percentage);
+void WhoopMotorGroup::apply_to_all(void (WhoopMotor::*func)()) {
+    for (auto& motor : whoop_motors) {
+        (motor->*func)();
     }
 }
 
-void WhoopMotorGroup::spin_unit(double unit){ // Unit being -1 to 1, being 0 stopped
-    for (size_t i = 0; i < whoop_motors.size(); ++i) {  
-        whoop_motors[i]->spin_unit(unit);
-    }
+void WhoopMotorGroup::spin(double volts) {
+    apply_to_all(&WhoopMotor::spin, volts);
 }
 
-void WhoopMotorGroup::stop_hold(){
-    for (size_t i = 0; i < whoop_motors.size(); ++i) {
-        whoop_motors[i]->stop_hold();
-    }
+void WhoopMotorGroup::spin_percentage(double percentage) {
+    apply_to_all(&WhoopMotor::spin_percentage, percentage);
 }
 
-void WhoopMotorGroup::stop_brake(){
-    for (size_t i = 0; i < whoop_motors.size(); ++i) {
-        whoop_motors[i]->stop_brake();
-    }
+void WhoopMotorGroup::spin_unit(double unit) {
+    apply_to_all(&WhoopMotor::spin_unit, unit);
 }
 
-void WhoopMotorGroup::stop_coast(){
-    for (size_t i = 0; i < whoop_motors.size(); ++i) {
-        whoop_motors[i]->stop_coast();
+void WhoopMotorGroup::set_gear_ratio_mult(double ratio) {
+    if (ratio <= 0) {
+        throw std::invalid_argument("Gear ratio must be positive and non-zero.");
     }
+    gear_ratio = ratio;
 }
 
-double WhoopMotorGroup::get_rotation(){
-    double avg = 0;
-    const int size = whoop_motors.size();
+void WhoopMotorGroup::stop_hold() {
+    apply_to_all(&WhoopMotor::stop_hold);
+}
 
-    for (size_t i = 0; i < size; ++i) {
-        avg += whoop_motors[i]->get_rotation();
+void WhoopMotorGroup::stop_brake() {
+    apply_to_all(&WhoopMotor::stop_brake);
+}
+
+void WhoopMotorGroup::stop_coast() {
+    apply_to_all(&WhoopMotor::stop_coast);
+}
+
+double WhoopMotorGroup::get_rotation() {
+    if (whoop_motors.empty()) return 0;
+    double total = 0;
+    std::vector<double> rotations;
+    for (auto& motor : whoop_motors) {
+        double rotation = motor->get_rotation();
+        rotations.push_back(rotation);
+        total += rotation;
     }
-
-    avg /= size;
+    double avg = total / whoop_motors.size();
     
-    // If size is greater than 2, remove one outlier in case of a bad motor
-    if (size > 2){
-
-        // Find highest deviation motor to exclude
-        int highest_dev_i = -1;
-        double highest_dev = 0;
-        double deviation;
-        for (size_t i = 0; i < size; ++i) {
-            deviation = std::abs(avg - whoop_motors[i]->get_rotation());
-            if(deviation > highest_dev){
-                highest_dev = deviation;
-                highest_dev_i = i;
-            }
-        }
-
-        // Apply, excluding one motor
-        if(highest_dev_i != -1){
-            avg = 0;
-            for (size_t i = 0; i < size; ++i) {
-                if(i != highest_dev_i){
-                    avg += whoop_motors[i]->get_rotation();
-                }
-            }
-            avg /= (size - 1);
-        }
+    // If there are more than 2 motors, remove a single outlier
+    if (whoop_motors.size() > 2) {
+        auto max_it = std::max_element(rotations.begin(), rotations.end(), [&avg](double a, double b) {
+            return std::abs(a - avg) < std::abs(b - avg);
+        });
+        total -= *max_it;
+        avg = total / (whoop_motors.size() - 1);
     }
 
-    return avg;
+    return avg * gear_ratio;
 }
 
-double WhoopMotorGroup::get_rotation_degrees(){
-    return this->get_rotation();
+double WhoopMotorGroup::get_rotation_degrees() {
+    return get_rotation();
 }
 
-double WhoopMotorGroup::get_rotation_radians(){
-    return to_rad(this->get_rotation());
+double WhoopMotorGroup::get_rotation_radians() {
+    return to_rad(get_rotation());
 }
 
-void WhoopMotorGroup::tare(double degrees){
-    for (size_t i = 0; i < whoop_motors.size(); ++i) {
-        whoop_motors[i]->tare(degrees);
-    }
+double WhoopMotorGroup::get_rotation_rotations(){
+    return get_rotation_degrees()/360.0;
 }
 
-void WhoopMotorGroup::tare(){
-    this->tare(0);
+void WhoopMotorGroup::tare() {
+    apply_to_all(&WhoopMotor::tare, 0);
 }
 
-void WhoopMotorGroup::tare_degrees(double degrees){
-    this->tare(degrees);
+void WhoopMotorGroup::tare(double degrees) {
+    apply_to_all(&WhoopMotor::tare, degrees / gear_ratio);
 }
 
-void WhoopMotorGroup::tare_radians(double radians){
-    this->tare(to_deg(radians));
+void WhoopMotorGroup::tare_degrees(double degrees) {
+    tare(degrees);
 }
 
+void WhoopMotorGroup::tare_rotations(double rotations) {
+    tare(rotations*360.0);
+}
+
+void WhoopMotorGroup::tare_radians(double radians) {
+    tare(to_deg(radians));
+}
 
 

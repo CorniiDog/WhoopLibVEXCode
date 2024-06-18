@@ -48,6 +48,12 @@ public:
     WhoopDrivetrain(WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors);
     WhoopDrivetrain(BufferNode* bufferSystem, std::string pose_stream, WhoopController* controller,  WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup); 
     WhoopDrivetrain(BufferNode* bufferSystem, std::string pose_stream, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors); 
+    WhoopDrivetrain(double gear_ratio, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup);
+    WhoopDrivetrain(double gear_ratio, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors);
+    WhoopDrivetrain(double gear_ratio, BufferNode* bufferSystem, std::string pose_stream, WhoopController* controller,  WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup); 
+    WhoopDrivetrain(double gear_ratio, BufferNode* bufferSystem, std::string pose_stream, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors); 
+    
+    void set_gear_ratio_mult(double ratio); // motor on 32 tooth powering the 64 toth: ratio = 32.0/64.0
 
     void set_state(drivetrainState state);
 

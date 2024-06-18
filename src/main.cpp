@@ -18,7 +18,8 @@ using namespace vex;
 // A global instance of competition
 competition Competition;
 
-BufferNode buffer_system(256, false, "/dev/serial1"); // set to false for competition
+// Serial communication module
+BufferNode buffer_system(256, debugMode::debug_disabled, "/dev/serial1"); // set to debug_disabled for competition
 
 WhoopController controller1(joystickMode::joystickmode_split_arcade);
 
@@ -34,9 +35,13 @@ WhoopMotor l2(PORT13, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotor l3(PORT14, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotor l4(PORT15, gearSetting::ratio6_1, reversed::no_reverse);
 
-// Jetson Nano Pose Retreival Channel
-std::string pose_channel = "P";
-WhoopDrivetrain robot_drivetrain(&buffer_system, pose_channel, &controller1, {&l1, &l2, &l3, &l4}, {&r1, &r2, &r3, &r4});
+// Jetson Nano pose retreival stream identifier (configured on Nano-side) 
+std::string pose_stream = "P";
+
+//Gear ratio on the drivetrain (If it's 32t driving 64t, it would be a 1.0/2.0 gear ratio, or 0.5)
+double gear_ratio = 1.0/2.0;
+
+WhoopDrivetrain robot_drivetrain(gear_ratio, &buffer_system, pose_stream, &controller1, {&l1, &l2, &l3, &l4}, {&r1, &r2, &r3, &r4});
 
 ComputeManager manager({&buffer_system, &robot_drivetrain});
 

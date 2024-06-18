@@ -43,6 +43,23 @@ WhoopDrivetrain::WhoopDrivetrain(BufferNode* bufferSystem, std::string pose_stre
     setup_messenger(bufferSystem, pose_stream);
 }
 
+WhoopDrivetrain::WhoopDrivetrain(double gear_ratio, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
+: WhoopDrivetrain(controller, leftMotorGroup, rightMotorGroup){
+    set_gear_ratio_mult(gear_ratio);
+}
+WhoopDrivetrain::WhoopDrivetrain(double gear_ratio, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
+: WhoopDrivetrain(controller, leftMotors, rightMotors){
+    set_gear_ratio_mult(gear_ratio);
+}
+WhoopDrivetrain::WhoopDrivetrain(double gear_ratio, BufferNode* bufferSystem, std::string pose_stream, WhoopController* controller,  WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
+: WhoopDrivetrain(bufferSystem, pose_stream, controller, leftMotorGroup, rightMotorGroup){
+    set_gear_ratio_mult(gear_ratio);
+}
+WhoopDrivetrain::WhoopDrivetrain(double gear_ratio, BufferNode* bufferSystem, std::string pose_stream, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
+: WhoopDrivetrain(bufferSystem, pose_stream, controller, leftMotors, rightMotors){
+    set_gear_ratio_mult(gear_ratio);
+}
+
 void WhoopDrivetrain::set_state(drivetrainState state){
     drive_state = state;
 }
@@ -52,6 +69,10 @@ void WhoopDrivetrain::_update_pose(std::string pose_data){
     iss >> pose.x >> pose.y >> pose.z >> pose.pitch >> pose.yaw >> pose.roll;
 }
 
+void WhoopDrivetrain::set_gear_ratio_mult(double ratio){ // motor on 32 tooth powering the 64 toth: ratio = 32.0/64.0
+    left_motor_group->set_gear_ratio_mult(ratio);
+    right_motor_group->set_gear_ratio_mult(ratio);
+}
 
 Pose WhoopDrivetrain::get_pose(){
     return pose;

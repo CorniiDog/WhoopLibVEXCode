@@ -15,7 +15,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 // BufferNode class methods
-BufferNode::BufferNode(int maxBufferSize, bool debugMode, std::string connection): max_buffer_size(maxBufferSize), serial_conn(connection), debug_mode(debugMode){}
+BufferNode::BufferNode(int maxBufferSize, debugMode debugMode, std::string connection): max_buffer_size(maxBufferSize), serial_conn(connection), debug_mode(debugMode){}
 
 void BufferNode::__step(){
     ////////////////////////////////////////////////////////////////////////

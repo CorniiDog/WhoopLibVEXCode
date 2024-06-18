@@ -38,6 +38,10 @@ double WhoopMotor::get_rotation(){
     return vex_motor.position(rotationUnits::deg) + pos_offset;
 }
 
+double WhoopMotor::get_rotation_rotations(){
+    return this->get_rotation()/360.0;
+}
+
 double WhoopMotor::get_rotation_degrees(){
     return this->get_rotation();
 }
@@ -57,6 +61,10 @@ void WhoopMotor::tare(){
 
 void WhoopMotor::tare_degrees(double degrees){
     this->tare(degrees);
+}
+
+void WhoopMotor::tare_rotations(double rotations){
+    this->tare(rotations*360.0);
 }
 
 void WhoopMotor::tare_radians(double radians){

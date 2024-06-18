@@ -35,12 +35,14 @@ public:
     double get_rotation(); // Degrees is default
     double get_rotation_degrees();
     double get_rotation_radians();
+    double get_rotation_rotations();
 
     // Tare (reset)
     void tare();
     void tare(double degrees); // Degrees is default
     void tare_degrees(double degrees);
     void tare_radians(double radians);
+    void tare_rotations(double rotations);
 };
 
 
