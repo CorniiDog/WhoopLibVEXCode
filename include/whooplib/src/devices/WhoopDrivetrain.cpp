@@ -1,5 +1,6 @@
 #include "vex.h"
 #include "whooplib/include/devices/WhoopDrivetrain.hpp"
+#include "whooplib/include/toolbox.hpp"
 #include <cmath>
 #include <iostream>
 #include <sstream>
@@ -7,8 +8,17 @@
 #include <memory> // For std::unique_ptr
 
 
-WhoopDrivetrain::WhoopDrivetrain(Messenger* messenger, WhoopController* controller,  WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup) : whoop_controller(controller), left_motor_group(leftMotorGroup), right_motor_group(rightMotorGroup), pose_messenger(messenger){}
+WhoopDrivetrain::WhoopDrivetrain(Messenger* messenger, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup) 
+: whoop_controller(controller), pose_messenger(messenger) {
+    left_motor_group = std::make_unique<WhoopMotorGroup>(*leftMotorGroup);
+    right_motor_group = std::make_unique<WhoopMotorGroup>(*rightMotorGroup);
+}
 
+WhoopDrivetrain::WhoopDrivetrain(Messenger* messenger, WhoopController* controller, std::vector<WhoopMotor*> left_motors, std::vector<WhoopMotor*> right_motors)
+: whoop_controller(controller), pose_messenger(messenger) {
+    left_motor_group = std::make_unique<WhoopMotorGroup>(left_motors);
+    right_motor_group = std::make_unique<WhoopMotorGroup>(right_motors);
+}
 
 void WhoopDrivetrain::set_state(drivetrainState state){
     drive_state = state;

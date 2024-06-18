@@ -39,14 +39,14 @@ SRC_A  = makefile
 # project header file locations
 INC_F  = include
 
-# build targets
-#all: $(BUILD)/$(PROJECT).bin # removed and replaced with build
-build: $(BUILD)/$(PROJECT).bin
-
 # set compiler flags after including the environment to ensure they are not overridden
 CXX_FLAGS += -fexceptions
 CXX_FLAGS += -std=gnu++17 #-std=c++17
 CXX_FLAGS += -Wc++17-extensions
+
+# build targets
+#all: $(BUILD)/$(PROJECT).bin # removed and replaced with build
+build: $(BUILD)/$(PROJECT).bin
 
 # include build rules
 include vex/mkrules.mk

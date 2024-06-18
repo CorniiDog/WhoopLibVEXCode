@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <sstream>
 #include <cmath>
+#include <memory>
 
 // Function to find all indexes of a substring in a string
 std::vector<int> find_all_indexes(const std::string& str, const std::string& substring) {

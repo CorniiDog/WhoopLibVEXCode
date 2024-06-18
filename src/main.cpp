@@ -20,6 +20,7 @@ competition Competition;
 
 BufferNode buffer_system(256, false, "/dev/serial1"); // set to false for competition
 
+// Jetson Nano Pose Retreival
 Messenger pose_messenger(&buffer_system, "P", deleteAfterRead::no_delete);
 
 WhoopController controller1(joystickMode::joystickmode_split_arcade);

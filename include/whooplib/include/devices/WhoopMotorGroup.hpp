@@ -17,7 +17,7 @@ public:
     void add_motor(WhoopMotor* whoop_motor);
 
     // Initialization Constructors
-    WhoopMotorGroup(std::vector<WhoopMotor*> whoop_motors); 
+    WhoopMotorGroup(std::vector<WhoopMotor*> whoop_motors);
 
     // Motor commands
     void spin(double volts);

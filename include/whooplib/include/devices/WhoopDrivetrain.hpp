@@ -8,6 +8,7 @@
 #include "whooplib/include/nodes/BufferNode.hpp"
 #include "vex.h"
 #include <vector>
+#include <memory>
 
 enum drivetrainState{
     mode_disabled=1,
@@ -25,8 +26,8 @@ class WhoopDrivetrain : public ComputeNode  {
 protected:
     // Upon initialization
     WhoopController* whoop_controller;
-    WhoopMotorGroup* left_motor_group;
-    WhoopMotorGroup* right_motor_group;
+    std::unique_ptr<WhoopMotorGroup> left_motor_group;
+    std::unique_ptr<WhoopMotorGroup> right_motor_group;
 
     drivetrainState drive_state = drivetrainState::mode_disabled;
 
@@ -38,6 +39,7 @@ public:
     Pose pose;
     // Initialization Constructors
     WhoopDrivetrain(Messenger* messenger, WhoopController* controller,  WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup); 
+    WhoopDrivetrain(Messenger* messenger, WhoopController* controller, std::vector<WhoopMotor*> left_motors, std::vector<WhoopMotor*> right_motors); 
 
     void set_state(drivetrainState state);
 
