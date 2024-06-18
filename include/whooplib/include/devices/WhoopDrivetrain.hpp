@@ -28,7 +28,6 @@ protected:
     WhoopMotorGroup* left_motor_group;
     WhoopMotorGroup* right_motor_group;
 
-    Pose robotPose;
     drivetrainState drive_state = drivetrainState::mode_disabled;
 
     Messenger* pose_messenger = nullptr;
@@ -36,6 +35,7 @@ protected:
     // These functions are ran automatically
     void _update_pose(std::string pose_data);
 public:
+    Pose pose;
     // Initialization Constructors
     WhoopDrivetrain(Messenger* messenger, WhoopController* controller,  WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup); 
 

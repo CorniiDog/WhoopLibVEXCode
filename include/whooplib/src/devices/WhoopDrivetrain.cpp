@@ -16,12 +16,12 @@ void WhoopDrivetrain::set_state(drivetrainState state){
 
 void WhoopDrivetrain::_update_pose(std::string pose_data){
     std::istringstream iss(pose_data); // Create a string stream from the input string
-    iss >> robotPose.x >> robotPose.y >> robotPose.z >> robotPose.pitch >> robotPose.yaw >> robotPose.roll;
+    iss >> pose.x >> pose.y >> pose.z >> pose.pitch >> pose.yaw >> pose.roll;
 }
 
 
 Pose WhoopDrivetrain::get_pose(){
-    return robotPose;
+    return pose;
 }
 
 void WhoopDrivetrain::__step(){
