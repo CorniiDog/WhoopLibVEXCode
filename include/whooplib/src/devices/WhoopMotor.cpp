@@ -18,6 +18,10 @@ void WhoopMotor::spin_unit(double unit){ // Unit being -1 to 1, being 0 stopped
     vex_motor.spin(fwd, unit*12.0, voltageUnits::volt);
 }
 
+void WhoopMotor::spin_percentage(double percentage){ // Percentage being -100 to 100
+    this->spin_unit(percentage/100.0);
+}
+
 void WhoopMotor::stop_hold(){
     vex_motor.stop(brakeType::hold);
 }

@@ -14,10 +14,15 @@ WhoopMotorGroup::WhoopMotorGroup(std::vector<WhoopMotor*> motors){
     }
 }
 
-
 void WhoopMotorGroup::spin(double volts){
     for (size_t i = 0; i < whoop_motors.size(); ++i) {
         whoop_motors[i]->spin(volts);
+    }
+}
+
+void WhoopMotorGroup::spin_percentage(double percentage){ // Percentage being -100 to 100
+    for (size_t i = 0; i < whoop_motors.size(); ++i) {
+        whoop_motors[i]->spin_percentage(percentage);
     }
 }
 

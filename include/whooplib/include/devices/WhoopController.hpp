@@ -4,6 +4,7 @@
 #include "vex.h"
 #include <vector>
 #include <functional>
+#include "whooplib/include/nodes/NodeManager.hpp"
 
 enum joystickMode{
     joystickmode_tank = 1,
@@ -17,8 +18,8 @@ enum joystickMode{
 class WhoopController {
 protected:
     vex::controller vex_controller;
-    joystickMode joystick_mode;
 public:
+    joystickMode joystick_mode;
 
     // Initialization Constructors
     WhoopController(joystickMode mode); 

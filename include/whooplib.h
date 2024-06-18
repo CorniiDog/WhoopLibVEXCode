@@ -20,6 +20,7 @@
 #include "whooplib/include/devices/WhoopMotorGroup.hpp"
 #include "whooplib/include/devices/WhoopInertial.hpp"
 #include "whooplib/include/devices/WhoopController.hpp"
+#include "whooplib/include/devices/WhoopDrivetrain.hpp"
 
 
 #endif

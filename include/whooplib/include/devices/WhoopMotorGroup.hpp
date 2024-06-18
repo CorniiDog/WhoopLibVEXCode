@@ -22,6 +22,7 @@ public:
     // Motor commands
     void spin(double volts);
     void spin_unit(double unit);
+    void spin_percentage(double percentage);
     void stop_hold();
     void stop_brake();
     void stop_coast();

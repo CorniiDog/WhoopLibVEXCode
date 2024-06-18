@@ -22,9 +22,6 @@ BufferNode buffer_system(256, false, "/dev/serial1"); // set to false for compet
 
 Messenger pose_messenger(&buffer_system, "P", deleteAfterRead::no_delete);
 
-std::vector<ComputeNode*> nodes = {&buffer_system};
-ComputeManager manager(nodes);
-
 WhoopController controller1(joystickMode::joystickmode_split_arcade);
 
 // Right drive motors
@@ -32,16 +29,18 @@ WhoopMotor r1(PORT1, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotor r2(PORT2, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotor r3(PORT3, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotor r4(PORT4, gearSetting::ratio6_1, reversed::no_reverse);
-WhoopMotorGroup left({&r1, &r2, &r3, &r4});
 
 // Left drive motors
 WhoopMotor l1(PORT12, gearSetting::ratio6_1, reversed::yes_reverse);
 WhoopMotor l2(PORT13, gearSetting::ratio6_1, reversed::yes_reverse);
 WhoopMotor l3(PORT14, gearSetting::ratio6_1, reversed::yes_reverse);
 WhoopMotor l4(PORT15, gearSetting::ratio6_1, reversed::yes_reverse);
-WhoopMotorGroup right({&l1, &l2, &l3, &l4});
 
-controller Controller1(controllerType::primary);
+WhoopDrivetrain robot_drivetrain(&buffer_system, "P", &controller1, {&l1, &l2, &l3, &l4}, {&r1, &r2, &r3, &r4});
+
+std::vector<ComputeNode*> nodes = {&buffer_system, &robot_drivetrain};
+ComputeManager manager(nodes);
+
 
 // define your global instances of motors and other devices here
 
@@ -68,13 +67,14 @@ void pre_auton(void) {
   vexcodeInit();
 
   manager.start();
+  robot_drivetrain.set_state(drivetrainState::mode_disabled);
 
-  while(true){
+  /*while(true){
     Brain.Screen.clearLine(4);
     Brain.Screen.setCursor(4, 1);
     Brain.Screen.print("Pose (e): %s", pose_messenger.read().c_str());
     wait(20, timeUnits::msec);
-  }
+  }*/
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
@@ -91,6 +91,7 @@ void pre_auton(void) {
 /*---------------------------------------------------------------------------*/
 
 void autonomous(void) {
+  robot_drivetrain.set_state(drivetrainState::mode_autonomous);
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
@@ -109,6 +110,8 @@ void autonomous(void) {
 
 
 void usercontrol(void) {
+  robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
+
   // User control code here, inside the loop
   while (1) {
     // This is the main execution loop for the user control program.
