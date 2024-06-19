@@ -10,6 +10,9 @@
 // Toolbox
 #include "whooplib/include/toolbox.hpp"
 
+// Calculators
+#include "whooplib/include/calculators/TwoDPose.hpp"
+
 // Nodes
 #include "whooplib/include/toolbox.hpp"
 #include "whooplib/include/nodes/BufferNode.hpp"
@@ -21,6 +24,5 @@
 #include "whooplib/include/devices/WhoopInertial.hpp"
 #include "whooplib/include/devices/WhoopController.hpp"
 #include "whooplib/include/devices/WhoopDrivetrain.hpp"
-
 
 #endif
