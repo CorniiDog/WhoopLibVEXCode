@@ -39,8 +39,9 @@ private:
     void init_motor_groups(const std::vector<WhoopMotor*>& leftMotors, const std::vector<WhoopMotor*>& rightMotors);
     void setup_messenger(BufferNode* bufferSystem, const std::string& pose_stream);
 public:
+    vex::mutex thread_lock;  // Mutex for synchronization
     drivetrainState drive_state = drivetrainState::mode_disabled;
-    Pose pose;
+    Pose vision_pose;
 
     // Initialization Constructors
     WhoopDrivetrain(WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup);
