@@ -67,7 +67,7 @@ void WhoopDrivetrain::set_state(drivetrainState state){
 void WhoopDrivetrain::_update_pose(std::string pose_data){
     std::istringstream iss(pose_data); // Create a string stream from the input string
     thread_lock.lock();
-    iss >> vision_pose.x >> vision_pose.y >> vision_pose.z >> vision_pose.pitch >> vision_pose.yaw >> vision_pose.roll;
+    iss >> pose.x >> pose.y >> pose.z >> pose.pitch >> pose.yaw >> pose.roll;
     thread_lock.unlock();
 }
 
@@ -77,7 +77,7 @@ void WhoopDrivetrain::set_gear_ratio_mult(double ratio){ // motor on 32 tooth po
 }
 
 Pose WhoopDrivetrain::get_pose(){
-    return vision_pose;
+    return pose;
 }
 
 void WhoopDrivetrain::__step(){

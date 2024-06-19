@@ -41,7 +41,7 @@ private:
 public:
     vex::mutex thread_lock;  // Mutex for synchronization
     drivetrainState drive_state = drivetrainState::mode_disabled;
-    Pose vision_pose;
+    Pose pose;
 
     // Initialization Constructors
     WhoopDrivetrain(WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup);

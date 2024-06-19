@@ -24,6 +24,8 @@ BufferNode buffer_system(256, debugMode::debug_disabled, "/dev/serial1"); // set
 
 WhoopController controller1(joystickMode::joystickmode_split_arcade);
 
+WhoopInertial inertial_sensor(PORT7);
+
 // Right drive motors
 WhoopMotor r1(PORT1, gearSetting::ratio6_1, reversed::yes_reverse);
 WhoopMotor r2(PORT2, gearSetting::ratio6_1, reversed::yes_reverse);
@@ -65,6 +67,8 @@ void pre_auton(void) {
   manager.start();
   robot_drivetrain.set_state(drivetrainState::mode_disabled);
 
+  inertial_sensor.calibrate();
+
   while (robot_drivetrain.drive_state == drivetrainState::mode_disabled){
     // Do stuff like calibrate IMU
     wait(20, msec); // Sleep the task for a short amount of time to
@@ -105,8 +109,10 @@ void usercontrol(void) {
 
     Brain.Screen.clearLine(2);
     Brain.Screen.setCursor(2, 1);
-    Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f", robot_drivetrain.vision_pose.x, robot_drivetrain.vision_pose.y, robot_drivetrain.vision_pose.z, robot_drivetrain.vision_pose.pitch, robot_drivetrain.vision_pose.yaw, robot_drivetrain.vision_pose.roll);
-
+    Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f", robot_drivetrain.pose.x, robot_drivetrain.pose.y, robot_drivetrain.pose.z, robot_drivetrain.pose.pitch, robot_drivetrain.pose.yaw, robot_drivetrain.pose.roll);
+    Brain.Screen.clearLine(3);
+    Brain.Screen.setCursor(3, 1);
+    Brain.Screen.print("Inertial: %.3f", inertial_sensor.get_yaw_radians());
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
