@@ -12,6 +12,7 @@
 
 // Calculators
 #include "whooplib/include/calculators/TwoDPose.hpp"
+#include "whooplib/include/calculators/Odom.hpp"
 
 // Nodes
 #include "whooplib/include/toolbox.hpp"

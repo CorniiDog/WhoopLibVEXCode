@@ -6,6 +6,7 @@
 #include "whooplib/include/devices/WhoopController.hpp"
 #include "whooplib/include/nodes/NodeManager.hpp"
 #include "whooplib/include/nodes/BufferNode.hpp"
+#include "whooplib/include/calculators/Odom.hpp"
 #include "vex.h"
 #include <vector>
 #include <memory>
