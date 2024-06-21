@@ -41,4 +41,4 @@ double to_inches(double meters);
 // Normalizes a radian angle to [-pi, pi]
 double normalize_angle(double angle_radians);
 
-#endif
+#endif // TOOLBOX_HPP

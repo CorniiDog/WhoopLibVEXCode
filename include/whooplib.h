@@ -5,7 +5,7 @@
 #ifndef VEX_H
 #define VEX_H
 #include "vex.h"
-#endif
+#endif // VEX_H
 
 // Toolbox
 #include "whooplib/include/toolbox.hpp"
@@ -27,4 +27,4 @@
 #include "whooplib/include/devices/WhoopDrivetrain.hpp"
 #include "whooplib/include/devices/WhoopVision.hpp"
 
-#endif
+#endif // WHOOP_LIB_H

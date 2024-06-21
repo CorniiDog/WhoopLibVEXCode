@@ -6,6 +6,9 @@
 #include <functional>
 #include "whooplib/include/nodes/NodeManager.hpp"
 
+/**
+ * Enumerates the available joystick control modes.
+ */
 enum joystickMode{
     joystickmode_tank = 1,
     joystickmode_split_arcade = 2,
@@ -13,22 +16,50 @@ enum joystickMode{
     joystickmode_right_arcade = 4
 }; 
 
-
-// Declaration of WhoopController class
+/**
+ * Controls and manages inputs from a VEX controller.
+ */
 class WhoopController {
 protected:
-    vex::controller vex_controller;
+    vex::controller vex_controller; // Instance of VEX controller.
 public:
-    joystickMode joystick_mode;
+    joystickMode joystick_mode; // Current joystick mode.
 
-    // Initialization Constructors
+    /**
+     * Constructor that initializes the controller with a specific joystick mode.
+     * @param mode The joystick mode to be used.
+     */
     WhoopController(joystickMode mode); 
+
+    /**
+     * Constructor that initializes the controller with a specific joystick mode and controller type.
+     * @param mode The joystick mode to be used.
+     * @param controller_type The type of controller (primary or partner).
+     */
     WhoopController(joystickMode mode, vex::controllerType controller_type); 
 
-    // Controller joystick
+    /**
+     * Retrieves the horizontal axis value of the left joystick.
+     * @return The x-coordinate value from the left joystick.
+     */
     double get_left_joystick_x();
+
+    /**
+     * Retrieves the vertical axis value of the left joystick.
+     * @return The y-coordinate value from the left joystick.
+     */
     double get_left_joystick_y();
+
+    /**
+     * Retrieves the horizontal axis value of the right joystick.
+     * @return The x-coordinate value from the right joystick.
+     */
     double get_right_joystick_x();
+
+    /**
+     * Retrieves the vertical axis value of the right joystick.
+     * @return The y-coordinate value from the right joystick.
+     */
     double get_right_joystick_y();
 
     //UDLR
@@ -85,5 +116,5 @@ public:
 };
 
 
-#endif // WHOOP_MOTOR_HPP
+#endif // WHOOP_CONTROLLER_HPP
 
