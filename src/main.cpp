@@ -41,7 +41,7 @@ WhoopMotor l4(PORT15, gearSetting::ratio6_1, reversed::no_reverse);
 // Robot Offset 
 // First variable is x, which +x is the direction of right from the center of the robot
 // Second variable is y, which +y is the direction of forwardness from the center of the robot (in meters)
-double x_offset = 0;
+double x_offset = 15.0/100;
 double y_offset = 15.0/100.0;
 RobotVisionOffset vision_offset(x_offset, y_offset);
 

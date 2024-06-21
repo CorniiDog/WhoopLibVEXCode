@@ -32,7 +32,7 @@ protected:
     // Upon initialization
     std::unique_ptr<Messenger> pose_messenger = nullptr;
     // These functions are ran automatically
-    void _transform_pose();
+    void _transform_pose(bool apply_delta=false);
     void _update_pose(std::string pose_data);
 
     Pose raw_pose;
@@ -50,6 +50,7 @@ protected:
     double tared_pitch = this->raw_pose.pitch - tare_pitch;
     double tared_roll = this->raw_pose.roll - tare_roll;
     TwoDPose tared_position;
+    TwoDPose offset_change;
 
     RobotVisionOffset* robot_offset;
 
@@ -67,6 +68,7 @@ public:
     void tare(double x, double y, double z, double pitch, double yaw, double roll);
     void tare(double x, double y, double yaw, tare_remaining_0 tare_rest_to_zero);
     void tare(double x, double y, double yaw);
+    void tare();
     
     Pose get_pose();
 };
