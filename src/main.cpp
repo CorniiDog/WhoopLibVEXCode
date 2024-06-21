@@ -107,35 +107,16 @@ void usercontrol(void) {
 
   Brain.Screen.print("Move Robot in 5s");
   wait(10, sec);
+  vision_system.tare(0, 0, 0, tare_rest::do_tare);
 
-  double tare_x = 0;
-  double tare_y = 0;
-  double tare_z = 0;
-  double tare_pitch = 0;
-  double tare_roll = 0;
-  double tare_yaw = 0;
-
-  TwoDPose tared_position(vision_system.pose.x, vision_system.pose.y, vision_system.pose.yaw - tare_yaw);
-
-  double tared_z = vision_system.pose.z - tare_z;
-  double tared_pitch = vision_system.pose.pitch - tare_pitch;
-  double tared_roll = vision_system.pose.roll - tare_roll;
 
   // User control code here, inside the loop
   while (1) {
 
-    TwoDPose transposed = tared_position.toObjectSpace(vision_system.pose.x, vision_system.pose.y, vision_system.pose.yaw);
-
-    double current_x = transposed.x + tare_x;
-    double current_y = transposed.y + tare_y;
-    double current_z = vision_system.pose.z - tared_z;
-    double current_pitch = vision_system.pose.pitch - tared_pitch;
-    double current_yaw = transposed.yaw;
-    double current_roll = vision_system.pose.roll - tared_roll;
 
     Brain.Screen.clearLine(2);
     Brain.Screen.setCursor(2, 1);
-    Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f", current_x, current_y, current_z, current_pitch, current_yaw, current_roll);
+    Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f", vision_system.pose.x, vision_system.pose.y, vision_system.pose.z, vision_system.pose.pitch, vision_system.pose.yaw, vision_system.pose.roll);
     Brain.Screen.clearLine(3);
     Brain.Screen.setCursor(3, 1);
     Brain.Screen.print("Inertial: %.3f", inertial_sensor.get_yaw_radians());
