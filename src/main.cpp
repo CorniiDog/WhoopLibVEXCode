@@ -38,9 +38,16 @@ WhoopMotor l2(PORT13, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotor l3(PORT14, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotor l4(PORT15, gearSetting::ratio6_1, reversed::no_reverse);
 
+// Robot Offset 
+// First variable is x, which +x is the direction of right from the center of the robot
+// Second variable is y, which +y is the direction of forwardness from the center of the robot (in meters)
+double x_offset = 0;
+double y_offset = 15.0/100.0;
+RobotVisionOffset vision_offset(x_offset, y_offset);
+
 // Jetson Nano pose retreival stream identifier (configured on Nano-side) 
 std::string pose_stream = "P";
-WhoopVision vision_system(&buffer_system, pose_stream);
+WhoopVision vision_system(&vision_offset, &buffer_system, pose_stream);
 
 //Gear ratio on the drivetrain (If it's 32t driving 64t, it would be a 1.0/2.0 gear ratio, or 0.5)
 double gear_ratio = 1.0/2.0;
@@ -107,7 +114,7 @@ void usercontrol(void) {
 
   Brain.Screen.print("Move Robot in 5s");
   wait(10, sec);
-  vision_system.tare(0, 0, 0, tare_rest::do_tare);
+  vision_system.tare(1, 1, M_PI/4);
 
 
   // User control code here, inside the loop

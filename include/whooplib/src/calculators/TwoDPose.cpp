@@ -73,3 +73,8 @@ TwoDPose TwoDPose::toObjectSpace(double x, double y, double yaw) const {
 
     return TwoDPose(relative_x, relative_y, relative_yaw);
 }
+
+TwoDPose& TwoDPose::operator*=(const TwoDPose& other) {
+    *this = *this * other;
+    return *this;
+}

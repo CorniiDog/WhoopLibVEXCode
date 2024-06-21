@@ -14,9 +14,16 @@ struct Pose{
     double pitch=0, yaw=0, roll=0;
 };
 
-enum tare_rest{
+enum tare_remaining_0{
     do_tare=true,
     dont_tare=false
+};
+
+class RobotVisionOffset{
+public:
+    double x = 0;
+    double y = 0;
+    RobotVisionOffset(double x, double y); 
 };
 
 // Declaration of WhoopDrivetrain class
@@ -44,6 +51,8 @@ protected:
     double tared_roll = this->raw_pose.roll - tare_roll;
     TwoDPose tared_position;
 
+    RobotVisionOffset* robot_offset;
+
 private:
     void setup_messenger(BufferNode* bufferSystem, const std::string& pose_stream);
 public:
@@ -53,10 +62,10 @@ public:
     Pose pose;
 
     // Initialization Constructors
-    WhoopVision(BufferNode* bufferSystem, std::string pose_stream); 
+    WhoopVision(RobotVisionOffset* robotOffset, BufferNode* bufferSystem, std::string pose_stream); 
 
     void tare(double x, double y, double z, double pitch, double yaw, double roll);
-    void tare(double x, double y, double yaw, tare_rest tare_rest_to_zero);
+    void tare(double x, double y, double yaw, tare_remaining_0 tare_rest_to_zero);
     void tare(double x, double y, double yaw);
     
     Pose get_pose();

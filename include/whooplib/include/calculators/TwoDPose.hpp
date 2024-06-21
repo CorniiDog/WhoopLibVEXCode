@@ -11,6 +11,9 @@ public:
     // Think of it as Roblox's CF = CFrame1 * CFrame2
     TwoDPose operator*(const TwoDPose& other) const;
 
+    // This allows for *= as well
+    TwoDPose& operator*=(const TwoDPose& other);
+
     // Method to compute the relative pose
     // Think of it as Roblox's CFrame1:ToObjectSpace(CFrame2)
     // in which it returns the pose of CFrame2 relative to CFrame1
