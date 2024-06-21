@@ -7,7 +7,6 @@
 #include <string>
 #include <memory> // For std::unique_ptr
 
-
 void WhoopDrivetrain::init_motor_groups(WhoopMotorGroup* leftGroup, WhoopMotorGroup* rightGroup) {
     left_motor_group = std::make_unique<WhoopMotorGroup>(*leftGroup);
     right_motor_group = std::make_unique<WhoopMotorGroup>(*rightGroup);
@@ -16,11 +15,6 @@ void WhoopDrivetrain::init_motor_groups(WhoopMotorGroup* leftGroup, WhoopMotorGr
 void WhoopDrivetrain::init_motor_groups(const std::vector<WhoopMotor*>& leftMotors, const std::vector<WhoopMotor*>& rightMotors) {
     left_motor_group = std::make_unique<WhoopMotorGroup>(leftMotors);
     right_motor_group = std::make_unique<WhoopMotorGroup>(rightMotors);
-}
-
-void WhoopDrivetrain::setup_messenger(BufferNode* bufferSystem, const std::string& pose_stream) {
-    pose_messenger = std::make_unique<Messenger>(bufferSystem, pose_stream, deleteAfterRead::no_delete);
-    pose_messenger->on_message(std::bind(&WhoopDrivetrain::_update_pose, this, std::placeholders::_1));
 }
 
 WhoopDrivetrain::WhoopDrivetrain(WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
@@ -33,16 +27,6 @@ WhoopDrivetrain::WhoopDrivetrain(WhoopController* controller, std::vector<WhoopM
     init_motor_groups(leftMotors, rightMotors);
 }
 
-WhoopDrivetrain::WhoopDrivetrain(BufferNode* bufferSystem, std::string pose_stream, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
-: WhoopDrivetrain(controller, leftMotors, rightMotors) {
-    setup_messenger(bufferSystem, pose_stream);
-}
-
-WhoopDrivetrain::WhoopDrivetrain(BufferNode* bufferSystem, std::string pose_stream, WhoopController* controller,  WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
-: WhoopDrivetrain(controller, leftMotorGroup, rightMotorGroup) {
-    setup_messenger(bufferSystem, pose_stream);
-}
-
 WhoopDrivetrain::WhoopDrivetrain(double gear_ratio, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
 : WhoopDrivetrain(controller, leftMotorGroup, rightMotorGroup){
     set_gear_ratio_mult(gear_ratio);
@@ -51,39 +35,14 @@ WhoopDrivetrain::WhoopDrivetrain(double gear_ratio, WhoopController* controller,
 : WhoopDrivetrain(controller, leftMotors, rightMotors){
     set_gear_ratio_mult(gear_ratio);
 }
-WhoopDrivetrain::WhoopDrivetrain(double gear_ratio, BufferNode* bufferSystem, std::string pose_stream, WhoopController* controller,  WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
-: WhoopDrivetrain(bufferSystem, pose_stream, controller, leftMotorGroup, rightMotorGroup){
-    set_gear_ratio_mult(gear_ratio);
-}
-WhoopDrivetrain::WhoopDrivetrain(double gear_ratio, BufferNode* bufferSystem, std::string pose_stream, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
-: WhoopDrivetrain(bufferSystem, pose_stream, controller, leftMotors, rightMotors){
-    set_gear_ratio_mult(gear_ratio);
-}
 
 void WhoopDrivetrain::set_state(drivetrainState state){
     drive_state = state;
 }
 
-void WhoopDrivetrain::_update_pose(std::string pose_data){
-    // Note: Data retrieved from Jetson Nano is using Graphics Coordinate System (assuming rotation is 0,0,0 for standardization):
-    // In Graphics Coordinate System for Realsense: +X is right, -Z is going forwards, +Y is up
-    // We correct this to follow robotics coordinate system: +X is right, +Y is forwards, +Z is up
-    // Both are pitch, yaw, roll equivalent.
-    std::istringstream iss(pose_data); // Create a string stream from the input string
-    double negative_y;
-    thread_lock.lock();
-    iss >> pose.x >> pose.z >> negative_y >> pose.pitch >> pose.yaw >> pose.roll;
-    pose.y = -negative_y;
-    thread_lock.unlock();
-}
-
 void WhoopDrivetrain::set_gear_ratio_mult(double ratio){ // motor on 32 tooth powering the 64 toth: ratio = 32.0/64.0
     left_motor_group->set_gear_ratio_mult(ratio);
     right_motor_group->set_gear_ratio_mult(ratio);
-}
-
-Pose WhoopDrivetrain::get_pose(){
-    return pose;
 }
 
 void WhoopDrivetrain::__step(){

@@ -12,7 +12,7 @@
 
 // Calculators
 #include "whooplib/include/calculators/TwoDPose.hpp"
-#include "whooplib/include/calculators/Odom.hpp"
+#include "whooplib/include/calculators/WheelOdom.hpp"
 
 // Nodes
 #include "whooplib/include/toolbox.hpp"
@@ -25,5 +25,6 @@
 #include "whooplib/include/devices/WhoopInertial.hpp"
 #include "whooplib/include/devices/WhoopController.hpp"
 #include "whooplib/include/devices/WhoopDrivetrain.hpp"
+#include "whooplib/include/devices/WhoopVision.hpp"
 
 #endif

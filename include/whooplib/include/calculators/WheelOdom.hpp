@@ -9,7 +9,7 @@
 #define ODOM_HPP
 
 
-class Odom
+class WheelOdom
 {
 private:
   float ForwardTracker_center_distance;

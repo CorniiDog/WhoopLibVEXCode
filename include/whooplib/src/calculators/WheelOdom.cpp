@@ -1,6 +1,6 @@
 #include "vex.h"
 
-#include "whooplib/include/calculators/Odom.hpp"
+#include "whooplib/include/calculators/WheelOdom.hpp"
 #include "whooplib/include/toolbox.hpp"
 
 /**
@@ -16,7 +16,7 @@
  * @param SidewaysTracker_center_distance A vertical distance to the wheel center in inches.
  */
 
-void Odom::set_physical_distances(float ForwardTracker_center_distance, float SidewaysTracker_center_distance){
+void WheelOdom::set_physical_distances(float ForwardTracker_center_distance, float SidewaysTracker_center_distance){
   this->ForwardTracker_center_distance = ForwardTracker_center_distance;
   this->SidewaysTracker_center_distance = SidewaysTracker_center_distance;
 }
@@ -34,7 +34,7 @@ void Odom::set_physical_distances(float ForwardTracker_center_distance, float Si
  * @param SidewaysTracker_position Current position of the sensor in inches.
  */
 
-void Odom::set_position(float X_position, float Y_position, float orientation_deg, float ForwardTracker_position, float SidewaysTracker_position){
+void WheelOdom::set_position(float X_position, float Y_position, float orientation_deg, float ForwardTracker_position, float SidewaysTracker_position){
   this->ForwardTracker_position = ForwardTracker_position;
   this->SideWaysTracker_position = SidewaysTracker_position;
   this->X_position = X_position;
@@ -54,7 +54,7 @@ void Odom::set_position(float X_position, float Y_position, float orientation_de
  * @param orientation_deg Field-centered, counter-clockwise-positive, orientation.
  */
 
-void Odom::update_position(float ForwardTracker_position, float SidewaysTracker_position, float orientation_deg){
+void WheelOdom::update_position(float ForwardTracker_position, float SidewaysTracker_position, float orientation_deg){
   // this-> always refers to the old version of the variable, so subtracting this->x from x gives delta x.
   float Forward_delta = ForwardTracker_position - this->ForwardTracker_position;
   float Sideways_delta = SidewaysTracker_position - this->SideWaysTracker_position;

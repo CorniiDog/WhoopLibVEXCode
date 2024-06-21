@@ -40,6 +40,7 @@ WhoopMotor l4(PORT15, gearSetting::ratio6_1, reversed::no_reverse);
 
 // Jetson Nano pose retreival stream identifier (configured on Nano-side) 
 std::string pose_stream = "P";
+WhoopVision vision_system(&buffer_system, pose_stream);
 
 //Gear ratio on the drivetrain (If it's 32t driving 64t, it would be a 1.0/2.0 gear ratio, or 0.5)
 double gear_ratio = 1.0/2.0;
@@ -47,7 +48,7 @@ double gear_ratio = 1.0/2.0;
 // Wheel diameter (converted from inches to meters)
 double wheel_diameter = to_meters(2.9845); 
 
-WhoopDrivetrain robot_drivetrain(gear_ratio, &buffer_system, pose_stream, &controller1, {&l1, &l2, &l3, &l4}, {&r1, &r2, &r3, &r4});
+WhoopDrivetrain robot_drivetrain(gear_ratio, &controller1, {&l1, &l2, &l3, &l4}, {&r1, &r2, &r3, &r4});
 
 ComputeManager manager({&buffer_system, &robot_drivetrain});
 
@@ -114,23 +115,23 @@ void usercontrol(void) {
   double tare_roll = 0;
   double tare_yaw = 0;
 
-  TwoDPose tared_position(robot_drivetrain.pose.x, robot_drivetrain.pose.y, robot_drivetrain.pose.yaw - tare_yaw);
+  TwoDPose tared_position(vision_system.pose.x, vision_system.pose.y, vision_system.pose.yaw - tare_yaw);
 
-  double tared_z = robot_drivetrain.pose.z - tare_z;
-  double tared_pitch = robot_drivetrain.pose.pitch - tare_pitch;
-  double tared_roll = robot_drivetrain.pose.roll - tare_roll;
+  double tared_z = vision_system.pose.z - tare_z;
+  double tared_pitch = vision_system.pose.pitch - tare_pitch;
+  double tared_roll = vision_system.pose.roll - tare_roll;
 
   // User control code here, inside the loop
   while (1) {
 
-    TwoDPose transposed = tared_position.toObjectSpace(robot_drivetrain.pose.x, robot_drivetrain.pose.y, robot_drivetrain.pose.yaw);
+    TwoDPose transposed = tared_position.toObjectSpace(vision_system.pose.x, vision_system.pose.y, vision_system.pose.yaw);
 
     double current_x = transposed.x + tare_x;
     double current_y = transposed.y + tare_y;
-    double current_z = tared_z;
-    double current_pitch = tared_pitch;
+    double current_z = vision_system.pose.z - tared_z;
+    double current_pitch = vision_system.pose.pitch - tared_pitch;
     double current_yaw = transposed.yaw;
-    double current_roll = tared_roll;
+    double current_roll = vision_system.pose.roll - tared_roll;
 
     Brain.Screen.clearLine(2);
     Brain.Screen.setCursor(2, 1);
