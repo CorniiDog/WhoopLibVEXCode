@@ -112,8 +112,7 @@ void autonomous(void) {
 void usercontrol(void) {
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 
-  Brain.Screen.print("Move Robot in 5s");
-  wait(10, sec);
+  wait(0.5, sec);
   vision_system.tare(1, 1, M_PI/4);
 
 

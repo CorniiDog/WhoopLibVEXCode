@@ -14,6 +14,9 @@ public:
     // This allows for *= as well
     TwoDPose& operator*=(const TwoDPose& other);
 
+    // Returns a TwoDPose that represents the delta change applied to the *=, relative to the first TwoDPose
+    TwoDPose multiplicative_delta(const TwoDPose& other) const;
+
     // Method to compute the relative pose
     // Think of it as Roblox's CFrame1:ToObjectSpace(CFrame2)
     // in which it returns the pose of CFrame2 relative to CFrame1

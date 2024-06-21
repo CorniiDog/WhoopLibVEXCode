@@ -173,3 +173,12 @@ double to_meters(double inches){
 double to_inches(double meters){
     return meters * 39.3700787402;
 }
+
+// Normalizes a radian angle to [-pi, pi]
+double normalize_angle(double angle_radians){
+    angle_radians = fmod(angle_radians + M_PI, 2 * M_PI) - M_PI;
+    if (angle_radians < -M_PI) {
+        angle_radians += 2 * M_PI;
+    }
+    return angle_radians;
+}

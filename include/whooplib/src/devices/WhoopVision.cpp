@@ -8,8 +8,8 @@
 #include <memory> // For std::unique_ptr
 
 RobotVisionOffset::RobotVisionOffset(double x, double y){
-    this->x = x;
-    this->y = y;
+    this->x = -x;
+    this->y = -y;
 }
 
 void WhoopVision::setup_messenger(BufferNode* bufferSystem, const std::string& pose_stream) {
@@ -26,11 +26,19 @@ WhoopVision::WhoopVision(RobotVisionOffset* robotOffset, BufferNode* bufferSyste
 void WhoopVision::_transform_pose(){
     // Also consider robot transformation
     TwoDPose transposed = tared_position.toObjectSpace(this->raw_pose.x, this->raw_pose.y, this->raw_pose.yaw);
-    transposed *= TwoDPose(robot_offset->x, robot_offset->y, 0); // Apply robot offset to transformation
+
+    // Ensure robot offset is correctly applied
+    TwoDPose offset(robot_offset->x, robot_offset->y, 0);
+
+    // Acquire delta change
+    TwoDPose offset_change = transposed.multiplicative_delta(offset);
+
+    // Apply robot offset to transformation
+    transposed *= offset;
 
     thread_lock.lock();
-    this->pose.x = transposed.x + tare_x - robot_offset->x;
-    this->pose.y = transposed.y + tare_y - robot_offset->y;
+    this->pose.x = transposed.x + tare_x;
+    this->pose.y = transposed.y + tare_y;
     this->pose.z = this->raw_pose.z - tared_z;
     this->pose.pitch = this->raw_pose.pitch - tared_pitch;
     this->pose.yaw = transposed.yaw;

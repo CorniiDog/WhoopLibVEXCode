@@ -38,4 +38,7 @@ double to_deg(double rad);
 double to_meters(double inches);
 double to_inches(double meters);
 
+// Normalizes a radian angle to [-pi, pi]
+double normalize_angle(double angle_radians);
+
 #endif
