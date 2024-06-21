@@ -104,12 +104,37 @@ void autonomous(void) {
 void usercontrol(void) {
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 
+  Brain.Screen.print("Move Robot in 5s");
+  wait(10, sec);
+
+  double tare_x = 0;
+  double tare_y = 0;
+  double tare_z = 0;
+  double tare_pitch = 0;
+  double tare_roll = 0;
+  double tare_yaw = 0;
+
+  TwoDPose tared_position(robot_drivetrain.pose.x, robot_drivetrain.pose.y, robot_drivetrain.pose.yaw - tare_yaw);
+
+  double tared_z = robot_drivetrain.pose.z - tare_z;
+  double tared_pitch = robot_drivetrain.pose.pitch - tare_pitch;
+  double tared_roll = robot_drivetrain.pose.roll - tare_roll;
+
   // User control code here, inside the loop
   while (1) {
 
+    TwoDPose transposed = tared_position.toObjectSpace(robot_drivetrain.pose.x, robot_drivetrain.pose.y, robot_drivetrain.pose.yaw);
+
+    double current_x = transposed.x + tare_x;
+    double current_y = transposed.y + tare_y;
+    double current_z = tared_z;
+    double current_pitch = tared_pitch;
+    double current_yaw = transposed.yaw;
+    double current_roll = tared_roll;
+
     Brain.Screen.clearLine(2);
     Brain.Screen.setCursor(2, 1);
-    Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f", robot_drivetrain.pose.x, robot_drivetrain.pose.y, robot_drivetrain.pose.z, robot_drivetrain.pose.pitch, robot_drivetrain.pose.yaw, robot_drivetrain.pose.roll);
+    Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f", current_x, current_y, current_z, current_pitch, current_yaw, current_roll);
     Brain.Screen.clearLine(3);
     Brain.Screen.setCursor(3, 1);
     Brain.Screen.print("Inertial: %.3f", inertial_sensor.get_yaw_radians());

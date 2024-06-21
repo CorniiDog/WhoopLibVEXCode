@@ -5,6 +5,10 @@
  * Note: Gyro is counter-clockwise-positive when sent. This is to standardize rotation
  */
 
+#ifndef ODOM_HPP
+#define ODOM_HPP
+
+
 class Odom
 {
 private:
@@ -20,3 +24,5 @@ public:
   void update_position(float ForwardTracker_position, float SidewaysTracker_position, float orientation_deg);
   void set_physical_distances(float ForwardTracker_center_distance, float SidewaysTracker_center_distance);
 };
+
+#endif
