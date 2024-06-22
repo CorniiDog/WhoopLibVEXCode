@@ -81,7 +81,7 @@ public:
     double get_velocity_rpm(); // explicitly defining rot/sec
 
     /**
-     * Gets the velocity of the motor group in meters/sec
+     * Gets the velocity of the rotation sensor in meters/sec
      * @returns 
      */
     double get_velocity_meters_s();
