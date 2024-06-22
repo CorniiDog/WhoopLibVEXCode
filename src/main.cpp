@@ -57,10 +57,11 @@ double wheel_diameter_meters = to_meters(3);
 
 WhoopDrivetrain robot_drivetrain(wheel_diameter_meters, gear_ratio, &controller1, &left_motors, &right_motors);
 
+WhoopInertial inertial_sensor(PORT7);
+
+
 ComputeManager manager({&buffer_system, &robot_drivetrain});
 
-
-WhoopInertial inertial_sensor(PORT7);
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */

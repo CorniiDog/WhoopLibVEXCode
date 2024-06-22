@@ -11,6 +11,7 @@
 #include "whooplib/include/toolbox.hpp"
 #include <iostream>
 #include <cstdio>
+#include <algorithm>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Node Class Manager
@@ -49,10 +50,18 @@ ComputeNode::ComputeNode() {}
 int ComputeNode::task_runner(void* param) {
     auto* node = static_cast<ComputeNode*>(param);
 
+    int start_time = 0;
+    node->initial_computational_time = 0;
     while (node->node_running) {
         if(node->node_debug){
             try{
+                if(node->initial_computational_time == 0){ // Try to accomodate process time to improve accuracy
+                    start_time = Brain.timer(timeUnits::msec);
+                }
                 node->__step();
+                if(node->initial_computational_time == 0){
+                    node->initial_computational_time = Brain.timer(timeUnits::msec) - start_time;
+                }
             }
             catch (const std::exception& e) {
                 Brain.Screen.clearLine(1);
@@ -63,7 +72,7 @@ int ComputeNode::task_runner(void* param) {
         else{
             node->__step();
         }
-        vex::wait(20, vex::timeUnits::msec);
+        vex::wait(std::max(0, node->step_time_ms - node->initial_computational_time), vex::timeUnits::msec);
     }
     return 1;
 }
@@ -80,6 +89,10 @@ void ComputeNode::start_pipeline(bool debug_mode) {
 
 void ComputeNode::stop_pipeline() {
     node_running = false;
+}
+
+void ComputeNode::set_step_time(int step_time_ms){
+    this->step_time_ms = step_time_ms;
 }
 
 void ComputeNode::__step() {
