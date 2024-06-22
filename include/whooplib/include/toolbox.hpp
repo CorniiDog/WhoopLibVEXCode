@@ -4,19 +4,40 @@
 #include <string>
 #include <vector>
 
-// Function to find all indexes of a substring in a string
+/**
+ * Finds all indices of a substring within a string.
+ * @param str The main string to search within.
+ * @param substring The substring to find.
+ * @return A vector of integers representing the starting indices of each occurrence of substring in str.
+ */
 std::vector<int> find_all_indexes(const std::string& str, const std::string& substring);
 
-// Function to read messages from buffer between start_marker and end_marker
+/**
+ * Extracts messages from a buffer delimited by start and end markers.
+ * @param buffer The string buffer to parse.
+ * @param start_marker The string marking the start of a message.
+ * @param end_marker The string marking the end of a message.
+ * @return A vector of strings, each representing a message found between a pair of start and end markers.
+ */
 std::vector<std::string> read_messages_from_buffer(const std::string& buffer, const std::string& start_marker, const std::string& end_marker);
 
-// Function to get the latest message from buffer
+/**
+ * Retrieves the latest message from a buffer based on the specified start and end markers.
+ * @param buffer The string buffer to search.
+ * @param start_marker The string marking the start of a message.
+ * @param end_marker The string marking the end of a message.
+ * @return The most recently added message found in the buffer.
+ */
 std::string get_latest_message_from_buffer(const std::string& buffer, const std::string& start_marker, const std::string& end_marker);
 
-// This strips a string and removes whitespaces and newlines
+/**
+ * Removes leading, trailing, and excess embedded whitespace characters from a string.
+ * @param str The string to clean up.
+ * @return A trimmed and cleaned string with no leading/trailing or consecutive whitespace characters.
+ */
 std::string strip(const std::string& str);
 
-// Conversions
+// Conversion functions
 std::string boolToString(bool b);
 std::string intToString(int value);
 std::string doubleToString(double value);
@@ -30,15 +51,67 @@ bool intToBool(int value);
 int boolToInt(bool value);
 double stringToDouble(const std::string& str);
 
-// Degrees to Radians conversions
+/**
+ * Converts degrees to radians.
+ * @param deg Angle in degrees.
+ * @return Equivalent angle in radians.
+ */
 double to_rad(double deg);
+
+/**
+ * Converts radians to degrees.
+ * @param rad Angle in radians.
+ * @return Equivalent angle in degrees.
+ */
 double to_deg(double rad);
 
-// Inches to meters conversions
+/**
+ * Converts inches to meters.
+ * @param inches Length in inches.
+ * @return Equivalent length in meters.
+ */
 double to_meters(double inches);
+
+/**
+ * Converts meters to inches.
+ * @param meters Length in meters.
+ * @return Equivalent length in inches.
+ */
 double to_inches(double meters);
 
-// Normalizes a radian angle to [-pi, pi]
+/**
+ * Normalizes a radian angle to the range [-π, π].
+ * @param angle_radians Angle in radians to normalize.
+ * @return Normalized angle in radians.
+ */
 double normalize_angle(double angle_radians);
+
+/**
+ * Calculates the circumference of a circle given its radius.
+ * @param radius Radius of the circle in meters.
+ * @return Circumference of the circle in meters.
+ */
+double circumference_from_radius(double radius);
+
+/**
+ * Calculates the circumference of a circle given its diameter.
+ * @param diameter Diameter of the circle in meters.
+ * @return Circumference of the circle in meters.
+ */
+double circumference_from_diameter(double diameter);
+
+/**
+ * Calculates the area of a circle given its radius.
+ * @param radius Radius of the circle in meters.
+ * @return Area of the circle in square meters.
+ */
+double area_from_radius(double radius);
+
+/**
+ * Calculates the area of a circle given its diameter.
+ * @param diameter Diameter of the circle in meters.
+ * @return Area of the circle in square meters.
+ */
+double area_from_diameter(double diameter);
 
 #endif // TOOLBOX_HPP

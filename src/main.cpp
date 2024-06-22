@@ -52,7 +52,7 @@ WhoopVision vision_system(&vision_offset, &buffer_system, pose_stream);
 //Gear ratio on the drivetrain (If it's 32t driving 64t, it would be a 1.0/2.0 gear ratio, or 0.5)
 double gear_ratio = 1.0/2.0;
 
-// Wheel diameter (converted from inches to meters)
+// Wheel diameter in meters
 double wheel_diameter = to_meters(2.9845); 
 
 WhoopDrivetrain robot_drivetrain(gear_ratio, &controller1, {&l1, &l2, &l3, &l4}, {&r1, &r2, &r3, &r4});
