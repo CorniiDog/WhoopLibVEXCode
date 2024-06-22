@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       WheelOdom.cpp                                             */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  Wheel X, Y, Yaw Tracking                                  */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #include "vex.h"
 #include "whooplib/include/calculators/WheelOdom.hpp"
 #include "whooplib/include/toolbox.hpp"

@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       WhoopController.cpp                                       */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  Virtual Controller With Additional Functions              */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #include "vex.h"
 #include "whooplib/include/toolbox.hpp"
 #include "whooplib/include/devices/WhoopController.hpp"

@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       WhoopMotorGroup.hpp                                       */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  Virtual Motor Group with Additional Reliability Features  */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #ifndef WHOOP_MOTOR_GROUP_HPP
 #define WHOOP_MOTOR_GROUP_HPP
 

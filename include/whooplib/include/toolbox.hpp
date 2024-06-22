@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       toolbox.hpp                                               */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  Contains an Assortment of Useful Functions                */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #ifndef TOOLBOX_HPP
 #define TOOLBOX_HPP
 

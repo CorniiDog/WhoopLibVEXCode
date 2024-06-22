@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       NodeManager.hpp                                           */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  Manages the Nodes (Anything that extends ComputeNode)     */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #ifndef NODE_MANAGER_HPP
 #define NODE_MANAGER_HPP
 

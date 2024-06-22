@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       WhoopDrivetrain.hpp                                       */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  Virtual Drivetrain for Controlling Chassis                */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #ifndef WHOOP_DRIVETRAIN_HPP
 #define WHOOP_DRIVETRAIN_HPP
 

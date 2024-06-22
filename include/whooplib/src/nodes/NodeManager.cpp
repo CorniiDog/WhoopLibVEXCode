@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       NodeManager.cpp                                           */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  Manages the Nodes (Anything that extends ComputeNode)     */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #include "whooplib/include/nodes/NodeManager.hpp"
 #include "whooplib/include/toolbox.hpp"
 #include <iostream>

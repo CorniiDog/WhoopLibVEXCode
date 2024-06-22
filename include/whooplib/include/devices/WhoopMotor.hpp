@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       WhoopMotor.hpp                                            */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  Virtual Motor With Streamlined Functions                  */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #ifndef WHOOP_MOTOR_HPP
 #define WHOOP_MOTOR_HPP
 

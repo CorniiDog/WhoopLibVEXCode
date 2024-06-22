@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       WhoopDrivetrain.cpp                                       */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  Virtual Drivetrain for Controlling Chassis                */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #include "vex.h"
 #include "whooplib/include/devices/WhoopDrivetrain.hpp"
 #include "whooplib/include/toolbox.hpp"

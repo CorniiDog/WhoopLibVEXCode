@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       WheelOdom.hpp                                             */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  Wheel X, Y, Yaw Tracking                                  */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 /**
  * General-use odometry class with X_position, Y_position, and
  * orientation_rad being the relevant outputs. This works for both one

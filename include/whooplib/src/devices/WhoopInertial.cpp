@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       WhoopInertial.cpp                                         */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  Virtual Interial Sensor that Follow Robotic Standard      */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #include "vex.h"
 #include "whooplib/include/devices/WhoopInertial.hpp"
 #include "whooplib/include/toolbox.hpp"

@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       WhoopVision.cpp                                           */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  A Streamlined Jetson Nano Vision System                   */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #include "vex.h"
 #include "whooplib/include/devices/WhoopVision.hpp"
 #include "whooplib/include/toolbox.hpp"

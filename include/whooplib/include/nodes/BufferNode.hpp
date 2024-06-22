@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       WhoopBufferNode.hpp                                       */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  A Streamlined Communication System (like for Jetson nano) */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #ifndef BUFFER_NODE_HPP
 #define BUFFER_NODE_HPP
 
@@ -57,16 +66,21 @@ public:
      * Retrieves a message from a specified stream, optionally deleting it after reading.
      * @param stream The name of the stream to read from.
      * @param delete_after_read Whether to delete the message after reading.
-     * @return The message as a string, or an empty string if no message is available.
+     * @return The message as a string, or an empty string ("") if no message is available.
      */
     std::string get_message(std::string stream, bool delete_after_read=false); // Receive a message from a stream from USB (returns empty string if nothing)
 
     /**
      * Sends a message to a specified stream over USB.
+     * Returns the result of the message. 
      * @param stream The stream identifier.
      * @param message The message to send.
-     * @param end The terminator string, defaults to newline.
-     * @return The number of bytes sent.
+     * @param end The terminator string, defaults to newline ("\\n").
+     * @return The result of the message:
+     * 0 = successfully sent |
+     * 1 = did not send successfully |
+     * 2 = did not establish communication |
+     * 3 = may have sent but did not close after writing
      */
     int send_message(std::string stream, std::string message, std::string end="\n"); // Sends a message to a stream over USB
 protected:
@@ -97,13 +111,13 @@ public:
 
     /**
      * Sends a message to the associated stream.
-     * @param message The message to send.
+     * @param message The message to send (i.e. "Hello Jetson").
      */
     void send(std::string message); // Send message to stream
 
     /**
      * Reads the latest message from the associated stream.
-     * @return The latest message as a string.
+     * @return The latest message as a string. May be an empty string ("") if no message received.
      */
     std::string read(); // Receive message from stream
 

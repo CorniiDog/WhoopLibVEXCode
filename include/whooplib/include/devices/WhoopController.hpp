@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       WhoopController.hpp                                       */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  Virtual Controller With Additional Functions              */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #ifndef WHOOP_CONTROLLER_HPP
 #define WHOOP_CONTROLLER_HPP
 
@@ -29,7 +38,7 @@ public:
      * Constructor that initializes the controller with a specific joystick mode.
      * @param mode The joystick mode to be used.
      */
-    WhoopController(joystickMode mode); 
+    WhoopController(joystickMode mode=joystickMode::joystickmode_split_arcade); 
 
     /**
      * Constructor that initializes the controller with a specific joystick mode and controller type.

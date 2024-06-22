@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       TwoDPose.hpp                                              */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  Two-Dimensional CFrames                                   */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #ifndef TWODPOSE_HPP
 #define TWODPOSE_HPP
 

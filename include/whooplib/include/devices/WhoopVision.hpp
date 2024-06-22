@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       WhoopVision.hpp                                           */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  A Streamlined Jetson Nano Vision System                   */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #ifndef WHOOP_VISION_HPP
 #define WHOOP_VISION_HPP
 

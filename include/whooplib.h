@@ -1,3 +1,11 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       whooplib.h                                                */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  Primary Headers for WhoopLib                              */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
 
 #ifndef WHOOP_LIB_H
 #define WHOOP_LIB_H

@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       WhoopBufferNode.cpp                                       */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  A Streamlined Communication System (like for Jetson nano) */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #include "whooplib/include/nodes/BufferNode.hpp"
 #include "whooplib/include/toolbox.hpp"
 
@@ -135,6 +144,7 @@ int BufferNode::send_message(std::string stream, std::string message, std::strin
 
     // Writing to serial connection
     if (fwrite(msg.c_str(), 1, msg_size, fp) != msg_size) {
+        // If there is an issue, then close file and return
         fclose(fp); // Ensure the file is closed even if writing fails
         if (lock_ptr) lock_ptr->unlock();  // Release the mutex
         return 1;

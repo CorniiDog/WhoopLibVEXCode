@@ -1,3 +1,11 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       TwoDPose.cpp                                              */
+/*    Author:       Aggie Robotics                                            */
+/*    Created:      Thu Jun 21 2024                                           */
+/*    Description:  Two-Dimensional CFrames                                   */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
 
 #include "whooplib/include/calculators/TwoDPose.hpp"
 #include <cmath>
