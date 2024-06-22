@@ -196,29 +196,14 @@ double circumference_from_radius(double radius) {
     return 2 * M_PI * radius;
 }
 
-/**
- * Calculates the circumference of a circle given its diameter.
- * @param diameter The diameter of the circle.
- * @return The circumference of the circle.
- */
 double circumference_from_diameter(double diameter) {
     return M_PI * diameter;
 }
 
-/**
- * Calculates the area of a circle given its radius.
- * @param radius The radius of the circle.
- * @return The area of the circle.
- */
 double area_from_radius(double radius) {
     return M_PI * radius * radius;
 }
 
-/**
- * Calculates the area of a circle given its diameter.
- * @param diameter The diameter of the circle.
- * @return The area of the circle.
- */
 double area_from_diameter(double diameter) {
     double radius = diameter / 2;
     return M_PI * radius * radius;
