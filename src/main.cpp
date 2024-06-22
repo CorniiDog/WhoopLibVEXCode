@@ -29,12 +29,14 @@ WhoopMotor r1(PORT1, gearSetting::ratio6_1, reversed::yes_reverse);
 WhoopMotor r2(PORT2, gearSetting::ratio6_1, reversed::yes_reverse);
 WhoopMotor r3(PORT3, gearSetting::ratio6_1, reversed::yes_reverse);
 WhoopMotor r4(PORT4, gearSetting::ratio6_1, reversed::yes_reverse);
+WhoopMotorGroup right_motors({&r1, &r2, &r3, &r4});
 
 // Left drive motors
 WhoopMotor l1(PORT12, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotor l2(PORT13, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotor l3(PORT14, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotor l4(PORT15, gearSetting::ratio6_1, reversed::no_reverse);
+WhoopMotorGroup left_motors({&l1, &l2, &l3, &l4});
 
 // Vision Offset from Center of Robot
 // First variable is x, which +x is the direction of right from the center of the robot in meters
@@ -53,7 +55,7 @@ double gear_ratio = 1.0/2.0;
 // Wheel diameter in meters
 double wheel_diameter_meters = to_meters(3); 
 
-WhoopDrivetrain robot_drivetrain(wheel_diameter_meters, gear_ratio, &controller1, {&l1, &l2, &l3, &l4}, {&r1, &r2, &r3, &r4});
+WhoopDrivetrain robot_drivetrain(wheel_diameter_meters, gear_ratio, &controller1, &left_motors, &right_motors);
 
 ComputeManager manager({&buffer_system, &robot_drivetrain});
 
