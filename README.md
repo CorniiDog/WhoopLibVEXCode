@@ -58,6 +58,7 @@ The Documentation is planned to be developed. Will be updated upon creation.
 - Object Detection and Gridded Permanence systenm
 - Moving between Point A and Point B
 - Virtual Highway system
+- Documentation
 - Detecting other robots that impede the path of the robot, and drive around
 - Virtual Highway system
 ## License
