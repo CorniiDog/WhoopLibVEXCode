@@ -26,22 +26,22 @@ void WhoopDrivetrain::init_motor_groups(const std::vector<WhoopMotor*>& leftMoto
     right_motor_group = std::make_unique<WhoopMotorGroup>(rightMotors);
 }
 
-WhoopDrivetrain::WhoopDrivetrain(WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
+WhoopDrivetrain::WhoopDrivetrain(double wheel_diameter, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
 : whoop_controller(controller) {
     init_motor_groups(leftMotorGroup, rightMotorGroup);
 }
 
-WhoopDrivetrain::WhoopDrivetrain(WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
+WhoopDrivetrain::WhoopDrivetrain(double wheel_diameter, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
 : whoop_controller(controller) {
     init_motor_groups(leftMotors, rightMotors);
 }
 
-WhoopDrivetrain::WhoopDrivetrain(double gear_ratio, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
-: WhoopDrivetrain(controller, leftMotorGroup, rightMotorGroup){
+WhoopDrivetrain::WhoopDrivetrain(double wheel_diameter, double gear_ratio, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
+: WhoopDrivetrain(wheel_diameter, controller, leftMotorGroup, rightMotorGroup){
     set_gear_ratio_mult(gear_ratio);
 }
-WhoopDrivetrain::WhoopDrivetrain(double gear_ratio, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
-: WhoopDrivetrain(controller, leftMotors, rightMotors){
+WhoopDrivetrain::WhoopDrivetrain(double wheel_diameter, double gear_ratio, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
+: WhoopDrivetrain(wheel_diameter, controller, leftMotors, rightMotors){
     set_gear_ratio_mult(gear_ratio);
 }
 

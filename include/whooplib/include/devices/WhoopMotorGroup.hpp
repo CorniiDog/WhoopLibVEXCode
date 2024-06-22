@@ -38,13 +38,30 @@ protected:
     std::vector<WhoopMotor*> whoop_motors; // Vector of pointers to WhoopMotor objects.
 
     double gear_ratio = 1; // Gear ratio for scaling motor output, default is 1.
+    double wheel_diameter = to_meters(4); // Gear ratio for scaling motor output, default is 0.1016 meters, or 4 inches
+    double wheel_circumference = circumference_from_diameter(wheel_diameter);
 public:
 
     /**
      * Constructor that initializes a motor group with a vector of motors.
-     * @param whoop_motors Vector of pointers to initialized WhoopMotors.
+     * @param motors Vector of pointers to initialized WhoopMotors.
      */
-    WhoopMotorGroup(std::vector<WhoopMotor*> whoop_motors);
+    WhoopMotorGroup(std::vector<WhoopMotor*> motors);
+
+    /**
+     * Constructor that initializes a motor group with a vector of motors, with addition to gear ratio
+     * @param ratio i.e. motor on 32 tooth powering the 64 tooth: ratio = 32.0/64.0 = 0.5
+     * @param motors Vector of pointers to initialized WhoopMotors.
+     */
+    WhoopMotorGroup(double ratio, std::vector<WhoopMotor*> motors);
+
+    /**
+     * Constructor that initializes a motor group with a vector of motors, with addition to gear ratio
+     * @param ratio i.e. motor on 32 tooth powering the 64 tooth: ratio = 32.0/64.0 = 0.5
+     * @param diameter_meters The wheel diameter in meters (i.e. 0.08255 for 3.25" wheels)
+     * @param motors Vector of pointers to initialized WhoopMotors.
+     */
+    WhoopMotorGroup(double ratio, double diameter_meters, std::vector<WhoopMotor*> motors);
 
     /**
      * Adds a motor to the motor group.
@@ -62,10 +79,16 @@ public:
 
     /**
      * Sets the gear ratio multiplier for the motor group.
-     * i.e. motor on 32 tooth powering the 64 toth: ratio = 32.0/64.0 = 0.5
+     * i.e. motor on 32 tooth powering the 64 tooth: ratio = 32.0/64.0 = 0.5
      * @param ratio The gear ratio multiplier to set.
      */
     void set_gear_ratio_mult(double ratio); // motor on 32 tooth powering the 64 toth: ratio = 32.0/64.0
+
+    /**
+     * Sets the wheel diameter multiplier for the motor group, in meters
+     * @param diameter_meters The wheel diameter in meters (i.e. 0.08255 for 3.25" wheels)
+     */
+    void set_wheel_diameter(double diameter_meters);
 
     // Receiving rotation
     // Note: If 3 or more motors are in a motor group, the motor group would get the average of n-1 motors (excluding the outlier motor furthest from average).
@@ -74,12 +97,24 @@ public:
     double get_rotation_radians(); // Returns the average rotation across all motors in radians.
     double get_rotation_rotations(); // Returns the average rotation across all motors in full rotations.
 
+    /**
+     * Gets the distance traveled by the motor group in meters (use case would be for a drivetrain)
+     * @returns 
+     */
+    double get_distance_meters(); // Gets distance traveled in meters
+
     // Tare (reset)
     void tare(); // Resets the encoder count for all motors in the group.
     void tare(double degrees); // Resets the encoder count for all motors to a specified degree value.
     void tare_degrees(double degrees); // Resets the encoder count for all motors to a specified degree value.
     void tare_radians(double radians); // Resets the encoder count for all motors to a specified radian value.
     void tare_rotations(double rotations); // Resets the encoder count for all motors to a specified number of full rotations.
+
+    /**
+     * Tares the wheels to set meters, if wheel diameter and gear ratio is set appropriately.
+     * @param meters tares to the specified meter distance value
+     */
+    void tare_meters(double meters); // For a drivetrain, to tare by meters
 };
 
 

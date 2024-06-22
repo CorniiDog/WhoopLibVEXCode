@@ -59,7 +59,7 @@ void WheelOdom::set_position(float X_position, float Y_position, float orientati
  * @param SidewaysTracker_position Current position of the sensor in meters.
  * @param orientation_rad Field-centered, counter-clockwise-positive, orientation in radians.
  */
-void WheelOdom::update_position(float ForwardTracker_position, float SidewaysTracker_position, float orientation_rad){
+void WheelOdom::_update_pose(float ForwardTracker_position, float SidewaysTracker_position, float orientation_rad){
   float Forward_delta = ForwardTracker_position - this->ForwardTracker_position;
   float Sideways_delta = SidewaysTracker_position - this->SideWaysTracker_position;
   this->ForwardTracker_position = ForwardTracker_position;

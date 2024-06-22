@@ -24,8 +24,6 @@ BufferNode buffer_system(256, debugMode::debug_disabled, "/dev/serial1"); // set
 
 WhoopController controller1(joystickMode::joystickmode_split_arcade);
 
-WhoopInertial inertial_sensor(PORT7);
-
 // Right drive motors
 WhoopMotor r1(PORT1, gearSetting::ratio6_1, reversed::yes_reverse);
 WhoopMotor r2(PORT2, gearSetting::ratio6_1, reversed::yes_reverse);
@@ -38,9 +36,9 @@ WhoopMotor l2(PORT13, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotor l3(PORT14, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotor l4(PORT15, gearSetting::ratio6_1, reversed::no_reverse);
 
-// Robot Offset 
-// First variable is x, which +x is the direction of right from the center of the robot
-// Second variable is y, which +y is the direction of forwardness from the center of the robot (in meters)
+// Vision Offset from Center of Robot
+// First variable is x, which +x is the direction of right from the center of the robot in meters
+// Second variable is y, which +y is the direction of forwardness from the center of the robot in meters
 double x_offset = 0;
 double y_offset = 15.0/100.0;
 RobotVisionOffset vision_offset(x_offset, y_offset);
@@ -49,15 +47,19 @@ RobotVisionOffset vision_offset(x_offset, y_offset);
 std::string pose_stream = "P";
 WhoopVision vision_system(&vision_offset, &buffer_system, pose_stream);
 
-//Gear ratio on the drivetrain (If it's 32t driving 64t, it would be a 1.0/2.0 gear ratio, or 0.5)
+//Gear ratio on the drivetrain (If it's a [motor powering the 32t] driving the [64t w/ shared axle to the wheels], it would be a 1.0/2.0 gear ratio, or 0.5)
 double gear_ratio = 1.0/2.0;
 
 // Wheel diameter in meters
 double wheel_diameter = to_meters(2.9845); 
 
-WhoopDrivetrain robot_drivetrain(gear_ratio, &controller1, {&l1, &l2, &l3, &l4}, {&r1, &r2, &r3, &r4});
+WhoopDrivetrain robot_drivetrain(wheel_diameter, gear_ratio, &controller1, {&l1, &l2, &l3, &l4}, {&r1, &r2, &r3, &r4});
 
 ComputeManager manager({&buffer_system, &robot_drivetrain});
+
+
+WhoopInertial inertial_sensor(PORT7);
+WheelOdom odom_system;
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -112,9 +114,13 @@ void autonomous(void) {
 void usercontrol(void) {
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 
+  double forward_tracker_center_distance;
+
   wait(0.5, sec);
   vision_system.tare(1, 1, M_PI/4);
 
+
+  odom_system.set_physical_distances();
 
   // User control code here, inside the loop
   while (1) {
@@ -123,6 +129,8 @@ void usercontrol(void) {
     Brain.Screen.clearLine(2);
     Brain.Screen.setCursor(2, 1);
     Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f", vision_system.pose.x, vision_system.pose.y, vision_system.pose.z, vision_system.pose.pitch, vision_system.pose.yaw, vision_system.pose.roll);
+    
+    
     Brain.Screen.clearLine(3);
     Brain.Screen.setCursor(3, 1);
     Brain.Screen.print("Inertial: %.3f", inertial_sensor.get_yaw_radians());

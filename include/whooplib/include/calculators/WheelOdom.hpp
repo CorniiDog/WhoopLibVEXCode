@@ -61,7 +61,7 @@ public:
    * @param ForwardTracker_position Current position of the sensor in meters.
    * @param SidewaysTracker_position Current position of the sensor in meters.
    */
-  void update_position(float ForwardTracker_position, float SidewaysTracker_position, float orientation_rad);
+  void _update_pose(float ForwardTracker_position, float SidewaysTracker_position, float orientation_rad);
 
   /**
    * Does the odometry math to update position

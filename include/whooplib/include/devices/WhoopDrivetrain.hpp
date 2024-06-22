@@ -54,7 +54,7 @@ public:
      * @param leftMotorGroup Pointer to the motor group controlling the left side.
      * @param rightMotorGroup Pointer to the motor group controlling the right side.
      */
-    WhoopDrivetrain(WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup);
+    WhoopDrivetrain(double wheel_diameter, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup);
 
     /**
      * Constructor for initializing the drivetrain with a list of motors for each side.
@@ -62,7 +62,7 @@ public:
      * @param leftMotors Vector of motors on the left side.
      * @param rightMotors Vector of motors on the right side.
      */
-    WhoopDrivetrain(WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors); 
+    WhoopDrivetrain(double wheel_diameter, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors); 
 
     /**
      * Constructor for initializing the drivetrain with predefined motor groups and a gear ratio.
@@ -71,7 +71,7 @@ public:
      * @param leftMotorGroup Pointer to the motor group controlling the left side.
      * @param rightMotorGroup Pointer to the motor group controlling the right side.
      */
-    WhoopDrivetrain(double gear_ratio, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup);
+    WhoopDrivetrain(double wheel_diameter, double gear_ratio, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup);
 
     /**
      * Constructor for initializing the drivetrain with a list of motors for each side and a gear ratio.
@@ -80,7 +80,7 @@ public:
      * @param leftMotors Vector of motors on the left side.
      * @param rightMotors Vector of motors on the right side.
      */
-    WhoopDrivetrain(double gear_ratio, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors);
+    WhoopDrivetrain(double wheel_diameter, double gear_ratio, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors);
 
     /**
      * Sets the gear ratio multiplier for the drivetrain.

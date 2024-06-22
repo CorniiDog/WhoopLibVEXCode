@@ -25,6 +25,16 @@ WhoopMotorGroup::WhoopMotorGroup(std::vector<WhoopMotor*> motors) {
     }
 }
 
+WhoopMotorGroup::WhoopMotorGroup(double ratio, std::vector<WhoopMotor*> motors): 
+    WhoopMotorGroup(motors){
+    set_gear_ratio_mult(ratio);
+}
+
+WhoopMotorGroup::WhoopMotorGroup(double ratio, double diameter_meters, std::vector<WhoopMotor*> motors): 
+    WhoopMotorGroup(ratio, motors){
+    set_wheel_diameter(diameter_meters);
+}
+
 void WhoopMotorGroup::apply_to_all(void (WhoopMotor::*func)(double), double value) {
     for (auto& motor : whoop_motors) {
         (motor->*func)(value);
@@ -54,6 +64,14 @@ void WhoopMotorGroup::set_gear_ratio_mult(double ratio) {
         throw std::invalid_argument("Gear ratio must be positive and non-zero.");
     }
     gear_ratio = ratio;
+}
+
+void WhoopMotorGroup::set_wheel_diameter(double diameter_meters){
+    if(diameter_meters <= 0){
+        throw std::invalid_argument("Wheel diameter must be positive and non-zero.");
+    }
+    wheel_diameter = diameter_meters;
+    wheel_circumference = circumference_from_diameter(wheel_diameter);
 }
 
 void WhoopMotorGroup::stop_hold() {
@@ -103,6 +121,10 @@ double WhoopMotorGroup::get_rotation_rotations(){
     return get_rotation_degrees()/360.0;
 }
 
+double WhoopMotorGroup::get_distance_meters() {
+    return get_rotation_rotations() * wheel_circumference;
+}
+
 void WhoopMotorGroup::tare() {
     apply_to_all(&WhoopMotor::tare, 0);
 }
@@ -121,6 +143,15 @@ void WhoopMotorGroup::tare_rotations(double rotations) {
 
 void WhoopMotorGroup::tare_radians(double radians) {
     tare(to_deg(radians));
+}
+
+void WhoopMotorGroup::tare_meters(double meters) {
+    if (wheel_diameter <= 0) {
+        throw std::invalid_argument("Wheel diameter must be set and positive to tare by meters.");
+    }
+    // Convert meters to the number of rotations needed
+    double rotations_needed = meters / wheel_circumference;
+    tare_rotations(rotations_needed);
 }
 
 
