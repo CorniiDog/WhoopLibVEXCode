@@ -10,7 +10,6 @@
 #include "vex.h"
 #include "whooplib/include/devices/WhoopRotation.hpp"
 #include "whooplib/include/toolbox.hpp"
-#include "whooplib/include/devices/WhoopRotation.hpp"
 #include <stdexcept>
 
 WhoopRotation::WhoopRotation(std::int32_t port) : vex_rotation(vex::rotation(port, false)){}
@@ -46,6 +45,23 @@ double WhoopRotation::get_rotation_degrees(){
 
 double WhoopRotation::get_rotation_radians(){
     return to_rad(this->get_rotation());
+}
+
+double WhoopRotation::get_velocity(vex::velocityUnits vel){
+    return vex_rotation.velocity(velocityUnits::dps);
+}
+double WhoopRotation::get_velocity_deg_s(){
+    return get_velocity();
+}
+double WhoopRotation::get_velocity_rad_s(){
+    return to_rad(get_velocity());
+}
+double WhoopRotation::get_velocity_rpm(){
+    return get_velocity(velocityUnits::rpm);
+}
+
+double WhoopRotation::get_velocity_meters_s(){
+    return get_velocity() * wheel_circumference / 360.0;
 }
 
 double WhoopRotation::get_distance_meters(){

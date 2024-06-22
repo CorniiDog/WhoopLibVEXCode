@@ -59,6 +59,23 @@ double WhoopMotor::get_rotation_radians(){
     return to_rad(this->get_rotation());
 }
 
+// Receiving velocity
+double WhoopMotor::get_velocity(vex::velocityUnits vel){
+    return vex_motor.velocity(vel);
+} 
+
+double WhoopMotor::get_velocity_deg_s(){
+    return get_velocity();
+} 
+
+double WhoopMotor::get_velocity_rad_s(){
+    return to_rad(get_velocity());
+}
+
+double WhoopMotor::get_velocity_rpm(){
+    return vex_motor.velocity(velocityUnits::rpm);
+}
+
 void WhoopMotor::tare(double degrees){
     pos_offset = degrees;
     vex_motor.resetPosition();

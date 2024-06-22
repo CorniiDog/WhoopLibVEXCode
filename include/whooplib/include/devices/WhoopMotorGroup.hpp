@@ -11,7 +11,7 @@
 #define WHOOP_MOTOR_GROUP_HPP
 
 #include "whooplib/include/devices/WhoopMotor.hpp"
-
+#include "whooplib/include/toolbox.hpp"
 #include "vex.h"
 #include <vector>
 
@@ -96,6 +96,19 @@ public:
     double get_rotation_degrees(); // Returns the average rotation across all motors in degrees.
     double get_rotation_radians(); // Returns the average rotation across all motors in radians.
     double get_rotation_rotations(); // Returns the average rotation across all motors in full rotations.
+
+
+    // Receiving velocity
+    double get_velocity(vex::velocityUnits vel = vex::velocityUnits::dps); // degrees/sec is default
+    double get_velocity_deg_s(); // explicitly defining degrees/sec
+    double get_velocity_rad_s(); // explicitly defining rad/sec
+    double get_velocity_rpm(); // explicitly defining rot/sec
+    
+    /**
+     * Gets the velocity of the motor group in meters/sec
+     * @returns 
+     */
+    double get_velocity_meters_s();
 
     /**
      * Gets the distance traveled by the motor group in meters (use case would be for a drivetrain)

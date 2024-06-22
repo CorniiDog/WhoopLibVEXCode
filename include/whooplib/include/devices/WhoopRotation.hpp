@@ -74,6 +74,18 @@ public:
     double get_rotation_radians(); // Returns the current rotation sensor rotation in radians.
     double get_rotation_rotations(); // Returns the current rotation sensor rotation in full rotations.
 
+    // Receiving velocity
+    double get_velocity(vex::velocityUnits vel = vex::velocityUnits::dps); // degrees/sec is default
+    double get_velocity_deg_s(); // explicitly defining degrees/sec
+    double get_velocity_rad_s(); // explicitly defining rad/sec
+    double get_velocity_rpm(); // explicitly defining rot/sec
+
+    /**
+     * Gets the velocity of the motor group in meters/sec
+     * @returns 
+     */
+    double get_velocity_meters_s();
+
     // Tare (reset)
     void tare();
     void tare(double degrees); // Degrees is default

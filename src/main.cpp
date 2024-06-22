@@ -51,15 +51,14 @@ WhoopVision vision_system(&vision_offset, &buffer_system, pose_stream);
 double gear_ratio = 1.0/2.0;
 
 // Wheel diameter in meters
-double wheel_diameter = to_meters(2.9845); 
+double wheel_diameter_meters = to_meters(3); 
 
-WhoopDrivetrain robot_drivetrain(wheel_diameter, gear_ratio, &controller1, {&l1, &l2, &l3, &l4}, {&r1, &r2, &r3, &r4});
+WhoopDrivetrain robot_drivetrain(wheel_diameter_meters, gear_ratio, &controller1, {&l1, &l2, &l3, &l4}, {&r1, &r2, &r3, &r4});
 
 ComputeManager manager({&buffer_system, &robot_drivetrain});
 
 
 WhoopInertial inertial_sensor(PORT7);
-WheelOdom odom_system;
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -114,13 +113,8 @@ void autonomous(void) {
 void usercontrol(void) {
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 
-  double forward_tracker_center_distance;
-
   wait(0.5, sec);
   vision_system.tare(1, 1, M_PI/4);
-
-
-  odom_system.set_physical_distances();
 
   // User control code here, inside the loop
   while (1) {

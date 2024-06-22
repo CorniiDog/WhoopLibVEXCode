@@ -125,6 +125,43 @@ double WhoopMotorGroup::get_distance_meters() {
     return get_rotation_rotations() * wheel_circumference;
 }
 
+// Receiving velocity
+double WhoopMotorGroup::get_velocity(vex::velocityUnits vel){
+    if (whoop_motors.empty()) return 0;
+    double total = 0;
+    std::vector<double> velocities;
+    for (auto& motor : whoop_motors) {
+        double velocity = motor->get_velocity(vel);
+        velocities.push_back(velocity);
+        total += velocity;
+    }
+    double avg = total / whoop_motors.size();
+    
+    // If there are more than 2 motors, remove a single outlier
+    if (whoop_motors.size() > 2) {
+        auto max_it = std::max_element(velocities.begin(), velocities.end(), [&avg](double a, double b) {
+            return std::abs(a - avg) < std::abs(b - avg);
+        });
+        total -= *max_it;
+        avg = total / (whoop_motors.size() - 1);
+    }
+
+    return avg * gear_ratio;
+}
+double WhoopMotorGroup::get_velocity_deg_s(){
+    return get_velocity();
+}
+double WhoopMotorGroup::get_velocity_rad_s(){
+    return to_rad(get_velocity());
+}
+double WhoopMotorGroup::get_velocity_rpm(){
+    return get_velocity(velocityUnits::rpm);
+}
+
+double WhoopMotorGroup::get_velocity_meters_s(){
+    return get_velocity_deg_s() * (wheel_circumference/360);
+}
+
 void WhoopMotorGroup::tare() {
     apply_to_all(&WhoopMotor::tare, 0);
 }

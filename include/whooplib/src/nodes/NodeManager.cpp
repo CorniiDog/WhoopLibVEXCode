@@ -19,17 +19,17 @@
 // ComputeManager Methods
 ComputeManager::ComputeManager(bool debugMode) : debug_mode(debugMode) {}
 
-void ComputeManager::add_compute_node(ComputeNode* node) {
-    computes.push_back(node);
-    node->lock_ptr = &thread_lock;  // Assign the manager's mutex to the node
-}
-
 // ComputeManager Methods
 ComputeManager::ComputeManager(std::vector<ComputeNode*> nodes, bool debugMode): debug_mode(debugMode) {
     for (size_t i = 0; i < nodes.size(); ++i) {
         ComputeNode* node = nodes[i];
         add_compute_node(node);
     }
+}
+
+void ComputeManager::add_compute_node(ComputeNode* node) {
+    computes.push_back(node);
+    node->lock_ptr = &thread_lock;  // Assign the manager's mutex to the node
 }
 
 void ComputeManager::start() {
