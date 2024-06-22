@@ -20,7 +20,7 @@ Installing Whooplib VEXCode (On your computer):
   git clone https://github.com/ConnorAtmos/WhoopLibVEXCode
 ```
 
-Installing Whooplib Python (SSH On your Jetson Nano via "ssh jetson@ip"):
+Installing Whooplib Python (SSH On your Jetson Nano via "ssh jetson@your_jetson_ip"):
 
 ```bash
   cd ~/Desktop
