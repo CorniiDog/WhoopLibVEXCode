@@ -13,6 +13,11 @@
 #include "vex.h"
 #include <vector>
 
+enum omitStepCompensation{
+    yes_omit = true,
+    dont_omit = false
+};
+
 class ComputeNode;  // Forward declaration to allow references in ComputeManager
 
 /**
@@ -58,6 +63,7 @@ public:
     bool node_running = false;  // Flag indicating whether the node's computation task is active
     bool node_debug = false; // Flag to enable debug mode for this specific node
     int step_time_ms = 20; // time between each computational activity
+    bool omit_steptime_compensation = false;
     int initial_computational_time = 0; // Time to process data (to try to adapt step time to be more precise)
     /**
      * Constructor for ComputeNode.
@@ -76,10 +82,12 @@ public:
     void stop_pipeline();  // Stops the computation process
 
     /**
-     * Sets step time between steps for the node
+     * Sets step time between each step for the node. The compute node would compensate the time to complete a step
+     * procedure to be as close to step_time_ms as possible, based upon the first initial step.
      * @param step_time_ms time between each computational activity
+     * @param omit_steptime_compensation Set to "omitStepCompensation::yes_omit" to omit step compensation
      */
-    void set_step_time(int step_time_ms);  // Stops the computation process
+    void set_step_time(int step_time_ms, omitStepCompensation omit_steptime_compensation = omitStepCompensation::dont_omit);  // Stops the computation process
 protected:
     /**
      * Virtual function intended to be overridden by derived classes to implement specific computation steps.

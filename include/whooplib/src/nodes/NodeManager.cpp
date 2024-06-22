@@ -12,6 +12,7 @@
 #include <iostream>
 #include <cstdio>
 #include <algorithm>
+#include <stdexcept>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Node Class Manager
@@ -51,14 +52,22 @@ int ComputeNode::task_runner(void* param) {
     auto* node = static_cast<ComputeNode*>(param);
 
     int start_time = 0;
-    node->initial_computational_time = -1;
+    if (node->omit_steptime_compensation){
+        node->initial_computational_time = 0;
+    }
+    else{
+        node->initial_computational_time = -1;
+    }
+
     while (node->node_running) {
         if(node->node_debug){
             try{
                 if(node->initial_computational_time == -1){ // Try to accomodate process time to improve accuracy
                     start_time = Brain.timer(timeUnits::msec);
                 }
+                
                 node->__step();
+
                 if(node->initial_computational_time == -1){
                     int end_time = Brain.timer(timeUnits::msec) - start_time;
                     if (end_time < node->step_time_ms){ // Accept if only within acceptable threshold.
@@ -86,7 +95,7 @@ int ComputeNode::task_runner(void* param) {
             vex::wait(0, vex::timeUnits::msec);
         }
         else{ // Omit and just wait using step_time_ms
-            vex::wait(std::max(0, node->step_time_ms), vex::timeUnits::msec);
+            vex::wait(node->step_time_ms, vex::timeUnits::msec);
         }
     }
     return 1;
@@ -106,8 +115,12 @@ void ComputeNode::stop_pipeline() {
     node_running = false;
 }
 
-void ComputeNode::set_step_time(int step_time_ms){
+void ComputeNode::set_step_time(int step_time_ms, omitStepCompensation omit_steptime_compensation){
+    if(step_time_ms < 0){
+        throw std::invalid_argument("Step-time must be positive or zero.");
+    }
     this->step_time_ms = step_time_ms;
+    this->omit_steptime_compensation = omit_steptime_compensation;
 }
 
 void ComputeNode::__step() {
