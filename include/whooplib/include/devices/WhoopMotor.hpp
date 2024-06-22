@@ -76,7 +76,7 @@ public:
     double get_velocity(vex::velocityUnits vel = vex::velocityUnits::dps); // degrees/sec is default
     double get_velocity_deg_s(); // explicitly defining degrees/sec
     double get_velocity_rad_s(); // explicitly defining rad/sec
-    double get_velocity_rpm(); // explicitly defining rot/sec
+    double get_velocity_rpm(); // explicitly defining rpm
 
     // Tare (reset)
     void tare();
