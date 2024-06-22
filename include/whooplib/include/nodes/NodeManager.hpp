@@ -55,7 +55,7 @@ public:
 class ComputeNode {
 public:
     vex::mutex* lock_ptr = nullptr;  // Pointer to a mutex for synchronization, typically shared with a ComputeManager
-    bool running = false;  // Flag indicating whether the node's computation task is active
+    bool node_running = false;  // Flag indicating whether the node's computation task is active
     bool node_debug = false; // Flag to enable debug mode for this specific node
     
     /**

@@ -49,7 +49,7 @@ ComputeNode::ComputeNode() {}
 int ComputeNode::task_runner(void* param) {
     auto* node = static_cast<ComputeNode*>(param);
 
-    while (node->running) {
+    while (node->node_running) {
         if(node->node_debug){
             try{
                 node->__step();
@@ -69,14 +69,17 @@ int ComputeNode::task_runner(void* param) {
 }
 
 void ComputeNode::start_pipeline(bool debug_mode) {
+    if (node_running){
+        return;
+    }
     node_debug = debug_mode;
-    running = true;
+    node_running = true;
     
     vex::task myTask(ComputeNode::task_runner, this);
 }
 
 void ComputeNode::stop_pipeline() {
-    running = false;
+    node_running = false;
 }
 
 void ComputeNode::__step() {
