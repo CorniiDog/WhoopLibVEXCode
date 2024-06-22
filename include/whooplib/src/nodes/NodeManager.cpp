@@ -51,16 +51,22 @@ int ComputeNode::task_runner(void* param) {
     auto* node = static_cast<ComputeNode*>(param);
 
     int start_time = 0;
-    node->initial_computational_time = 0;
+    node->initial_computational_time = -1;
     while (node->node_running) {
         if(node->node_debug){
             try{
-                if(node->initial_computational_time == 0){ // Try to accomodate process time to improve accuracy
+                if(node->initial_computational_time == -1){ // Try to accomodate process time to improve accuracy
                     start_time = Brain.timer(timeUnits::msec);
                 }
                 node->__step();
-                if(node->initial_computational_time == 0){
-                    node->initial_computational_time = Brain.timer(timeUnits::msec) - start_time;
+                if(node->initial_computational_time == -1){
+                    int end_time = Brain.timer(timeUnits::msec) - start_time;
+                    if (end_time < node->step_time_ms){ // Accept if only within acceptable threshold.
+                        node->initial_computational_time = Brain.timer(timeUnits::msec) - start_time;
+                    }
+                    else{ // Assume it takes same processing time as step_time_ms
+                        node->initial_computational_time = node->step_time_ms;
+                    }
                 }
             }
             catch (const std::exception& e) {
@@ -72,7 +78,16 @@ int ComputeNode::task_runner(void* param) {
         else{
             node->__step();
         }
-        vex::wait(std::max(0, node->step_time_ms - node->initial_computational_time), vex::timeUnits::msec);
+
+        if(node->initial_computational_time > 0 && node->initial_computational_time < node->step_time_ms){
+            vex::wait(node->step_time_ms - node->initial_computational_time, vex::timeUnits::msec);
+        }
+        else if(node->initial_computational_time >= node->step_time_ms){
+            vex::wait(0, vex::timeUnits::msec);
+        }
+        else{ // Omit and just wait using step_time_ms
+            vex::wait(std::max(0, node->step_time_ms), vex::timeUnits::msec);
+        }
     }
     return 1;
 }
