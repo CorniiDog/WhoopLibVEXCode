@@ -17,8 +17,8 @@
  * Source: https://github.com/JacksonAreaRobotics/JAR-Template/blob/main/src/JAR-Template/odom.cpp
  */
 
-#ifndef ODOM_HPP
-#define ODOM_HPP
+#ifndef WHEEL_ODOM_HPP
+#define WHEEL_ODOM_HPP
 
 /**
  * Wheel Odometry Object
@@ -77,4 +77,4 @@ public:
   void set_physical_distances(float ForwardTracker_center_distance, float SidewaysTracker_center_distance);
 };
 
-#endif
+#endif // WHEEL_ODOM_HPP
