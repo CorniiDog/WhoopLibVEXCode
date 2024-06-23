@@ -57,9 +57,23 @@ double wheel_diameter_meters = to_meters(3);
 
 WhoopDrivetrain robot_drivetrain(wheel_diameter_meters, gear_ratio, &controller1, &left_motors, &right_motors);
 
+
+
 WhoopInertial inertial_sensor(PORT7);
 
-ComputeManager manager({&buffer_system, &robot_drivetrain});
+WhoopRotation forward_tracker(PORT6, reversed::yes_reverse);
+WhoopRotation sideways_tracker(PORT9, reversed::yes_reverse);
+
+double forward_wheel_diameter_meters = to_meters(2.5189); // (e.g., 0.08255 for 3.25-inch wheels).
+double sideways_wheel_diameter_meters = to_meters(2.5189);
+
+// The odom unit center is the virtual intercept of the perpendicular faces of the odometry trackers.
+// Visual Representation of Tracker Distances from Odom Unit: https://imgur.com/rWCCCfz
+double forward_tracker_distance_meters = to_meters(1.29); // Distance from the odom unit center to the forward tracker, in meters (positive implies a shift to the right from the odom unit center).
+double sideways_tracker_distance_meters = to_meters(-4.50); // Distance from the odom unit center to the sideways tracker, in meters (positive implies a shift forward from the odom unit center).
+WhoopDriveOdomUnit odom_unit(forward_tracker_distance_meters, forward_wheel_diameter_meters, sideways_tracker_distance_meters, sideways_wheel_diameter_meters, &inertial_sensor, &forward_tracker, &sideways_tracker);
+
+ComputeManager manager({&buffer_system, &robot_drivetrain, &odom_unit});
 
 
 /*---------------------------------------------------------------------------*/
@@ -78,7 +92,7 @@ void pre_auton(void) {
   manager.start();
   robot_drivetrain.set_state(drivetrainState::mode_disabled);
 
-  inertial_sensor.calibrate();
+  odom_unit.calibrate();
 
   while (robot_drivetrain.drive_state == drivetrainState::mode_disabled){
     // Do stuff like calibrate IMU
@@ -118,6 +132,7 @@ void usercontrol(void) {
   wait(0.5, sec);
   vision_system.tare(1, 1, M_PI/4);
 
+
   // User control code here, inside the loop
   while (1) {
 
@@ -130,6 +145,10 @@ void usercontrol(void) {
     Brain.Screen.clearLine(3);
     Brain.Screen.setCursor(3, 1);
     Brain.Screen.print("Inertial: %.3f", inertial_sensor.get_yaw_radians());
+
+    Brain.Screen.clearLine(4);
+    Brain.Screen.setCursor(4, 1);
+    Brain.Screen.print("Wheel Odom: %.3f %.3f %.3f", odom_unit.pose.x, odom_unit.pose.y, odom_unit.pose.yaw);
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }

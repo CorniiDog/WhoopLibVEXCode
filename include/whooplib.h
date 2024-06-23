@@ -35,5 +35,6 @@
 #include "whooplib/include/devices/WhoopDrivetrain.hpp"
 #include "whooplib/include/devices/WhoopVision.hpp"
 #include "whooplib/include/devices/WhoopRotation.hpp"
+#include "whooplib/include/devices/WhoopDriveOdomUnit.hpp"
 
 #endif // WHOOP_LIB_H
