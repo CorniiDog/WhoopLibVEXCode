@@ -49,25 +49,25 @@ public:
 
     /**
      * Retrieves the horizontal axis value of the left joystick.
-     * @return The x-coordinate value from the left joystick.
+     * @return The x-coordinate value from the left joystick [-100, 100].
      */
     double get_left_joystick_x();
 
     /**
      * Retrieves the vertical axis value of the left joystick.
-     * @return The y-coordinate value from the left joystick.
+     * @return The y-coordinate value from the left joystick [-100, 100].
      */
     double get_left_joystick_y();
 
     /**
      * Retrieves the horizontal axis value of the right joystick.
-     * @return The x-coordinate value from the right joystick.
+     * @return The x-coordinate value from the right joystick [-100, 100].
      */
     double get_right_joystick_x();
 
     /**
      * Retrieves the vertical axis value of the right joystick.
-     * @return The y-coordinate value from the right joystick.
+     * @return The y-coordinate value from the right joystick [-100, 100].
      */
     double get_right_joystick_y();
 

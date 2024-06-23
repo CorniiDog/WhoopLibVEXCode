@@ -21,16 +21,16 @@ WhoopController::WhoopController(joystickMode mode, vex::controllerType controll
 /////////////////////////////////////////////
 // Controller joystick
 double WhoopController::get_left_joystick_x(){
-    return vex_controller.Axis4.value();
+    return vex_controller.Axis4.position(pct);
 }
 double WhoopController::get_left_joystick_y(){
-    return vex_controller.Axis3.value();
+    return vex_controller.Axis3.position(pct);
 }
 double WhoopController::get_right_joystick_x(){
-    return vex_controller.Axis1.value();
+    return vex_controller.Axis1.position(pct);
 }
 double WhoopController::get_right_joystick_y(){
-    return vex_controller.Axis2.value();
+    return vex_controller.Axis2.position(pct);
 }
 
 /////////////////////////////////////////////

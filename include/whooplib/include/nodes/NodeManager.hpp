@@ -18,6 +18,7 @@ enum omitStepCompensation{
     dont_omit = false
 };
 
+
 class ComputeNode;  // Forward declaration to allow references in ComputeManager
 
 /**
@@ -62,7 +63,7 @@ public:
     vex::mutex* lock_ptr = nullptr;  // Pointer to a mutex for synchronization, typically shared with a ComputeManager
     bool node_running = false;  // Flag indicating whether the node's computation task is active
     bool node_debug = false; // Flag to enable debug mode for this specific node
-    int step_time_ms = 20; // time between each computational activity
+    int step_time_ms = 10; // time between each computational activity
     bool omit_steptime_compensation = false;
     int initial_computational_time = 0; // Time to process data (to try to adapt step time to be more precise)
     /**

@@ -81,7 +81,7 @@ WhoopDriveOdomUnit odom_unit(forward_tracker_distance_meters, forward_wheel_diam
 // TODO: Create Odom Unit Offset Object with x and y
 
 
-WhoopDrivetrain robot_drivetrain(wheel_diameter_meters, gear_ratio, &controller1, &left_motors, &right_motors);
+WhoopDrivetrain robot_drivetrain(&controller1, &left_motors, &right_motors);
 
 ComputeManager manager({&buffer_system, &robot_drivetrain, &odom_unit});
 
@@ -156,7 +156,7 @@ void usercontrol(void) {
     
     Brain.Screen.clearLine(3);
     Brain.Screen.setCursor(3, 1);
-    Brain.Screen.print("Inertial: %.3f", inertial_sensor.get_yaw_radians());
+    Brain.Screen.print("Controller: %.3f", controller1.get_left_joystick_x());
 
     Brain.Screen.clearLine(4);
     Brain.Screen.setCursor(4, 1);

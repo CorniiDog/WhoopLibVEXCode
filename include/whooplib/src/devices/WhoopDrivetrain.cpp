@@ -26,39 +26,19 @@ void WhoopDrivetrain::init_motor_groups(const std::vector<WhoopMotor*>& leftMoto
     right_motor_group = std::make_unique<WhoopMotorGroup>(rightMotors);
 }
 
-WhoopDrivetrain::WhoopDrivetrain(double wheel_diameter_meters, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
+WhoopDrivetrain::WhoopDrivetrain(WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
 : whoop_controller(controller) {
     init_motor_groups(leftMotorGroup, rightMotorGroup);
-    set_wheel_diameter(wheel_diameter_meters);
 }
 
-WhoopDrivetrain::WhoopDrivetrain(double wheel_diameter_meters, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
+WhoopDrivetrain::WhoopDrivetrain(WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
 : whoop_controller(controller) {
     init_motor_groups(leftMotors, rightMotors);
-    set_wheel_diameter(wheel_diameter_meters);
 }
 
-WhoopDrivetrain::WhoopDrivetrain(double wheel_diameter_meters, double gear_ratio, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
-: WhoopDrivetrain(wheel_diameter_meters, controller, leftMotorGroup, rightMotorGroup){
-    set_gear_ratio_mult(gear_ratio);
-}
-WhoopDrivetrain::WhoopDrivetrain(double wheel_diameter_meters, double gear_ratio, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
-: WhoopDrivetrain(wheel_diameter_meters, controller, leftMotors, rightMotors){
-    set_gear_ratio_mult(gear_ratio);
-}
 
 void WhoopDrivetrain::set_state(drivetrainState state){
     drive_state = state;
-}
-
-void WhoopDrivetrain::set_gear_ratio_mult(double ratio){ // motor on 32 tooth powering the 64 toth: ratio = 32.0/64.0
-    left_motor_group->set_gear_ratio_mult(ratio);
-    right_motor_group->set_gear_ratio_mult(ratio);
-}
-
-void WhoopDrivetrain::set_wheel_diameter(double diameter_meters){ // motor on 32 tooth powering the 64 toth: ratio = 32.0/64.0
-    left_motor_group->set_wheel_diameter(diameter_meters);
-    right_motor_group->set_wheel_diameter(diameter_meters);
 }
 
 
