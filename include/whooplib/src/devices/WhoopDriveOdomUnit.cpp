@@ -92,8 +92,6 @@ void WhoopDriveOdomUnit::calibrate(){
 
 void WhoopDriveOdomUnit::tare(double x, double y, double yaw){
 
-    inertial_sensor->tare(yaw);
-
     if(drive_odom_config == DriveOdomConfig::DRIVE_ONLY){
         set_position(x, y, yaw, right_motor_group->get_distance_meters(), 0); // From odom class
     }
@@ -103,6 +101,8 @@ void WhoopDriveOdomUnit::tare(double x, double y, double yaw){
     else if(drive_odom_config == DriveOdomConfig::DRIVE_WITH_BOTH_TRACKERS){
         set_position(x, y, yaw, forward_tracker->get_distance_meters(), sideways_tracker->get_distance_meters()); // From odom class
     }
+
+    inertial_sensor->tare(yaw);
 }
 
 void WhoopDriveOdomUnit::tare(){

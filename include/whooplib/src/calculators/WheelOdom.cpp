@@ -24,8 +24,10 @@
  * @param SidewaysTracker_center_distance A vertical distance to the wheel center in meters.
  */
 void WheelOdom::set_physical_distances(double ForwardTracker_center_distance, double SidewaysTracker_center_distance){
+  vex_mutex.lock();
   this->ForwardTracker_center_distance = ForwardTracker_center_distance;
   this->SidewaysTracker_center_distance = SidewaysTracker_center_distance;
+  vex_mutex.unlock();
 }
 
 /**
@@ -41,11 +43,13 @@ void WheelOdom::set_physical_distances(double ForwardTracker_center_distance, do
  * @param SidewaysTracker_position Current position of the sensor in meters.
  */
 void WheelOdom::set_position(double X_position, double Y_position, double orientation_rad, double ForwardTracker_position, double SidewaysTracker_position){
+  vex_mutex.lock();
   this->ForwardTracker_position = ForwardTracker_position;
   this->SideWaysTracker_position = SidewaysTracker_position;
   this->X_position = X_position;
   this->Y_position = Y_position;
   this->orientation_rad = orientation_rad;
+  vex_mutex.unlock();
 }
 
 /**
@@ -62,10 +66,12 @@ void WheelOdom::set_position(double X_position, double Y_position, double orient
 void WheelOdom::_update_pose(double ForwardTracker_position, double SidewaysTracker_position, double orientation_rad){
   Forward_delta = ForwardTracker_position - this->ForwardTracker_position;
   Sideways_delta = SidewaysTracker_position - this->SideWaysTracker_position;
+  orientation_delta_rad = orientation_rad - this->orientation_rad;
+  vex_mutex.lock();
   this->ForwardTracker_position = ForwardTracker_position;
   this->SideWaysTracker_position = SidewaysTracker_position;
-  orientation_delta_rad = orientation_rad - this->orientation_rad;
   this->orientation_rad = orientation_rad;
+  vex_mutex.unlock();
 
   if (orientation_delta_rad == 0) {
     local_X_position = Sideways_delta;
@@ -83,6 +89,8 @@ void WheelOdom::_update_pose(double ForwardTracker_position, double SidewaysTrac
   X_position_delta = local_polar_length * cos(global_polar_angle); 
   Y_position_delta = local_polar_length * sin(global_polar_angle);
 
+  vex_mutex.lock();
   X_position += X_position_delta;
   Y_position += Y_position_delta;
+  vex_mutex.unlock();
 }

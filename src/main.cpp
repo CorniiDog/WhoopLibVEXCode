@@ -143,7 +143,7 @@ void usercontrol(void) {
 
   wait(0.5, sec);
   vision_system.tare(1, 1, M_PI/4);
-
+  odom_unit.tare(1,1, M_PI/4);
 
   // User control code here, inside the loop
   while (1) {

@@ -26,6 +26,9 @@
 class WheelOdom
 {
 private:
+
+  vex::mutex vex_mutex;
+
   double ForwardTracker_center_distance; // Horizontal distance from the robot's center to the forward wheel's sensor.
   double SidewaysTracker_center_distance; // Vertical distance from the robot's center to the sideways wheel's sensor.
   double ForwardTracker_position; // Current horizontal position of the forward tracker in meters.
