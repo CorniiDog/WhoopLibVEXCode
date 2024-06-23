@@ -16,7 +16,6 @@
 #include "whooplib/include/devices/WhoopVision.hpp"
 #include "whooplib/include/devices/WhoopRotation.hpp"
 #include "whooplib/include/nodes/NodeManager.hpp"
-#include "whooplib/include/nodes/BufferNode.hpp"
 #include "whooplib/include/calculators/WheelOdom.hpp"
 #include "vex.h"
 #include <vector>
@@ -153,7 +152,7 @@ public:
      * @return The current pose of the system.
      */
     TwoDPose get_pose();
-protected:
+public: // This is one of the ONLY exceptions to be public, as another module requires this step function.
     /**
      * Override of ComputeNode's __step method to update the drivetrain's operation each cycle.
      */
