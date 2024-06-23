@@ -18,6 +18,7 @@ WhoopDriveOdomUnit::WhoopDriveOdomUnit(double drive_width, double drive_wheel_di
     set_motor_ratio_and_diameter(drive_wheel_diameter_meters, drive_gear_ratio);
     set_physical_distances(drive_width/2.0, 0); // From odom class
     drive_odom_config = DriveOdomConfig::DRIVE_ONLY;
+    this->set_step_time(10, omitStepCompensation::dont_omit);
 }
 
 WhoopDriveOdomUnit::WhoopDriveOdomUnit(double drive_width, double drive_wheel_diameter_meters, double drive_gear_ratio, double sideways_tracker_distance, double sideways_tracker_wheel_diameter_meters, WhoopInertial* inertialSensor, WhoopRotation* sideways_tracker, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup):
@@ -28,6 +29,7 @@ WhoopDriveOdomUnit::WhoopDriveOdomUnit(double drive_width, double drive_wheel_di
     sideways_tracker->set_wheel_diameter(sideways_tracker_wheel_diameter_meters);
     set_physical_distances(drive_width/2.0, sideways_tracker_distance); // From odom class
     drive_odom_config = DriveOdomConfig::DRIVE_WITH_SIDEWAYS_TRACKER;
+    this->set_step_time(10, omitStepCompensation::dont_omit);
 }
 
 WhoopDriveOdomUnit::WhoopDriveOdomUnit(double forward_tracker_distance, double forward_tracker_wheel_diameter_meters, double sideways_tracker_distance, double sideways_tracker_wheel_diameter_meters, WhoopInertial* inertialSensor, WhoopRotation* forward_tracker, WhoopRotation* sideways_tracker):
@@ -38,6 +40,7 @@ WhoopDriveOdomUnit::WhoopDriveOdomUnit(double forward_tracker_distance, double f
     sideways_tracker->set_wheel_diameter(sideways_tracker_wheel_diameter_meters);
     set_physical_distances(forward_tracker_wheel_diameter_meters, sideways_tracker_distance); // From odom class
     drive_odom_config = DriveOdomConfig::DRIVE_WITH_BOTH_TRACKERS;
+    this->set_step_time(10, omitStepCompensation::dont_omit);
 }
 
 WhoopDriveOdomUnit::WhoopDriveOdomUnit(double drive_width, double drive_wheel_diameter_meters, double drive_gear_ratio, WhoopInertial* inertialSensor, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors):
@@ -46,6 +49,7 @@ WhoopDriveOdomUnit::WhoopDriveOdomUnit(double drive_width, double drive_wheel_di
     set_motor_ratio_and_diameter(drive_wheel_diameter_meters, drive_gear_ratio);
     set_physical_distances(drive_width/2.0, 0); // From odom class
     drive_odom_config = DriveOdomConfig::DRIVE_ONLY;
+    this->set_step_time(10, omitStepCompensation::dont_omit);
 }
 
 WhoopDriveOdomUnit::WhoopDriveOdomUnit(double drive_width, double drive_wheel_diameter_meters, double drive_gear_ratio, double sideways_tracker_distance, double sideways_tracker_wheel_diameter_meters, WhoopInertial* inertialSensor, WhoopRotation* sideways_tracker, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors):
@@ -56,6 +60,7 @@ WhoopDriveOdomUnit::WhoopDriveOdomUnit(double drive_width, double drive_wheel_di
     sideways_tracker->set_wheel_diameter(sideways_tracker_wheel_diameter_meters);
     set_physical_distances(drive_width/2.0, sideways_tracker_distance); // From odom class
     drive_odom_config = DriveOdomConfig::DRIVE_WITH_SIDEWAYS_TRACKER;
+    this->set_step_time(10, omitStepCompensation::dont_omit);
 }
 
 // Configures motor groups for diameter and gear ratio
@@ -115,13 +120,13 @@ TwoDPose WhoopDriveOdomUnit::get_pose(){
 
 void WhoopDriveOdomUnit::__step(){
     if(drive_odom_config == DriveOdomConfig::DRIVE_ONLY){
-        _update_pose(right_motor_group->get_distance_meters(), 0, inertial_sensor->get_yaw());
+        _update_pose(right_motor_group->get_distance_meters(), 0, inertial_sensor->get_yaw_radians());
     }
     else if(drive_odom_config == DriveOdomConfig::DRIVE_WITH_SIDEWAYS_TRACKER){
-        _update_pose(right_motor_group->get_distance_meters(), sideways_tracker->get_distance_meters(), inertial_sensor->get_yaw());
+        _update_pose(right_motor_group->get_distance_meters(), sideways_tracker->get_distance_meters(), inertial_sensor->get_yaw_radians());
     }
     else if(drive_odom_config == DriveOdomConfig::DRIVE_WITH_BOTH_TRACKERS){
-        _update_pose(forward_tracker->get_distance_meters(), sideways_tracker->get_distance_meters(), inertial_sensor->get_yaw());
+        _update_pose(forward_tracker->get_distance_meters(), sideways_tracker->get_distance_meters(), inertial_sensor->get_yaw_radians());
     }
 
     pose.x = X_position;

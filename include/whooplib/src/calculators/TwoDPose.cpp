@@ -11,7 +11,11 @@
 #include <cmath>
 #include "whooplib/include/toolbox.hpp"
 
-TwoDPose::TwoDPose(double x, double y, double yaw) : x(x), y(y), yaw(yaw) {}
+TwoDPose::TwoDPose(double x, double y, double yaw) {
+    this->x = x;
+    this->y = y;
+    this->yaw = yaw;
+}
 
 TwoDPose TwoDPose::multiplicative_delta(const TwoDPose& other) const{
     // Calculate the new position
