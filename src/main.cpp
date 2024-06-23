@@ -67,11 +67,23 @@ WhoopRotation sideways_tracker(PORT9, reversed::yes_reverse);
 double forward_wheel_diameter_meters = to_meters(2.5189); // (e.g., 0.08255 for 3.25-inch wheels).
 double sideways_wheel_diameter_meters = to_meters(2.5189);
 
+/**
+ * SUGGESTION: It is easier and likely more precise to measure the distances by placing the robot over a glass table to allow the odometry wheels to recess to default 
+ * position and measure from below.
+ */
+
 // The odom unit center is the virtual intercept of the perpendicular faces of the odometry trackers.
+// The measurement is from the center of the odom unit to the designated tracker distances.
 // Visual Representation of Tracker Distances from Odom Unit: https://imgur.com/rWCCCfz
 double forward_tracker_distance_meters = to_meters(1.29); // Distance from the odom unit center to the forward tracker, in meters (positive implies a shift to the right from the odom unit center).
 double sideways_tracker_distance_meters = to_meters(-4.50); // Distance from the odom unit center to the sideways tracker, in meters (positive implies a shift forward from the odom unit center).
 WhoopDriveOdomUnit odom_unit(forward_tracker_distance_meters, forward_wheel_diameter_meters, sideways_tracker_distance_meters, sideways_wheel_diameter_meters, &inertial_sensor, &forward_tracker, &sideways_tracker);
+
+// If your Odom Unit's Center is NOT the center of the robot, apply the offset here.
+// The measurement is from the center of the robot to the odom unit center.
+// If your Odom Unit's Center IS the center of the robot, set to 0,0.
+// Visual representation of Odom Unit from Center of Robot: https://imgur.com/x8ObCIG
+// TODO: Create Odom Unit Offset Object with x and y
 
 ComputeManager manager({&buffer_system, &robot_drivetrain, &odom_unit});
 
@@ -91,6 +103,8 @@ void pre_auton(void) {
 
   manager.start();
   robot_drivetrain.set_state(drivetrainState::mode_disabled);
+
+  wait(0.5, sec);
 
   odom_unit.calibrate();
 
