@@ -13,6 +13,7 @@
 #include "vex.h"
 #include <vector>
 #include <memory>
+#include <iostream>
 
 WhoopDriveOdomOffset::WhoopDriveOdomOffset(WhoopDriveOdomUnit* odom_unit, double x_offset, double y_offset):
     offset(x_offset, y_offset, 0){
@@ -30,7 +31,7 @@ void WhoopDriveOdomOffset::calibrate(){
 
 void WhoopDriveOdomOffset::tare(double x, double y, double yaw){
     thread_lock.lock();
-    TwoDPose TaredOffset = TwoDPose(x, y, yaw)/offset;
+    TwoDPose TaredOffset = TwoDPose(x, y, yaw) * -offset;
     odom_unit->tare(TaredOffset.x, TaredOffset.y, TaredOffset.yaw);
     thread_lock.unlock();
 }

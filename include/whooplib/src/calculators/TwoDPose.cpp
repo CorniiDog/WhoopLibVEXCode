@@ -71,6 +71,10 @@ TwoDPose TwoDPose::toObjectSpace(double x, double y, double yaw) const {
     return TwoDPose(relative_x, relative_y, normalize_angle(relative_yaw));
 }
 
+TwoDPose TwoDPose::operator-() const {
+    return TwoDPose(-x, -y, -yaw);
+}
+
 TwoDPose TwoDPose::inverse() const {
     // Calculate the inverse rotation and translation
     double cos_yaw = cos(-this->yaw); // Inverse rotation is simply the negative of the yaw

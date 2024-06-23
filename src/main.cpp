@@ -144,7 +144,7 @@ void usercontrol(void) {
 
   wait(0.5, sec);
   vision_system.tare(1, 1, M_PI/4);
-  odom_offset.tare(1,1, M_PI/4);
+  odom_offset.tare(1, 1, M_PI/4);
 
   // User control code here, inside the loop
   while (1) {
@@ -161,7 +161,7 @@ void usercontrol(void) {
 
     Brain.Screen.clearLine(4);
     Brain.Screen.setCursor(4, 1);
-    Brain.Screen.print("Wheel Odom: %.3f %.3f %.3f", odom_unit.pose.x, odom_unit.pose.y, odom_unit.pose.yaw);
+    Brain.Screen.print("Wheel Odom: %.3f %.3f %.3f", odom_offset.pose.x, odom_offset.pose.y, odom_offset.pose.yaw);
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }

@@ -101,6 +101,9 @@ public:
      */
     TwoDPose inverseMultiply(const TwoDPose& other) const;
 
+    // Unary negation operator
+    TwoDPose operator-() const;
+
     // Overloaded / operator to divide one pose by another
     /**
      * Divides this pose by another pose using the inverse of the other pose.
