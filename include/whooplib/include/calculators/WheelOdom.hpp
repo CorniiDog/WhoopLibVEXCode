@@ -26,14 +26,26 @@
 class WheelOdom
 {
 private:
-  float ForwardTracker_center_distance; // Horizontal distance from the robot's center to the forward wheel's sensor.
-  float SidewaysTracker_center_distance; // Vertical distance from the robot's center to the sideways wheel's sensor.
-  float ForwardTracker_position; // Current horizontal position of the forward tracker in meters.
-  float SideWaysTracker_position; // Current vertical position of the sideways tracker in meters.
+  double ForwardTracker_center_distance; // Horizontal distance from the robot's center to the forward wheel's sensor.
+  double SidewaysTracker_center_distance; // Vertical distance from the robot's center to the sideways wheel's sensor.
+  double ForwardTracker_position; // Current horizontal position of the forward tracker in meters.
+  double SideWaysTracker_position; // Current vertical position of the sideways tracker in meters.
+
+  // Shelved variables for odometry use.
+  double local_X_position = 0;
+  double local_Y_position = 0;
+  double orientation_delta_rad = 0;
+  double Sideways_delta = 0;
+  double Forward_delta = 0;
+  double local_polar_angle = 0;
+  double local_polar_length = 0;
+  double global_polar_angle = 0;
+  double X_position_delta = 0;
+  double Y_position_delta = 0;
 public:
-  float X_position; // Field-centric X position of the robot in meters.
-  float Y_position; // Field-centric Y position of the robot in meters.
-  float orientation_rad; // Robot's orientation in radians, where 0 radians aligns with the positive Y-direction.
+  double X_position; // Field-centric X position of the robot in meters.
+  double Y_position; // Field-centric Y position of the robot in meters.
+  double orientation_rad; // Robot's orientation in radians, where 0 radians aligns with the positive Y-direction.
 
   /**
    * Setter method for tracker center distances.
@@ -47,7 +59,7 @@ public:
    * @param ForwardTracker_center_distance A horizontal distance to the wheel center in meters.
    * @param SidewaysTracker_center_distance A vertical distance to the wheel center in meters.
    */
-  void set_position(float X_position, float Y_position, float orientation_rad, float ForwardTracker_position, float SidewaysTracker_position);
+  void set_position(double X_position, double Y_position, double orientation_rad, double ForwardTracker_position, double SidewaysTracker_position);
 
   /**
    * Resets the position, including tracking wheels.
@@ -61,7 +73,7 @@ public:
    * @param ForwardTracker_position Current position of the sensor in meters.
    * @param SidewaysTracker_position Current position of the sensor in meters.
    */
-  void _update_pose(float ForwardTracker_position, float SidewaysTracker_position, float orientation_rad);
+  void _update_pose(double ForwardTracker_position, double SidewaysTracker_position, double orientation_rad);
 
   /**
    * Does the odometry math to update position
@@ -74,7 +86,7 @@ public:
    * @param SidewaysTracker_position Current position of the sensor in meters.
    * @param orientation_rad Field-centered, counter-clockwise-positive, orientation in radians.
    */
-  void set_physical_distances(float ForwardTracker_center_distance, float SidewaysTracker_center_distance);
+  void set_physical_distances(double ForwardTracker_center_distance, double SidewaysTracker_center_distance);
 };
 
 #endif // WHEEL_ODOM_HPP

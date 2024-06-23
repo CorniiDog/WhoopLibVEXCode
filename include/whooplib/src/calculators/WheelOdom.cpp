@@ -23,7 +23,7 @@
  * @param ForwardTracker_center_distance A horizontal distance to the wheel center in meters.
  * @param SidewaysTracker_center_distance A vertical distance to the wheel center in meters.
  */
-void WheelOdom::set_physical_distances(float ForwardTracker_center_distance, float SidewaysTracker_center_distance){
+void WheelOdom::set_physical_distances(double ForwardTracker_center_distance, double SidewaysTracker_center_distance){
   this->ForwardTracker_center_distance = ForwardTracker_center_distance;
   this->SidewaysTracker_center_distance = SidewaysTracker_center_distance;
 }
@@ -40,7 +40,7 @@ void WheelOdom::set_physical_distances(float ForwardTracker_center_distance, flo
  * @param ForwardTracker_position Current position of the sensor in meters.
  * @param SidewaysTracker_position Current position of the sensor in meters.
  */
-void WheelOdom::set_position(float X_position, float Y_position, float orientation_rad, float ForwardTracker_position, float SidewaysTracker_position){
+void WheelOdom::set_position(double X_position, double Y_position, double orientation_rad, double ForwardTracker_position, double SidewaysTracker_position){
   this->ForwardTracker_position = ForwardTracker_position;
   this->SideWaysTracker_position = SidewaysTracker_position;
   this->X_position = X_position;
@@ -59,16 +59,13 @@ void WheelOdom::set_position(float X_position, float Y_position, float orientati
  * @param SidewaysTracker_position Current position of the sensor in meters.
  * @param orientation_rad Field-centered, counter-clockwise-positive, orientation in radians.
  */
-void WheelOdom::_update_pose(float ForwardTracker_position, float SidewaysTracker_position, float orientation_rad){
-  float Forward_delta = ForwardTracker_position - this->ForwardTracker_position;
-  float Sideways_delta = SidewaysTracker_position - this->SideWaysTracker_position;
+void WheelOdom::_update_pose(double ForwardTracker_position, double SidewaysTracker_position, double orientation_rad){
+  Forward_delta = ForwardTracker_position - this->ForwardTracker_position;
+  Sideways_delta = SidewaysTracker_position - this->SideWaysTracker_position;
   this->ForwardTracker_position = ForwardTracker_position;
   this->SideWaysTracker_position = SidewaysTracker_position;
-  float orientation_delta_rad = orientation_rad - this->orientation_rad;
+  orientation_delta_rad = orientation_rad - this->orientation_rad;
   this->orientation_rad = orientation_rad;
-
-  float local_X_position;
-  float local_Y_position;
 
   if (orientation_delta_rad == 0) {
     local_X_position = Sideways_delta;
@@ -78,13 +75,13 @@ void WheelOdom::_update_pose(float ForwardTracker_position, float SidewaysTracke
     local_Y_position = (2 * sin(orientation_delta_rad / 2)) * ((Forward_delta / orientation_delta_rad) + ForwardTracker_center_distance);
   }
 
-  float local_polar_angle = atan2(local_Y_position, local_X_position); 
-  float local_polar_length = sqrt(pow(local_X_position, 2) + pow(local_Y_position, 2)); 
+  local_polar_angle = atan2(local_Y_position, local_X_position); 
+  local_polar_length = sqrt(pow(local_X_position, 2) + pow(local_Y_position, 2)); 
 
-  float global_polar_angle = local_polar_angle + this->orientation_rad + (orientation_delta_rad / 2);
+  global_polar_angle = local_polar_angle + this->orientation_rad + (orientation_delta_rad / 2);
 
-  float X_position_delta = local_polar_length * cos(global_polar_angle); 
-  float Y_position_delta = local_polar_length * sin(global_polar_angle);
+  X_position_delta = local_polar_length * cos(global_polar_angle); 
+  Y_position_delta = local_polar_length * sin(global_polar_angle);
 
   X_position += X_position_delta;
   Y_position += Y_position_delta;
