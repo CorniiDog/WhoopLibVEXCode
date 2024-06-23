@@ -64,33 +64,39 @@ void WheelOdom::set_position(double X_position, double Y_position, double orient
  * @param orientation_rad Field-centered, counter-clockwise-positive, orientation in radians.
  */
 void WheelOdom::_update_pose(double ForwardTracker_position, double SidewaysTracker_position, double orientation_rad){
-  Forward_delta = ForwardTracker_position - this->ForwardTracker_position;
-  Sideways_delta = SidewaysTracker_position - this->SideWaysTracker_position;
-  orientation_delta_rad = orientation_rad - this->orientation_rad;
-  vex_mutex.lock();
-  this->ForwardTracker_position = ForwardTracker_position;
-  this->SideWaysTracker_position = SidewaysTracker_position;
-  this->orientation_rad = orientation_rad;
-  vex_mutex.unlock();
+    Forward_delta = ForwardTracker_position - this->ForwardTracker_position;
+    Sideways_delta = SidewaysTracker_position - this->SideWaysTracker_position;
+    orientation_delta_rad = orientation_rad - this->orientation_rad;
 
-  if (orientation_delta_rad == 0) {
-    local_X_position = Sideways_delta;
-    local_Y_position = Forward_delta;
-  } else {
-    local_X_position = (2 * sin(orientation_delta_rad / 2)) * ((Sideways_delta / orientation_delta_rad) + SidewaysTracker_center_distance); 
-    local_Y_position = (2 * sin(orientation_delta_rad / 2)) * ((Forward_delta / orientation_delta_rad) + ForwardTracker_center_distance);
-  }
+    vex_mutex.lock();
+    this->ForwardTracker_position = ForwardTracker_position;
+    this->SideWaysTracker_position = SidewaysTracker_position;
+    this->orientation_rad = orientation_rad;
+    vex_mutex.unlock();
 
-  local_polar_angle = atan2(local_Y_position, local_X_position); 
-  local_polar_length = sqrt(pow(local_X_position, 2) + pow(local_Y_position, 2)); 
+    double delta_radius = 0.001; // Threshold for considering orientation change as negligible
 
-  global_polar_angle = local_polar_angle + this->orientation_rad + (orientation_delta_rad / 2);
+    if (fabs(orientation_delta_rad) < delta_radius) {
+        local_X_position = Sideways_delta;
+        local_Y_position = Forward_delta;
+    } else {
+        double radius_forward = Forward_delta / orientation_delta_rad + ForwardTracker_center_distance;
+        double radius_sideways = Sideways_delta / orientation_delta_rad + SidewaysTracker_center_distance;
+        local_X_position = 2 * sin(orientation_delta_rad / 2) * radius_sideways; 
+        local_Y_position = 2 * sin(orientation_delta_rad / 2) * radius_forward;
+    }
 
-  X_position_delta = local_polar_length * cos(global_polar_angle); 
-  Y_position_delta = local_polar_length * sin(global_polar_angle);
+    local_polar_angle = atan2(local_Y_position, local_X_position); 
+    local_polar_length = sqrt(pow(local_X_position, 2) + pow(local_Y_position, 2)); 
 
-  vex_mutex.lock();
-  X_position += X_position_delta;
-  Y_position += Y_position_delta;
-  vex_mutex.unlock();
+    // Correct application of CCW rotation to global orientation
+    global_polar_angle = local_polar_angle + this->orientation_rad + (orientation_delta_rad / 2);
+
+    X_position_delta = local_polar_length * cos(global_polar_angle); 
+    Y_position_delta = local_polar_length * sin(global_polar_angle);
+
+    vex_mutex.lock();
+    X_position += X_position_delta;
+    Y_position += Y_position_delta;
+    vex_mutex.unlock();
 }

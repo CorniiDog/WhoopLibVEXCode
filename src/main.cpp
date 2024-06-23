@@ -78,8 +78,8 @@ WhoopDriveOdomUnit odom_unit(forward_tracker_distance_meters, forward_wheel_diam
 // The measurement is from the center of the robot to the odom unit center.
 // If your Odom Unit's Center IS the center of the robot, set to 0,0.
 // Visual representation of Odom Unit from Center of Robot: https://imgur.com/x8ObCIG
-double odom_x_offset = to_meters(4.95); // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
-double odom_y_offset = to_meters(-0.60); // The y offset of the odom unit from the center of the robot (positive implies a shift forward from the center of the robot).
+double odom_x_offset = to_meters(-0.60); // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
+double odom_y_offset = to_meters(4.95); // The y offset of the odom unit from the center of the robot (positive implies a shift forward from the center of the robot).
 WhoopDriveOdomOffset odom_offset(&odom_unit, odom_x_offset, odom_y_offset);
 
 WhoopDrivetrain robot_drivetrain(&controller1, &left_motors, &right_motors);
@@ -144,7 +144,7 @@ void usercontrol(void) {
 
   wait(0.5, sec);
   vision_system.tare(1, 1, M_PI/4);
-  odom_offset.tare(1, 1, M_PI/4);
+  odom_offset.tare(to_meters(1), to_meters(1), to_rad(0));
 
   // User control code here, inside the loop
   while (1) {
@@ -161,7 +161,7 @@ void usercontrol(void) {
 
     Brain.Screen.clearLine(4);
     Brain.Screen.setCursor(4, 1);
-    Brain.Screen.print("Wheel Odom: %.3f %.3f %.3f", odom_offset.pose.x, odom_offset.pose.y, odom_offset.pose.yaw);
+    Brain.Screen.print("Wheel Odom: %.3f %.3f %.3f", to_inches(odom_offset.pose.x), to_inches(odom_offset.pose.y), to_deg(odom_offset.pose.yaw));
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }

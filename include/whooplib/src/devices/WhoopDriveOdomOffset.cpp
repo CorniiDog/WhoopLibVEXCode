@@ -16,7 +16,7 @@
 #include <iostream>
 
 WhoopDriveOdomOffset::WhoopDriveOdomOffset(WhoopDriveOdomUnit* odom_unit, double x_offset, double y_offset):
-    offset(x_offset, y_offset, 0){
+    offset(-x_offset, -y_offset, 0){
     this->odom_unit = odom_unit;
 }
 

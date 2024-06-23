@@ -128,7 +128,7 @@ void WhoopDriveOdomUnit::__step(){
 
     pose.x = X_position;
     pose.y = Y_position;
-    pose.yaw = orientation_rad;
+    pose.yaw = inertial_sensor->get_yaw_radians();
     thread_lock.unlock();
 }
 
