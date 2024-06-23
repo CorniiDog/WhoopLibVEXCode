@@ -59,7 +59,6 @@ WhoopDrivetrain robot_drivetrain(wheel_diameter_meters, gear_ratio, &controller1
 
 WhoopInertial inertial_sensor(PORT7);
 
-
 ComputeManager manager({&buffer_system, &robot_drivetrain});
 
 

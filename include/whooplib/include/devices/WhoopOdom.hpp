@@ -24,7 +24,7 @@
 /**
  * Class responsible for managing the drivetrain of a robot, including motor control and state management.
  */
-class WhoopOdom : public ComputeNode  {
+class WhoopOdom : public ComputeNode {
 protected:
     // Upon initialization
     std::unique_ptr<WhoopMotorGroup> left_motor_group; // Group of motors on the left side of the drivetrain.
