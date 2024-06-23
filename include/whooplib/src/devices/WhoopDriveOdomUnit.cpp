@@ -91,7 +91,7 @@ void WhoopDriveOdomUnit::calibrate(){
 }
 
 void WhoopDriveOdomUnit::tare(double x, double y, double yaw){
-
+    thread_lock.lock();
     if(drive_odom_config == DriveOdomConfig::DRIVE_ONLY){
         set_position(x, y, yaw, right_motor_group->get_distance_meters(), 0); // From odom class
     }
@@ -102,7 +102,8 @@ void WhoopDriveOdomUnit::tare(double x, double y, double yaw){
         set_position(x, y, yaw, forward_tracker->get_distance_meters(), sideways_tracker->get_distance_meters()); // From odom class
     }
 
-    inertial_sensor->tare(yaw);
+    inertial_sensor->tare_radians(yaw);
+    thread_lock.unlock();
 }
 
 void WhoopDriveOdomUnit::tare(){
@@ -114,6 +115,7 @@ TwoDPose WhoopDriveOdomUnit::get_pose(){
 }
 
 void WhoopDriveOdomUnit::__step(){
+    thread_lock.lock();
     if(drive_odom_config == DriveOdomConfig::DRIVE_ONLY){
         _update_pose(right_motor_group->get_distance_meters(), 0, inertial_sensor->get_yaw_radians());
     }
@@ -127,5 +129,6 @@ void WhoopDriveOdomUnit::__step(){
     pose.x = X_position;
     pose.y = Y_position;
     pose.yaw = orientation_rad;
+    thread_lock.unlock();
 }
 

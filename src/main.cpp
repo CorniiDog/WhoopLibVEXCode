@@ -156,7 +156,7 @@ void usercontrol(void) {
     
     Brain.Screen.clearLine(3);
     Brain.Screen.setCursor(3, 1);
-    Brain.Screen.print("Controller: %.3f", controller1.get_left_joystick_x());
+    Brain.Screen.print("Inertial: %.3f", inertial_sensor.get_yaw_radians());
 
     Brain.Screen.clearLine(4);
     Brain.Screen.setCursor(4, 1);
