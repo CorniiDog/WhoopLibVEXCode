@@ -40,7 +40,7 @@ void WhoopVision::_transform_pose(bool apply_delta){
     // Ensure robot offset is correctly applied
     TwoDPose offset(robot_offset->x, robot_offset->y, 0);
 
-    // Acquire relative delta change
+    // Acquire relative delta change of robot relative to vision system if tare
     if(apply_delta){
         this->offset_change = transposed.multiplicative_delta(offset);
     }
