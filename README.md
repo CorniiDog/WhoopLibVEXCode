@@ -1,5 +1,5 @@
 
-# Whooplib Template
+![WhoopLib Logo](/include/whooplib/WhoopLibWhite.png)
 
 The most advanced SLAM solution in VEX.
 
