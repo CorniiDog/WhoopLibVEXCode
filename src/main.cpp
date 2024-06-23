@@ -41,9 +41,9 @@ WhoopMotorGroup left_motors({&l1, &l2, &l3, &l4});
 // Vision Offset from Center of Robot
 // First variable is x, which +x is the direction of right from the center of the robot in meters
 // Second variable is y, which +y is the direction of forwardness from the center of the robot in meters
-double x_offset = 0;
-double y_offset = 15.0/100.0;
-RobotVisionOffset vision_offset(x_offset, y_offset);
+double vision_x_offset = 0;
+double vision_y_offset = 15.0/100.0;
+RobotVisionOffset vision_offset(vision_x_offset, vision_y_offset);
 
 // Jetson Nano pose retreival stream identifier (configured on Nano-side) 
 std::string pose_stream = "P";
@@ -78,12 +78,13 @@ WhoopDriveOdomUnit odom_unit(forward_tracker_distance_meters, forward_wheel_diam
 // The measurement is from the center of the robot to the odom unit center.
 // If your Odom Unit's Center IS the center of the robot, set to 0,0.
 // Visual representation of Odom Unit from Center of Robot: https://imgur.com/x8ObCIG
-// TODO: Create Odom Unit Offset Object with x and y
-
+double odom_x_offset = to_meters(4.95); // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
+double odom_y_offset = to_meters(-0.60); // The y offset of the odom unit from the center of the robot (positive implies a shift forward from the center of the robot).
+WhoopDriveOdomOffset odom_offset(&odom_unit, odom_x_offset, odom_y_offset);
 
 WhoopDrivetrain robot_drivetrain(&controller1, &left_motors, &right_motors);
 
-ComputeManager manager({&buffer_system, &robot_drivetrain, &odom_unit});
+ComputeManager manager({&buffer_system, &robot_drivetrain, &odom_offset});
 
 
 /*---------------------------------------------------------------------------*/
@@ -104,7 +105,7 @@ void pre_auton(void) {
 
   wait(0.5, sec);
 
-  odom_unit.calibrate();
+  odom_offset.calibrate();
 
   while (robot_drivetrain.drive_state == drivetrainState::mode_disabled){
     // Do stuff like calibrate IMU
@@ -143,7 +144,7 @@ void usercontrol(void) {
 
   wait(0.5, sec);
   vision_system.tare(1, 1, M_PI/4);
-  odom_unit.tare(1,1, M_PI/4);
+  odom_offset.tare(1,1, M_PI/4);
 
   // User control code here, inside the loop
   while (1) {

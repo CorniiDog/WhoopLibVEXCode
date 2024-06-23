@@ -14,11 +14,6 @@
 #include <vector>
 #include <memory>
 
-
-
-TwoDPose pose;
-vex::mutex thread_lock;  // Mutex for synchronizing access to odometry components.
-
 WhoopDriveOdomOffset::WhoopDriveOdomOffset(WhoopDriveOdomUnit* odom_unit, double x_offset, double y_offset):
     offset(x_offset, y_offset, 0){
     this->odom_unit = odom_unit;
