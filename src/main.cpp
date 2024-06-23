@@ -55,12 +55,7 @@ double gear_ratio = 1.0/2.0;
 // Wheel diameter in meters
 double wheel_diameter_meters = to_meters(3); 
 
-WhoopDrivetrain robot_drivetrain(wheel_diameter_meters, gear_ratio, &controller1, &left_motors, &right_motors);
-
-
-
 WhoopInertial inertial_sensor(PORT7);
-
 WhoopRotation forward_tracker(PORT6, reversed::yes_reverse);
 WhoopRotation sideways_tracker(PORT9, reversed::yes_reverse);
 
@@ -84,6 +79,9 @@ WhoopDriveOdomUnit odom_unit(forward_tracker_distance_meters, forward_wheel_diam
 // If your Odom Unit's Center IS the center of the robot, set to 0,0.
 // Visual representation of Odom Unit from Center of Robot: https://imgur.com/x8ObCIG
 // TODO: Create Odom Unit Offset Object with x and y
+
+
+WhoopDrivetrain robot_drivetrain(wheel_diameter_meters, gear_ratio, &controller1, &left_motors, &right_motors);
 
 ComputeManager manager({&buffer_system, &robot_drivetrain, &odom_unit});
 
