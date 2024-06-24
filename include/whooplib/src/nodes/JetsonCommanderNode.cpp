@@ -25,10 +25,10 @@ void JetsonCommander::_on_message_received(std::string message){
 }
 
 
-JetsonCommander::JetsonCommander(BufferNode* bufferSystem, std::string communication_stream, int keep_alive_time_seconds){
+JetsonCommander::JetsonCommander(BufferNode* bufferSystem, std::string communication_stream, int keep_alive_time_seconds, int step_time_s){
     this->keep_alive_time_seconds = keep_alive_time_seconds;
     setup_messenger(bufferSystem, communication_stream);
-    this->set_step_time(1000); // Configure step time in milliseconds
+    this->set_step_time(step_time_s*1000); // Configure step time in milliseconds
 }
 
 void JetsonCommander::reboot_jetson(){

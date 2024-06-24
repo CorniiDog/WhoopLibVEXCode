@@ -26,7 +26,7 @@ private:
 
     int keep_alive_time_seconds;
 public:
-    JetsonCommander(BufferNode* bufferSystem, std::string communication_stream, int keep_alive_time_seconds);
+    JetsonCommander(BufferNode* bufferSystem, std::string communication_stream, int keep_alive_time_seconds, int step_time_ms);
 
     void reboot_jetson();
     void shutdown_jetson();
