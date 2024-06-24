@@ -24,6 +24,8 @@ competition Competition;
 // Use wheel odom for x, y, yaw
 // Use vision system for x, y, z, pitch, yaw, roll, confidence, which confidence is [0,1] and conf>0.5 is good, conf>0.3 is acceptable
 
+//TODO: Write code that communicates to the Jetson Nano to start and stop vision system
+
 ////////////////////////////////////////////////////////////
 /**
  *    VISION TESSERACT
