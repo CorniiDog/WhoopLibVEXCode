@@ -19,13 +19,13 @@ using namespace vex;
 // A global instance of competition
 competition Competition;
 
-// Serial communication module
-BufferNode buffer_system(
-  256, // The buffer size, in characters. Increase if necessary, but at the cost of computational efficiency.
-  debugMode::debug_disabled, // debugMode::debug_disabled for competition use, debugMode::debug_enabled to allow the code to pass errors through
-  "/dev/serial1" // The serial connection of the Jetson Nano ("/dev/serial1" is the micro-usb serial connection on the V5 Brain)
-); 
+////////////////////////////////////////////////////////////
+/**
+ *    Globals
+ */
+////////////////////////////////////////////////////////////
 
+// Primary controller
 WhoopController controller1(joystickMode::joystickmode_split_arcade);
 
 // Left drive motors
@@ -42,22 +42,16 @@ WhoopMotor r3(PORT3, gearSetting::ratio6_1, reversed::yes_reverse);
 WhoopMotor r4(PORT4, gearSetting::ratio6_1, reversed::yes_reverse);
 WhoopMotorGroup right_motors({&r1, &r2, &r3, &r4});
 
-// Vision Offset of the Vision Tesseract from the Center of Robot
-RobotVisionOffset vision_offset(
-  0.00, // The x offset (+x is the direction of right from the center of the robot in meters).
-  15.0/100.0 // The y offset (+y is the direction of forwardness from the center of the robot in meters).
-);
-
-// Jetson Nano pose retreival object (also configured on Nano-side) 
-WhoopVision vision_system(
-  &vision_offset, // pointer to the vision offset
-  &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
-  "P" // The subscribed stream name to receive the pose from the Jetson Nano
-);
-
+// Sensors
 WhoopInertial inertial_sensor(PORT7);
 WhoopRotation forward_tracker(PORT6, reversed::yes_reverse);
 WhoopRotation sideways_tracker(PORT9, reversed::no_reverse);
+
+////////////////////////////////////////////////////////////
+/**
+ *    Wheel Odometry Configuration
+ */
+////////////////////////////////////////////////////////////
 
 // The odom unit center is the virtual intercept of the perpendicular faces of the odometry trackers.
 // The measurement is from the center of the odom unit to the designated tracker distances.
@@ -65,7 +59,7 @@ WhoopRotation sideways_tracker(PORT9, reversed::no_reverse);
 WhoopDriveOdomUnit odom_unit(
   to_meters(1.51), // The forward tracker distance, in meters, from the odom unit's center. (positive implies a shift to the right from the odom unit's center)
   to_meters(2.5189), // Diameter of the forward tracker, in meters (e.g., 0.08255 for 3.25-inch wheels).
-  to_meters(-4.468), // The sideways tracker distance, in meters, from the odom unit's center (positive implies a shift forward from the odom unit center).
+  to_meters(-4.468), // The sideways tracker distance, in meters, from the odom unit's center (positive implies a shift forward from the odom unit center)
   to_meters(2.5189), // Diameter of the sideways tracker, in meters (e.g., 0.08255 for 3.25-inch wheels).
   &inertial_sensor, // Pointer to the WhoopInertial sensor
   &forward_tracker, // Pointer to the forward tracker, as a WhoopRotation sensor
@@ -115,6 +109,38 @@ WhoopDriveOdomOffset odom_offset(
   to_meters(4.95) // The y offset of the odom unit from the center of the robot (positive implies a shift forward from the center of the robot).
 );
 
+////////////////////////////////////////////////////////////
+/**
+ *    VISION TESSERACT
+ */
+////////////////////////////////////////////////////////////
+
+// Serial communication module
+BufferNode buffer_system(
+  256, // The buffer size, in characters. Increase if necessary, but at the cost of computational efficiency.
+  debugMode::debug_disabled, // debugMode::debug_disabled for competition use, debugMode::debug_enabled to allow the code to pass errors through
+  "/dev/serial1" // The serial connection of the Jetson Nano ("/dev/serial1" is the micro-usb serial connection on the V5 Brain)
+); 
+
+
+// Vision Offset of the Vision Tesseract from the Center of Robot
+RobotVisionOffset vision_offset(
+  0.00, // The x offset in meters, (right-positive from the center of the robot).
+  15.0/100.0 // The y offset in meters (forward-positive from the center of the robot).
+);
+
+// Jetson Nano pose retreival object (also configured on Nano-side) 
+WhoopVision vision_system(
+  &vision_offset, // pointer to the vision offset
+  &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
+  "P" // The subscribed stream name to receive the pose from the Jetson Nano
+);
+
+////////////////////////////////////////////////////////////
+/**
+ *    Robot Drivetrain and Manager
+ */
+////////////////////////////////////////////////////////////
 WhoopDrivetrain robot_drivetrain(
   &controller1, // Pointer to the controller that controls the drivetrain
   &left_motors, // Pointer to the left motor group (optionally can be a list of motors as well)

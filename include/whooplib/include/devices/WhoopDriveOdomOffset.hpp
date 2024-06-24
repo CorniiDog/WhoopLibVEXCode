@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       WhoopDriveOdomOffset.hpp                                  */
-/*    Author:       Aggie Robotics                                            */
+/*    Author:       Connor White (WHOOP)                                      */
 /*    Created:      Thu Jun 21 2024                                           */
 /*    Description:  Odometry Offset Module for Pose Estimation                */
 /*                                                                            */

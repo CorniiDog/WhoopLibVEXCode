@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       WheelOdom.cpp                                             */
-/*    Author:       Aggie Robotics                                            */
+/*    Author:       Connor White (WHOOP)                                      */
 /*    Created:      Thu Jun 21 2024                                           */
 /*    Description:  Wheel X, Y, Yaw Tracking                                  */
 /*                                                                            */

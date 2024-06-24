@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
-/*    Module:       WhoopDriveOdomUnit.cpp                                        */
-/*    Author:       Aggie Robotics                                            */
+/*    Module:       WhoopDriveOdomUnit.cpp                                    */
+/*    Author:       Connor White (WHOOP)                                      */
 /*    Created:      Thu Jun 21 2024                                           */
 /*    Description:  Odometry Module for Pose Estimation                       */
 /*                                                                            */

@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       WhoopVision.hpp                                           */
-/*    Author:       Aggie Robotics                                            */
+/*    Author:       Connor White (WHOOP)                                      */
 /*    Created:      Thu Jun 21 2024                                           */
 /*    Description:  A Streamlined Jetson Nano Vision System                   */
 /*                                                                            */

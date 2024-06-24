@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       WhoopController.hpp                                       */
-/*    Author:       Aggie Robotics                                            */
+/*    Author:       Connor White (WHOOP)                                      */
 /*    Created:      Thu Jun 21 2024                                           */
 /*    Description:  Virtual Controller With Additional Functions              */
 /*                                                                            */
