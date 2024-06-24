@@ -40,7 +40,7 @@ The Documentation is planned to be developed. Will be updated upon creation.
 
 ## Acknowledgements
 
- - [Jar-Template](https://github.com/JacksonAreaRobotics/JAR-Template)
+ - [E-Bots πLons](http://thepilons.ca/wp-content/uploads/2018/10/Tracking.pdf)
  - [Librealsense](https://github.com/IntelRealSense/librealsense)
  - [VEX Robotics](https://github.com/VEX-Robotics-AI)
 
