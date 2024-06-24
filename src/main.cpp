@@ -19,6 +19,11 @@ using namespace vex;
 // A global instance of competition
 competition Competition;
 
+//TODO: Merge the wheel odom pose and vision pose
+// Use inertial for pitch, yaw, roll
+// Use wheel odom for x, y, yaw
+// Use vision system for x, y, z, pitch, yaw, roll, confidence, which confidence is [0,1] and conf>0.5 is good, conf>0.3 is acceptable
+
 ////////////////////////////////////////////////////////////
 /**
  *    VISION TESSERACT

@@ -114,12 +114,12 @@ void WhoopVision::_update_pose(std::string pose_data){
     // Both are pitch, yaw, roll equivalent.
     std::istringstream iss(pose_data); // Create a string stream from the input string
 
-    double x, negative_y, z, pitch, yaw, roll;
-    if(!(iss >> x >> z >> negative_y >> pitch >> yaw >> roll >> confidence)){
+    double x, negative_y, z, pitch, yaw, roll, unscaled_confidence;
+    if(!(iss >> x >> z >> negative_y >> pitch >> yaw >> roll >> unscaled_confidence)){
         return; // Reject malformed data
     }
-    confidence / 3.0;
     thread_lock.lock();
+    confidence = unscaled_confidence / 3.0; // Scale from 0 to 1
     raw_pose.x = x;
     raw_pose.y = -negative_y;
     raw_pose.z = z;

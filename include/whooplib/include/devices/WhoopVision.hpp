@@ -19,11 +19,18 @@
 
 /**
  * Struct representing a three-dimensional pose with orientation.
+ * @param x meters (right-positive)
+ * @param y meters (forward-positive)
+ * @param z meters (up-positive, non-zero with vision system)
+ * @param pitch radians (pitch-up-positive)
+ * @param yaw radians (counter-clockwise-positive)
+ * @param roll radians (counter-clockwise-positive)
+ * @param confidence (non-zero with vision system) If for the vision system, it would output a value between [0,1] where 1 is the highest confidence. 0.3 or higher means it tracks, and 0.5 or higher means the tracking is good.
  */
 struct Pose{
     double x=0, y=0, z=0;
     double pitch=0, yaw=0, roll=0;
-    double confidence = 0;
+    double confidence = 0; // If for the vision system, it would output a value between 0 and 1 where 1 is the highest confidence. 0.3 or higher means it tracks, and 0.5 or higher means the tracking is good.
 };
 
 /**
