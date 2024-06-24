@@ -30,6 +30,16 @@ Installing Whooplib Python (SSH On your Jetson Nano via "ssh jetson@your_jetson_
   git clone https://github.com/ConnorAtmos/WhoopLibPython
 ```
     
+Modify the whooplibpython.service if necessary, then after:
+
+```bash
+  sudo cp whooplibpython.service /etc/systemd/system/whooplibpython.service
+
+  sudo systemctl enable whooplibpython.service 
+
+  sudo systemctl restart whooplibpython.service
+```
+
 ## Documentation
 
 The Documentation is planned to be developed. Will be updated upon creation.
