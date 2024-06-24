@@ -32,7 +32,7 @@ private:
     void _on_message_received(std::string message);
     WhoopController* controller_for_messages;
 
-    int raw_connected = 0;
+    int raw_connected = 5;
 
     int keep_alive_time_seconds;
 
