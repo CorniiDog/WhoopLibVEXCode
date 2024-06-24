@@ -80,7 +80,7 @@ WhoopDriveOdomUnit odom_unit(
 WhoopDriveOdomUnit odom_unit(
   to_meters(12.625), // Width of the drivetrain, in meters. Measured as the distance between the left wheels and right wheels
   to_meters(3), // Diameter of drivetrain wheels, in meters 
-  1.0/2.0, // Gear Ratio (If [motor is powering 32t] connected to [64t sharing shaft with drive wheel], it would be ratio = 32/64 = 1.0/2.0) 
+  1.0/2.0, // Gear Ratio of Drivetrain (If [motor is powering 32t] connected to [64t sharing shaft with drive wheel], it would be ratio = 32/64 = 1.0/2.0) 
   to_meters(0), // Sideways tracker distance from the center of the robot's rotation. (positive implies a shift forward from the drivetrain's center)
   to_meters(2.5189), // Diameter of the sideways tracker, in meters (e.g., 0.08255 for 3.25-inch wheels).
   &inertial_sensor, 
@@ -97,7 +97,7 @@ WhoopDriveOdomUnit odom_unit(
 WhoopDriveOdomUnit odom_unit(
   to_meters(12.625), // Width of the drivetrain, in meters. Measured as the distance between the left wheels and right wheels
   to_meters(3), // Diameter of drivetrain wheels, in meters 
-  1.0/2.0, // Gear Ratio (If [motor is powering 32t] connected to [64t sharing shaft with drive wheel], it would be ratio = 32/64 = 1.0/2.0) 
+  1.0/2.0, // Gear Ratio of Drivetrain (If [motor is powering 32t] connected to [64t sharing shaft with drive wheel], it would be ratio = 32/64 = 1.0/2.0) 
   &inertial_sensor, 
   &left_motors, 
   &right_motors
