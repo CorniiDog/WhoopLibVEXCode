@@ -72,9 +72,42 @@ WhoopDriveOdomUnit odom_unit(
   &sideways_tracker // Pointer to the sideways tracker, as a WhoopRotation sensor
 );
 
+// Example of a single tracker setup
+// In this configuration, the sideways tracker must be directly in front, behind, or on the center of the robot's rotation.
+// It cannot be right or left shifted from the center. This is a similar configuration to the JAR-Template's one-tracker odom.
+// After, configure the odom_offset to 0,0
+/*
+WhoopDriveOdomUnit odom_unit(
+  to_meters(12.625), // Width of the drivetrain, in meters. Measured as the distance between the left wheels and right wheels
+  to_meters(3), // Diameter of drivetrain wheels, in meters 
+  1.0/2.0, // Gear Ratio (If [motor is powering 32t] connected to [64t sharing shaft with drive], it would be ratio = 32/64 = 1.0/2.0) 
+  to_meters(0), // Sideways tracker distance from the center of the robot's rotation. (positive implies a shift forward from the drivetrain's center)
+  to_meters(2.5189), // Diameter of the sideways tracker, in meters (e.g., 0.08255 for 3.25-inch wheels).
+  &inertial_sensor, 
+  &sideways_tracker, 
+  &left_motors, 
+  &right_motors
+);
+*/
+
+// Example of a no-tracker setup
+// In this configuration, there is not much you really need to do.
+// After, configure the odom_offset below to 0,0
+/*
+WhoopDriveOdomUnit odom_unit(
+  to_meters(12.625), // Width of the drivetrain, in meters. Measured as the distance between the left wheels and right wheels
+  to_meters(3), // Diameter of drivetrain wheels, in meters 
+  1.0/2.0, // Gear Ratio (If [motor is powering 32t] connected to [64t sharing shaft with drive], it would be ratio = 32/64 = 1.0/2.0) 
+  &inertial_sensor, 
+  &left_motors, 
+  &right_motors
+);
+*/
+
 // If your Odom Unit's Center is NOT the center of the robot, apply the offset here.
 // The measurement is from the center of the robot to the odom unit center.
 // If your Odom Unit's Center IS the center of the robot, set to 0,0.
+// ALSO If using one tracker or no tracker, set to 0,0.
 // Visual representation of Odom Unit from Center of Robot: https://imgur.com/x8ObCIG
 WhoopDriveOdomOffset odom_offset(
   &odom_unit, // Pointer to the odometry unit (will manage the odom unit)
