@@ -66,7 +66,7 @@ JetsonCommander jetson_commander(
   &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
   "C", // The subscribed stream name for keep-alive, shutdown, and reboot
   180, // The number of seconds to stay alive. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this continued
-  5 // How many seconds to wait before sending anoter keep alive message
+  2 // How many seconds to wait before sending anoter keep alive message
 );
 
 
