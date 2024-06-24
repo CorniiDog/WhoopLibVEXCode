@@ -52,7 +52,7 @@ RobotVisionOffset vision_offset(
 WhoopVision vision_system(
   &vision_offset, // pointer to the vision offset
   &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
-  "P" // The string representing the subscribed stream to receive the pose from the Jetson Nano
+  "P" // The subscribed stream name to receive the pose from the Jetson Nano
 );
 
 WhoopInertial inertial_sensor(PORT7);
