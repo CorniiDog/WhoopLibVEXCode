@@ -26,7 +26,7 @@
 #include "whooplib/include/toolbox.hpp"
 #include "whooplib/include/nodes/BufferNode.hpp"
 #include "whooplib/include/nodes/NodeManager.hpp"
-#include "whooplib/include/nodes/SerialCommunication.hpp"
+#include "whooplib/include/nodes/JetsonCommanderNode.hpp"
 
 // Devices
 #include "whooplib/include/devices/WhoopMotor.hpp"

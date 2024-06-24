@@ -1,14 +1,14 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
-/*    Module:       SerialCommunication.hpp                                       */
+/*    Module:       JetsonCommanderNode.hpp                                   */
 /*    Author:       Connor White (WHOOP)                                      */
 /*    Created:      Thu Jun 21 2024                                           */
 /*    Description:  A keep-alive system for the Jetson Nano                   */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-#ifndef SERIAL_COMMUNICATION_HPP
-#define SERIAL_COMMUNICATION_HPP
+#ifndef JETSON_COMMANDER_HPP
+#define JETSON_COMMANDER_HPP
 
 #include "whooplib/include/nodes/NodeManager.hpp"
 #include "whooplib/include/nodes/BufferNode.hpp"
@@ -17,7 +17,7 @@
 #include <functional>
 #include <memory> // For std::unique_ptr
 
-class SerialCommunication: public ComputeNode{
+class JetsonCommander: public ComputeNode{
 private:
     std::unique_ptr<Messenger> keepalive_messenger = nullptr; // Handles messaging for pose data from Jetson Nano
     int time_waited_ms = 0;
@@ -26,7 +26,7 @@ private:
 
     int keep_alive_time_seconds;
 public:
-    SerialCommunication(BufferNode* bufferSystem, std::string communication_stream, int keep_alive_time_seconds);
+    JetsonCommander(BufferNode* bufferSystem, std::string communication_stream, int keep_alive_time_seconds);
 
     void reboot_jetson();
     void shutdown_jetson();
@@ -37,4 +37,4 @@ public:
     void __step() override;  // Protected helper function for processing steps
 };
 
-#endif
+#endif // JETSON_COMMANDER_HPP

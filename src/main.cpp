@@ -62,7 +62,7 @@ WhoopVision vision_system(
 // jetson_commander.reboot_jetson();
 // This is essential to ensure that the nano starts its internal program, stop program, restarts program, 
 // and can be told to reboot or shutdown
-SerialCommunication jetson_commander(
+JetsonCommander jetson_commander(
   &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
   "C", // The subscribed stream name for keep-alive, shutdown, and reboot
   180 // The number of seconds to stay alive. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this continued
