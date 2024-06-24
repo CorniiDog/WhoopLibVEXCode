@@ -56,6 +56,20 @@ WhoopVision vision_system(
   "P" // The subscribed stream name to receive the pose from the Jetson Nano
 );
 
+// This is the jetson commander. It sends keep-alive messages intermittently and also allows
+// Running the following functions (can be a touch screen confirmation button perhaps):
+// jetson_commander.shutdown_jetson();
+// jetson_commander.reboot_jetson();
+// This is essential to ensure that the nano starts its internal program, stop program, restarts program, 
+// and can be told to reboot or shutdown
+SerialCommunication jetson_commander(
+  &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
+  "C", // The subscribed stream name for keep-alive, shutdown, and reboot
+  180 // The number of seconds to stay alive. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this continued
+);
+
+
+
 ////////////////////////////////////////////////////////////
 /**
  *    Globals
@@ -157,7 +171,7 @@ WhoopDrivetrain robot_drivetrain(
   &right_motors // Pointer to the right motor group (optionally can be a list of motors as well)
 );
 
-ComputeManager manager({&buffer_system, &robot_drivetrain, &odom_offset});
+ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &odom_offset,});
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
