@@ -23,7 +23,7 @@ void JetsonCommander::_on_message_received(std::string message){
     if(raw_connected > 5){
         raw_connected = 5;
     }
-    
+
     if(message == "Hello"){
         keepalive_messenger->send(intToString(keep_alive_time_seconds) + " " + "Initialize");
     }
@@ -68,7 +68,7 @@ void JetsonCommander::__step(){
     else{
         connected = false;
     }
-    raw_connected -= 1;
+
     if (raw_connected <= -1){
         raw_connected = -1;
     }
@@ -82,6 +82,8 @@ void JetsonCommander::__step(){
     else if(raw_connected > 5){
         raw_connected = 5;
     }
+
+    raw_connected -= 1;
     
     keepalive_messenger->send(intToString(keep_alive_time_seconds));
 }
