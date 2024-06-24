@@ -24,8 +24,10 @@ void WhoopController::notify(std::string message, double duration_seconds){
     vex_controller.Screen.setCursor(1, 1);
     vex_controller.Screen.print("Jetson Disconnected");
     vex_controller.rumble(".");
-    wait(duration_seconds, sec);
-    vex_controller.Screen.clearLine(1);
+    if(duration_seconds > 0 ){
+        wait(duration_seconds, sec);
+        vex_controller.Screen.clearLine(1);
+    }
 }
 
 /////////////////////////////////////////////
