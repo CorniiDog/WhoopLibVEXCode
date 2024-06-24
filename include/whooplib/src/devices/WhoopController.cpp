@@ -22,7 +22,7 @@ WhoopController::WhoopController(joystickMode mode, vex::controllerType controll
 void WhoopController::notify(std::string message, double duration_seconds){
     vex_controller.Screen.clearLine(1);
     vex_controller.Screen.setCursor(1, 1);
-    vex_controller.Screen.print(message);
+    vex_controller.Screen.print("%s", message);
     vex_controller.rumble(".");
     if(duration_seconds > 0 ){
         wait(duration_seconds, sec);
