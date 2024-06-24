@@ -23,6 +23,7 @@
 struct Pose{
     double x=0, y=0, z=0;
     double pitch=0, yaw=0, roll=0;
+    double confidence = 0;
 };
 
 /**
@@ -65,6 +66,7 @@ protected:
     double tare_pitch = 0;
     double tare_roll = 0;
     double tare_yaw = 0;
+    double confidence = 0;
 
     // Tared computes
     double tared_z = this->raw_pose.z - tare_z;

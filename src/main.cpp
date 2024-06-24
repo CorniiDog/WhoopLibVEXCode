@@ -21,6 +21,36 @@ competition Competition;
 
 ////////////////////////////////////////////////////////////
 /**
+ *    VISION TESSERACT
+ * 
+ *    Skip this section if you don't have a tesseract
+ *    connected to your V5 Brain
+ */
+////////////////////////////////////////////////////////////
+
+// Serial communication module
+BufferNode buffer_system(
+  256, // The buffer size, in characters. Increase if necessary, but at the cost of computational efficiency.
+  debugMode::debug_disabled, // debugMode::debug_disabled for competition use, debugMode::debug_enabled to allow the code to pass errors through
+  "/dev/serial1" // The serial connection of the Jetson Nano ("/dev/serial1" is the micro-usb serial connection on the V5 Brain)
+); 
+
+
+// Vision Offset of the Vision Tesseract from the Center of Robot
+RobotVisionOffset vision_offset(
+  0.00, // The x offset in meters, (right-positive from the center of the robot).
+  15.0/100.0 // The y offset in meters (forward-positive from the center of the robot).
+);
+
+// Jetson Nano pose retreival object (also configured on Nano-side) 
+WhoopVision vision_system(
+  &vision_offset, // pointer to the vision offset
+  &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
+  "P" // The subscribed stream name to receive the pose from the Jetson Nano
+);
+
+////////////////////////////////////////////////////////////
+/**
  *    Globals
  */
 ////////////////////////////////////////////////////////////
@@ -111,33 +141,6 @@ WhoopDriveOdomOffset odom_offset(
 
 ////////////////////////////////////////////////////////////
 /**
- *    VISION TESSERACT
- */
-////////////////////////////////////////////////////////////
-
-// Serial communication module
-BufferNode buffer_system(
-  256, // The buffer size, in characters. Increase if necessary, but at the cost of computational efficiency.
-  debugMode::debug_disabled, // debugMode::debug_disabled for competition use, debugMode::debug_enabled to allow the code to pass errors through
-  "/dev/serial1" // The serial connection of the Jetson Nano ("/dev/serial1" is the micro-usb serial connection on the V5 Brain)
-); 
-
-
-// Vision Offset of the Vision Tesseract from the Center of Robot
-RobotVisionOffset vision_offset(
-  0.00, // The x offset in meters, (right-positive from the center of the robot).
-  15.0/100.0 // The y offset in meters (forward-positive from the center of the robot).
-);
-
-// Jetson Nano pose retreival object (also configured on Nano-side) 
-WhoopVision vision_system(
-  &vision_offset, // pointer to the vision offset
-  &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
-  "P" // The subscribed stream name to receive the pose from the Jetson Nano
-);
-
-////////////////////////////////////////////////////////////
-/**
  *    Robot Drivetrain and Manager
  */
 ////////////////////////////////////////////////////////////
@@ -148,7 +151,6 @@ WhoopDrivetrain robot_drivetrain(
 );
 
 ComputeManager manager({&buffer_system, &robot_drivetrain, &odom_offset});
-
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -164,6 +166,7 @@ void pre_auton(void) {
   vexcodeInit();
 
   manager.start();
+
   robot_drivetrain.set_state(drivetrainState::mode_disabled);
 
   wait(0.5, sec);
@@ -215,7 +218,7 @@ void usercontrol(void) {
 
     Brain.Screen.clearLine(2);
     Brain.Screen.setCursor(2, 1);
-    Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f", vision_system.pose.x, vision_system.pose.y, vision_system.pose.z, vision_system.pose.pitch, vision_system.pose.yaw, vision_system.pose.roll);
+    Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f %.1f", vision_system.pose.x, vision_system.pose.y, vision_system.pose.z, vision_system.pose.pitch, vision_system.pose.yaw, vision_system.pose.roll, vision_system.pose.confidence);
     
     
     Brain.Screen.clearLine(3);

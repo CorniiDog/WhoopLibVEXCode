@@ -55,6 +55,7 @@ void WhoopVision::_transform_pose(bool apply_delta){
     this->pose.pitch = this->raw_pose.pitch - tared_pitch;
     this->pose.yaw = transposed.yaw;
     this->pose.roll = this->raw_pose.roll - tared_roll;
+    this->pose.confidence = confidence;
     thread_lock.unlock();
 }
 
@@ -114,9 +115,10 @@ void WhoopVision::_update_pose(std::string pose_data){
     std::istringstream iss(pose_data); // Create a string stream from the input string
 
     double x, negative_y, z, pitch, yaw, roll;
-    if(!(iss >> x >> z >> negative_y >> pitch >> yaw >> roll)){
+    if(!(iss >> x >> z >> negative_y >> pitch >> yaw >> roll >> confidence)){
         return; // Reject malformed data
     }
+    confidence / 3.0;
     thread_lock.lock();
     raw_pose.x = x;
     raw_pose.y = -negative_y;
@@ -124,6 +126,7 @@ void WhoopVision::_update_pose(std::string pose_data){
     raw_pose.pitch = pitch;
     raw_pose.yaw = yaw;
     raw_pose.roll = roll;
+    raw_pose.confidence = confidence;
     thread_lock.unlock();
 
     this->_transform_pose();

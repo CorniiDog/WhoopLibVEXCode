@@ -5,7 +5,7 @@
 	},
 	"project": {
 		"name": "WhoopLibVEXCode",
-		"description": "",
+		"description": "The most advanced SLAM solution in VEX",
 		"creationDate": "6/15/2024, 11:12:37 PM",
 		"platform": "V5",
 		"language": "cpp",
