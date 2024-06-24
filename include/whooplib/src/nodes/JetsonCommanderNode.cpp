@@ -29,9 +29,7 @@ void JetsonCommander::_on_message_received(std::string message){
     }
     else if(message == "Failed"){ // If failed to initialize realsense system
         if(!comms_disabled){
-            controller_for_messages->vex_controller.Screen.setCursor(1, 1);
-            controller_for_messages->vex_controller.Screen.print("Replug Vis USBs");
-            controller_for_messages->vex_controller.rumble("-");
+            controller_for_messages->notify("Replug Realsense", 1);
         }
     }
 }
@@ -69,15 +67,9 @@ void JetsonCommander::__step(){
         connected = false;
     }
 
-    if (raw_connected <= -1){
-        raw_connected = -1;
-    }
-    else if (raw_connected == 0){
-        if(!comms_disabled){
-            controller_for_messages->vex_controller.Screen.setCursor(1, 1);
-            controller_for_messages->vex_controller.Screen.print("Jetson DCd");
-            controller_for_messages->vex_controller.rumble("-");
-        }
+    if (raw_connected <= 0){
+        raw_connected = 0;
+        controller_for_messages->notify("Jetson Disconnected", 1);
     }
     else if(raw_connected > 5){
         raw_connected = 5;

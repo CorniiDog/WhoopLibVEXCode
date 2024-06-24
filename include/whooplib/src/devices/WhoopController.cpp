@@ -18,6 +18,16 @@ WhoopController::WhoopController(joystickMode mode) : vex_controller(controller(
 
 WhoopController::WhoopController(joystickMode mode, vex::controllerType controller_type) : vex_controller(controller(controller_type)), joystick_mode(mode){} 
 
+
+void WhoopController::notify(std::string message, double duration_seconds){
+    vex_controller.Screen.clearLine(1);
+    vex_controller.Screen.setCursor(1, 1);
+    vex_controller.Screen.print("Jetson Disconnected");
+    vex_controller.rumble(".");
+    wait(duration_seconds, sec);
+    vex_controller.Screen.clearLine(1);
+}
+
 /////////////////////////////////////////////
 // Controller joystick
 double WhoopController::get_left_joystick_x(){

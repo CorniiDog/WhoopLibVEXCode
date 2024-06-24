@@ -70,6 +70,13 @@ public:
      */
     double get_right_joystick_y();
 
+    /**
+     * Notifies for a set period of time
+     * @param message The message to send the notification
+     * @param duration_seconds The duration to display the message
+     */
+    void notify(std::string message, double duration_seconds=5);
+
     //UDLR
     bool up_pressing();
     bool down_pressing();
