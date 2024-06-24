@@ -7,18 +7,11 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-/**
- * General-use odometry class with X_position, Y_position, and
- * orientation_rad being the relevant outputs. This works for both one
- * and two-tracker systems, and requires a gyro to determine the input angle.
- * Note: The gyro input is counter-clockwise-positive and provided in radians,
- * which standardizes the rotation. This odometry system is a modified version
- * adapted from the Jar-Template, specifically tailored for academic use.
- * Source: https://github.com/JacksonAreaRobotics/JAR-Template/blob/main/src/JAR-Template/odom.cpp
- */
-
 #ifndef WHEEL_ODOM_HPP
 #define WHEEL_ODOM_HPP
+
+
+#include "vex.h"
 
 /**
  * Wheel Odometry Object
@@ -29,26 +22,17 @@ private:
 
   vex::mutex vex_mutex;
 
-  double ForwardTracker_center_distance; // Horizontal distance from the robot's center to the forward wheel's sensor.
-  double SidewaysTracker_center_distance; // Vertical distance from the robot's center to the sideways wheel's sensor.
-  double ForwardTracker_position; // Current horizontal position of the forward tracker in meters.
-  double SideWaysTracker_position; // Current vertical position of the sideways tracker in meters.
+    double tare_angle{0.0};  // Stores the initial gyro angle for taring
+    double last_forward_tracker_pos{0.0};
+    double last_sideways_tracker_pos{0.0};
+    double forward_tracker_center_distance{0.0};
+    double sideways_tracker_center_distance{0.0};
 
-  // Shelved variables for odometry use.
-  double local_X_position = 0;
-  double local_Y_position = 0;
-  double orientation_delta_rad = 0;
-  double Sideways_delta = 0;
-  double Forward_delta = 0;
-  double local_polar_angle = 0;
-  double local_polar_length = 0;
-  double global_polar_angle = 0;
-  double X_position_delta = 0;
-  double Y_position_delta = 0;
 public:
-  double X_position; // Field-centric X position of the robot in meters.
-  double Y_position; // Field-centric Y position of the robot in meters.
-  double orientation_rad; // Robot's orientation in radians, where 0 radians aligns with the positive Y-direction.
+  double X_position{0.0};
+  double Y_position{0.0};
+  double orientation_rad{0.0};
+  WheelOdom() = default;
 
   /**
    * Setter method for tracker center distances.
@@ -59,10 +43,11 @@ public:
    * If there's really no sideways wheel we set the center distance to 0 and
    * pretend the wheel never spins, which is equivalent to a no-drift robot.
    * 
-   * @param ForwardTracker_center_distance A horizontal distance to the wheel center in meters.
-   * @param SidewaysTracker_center_distance A vertical distance to the wheel center in meters.
+   * @param x The desired x position to start at
+   * @param y The desired y position to start at
+   * @param orientation The desired yaw position to start at (radians, counter-clockwise)
    */
-  void set_position(double X_position, double Y_position, double orientation_rad, double ForwardTracker_position, double SidewaysTracker_position);
+  void set_position(double x, double y, double orientation);
 
   /**
    * Resets the position, including tracking wheels.
@@ -70,13 +55,11 @@ public:
    * is in the positive Y direction. Orientation can be provided with 
    * some flexibility, including less than 0 and greater than 2*pi.
    * 
-   * @param X_position Field-centric x position of the robot.
-   * @param Y_position Field-centric y position of the robot.
-   * @param orientation_rad Field-centered, counter-clockwise-positive, orientation in radians.
-   * @param ForwardTracker_position Current position of the sensor in meters.
-   * @param SidewaysTracker_position Current position of the sensor in meters.
+   * @param forward_tracker_pos Current position of the sensor in meters.
+   * @param sideways_tracker_pos Current position of the sensor in meters.
+   * @param gyro_angle_rad Current angle of the gyroscope (radians, counter-clockwise positive)
    */
-  void _update_pose(double ForwardTracker_position, double SidewaysTracker_position, double orientation_rad);
+  void update_pose(double forward_tracker_pos, double sideways_tracker_pos, double gyro_angle_rad);
 
   /**
    * Does the odometry math to update position
@@ -85,11 +68,10 @@ public:
    * the input. Ultimately this all works to update the public member variable
    * X_position. This function needs to be run at 200Hz or so for best results.
    * 
-   * @param ForwardTracker_position Current position of the sensor in meters.
-   * @param SidewaysTracker_position Current position of the sensor in meters.
-   * @param orientation_rad Field-centered, counter-clockwise-positive, orientation in radians.
+   * @param forward_distance Distance from the odom unit center to the forward tracker, in meters (positive implies a shift to the right from the odom unit center).
+   * @param sideways_distance Distance from the odom unit center to the sideways tracker, in meters (positive implies a shift forward from the odom unit center).
    */
-  void set_physical_distances(double ForwardTracker_center_distance, double SidewaysTracker_center_distance);
+  void set_physical_distances(double forward_distance, double sideways_distance);;
 };
 
 #endif // WHEEL_ODOM_HPP

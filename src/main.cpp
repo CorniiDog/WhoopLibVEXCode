@@ -41,9 +41,9 @@ WhoopMotorGroup left_motors({&l1, &l2, &l3, &l4});
 // Vision Offset from Center of Robot
 // First variable is x, which +x is the direction of right from the center of the robot in meters
 // Second variable is y, which +y is the direction of forwardness from the center of the robot in meters
-double vision_x_offset = 0;
-double vision_y_offset = 15.0/100.0;
-RobotVisionOffset vision_offset(vision_x_offset, vision_y_offset);
+double vision_x_offset_m = 0;
+double vision_y_offset_m = 15.0/100.0;
+RobotVisionOffset vision_offset(vision_x_offset_m, vision_y_offset_m);
 
 // Jetson Nano pose retreival stream identifier (configured on Nano-side) 
 std::string pose_stream = "P";
@@ -53,14 +53,14 @@ WhoopVision vision_system(&vision_offset, &buffer_system, pose_stream);
 double gear_ratio = 1.0/2.0;
 
 // Wheel diameter in meters
-double wheel_diameter_meters = to_meters(3); 
+double wheel_diameter_m = to_meters(3); 
 
 WhoopInertial inertial_sensor(PORT7);
 WhoopRotation forward_tracker(PORT6, reversed::yes_reverse);
-WhoopRotation sideways_tracker(PORT9, reversed::yes_reverse);
+WhoopRotation sideways_tracker(PORT9, reversed::no_reverse);
 
-double forward_wheel_diameter_meters = to_meters(2.5189); // (e.g., 0.08255 for 3.25-inch wheels).
-double sideways_wheel_diameter_meters = to_meters(2.5189);
+double forward_wheel_diameter_m = to_meters(2.5189); // (e.g., 0.08255 for 3.25-inch wheels).
+double sideways_wheel_diameter_m = to_meters(2.5189);
 
 /**
  * SUGGESTION: It is easier and likely more precise to measure the distances by placing the robot over a glass table to allow the odometry wheels to recess to default 
@@ -70,17 +70,17 @@ double sideways_wheel_diameter_meters = to_meters(2.5189);
 // The odom unit center is the virtual intercept of the perpendicular faces of the odometry trackers.
 // The measurement is from the center of the odom unit to the designated tracker distances.
 // Visual Representation of Tracker Distances from Odom Unit: https://imgur.com/rWCCCfz
-double forward_tracker_distance_meters = to_meters(1.29); // Distance from the odom unit center to the forward tracker, in meters (positive implies a shift to the right from the odom unit center).
-double sideways_tracker_distance_meters = to_meters(-4.50); // Distance from the odom unit center to the sideways tracker, in meters (positive implies a shift forward from the odom unit center).
-WhoopDriveOdomUnit odom_unit(forward_tracker_distance_meters, forward_wheel_diameter_meters, sideways_tracker_distance_meters, sideways_wheel_diameter_meters, &inertial_sensor, &forward_tracker, &sideways_tracker);
+double forward_tracker_distance_m = to_meters(1.51); // Distance from the odom unit center to the forward tracker, in meters (positive implies a shift to the right from the odom unit center).
+double sideways_tracker_distance_m = to_meters(-4.468); // Distance from the odom unit center to the sideways tracker, in meters (positive implies a shift forward from the odom unit center).
+WhoopDriveOdomUnit odom_unit(forward_tracker_distance_m, forward_wheel_diameter_m, sideways_tracker_distance_m, sideways_wheel_diameter_m, &inertial_sensor, &forward_tracker, &sideways_tracker);
 
 // If your Odom Unit's Center is NOT the center of the robot, apply the offset here.
 // The measurement is from the center of the robot to the odom unit center.
 // If your Odom Unit's Center IS the center of the robot, set to 0,0.
 // Visual representation of Odom Unit from Center of Robot: https://imgur.com/x8ObCIG
-double odom_x_offset = to_meters(-0.60); // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
-double odom_y_offset = to_meters(4.95); // The y offset of the odom unit from the center of the robot (positive implies a shift forward from the center of the robot).
-WhoopDriveOdomOffset odom_offset(&odom_unit, odom_x_offset, odom_y_offset);
+double odom_x_offset_m = to_meters(-0.6); // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
+double odom_y_offset_m = to_meters(4.95); // The y offset of the odom unit from the center of the robot (positive implies a shift forward from the center of the robot).
+WhoopDriveOdomOffset odom_offset(&odom_unit, odom_x_offset_m, odom_y_offset_m);
 
 WhoopDrivetrain robot_drivetrain(&controller1, &left_motors, &right_motors);
 
@@ -144,7 +144,7 @@ void usercontrol(void) {
 
   wait(0.5, sec);
   vision_system.tare(1, 1, M_PI/4);
-  odom_offset.tare(to_meters(1), to_meters(1), to_rad(0));
+  odom_offset.tare(0,0,0);
 
   // User control code here, inside the loop
   while (1) {
