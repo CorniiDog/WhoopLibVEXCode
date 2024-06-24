@@ -31,7 +31,14 @@ void WhoopDriveOdomOffset::calibrate(){
 
 void WhoopDriveOdomOffset::tare(double x, double y, double yaw){
     thread_lock.lock();
-    TwoDPose TaredOffset = TwoDPose(x, y, yaw) * -offset;
+
+    TwoDPose TaredOffset = TwoDPose(x, y, yaw);
+
+    // If there is an offset
+    if(offset.x != 0 or offset.y != 0 or offset.yaw != 0){ 
+        TaredOffset *= -offset;
+    }
+
     odom_unit->tare(TaredOffset.x, TaredOffset.y, TaredOffset.yaw);
     thread_lock.unlock();
 }
@@ -49,7 +56,12 @@ void WhoopDriveOdomOffset::__step(){
     thread_lock.lock();
     odom_unit->__step();
 
-    pose = odom_unit->pose * offset; // Update pose with offset
+    if(offset.x == offset.y == offset.yaw == 0){ // If offset is not applied
+        pose = odom_unit->pose; // Update pose without offset, to reduce computational time
+    }
+    else{
+        pose = odom_unit->pose * offset; // Update pose with offset
+    }
 
     thread_lock.unlock();
 }
