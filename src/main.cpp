@@ -26,49 +26,6 @@ competition Competition;
 
 //TODO: Write code that communicates to the Jetson Nano to start and stop vision system
 
-////////////////////////////////////////////////////////////
-/**
- *    VISION TESSERACT
- * 
- *    Skip this section if you don't have a tesseract
- *    connected to your V5 Brain
- */
-////////////////////////////////////////////////////////////
-
-// Serial communication module
-BufferNode buffer_system(
-  256, // The buffer size, in characters. Increase if necessary, but at the cost of computational efficiency.
-  debugMode::debug_disabled, // debugMode::debug_disabled for competition use, debugMode::debug_enabled to allow the code to pass errors through
-  "/dev/serial1" // The serial connection of the Jetson Nano ("/dev/serial1" is the micro-usb serial connection on the V5 Brain)
-); 
-
-
-// Vision Offset of the Vision Tesseract from the Center of Robot
-RobotVisionOffset vision_offset(
-  0.00, // The x offset in meters, (right-positive from the center of the robot).
-  15.0/100.0 // The y offset in meters (forward-positive from the center of the robot).
-);
-
-// Jetson Nano pose retreival object (also configured on Nano-side) 
-WhoopVision vision_system(
-  &vision_offset, // pointer to the vision offset
-  &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
-  "P" // The subscribed stream name to receive the pose from the Jetson Nano
-);
-
-// This is the jetson commander. It sends keep-alive messages intermittently and also allows
-// Running the following functions (can be a touch screen confirmation button perhaps):
-// jetson_commander.shutdown_jetson();
-// jetson_commander.reboot_jetson();
-// This is essential to ensure that the nano starts its internal program, stop program, restarts program, 
-// and can be told to reboot or shutdown
-JetsonCommander jetson_commander(
-  &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
-  "C", // The subscribed stream name for keep-alive, shutdown, and reboot
-  180, // The number of seconds to stay alive. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this continued
-  2 // How many seconds to wait before sending anoter keep alive message
-);
-
 
 
 ////////////////////////////////////////////////////////////
@@ -159,6 +116,52 @@ WhoopDriveOdomOffset odom_offset(
   &odom_unit, // Pointer to the odometry unit (will manage the odom unit)
   to_meters(-0.6), // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
   to_meters(4.95) // The y offset of the odom unit from the center of the robot (positive implies a shift forward from the center of the robot).
+);
+
+////////////////////////////////////////////////////////////
+/**
+ *    VISION TESSERACT
+ * 
+ *    Skip this section if you don't have a tesseract
+ *    connected to your V5 Brain
+ */
+////////////////////////////////////////////////////////////
+
+// Serial communication module
+BufferNode buffer_system(
+  256, // The buffer size, in characters. Increase if necessary, but at the cost of computational efficiency.
+  debugMode::debug_disabled, // debugMode::debug_disabled for competition use, debugMode::debug_enabled to allow the code to pass errors through
+  "/dev/serial1" // The serial connection of the Jetson Nano ("/dev/serial1" is the micro-usb serial connection on the V5 Brain)
+); 
+
+
+// Vision Offset of the Vision Tesseract from the Center of Robot
+RobotVisionOffset vision_offset(
+  0.00, // The x offset in meters, (right-positive from the center of the robot).
+  15.0/100.0 // The y offset in meters (forward-positive from the center of the robot).
+);
+
+// Jetson Nano pose retreival object (also configured on Nano-side) 
+WhoopVision vision_system(
+  &vision_offset, // pointer to the vision offset
+  &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
+  "P" // The subscribed stream name to receive the pose from the Jetson Nano
+);
+
+// This is the jetson commander. It sends keep-alive messages intermittently and also allows
+// Running the following functions (can be a touch screen confirmation button perhaps):
+// jetson_commander.shutdown_jetson();
+// jetson_commander.reboot_jetson();
+// bool is_connected_currently = jetson_commander.is_connected_to_jetson();
+// This is essential to ensure that the nano starts its internal program, stop program, restarts program, 
+// and can be told to reboot or shutdown
+JetsonCommander jetson_commander(
+  &controller1, // The controller to send messages to upon error
+  &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
+  "C", // The subscribed stream name for keep-alive, shutdown, and reboot
+  180, // The number of seconds to stay alive. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this continued
+  2, // How many seconds to wait before sending anoter keep alive message (suggested 2)
+  jetsonCommunication::enable_comms // Allow/deny the jetson to send controller notifications (set to jetsonCommunication::disable_comms to reject controller communication)
 );
 
 ////////////////////////////////////////////////////////////

@@ -29,9 +29,8 @@ enum joystickMode{
  * Controls and manages inputs from a VEX controller.
  */
 class WhoopController {
-protected:
-    vex::controller vex_controller; // Instance of VEX controller.
 public:
+    vex::controller vex_controller; // Instance of VEX controller.
     joystickMode joystick_mode; // Current joystick mode.
 
     /**
