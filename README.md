@@ -47,13 +47,13 @@ The Documentation is planned to be developed. Will be updated upon creation.
 
 ## Features
 
-- Visual Pose Estimation
+- Visual Odometry/Pose Estimation
+- Wheel Odometry/Pose Estimation
 - Communication between V5 Brain and Jetson Nano
 
 
 ## Roadmap
 
-- Wheel Odometry
 - Fusion between Visual Pose Estimation and Wheel Odometry
 - Object Detection and Gridded Permanence systenm
 - Moving between Point A and Point B
