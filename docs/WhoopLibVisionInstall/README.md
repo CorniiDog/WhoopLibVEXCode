@@ -57,5 +57,5 @@ With "your_jetson_ip" as the ip address of the jetson on the network.
 
   git pull
 
-  sudo reboot now
+  sudo systemctl restart whooplibpython.service
 ```
