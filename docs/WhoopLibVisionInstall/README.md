@@ -17,7 +17,7 @@ You will require a MicroSD card with at least 64GB of memory. 32GB will not cut 
 
 - ###### Install from Image:
 > 1. Download the compressed .img from here:\
-> For Jetson Nano:\
+> For Jetson Nano: [File Link](https://drive.google.com/file/d/1dwa_KmGzVp8BOQCDQ5cHc-nW-zZzIjw9/view?usp=sharing)\
 > For Jetson Nano Orion: Not Available Yet
 > 2. Extract whooplib_vision.zip file:\
 > Right click the file -> Extract Here
