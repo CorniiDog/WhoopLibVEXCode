@@ -42,15 +42,18 @@ WhoopLibPython: https://github.com/ConnorAtmos/WhoopLibPython
 
 On your computer (separate device) Install VSCode
 
-Install "VEX Robotics" Extension in VSCode
-
-Installing Whooplib VEXCode (On your computer):
+Open up cmd Installing Whooplib VEXCode Template (On your computer):
 
 ```bash
   cd Desktop
 
   git clone https://github.com/ConnorAtmos/WhoopLibVEXCode
 ```
+
+Install "VEX Robotics" Extension in VSCode
+
+You should be prompted to install the C++ extension by Microsoft. This would be using Intellisense (clangd may not work with the VEXCode extension)
+
 
 ## Installation for Jetson Nano
 
