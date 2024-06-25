@@ -55,8 +55,6 @@ Installing Whooplib VEXCode (On your computer):
 
 ## Installation for Jetson Nano
 
-Installing Whooplib Python (SSH On your Jetson Nano via "ssh jetson@your_jetson_ip"):
-
 [Instructions to build Vision Tesseract for Jetson Nano from Source](https://docs.google.com/document/d/1R466WGGEFfLnCq74Ui_tFQveaQ1RHnSQTE2j4t9e8I4/edit?usp=sharing)
 
 SSH into your jetson nano via "```ssh jetson@your_jetson_ip```"
