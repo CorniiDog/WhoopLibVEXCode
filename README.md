@@ -95,23 +95,23 @@ Distributed under the [MIT](https://choosealicense.com/licenses/mit/) License.
 
 Connor White - connor.sw.personal@gmail.com
 
-Project Link: [https://github.com/ConnorAtmos/OpenVR_Simple_Tracking](https://github.com/ConnorAtmos/OpenVR_Simple_Tracking)
+Project Link: [https://github.com/ConnorAtmos/WhoopLibVEXCode](https://github.com/ConnorAtmos/WhoopLibVEXCode)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/ConnorAtmos/OpenVR_Simple_Tracking.svg?style=for-the-badge
-[contributors-url]: https://github.com/ConnorAtmos/OpenVR_Simple_Tracking/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/ConnorAtmos/OpenVR_Simple_Tracking.svg?style=for-the-badge
-[forks-url]: https://github.com/ConnorAtmos/OpenVR_Simple_Tracking/network/members
-[stars-shield]: https://img.shields.io/github/stars/ConnorAtmos/OpenVR_Simple_Tracking.svg?style=for-the-badge
-[stars-url]: https://github.com/ConnorAtmos/OpenVR_Simple_Tracking/stargazers
-[issues-shield]: https://img.shields.io/github/issues/ConnorAtmos/OpenVR_Simple_Tracking.svg?style=for-the-badge
-[issues-url]: https://github.com/ConnorAtmos/OpenVR_Simple_Tracking/issues
-[license-shield]: https://img.shields.io/github/license/ConnorAtmos/OpenVR_Simple_Tracking.svg?style=for-the-badge
-[license-url]: https://github.com/ConnorAtmos/OpenVR_Simple_Tracking/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/ConnorAtmos/WhoopLibVEXCode.svg?style=for-the-badge
+[contributors-url]: https://github.com/ConnorAtmos/WhoopLibVEXCode/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/ConnorAtmos/WhoopLibVEXCode.svg?style=for-the-badge
+[forks-url]: https://github.com/ConnorAtmos/WhoopLibVEXCode/network/members
+[stars-shield]: https://img.shields.io/github/stars/ConnorAtmos/WhoopLibVEXCode.svg?style=for-the-badge
+[stars-url]: https://github.com/ConnorAtmos/WhoopLibVEXCode/stargazers
+[issues-shield]: https://img.shields.io/github/issues/ConnorAtmos/WhoopLibVEXCode.svg?style=for-the-badge
+[issues-url]: https://github.com/ConnorAtmos/WhoopLibVEXCode/issues
+[license-shield]: https://img.shields.io/github/license/ConnorAtmos/WhoopLibVEXCode.svg?style=for-the-badge
+[license-url]: https://github.com/ConnorAtmos/WhoopLibVEXCode/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/connor-white-38a5501a0/
 
