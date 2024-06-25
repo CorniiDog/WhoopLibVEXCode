@@ -38,7 +38,7 @@ WhoopLibPython: https://github.com/ConnorAtmos/WhoopLibPython
 - Detecting other robots that impede the path of the robot, and drive around
 - Virtual Highway system
 
-## Installation for V5 Brain
+## Downloading WhoopLibVEXCode Template for V5 Brain
 
 On your computer (separate device) Install VSCode
 
