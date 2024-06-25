@@ -80,7 +80,7 @@ Run the following to update to the latest version of the WhoopLibPython and rebo
 
 ## Documentation
 
-The Documentation is planned to be developed. Will be updated upon creation.
+[Documentation Link](https://connoratmos.github.io/WhoopLibVEXCode/#/)
 
 
 ## Acknowledgements
