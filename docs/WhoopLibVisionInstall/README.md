@@ -44,7 +44,8 @@ You will require a MicroSD card with at least 64GB of memory. 32GB will not cut 
 
 ## Update to Latest Deployment
 
-1. SSH into your jetson nano via "```ssh jetson@your_jetson_ip```"
+1. SSH into your jetson nano via "```ssh jetson@your_jetson_ip```"\
+With "your_jetson_ip" as the ip address of the jetson on the network.
 
 2. Password should be "```jetson```"
 
