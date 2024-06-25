@@ -1,4 +1,4 @@
-![WhoopLib Logo](/include/whooplib/images/WhoopLibWhite.png)
+![WhoopLib Logo](/docs/images/whooplib/images/WhoopLibWhite.png)
 
 <!-- PROJECT SHIELDS -->
 <!--
