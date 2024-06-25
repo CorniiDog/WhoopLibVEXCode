@@ -36,7 +36,6 @@ WhoopLibPython Github: https://github.com/ConnorAtmos/WhoopLibPython
 - Fusion between Visual Pose Estimation and Wheel Odometry
 - Object Detection and Gridded Permanence systenm
 - Moving between Point A and Point B
-- Documentation
 - Detecting other robots that impede the path of the robot, and drive around
 - Virtual Highway system
 
