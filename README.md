@@ -106,7 +106,7 @@ Connor White - connor.sw.personal@gmail.com
 [issues-shield]: https://img.shields.io/github/issues/ConnorAtmos/WhoopLibVEXCode.svg?style=for-the-badge
 [issues-url]: https://github.com/ConnorAtmos/WhoopLibVEXCode/issues
 [license-shield]: https://img.shields.io/github/license/ConnorAtmos/WhoopLibVEXCode.svg?style=for-the-badge
-[license-url]: https://github.com/ConnorAtmos/WhoopLibVEXCode/blob/master/LICENSE.txt
+[license-url]: https://github.com/ConnorAtmos/WhoopLibVEXCode/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/connor-white-38a5501a0/
 
