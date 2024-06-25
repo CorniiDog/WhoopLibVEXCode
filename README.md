@@ -8,6 +8,9 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
+
+The most advanced SLAM solution in VEX.
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -15,12 +18,28 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-The most advanced SLAM solution in VEX.
+## Project Links
 
+WhoopLibVEXCode: https://github.com/ConnorAtmos/WhoopLibVEXCode
 
-## Installation
+WhoopLibPython: https://github.com/ConnorAtmos/WhoopLibPython
 
-[Instructions on setting up your Jetson Nano](https://docs.google.com/document/d/1Zwriuj1YhczBsMVh11xQKaoRo1WXXvaLQYEdnHrO4jg/edit?usp=sharing)
+## Features
+
+- Visual Odometry/Pose Estimation
+- Wheel Odometry/Pose Estimation
+- Communication between V5 Brain and Jetson Nano
+
+## Roadmap
+
+- Fusion between Visual Pose Estimation and Wheel Odometry
+- Object Detection and Gridded Permanence systenm
+- Moving between Point A and Point B
+- Documentation
+- Detecting other robots that impede the path of the robot, and drive around
+- Virtual Highway system
+
+## Installation for V5 Brain
 
 On your computer (separate device) Install VSCode
 
@@ -34,32 +53,32 @@ Installing Whooplib VEXCode (On your computer):
   git clone https://github.com/ConnorAtmos/WhoopLibVEXCode
 ```
 
+## Installation for Jetson Nano
+
 Installing Whooplib Python (SSH On your Jetson Nano via "ssh jetson@your_jetson_ip"):
 
-```bash
-  cd ~/Desktop
+[Instructions to build Vision Tesseract for Jetson Nano from Source](https://docs.google.com/document/d/1R466WGGEFfLnCq74Ui_tFQveaQ1RHnSQTE2j4t9e8I4/edit?usp=sharing)
 
-  mkdir WhoopLibPython
+SSH into your jetson nano via "```ssh jetson@your_jetson_ip```"
 
-  git clone https://github.com/ConnorAtmos/WhoopLibPython
-```
-    
-Modify the whooplibpython.service if necessary, then after:
+Password should be "```jetson```"
+
+Run the following to update to the latest version of the WhoopLibPython and reboot.
 
 ```bash
-  sudo cp whooplibpython.service /etc/systemd/system/whooplibpython.service
+  cd ~/Desktop/WhoopLibPython
 
-  sudo systemctl enable whooplibpython.service 
+  git fetch
 
-  sudo systemctl restart whooplibpython.service
+  git pull
+
+  sudo reboot now
 ```
+
 
 ## Documentation
 
 The Documentation is planned to be developed. Will be updated upon creation.
-
-
-
 
 
 ## Acknowledgements
@@ -67,23 +86,6 @@ The Documentation is planned to be developed. Will be updated upon creation.
  - [E-Bots πLons](http://thepilons.ca/wp-content/uploads/2018/10/Tracking.pdf)
  - [Librealsense](https://github.com/IntelRealSense/librealsense)
  - [VEX Robotics](https://github.com/VEX-Robotics-AI)
-
-
-## Features
-
-- Visual Odometry/Pose Estimation
-- Wheel Odometry/Pose Estimation
-- Communication between V5 Brain and Jetson Nano
-
-
-## Roadmap
-
-- Fusion between Visual Pose Estimation and Wheel Odometry
-- Object Detection and Gridded Permanence systenm
-- Moving between Point A and Point B
-- Documentation
-- Detecting other robots that impede the path of the robot, and drive around
-- Virtual Highway system
 
 <!-- LICENSE -->
 ## License
@@ -94,11 +96,6 @@ Distributed under the [MIT](https://choosealicense.com/licenses/mit/) License.
 ## Contact
 
 Connor White - connor.sw.personal@gmail.com
-
-Project Link: [https://github.com/ConnorAtmos/WhoopLibVEXCode](https://github.com/ConnorAtmos/WhoopLibVEXCode)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
