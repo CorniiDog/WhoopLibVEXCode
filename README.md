@@ -50,6 +50,8 @@ Open up cmd Installing Whooplib VEXCode Template (On your computer):
   git clone https://github.com/ConnorAtmos/WhoopLibVEXCode
 ```
 
+Open the project in VSCode
+
 Install "VEX Robotics" Extension in VSCode
 
 You should be prompted to install the C++ extension by Microsoft. This would be using Intellisense (clangd may not work with the VEXCode extension)
