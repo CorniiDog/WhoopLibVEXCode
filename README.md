@@ -17,11 +17,13 @@ The most advanced SLAM solution in VEX.
 [![Issues][issues-shield]][issues-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-## Project Links
+## Links
 
-WhoopLibVEXCode: https://github.com/ConnorAtmos/WhoopLibVEXCode
+Documentation: https://connoratmos.github.io/WhoopLibVEXCode/#/
 
-WhoopLibPython: https://github.com/ConnorAtmos/WhoopLibPython
+WhoopLibVEXCode Github: https://github.com/ConnorAtmos/WhoopLibVEXCode
+
+WhoopLibPython Github: https://github.com/ConnorAtmos/WhoopLibPython
 
 ## Features
 
@@ -55,33 +57,6 @@ Open the project in VSCode
 Install "VEX Robotics" Extension in VSCode
 
 You should be prompted to install the C++ extension by Microsoft. This would be using Intellisense (clangd may not work with the VEXCode extension)
-
-
-## Installation for Jetson Nano
-
-[Instructions to build Vision Tesseract for Jetson Nano from Source](https://docs.google.com/document/d/1R466WGGEFfLnCq74Ui_tFQveaQ1RHnSQTE2j4t9e8I4/edit?usp=sharing)
-
-SSH into your jetson nano via "```ssh jetson@your_jetson_ip```"
-
-Password should be "```jetson```"
-
-Run the following to update to the latest version of the WhoopLibPython and reboot.
-
-```bash
-  cd ~/Desktop/WhoopLibPython
-
-  git fetch
-
-  git pull
-
-  sudo reboot now
-```
-
-
-## Documentation
-
-[Documentation Link](https://connoratmos.github.io/WhoopLibVEXCode/#/)
-
 
 ## Acknowledgements
 
