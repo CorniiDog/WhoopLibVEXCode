@@ -16,23 +16,23 @@ You will require a MicroSD card with at least 64GB of memory. 32GB will not cut 
 #### You have two options to setup the Jetson Nano (select one):
 
 - ###### Install from Image:
-> 1. Download the compressed .img from here:
-> 2. Download 7-Zip if it's not already installed:\
-> Windows: [Download Page](https://www.7-zip.org/download.html)\
-> Linux: run ```sudo apt-get update && sudo apt-get install p7zip-full```
-> 3. Extract whooplib_vision.img.7z file:\
-> Windows: Right click the file -> 7-Z -> Extract Here\
-> Linux: run ```7z x whooplib_vision.img.7z```
-> 4. Download Balena Etcher: [Download Page](https://github.com/balena-io/etcher/releases/)\
+> 1. Download the compressed .img from here:\
+> For Jetson Nano:\
+> For Jetson Nano Orion: Not Available Yet
+> 2. Extract whooplib_vision.zip file:\
+> Right click the file -> Extract Here
+> 3. Download Balena Etcher: [Download Page](https://github.com/balena-io/etcher/releases/)\
 > Windows: Download the x64 .exe and run the installer\
 > Linux: Download the .deb, Right Click -> Open With Other Application -> Software Install
-> 5. Run Balena Etcher and etch the whooplib_vision.img onto your MicroSD Card
-> 6. Put your MicroSD Card into the port on the Jetson Nano
-> 7. Connect a monitor to the Nano and power it\
+> 4. Run Balena Etcher and etch the whooplib_vision.img onto your MicroSD Card\
+> This process may take 30-60 minutes.
+> 5. Put your MicroSD Card into the port on the Jetson Nano
+> 6. Connect a monitor to the Nano and power it\
 > It may take a while (5-10 minutes), but you should expect it to display the desktop.
 
 - ###### Build From Source:
-> [Instructions to build Whooplib Vision OS from Source](https://docs.google.com/document/d/1R466WGGEFfLnCq74Ui_tFQveaQ1RHnSQTE2j4t9e8I4/edit?usp=sharing)
+> For Jetson Nano: [Instructions](https://docs.google.com/document/d/1R466WGGEFfLnCq74Ui_tFQveaQ1RHnSQTE2j4t9e8I4/edit?usp=sharing)\
+> For Jetson Nano Orion: Not Available Yet
 
 ## Connect Jetson Nano to WiFi
 
@@ -40,6 +40,9 @@ You will require a MicroSD card with at least 64GB of memory. 32GB will not cut 
 
 2. Connect to the wifi network (Image for Reference):\
 ![Image](../images/JetsonWifi.png)
+
+3. Click "Connection Information" and take note of the ip address. This is the IP address for your Jetson Nano for the next step\
+![Image](../images/LocalIP.png)
 
 
 ## Update to Latest Deployment
