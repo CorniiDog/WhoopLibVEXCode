@@ -216,9 +216,10 @@ void pre_auton(void) {
   jetson_commander.initialize();
 
   // Calibration protocol
+  double time_until_calibration = 1000; // ms
+
   bool needs_calibration = true;
   double calibration_timer = 0;
-  double time_until_calibration = 1000; // ms
   bool moved_one_time_notif = false;
   while (robot_drivetrain.drive_state == drivetrainState::mode_disabled || needs_calibration){
     if(odom_fusion.is_moving()){
