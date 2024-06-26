@@ -3,7 +3,7 @@
 /*    Module:       RollingAverage.hpp                                        */
 /*    Author:       Connor White (WHOOP)                                      */
 /*    Created:      Thu Jun 21 2024                                           */
-/*    Description:  Kalman Filter for Odometry                                */
+/*    Description:  Rolling Average Filter for Odometry                       */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
@@ -19,7 +19,9 @@
  */
 class RollingAverageFilter {
 private:
-    std::deque<Pose> buffer;
+    std::deque<Pose> buffer_pose;
+    std::deque<double> buffer_double;
+    std::deque<double> buffer_int;
     int capacity;
 
 public:
@@ -35,6 +37,18 @@ public:
    * @return rolling average result
    */
     Pose process(const Pose& newMeasurement);
+
+    /**
+   * Processes double into rolling average
+   * @return rolling average result
+   */
+    double process(double newMeasurement);
+
+    /**
+   * Processes double into rolling average
+   * @return rolling average result
+   */
+    int process(int newMeasurement);
 };
 
 #endif

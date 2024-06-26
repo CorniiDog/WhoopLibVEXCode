@@ -22,6 +22,8 @@
 #include "whooplib/include/calculators/TwoDPose.hpp"
 #include "whooplib/include/calculators/WheelOdom.hpp"
 #include "whooplib/include/calculators/RollingAverage.hpp"
+#include "whooplib/include/calculators/LowPassFilter.hpp"
+#include "whooplib/include/calculators/KalmanFilter.hpp"
 
 // Nodes
 #include "whooplib/include/toolbox.hpp"
