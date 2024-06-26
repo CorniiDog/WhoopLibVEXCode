@@ -30,10 +30,10 @@ WhoopLibPython Github: https://github.com/ConnorAtmos/WhoopLibPython
 - Visual Odometry/Pose Estimation
 - Wheel Odometry/Pose Estimation
 - Communication between V5 Brain and Jetson Nano
+- Fusion between Visual Odometry and Wheel Odometry
 
 ## Roadmap
 
-- Fusion between Visual Pose Estimation and Wheel Odometry
 - Object Detection and Gridded Permanence systenm
 - Moving between Point A and Point B
 - Detecting other robots that impede the path of the robot, and drive around
@@ -43,7 +43,7 @@ WhoopLibPython Github: https://github.com/ConnorAtmos/WhoopLibPython
 
 On your computer (separate device) Install VSCode
 
-Open up cmd Installing Whooplib VEXCode Template (On your computer):
+Open up command prompt or terminal (On your computer):
 
 ```bash
   cd Desktop
