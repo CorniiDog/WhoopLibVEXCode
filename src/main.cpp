@@ -24,10 +24,6 @@ competition Competition;
 // Use wheel odom for x, y, yaw
 // Use vision system for x, y, z, pitch, yaw, roll, confidence, which confidence is [0,1] and conf>0.5 is good, conf>0.3 is acceptable
 
-//TODO: Write code that communicates to the Jetson Nano to start and stop vision system
-
-
-
 ////////////////////////////////////////////////////////////
 /**
  *    Globals
@@ -121,10 +117,19 @@ WhoopDriveOdomOffset odom_offset(
 ////////////////////////////////////////////////////////////
 /**
  *    VISION TESSERACT
- * 
- *    Skip this section if you don't have a tesseract
- *    connected to your V5 Brain
  */
+////////////////////////////////////////////////////////////
+
+// If you have a Vision Tesseract on your robot, 
+// switch to jetsonCommunication::enable_comms
+// If not, use jetsonCommunication::disable_comms
+jetsonCommunication jetson_comms_enabled = jetsonCommunication::disable_comms;
+
+////////////////////////////////////////////////////////////
+/** 
+ *    Skip the rest of this section if you don't have a
+ *    Tesseract on your robot
+*/ 
 ////////////////////////////////////////////////////////////
 
 // Serial communication module
@@ -161,7 +166,7 @@ JetsonCommander jetson_commander(
   "C", // The subscribed stream name for keep-alive, shutdown, and reboot
   180, // The number of seconds to stay alive. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this continued
   2, // How many seconds to wait before sending anoter keep alive message (suggested 2)
-  jetsonCommunication::enable_comms // Allow/deny the jetson to send controller notifications (set to jetsonCommunication::disable_comms to reject controller communication)
+  jetson_comms_enabled // Allow/deny the jetson to send controller notifications
 );
 
 ////////////////////////////////////////////////////////////
@@ -175,7 +180,7 @@ WhoopDrivetrain robot_drivetrain(
   &right_motors // Pointer to the right motor group (optionally can be a list of motors as well)
 );
 
-ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &odom_offset,});
+ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &odom_offset});
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */

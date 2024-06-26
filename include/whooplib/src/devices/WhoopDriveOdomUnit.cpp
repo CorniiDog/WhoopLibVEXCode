@@ -103,7 +103,10 @@ void WhoopDriveOdomUnit::tare(){
 }
 
 TwoDPose WhoopDriveOdomUnit::get_pose(){
-    return pose;
+    thread_lock.lock();
+    TwoDPose result = pose;
+    thread_lock.unlock();
+    return result;
 }
 
 void WhoopDriveOdomUnit::__step(){

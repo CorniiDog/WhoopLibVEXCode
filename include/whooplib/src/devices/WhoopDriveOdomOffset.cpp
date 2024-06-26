@@ -49,12 +49,22 @@ void WhoopDriveOdomOffset::tare(){
 
 
 TwoDPose WhoopDriveOdomOffset::get_pose(){
-    return pose;
+    thread_lock.lock();
+    TwoDPose result = pose;
+    thread_lock.unlock();
+    return result;
+}
+
+void WhoopDriveOdomOffset::__step_down(){
+    thread_lock.lock();
+    odom_unit->__step();
+    thread_lock.unlock();
+
+    this->__step();
 }
 
 void WhoopDriveOdomOffset::__step(){
     thread_lock.lock();
-    odom_unit->__step();
 
     if(offset.x == offset.y == offset.yaw == 0){ // If offset is not applied
         pose = odom_unit->pose; // Update pose without offset, to reduce computational time

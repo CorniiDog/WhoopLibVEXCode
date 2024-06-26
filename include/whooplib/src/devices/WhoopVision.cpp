@@ -77,6 +77,10 @@ void WhoopVision::tare(double x, double y, double z, double pitch, double yaw, d
     thread_lock.unlock();
 }
 
+void WhoopVision::on_update(std::function<void(Pose)> callback){
+    callback_functions.push_back(callback);
+}
+
 void WhoopVision::tare(double x, double y, double yaw, tare_remaining_0 tare_rest_to_zero){
     thread_lock.lock();
     this->tare_x = x;
@@ -128,6 +132,10 @@ void WhoopVision::_update_pose(std::string pose_data){
     raw_pose.roll = roll;
     raw_pose.confidence = confidence;
     thread_lock.unlock();
+
+    for (size_t i = 0; i < callback_functions.size(); ++i) {
+        callback_functions[i](pose);
+    }
 
     this->_transform_pose();
 }

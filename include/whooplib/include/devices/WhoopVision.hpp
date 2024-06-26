@@ -84,6 +84,8 @@ protected:
 
     RobotVisionOffset* robot_offset; // Offset configuration for vision adjustments.
 
+    std::vector<std::function<void(Pose)>> callback_functions; // Callbacks registered for incoming messages.
+
     /**
      * Setups the messaging system for receiving pose data.
      * @param bufferSystem The buffer node system used for message handling.
@@ -120,6 +122,8 @@ public:
     void tare(double x, double y, double yaw, tare_remaining_0 tare_rest_to_zero);
     void tare(double x, double y, double yaw);
     void tare();
+
+    void on_update(std::function<void(Pose)> callback);
     
     /**
      * Retrieves the corrected and computed pose.

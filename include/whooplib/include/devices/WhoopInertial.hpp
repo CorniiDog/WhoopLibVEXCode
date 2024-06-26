@@ -54,6 +54,42 @@ public:
     double get_yaw_radians();
 
     /**
+     * Retrieves the current roll value with any applied offsets, in degrees by default.
+     * @return The roll value in degrees.
+     */
+    double get_roll();
+
+    /**
+     * Explicitly retrieves the current roll value in degrees.
+     * @return The roll value in degrees.
+     */
+    double get_roll_degrees();
+
+    /**
+     * Retrieves the current roll value in radians.
+     * @return The roll value in radians.
+     */
+    double get_roll_radians(); // Gets roll in radians
+
+    /**
+     * Retrieves the current pitch value with any applied offsets, in degrees by default.
+     * @return The pitch value in degrees.
+     */
+    double get_pitch(); // Gets pitch in degrees
+
+    /**
+     * Explicitly retrieves the current pitch value in degrees.
+     * @return The pitch value in degrees.
+     */
+    double get_pitch_degrees(); // Gets pitch in degrees, explicit
+
+    /**
+     * Retrieves the current pitch value in radians.
+     * @return The pitch value in radians.
+     */
+    double get_pitch_radians(); // Gets pitch in radians
+
+    /**
      * Initiates calibration of the inertial sensor. This process may take a few seconds.
      */
     void calibrate();

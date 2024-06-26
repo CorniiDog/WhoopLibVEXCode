@@ -43,6 +43,31 @@ double WhoopInertial::get_yaw_radians(){
     return to_rad(this->get_yaw());
 }
 
+
+double WhoopInertial::get_roll(){
+    return vex_inertial.roll();
+}
+
+double WhoopInertial::get_roll_degrees(){
+    return get_roll();
+}
+
+double WhoopInertial::get_roll_radians(){
+    return to_rad(get_roll());
+}
+
+double WhoopInertial::get_pitch(){
+    return vex_inertial.pitch();
+}
+
+double WhoopInertial::get_pitch_degrees(){
+    return get_pitch();
+}
+
+double WhoopInertial::get_pitch_radians(){
+    return to_rad(get_pitch());
+}
+
 // Calibrate
 void WhoopInertial::calibrate(){
     vex_inertial.calibrate();

@@ -23,11 +23,8 @@
  * Class responsible for managing the odometry unit.
  */
 class WhoopDriveOdomOffset : public ComputeNode {
-private:
-    // Upon initialization
-    WhoopDriveOdomUnit* odom_unit;
-
 public:
+    WhoopDriveOdomUnit* odom_unit;
 
     TwoDPose pose = TwoDPose(0,0,0);
     TwoDPose offset;
@@ -57,10 +54,11 @@ public:
      * @return The current pose of the system.
      */
     TwoDPose get_pose();
-protected:
+public: // This is one of the ONLY exceptions to be public, as another module requires this step function.
     /**
      * Override of ComputeNode's __step method to update the drivetrain's operation each cycle.
      */
+    void __step_down(); // This steps down to the Odom Unit (meant to be managed by drivetrain or fusion object)
     void __step() override;  // Protected helper function for processing steps
 };
 

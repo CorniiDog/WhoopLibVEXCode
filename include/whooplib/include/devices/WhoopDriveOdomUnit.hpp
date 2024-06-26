@@ -36,7 +36,6 @@ private:
     // Upon initialization
     std::unique_ptr<WhoopMotorGroup> left_motor_group = nullptr; // Group of motors on the left side of the drivetrain.
     std::unique_ptr<WhoopMotorGroup> right_motor_group = nullptr; // Group of motors on the right side of the drivetrain.
-    WhoopInertial* inertial_sensor;
     WhoopRotation* forward_tracker = nullptr;
     WhoopRotation* sideways_tracker = nullptr;
     DriveOdomConfig drive_odom_config;
@@ -61,6 +60,8 @@ private:
      */
     void set_motor_wheel_diameter(double diameter_meters);
 public:
+
+    WhoopInertial* inertial_sensor;
 
     TwoDPose pose = TwoDPose(0,0,0);
     vex::mutex thread_lock;  // Mutex for synchronizing access to odometry components.
