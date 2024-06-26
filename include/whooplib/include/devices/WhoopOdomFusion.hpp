@@ -64,6 +64,11 @@ public:
     Pose get_pose();
 
     /**
+     * Runs calibration process
+     */
+    void calibrate();
+
+    /**
      * Sets the current odometry to the specified coordinates and yaw.
      * @param x the x coordinate (forwards), in meters
      * @param y the y coordinate (right), in meters

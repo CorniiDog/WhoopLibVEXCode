@@ -75,6 +75,8 @@ protected:
     double tare_yaw = 0;
     double confidence = 0;
 
+    double last_vision_message_time = 0;
+
     // Tared computes
     double tared_z = this->raw_pose.z - tare_z;
     double tared_pitch = this->raw_pose.pitch - tare_pitch;
@@ -124,6 +126,8 @@ public:
     void tare();
 
     void on_update(std::function<void(Pose)> callback);
+
+    bool vision_running();
     
     /**
      * Retrieves the corrected and computed pose.

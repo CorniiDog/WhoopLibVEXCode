@@ -25,7 +25,6 @@ enum jetsonCommunication{
 
 class JetsonCommander: public ComputeNode{
 private:
-    std::unique_ptr<Messenger> keepalive_messenger = nullptr; // Handles messaging for pose data from Jetson Nano
     int time_waited_ms = 0;
 
     void setup_messenger(BufferNode* bufferSystem, const std::string& pose_stream);
@@ -38,6 +37,10 @@ private:
 
     bool comms_disabled = false;
 public:
+
+    void initialize();
+    std::unique_ptr<Messenger> keepalive_messenger = nullptr; // Handles messaging for pose data from Jetson Nano
+
     bool connected = false;
     JetsonCommander(WhoopController* controller_for_messages, BufferNode* bufferSystem, std::string communication_stream, int keep_alive_time_seconds, int step_time_ms, jetsonCommunication enable_jetson_comms);
 

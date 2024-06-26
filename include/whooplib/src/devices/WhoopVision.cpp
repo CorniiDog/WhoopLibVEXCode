@@ -122,6 +122,9 @@ void WhoopVision::_update_pose(std::string pose_data){
     if(!(iss >> x >> z >> negative_y >> pitch >> yaw >> roll >> unscaled_confidence)){
         return; // Reject malformed data
     }
+
+    last_vision_message_time = Brain.Timer.time(msec);
+
     thread_lock.lock();
     confidence = unscaled_confidence / 3.0; // Scale from 0 to 1
     raw_pose.x = x;
@@ -138,6 +141,10 @@ void WhoopVision::_update_pose(std::string pose_data){
     }
 
     this->_transform_pose();
+}
+
+bool WhoopVision::vision_running(){
+    return (Brain.Timer.time(msec) - last_vision_message_time) < 500;
 }
 
 

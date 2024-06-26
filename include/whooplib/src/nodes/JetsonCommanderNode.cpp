@@ -25,7 +25,7 @@ void JetsonCommander::_on_message_received(std::string message){
     }
 
     if(message == "Hello"){
-        keepalive_messenger->send(intToString(keep_alive_time_seconds) + " " + "Initialize");
+        keepalive_messenger->send(intToString(keep_alive_time_seconds)); //+ " " + "Initialize");
     }
     else if(message == "Failed"){ // If failed to initialize realsense system
         if(!comms_disabled){
@@ -43,7 +43,6 @@ JetsonCommander::JetsonCommander(WhoopController* controller_for_messages, Buffe
     this->keep_alive_time_seconds = keep_alive_time_seconds;
     setup_messenger(bufferSystem, communication_stream);
     this->set_step_time(step_time_s*1000); // Configure step time in milliseconds
-    keepalive_messenger->send(intToString(keep_alive_time_seconds) + " " + "Initialize");
 }
 
 void JetsonCommander::reboot_jetson(){
@@ -56,6 +55,10 @@ void JetsonCommander::shutdown_jetson(){
 
 bool JetsonCommander::is_connected_to_jetson(){
     return connected;
+}
+
+void JetsonCommander::initialize(){
+    keepalive_messenger->send(intToString(keep_alive_time_seconds) + " " + "Initialize");
 }
 
 void JetsonCommander::__step(){

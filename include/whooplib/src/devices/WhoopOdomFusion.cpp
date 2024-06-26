@@ -99,6 +99,13 @@ void WhoopOdomFusion::tare(){
     tare(0,0,0);
 }
 
+void WhoopOdomFusion::calibrate(){
+    self_lock.lock();
+    odom_offset->calibrate();
+    whoop_vision->tare();
+    self_lock.unlock();
+}
+
 Pose WhoopOdomFusion::get_pose(){
     self_lock.lock();
     Pose p = pose;

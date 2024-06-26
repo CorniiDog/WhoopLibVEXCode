@@ -216,8 +216,9 @@ void pre_auton(void) {
   robot_drivetrain.set_state(drivetrainState::mode_disabled);
 
   wait(0.5, sec);
+  jetson_commander.initialize();
 
-  odom_offset.calibrate();
+  odom_fusion.calibrate();
 
   while (robot_drivetrain.drive_state == drivetrainState::mode_disabled){
     // Do stuff like calibrate IMU
@@ -255,15 +256,20 @@ void usercontrol(void) {
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 
   wait(1, sec);
-  odom_fusion.tare(0,0,0);
+  odom_fusion.tare(1,1,M_PI/4);
 
   // User control code here, inside the loop
   while (1) {
-
+    Pose current_pose = odom_fusion.get_pose();
     Brain.Screen.clearLine(2);
     Brain.Screen.setCursor(2, 1);
-    Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f", odom_fusion.pose.x, odom_fusion.pose.y, odom_fusion.pose.z, odom_fusion.pose.pitch, odom_fusion.pose.yaw, odom_fusion.pose.roll);
+    Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f", current_pose.x, current_pose.y, current_pose.z, current_pose.pitch, current_pose.yaw, current_pose.roll);
     
+    Brain.Screen.clearLine(3);
+    Brain.Screen.setCursor(3, 1);
+    Brain.Screen.print("Vision Running: %s", boolToString(vision_system.vision_running()).c_str());
+    
+
     wait(20, msec);
   }
 }
