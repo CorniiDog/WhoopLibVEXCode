@@ -182,7 +182,7 @@ WhoopOdomFusion odom_fusion(
   to_meters(10), // If FusionMode is fusion_gradual, it is the maximum allowable shift in meters for gradual fusion, per second.
   to_rad(10), // If FusionMode is fusion_gradual, it is the maximum allowable rotational shift of the yaw in radians for gradual fusion, per second.
   20, // Feedforward gain of the vision system as it has delay, in milliseconds (For 100Hz Wheel Odometry)
-  3 // n for Rolling Average Filter. Set to 0 to disable Rolling Average Filter.
+  3 // Length of poses for Rolling Average Filter. Set to 0 to disable.
 );
 
 ////////////////////////////////////////////////////////////
