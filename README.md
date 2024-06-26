@@ -30,8 +30,8 @@ WhoopLibPython Github: https://github.com/ConnorAtmos/WhoopLibPython
 - Visual Odometry/Pose Estimation with FeedForward
 - Wheel Odometry/Pose Estimation
 - Communication between V5 Brain and Jetson Nano
-- Fusion between Visual Odometry and Wheel Odometry
-- Kalman Filter + Forecasting for Odometry Fusion Object
+- Fusion Odometry between Visual Odometry and Wheel Odometry
+- Kalman Filter + Forecasting for Fusion Odometry
 
 ## Roadmap
 
