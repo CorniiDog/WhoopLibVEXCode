@@ -28,5 +28,6 @@ Pose RollingAverageFilter::process(const Pose& newMeasurement) {
         sumRoll += pose.yaw;
         sumConfidence += pose.confidence;
     }
-    return Pose(sumX / buffer.size(), sumY / buffer.size(), sumZ / buffer.size(), sumPitch / buffer.size(), sumYaw / buffer.size(), sumRoll / buffer.size(), sumConfidence / buffer.size());
+    int size = buffer.size();
+    return Pose(sumX / size, sumY / size, sumZ / size, sumPitch / size, sumYaw / size, sumRoll / size, sumConfidence / size);
 }
