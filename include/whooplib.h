@@ -38,5 +38,6 @@
 #include "whooplib/include/devices/WhoopRotation.hpp"
 #include "whooplib/include/devices/WhoopDriveOdomUnit.hpp"
 #include "whooplib/include/devices/WhoopDriveOdomOffset.hpp"
+#include "whooplib/include/devices/WhoopOdomFusion.hpp"
 
 #endif // WHOOP_LIB_H

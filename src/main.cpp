@@ -171,6 +171,20 @@ JetsonCommander jetson_commander(
 
 ////////////////////////////////////////////////////////////
 /**
+ *    Vision x Wheel Odometry Fusion
+ */
+////////////////////////////////////////////////////////////
+WhoopOdomFusion odom_fusion(
+  &vision_system, // Pointer to the vision system
+  &odom_offset, // Pointer to the odometry offset
+  0.5, // Minimum confidence threshold to apply vision system to odometry
+  FusionMode::vision_only, // The method of fusing
+  to_meters(1), // If FusionMode is fusion_gradual, it is the maximum allowable shift in meters for gradual fusion, per second.
+  to_rad(1) // If FusionMode is fusion_gradual, it is the maximum allowable rotational shift of the yaw in radians for gradual fusion, per second.
+);
+
+////////////////////////////////////////////////////////////
+/**
  *    Robot Drivetrain and Manager
  */
 ////////////////////////////////////////////////////////////
@@ -180,7 +194,7 @@ WhoopDrivetrain robot_drivetrain(
   &right_motors // Pointer to the right motor group (optionally can be a list of motors as well)
 );
 
-ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &odom_offset});
+ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &odom_fusion});
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -192,6 +206,7 @@ ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &o
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
 void pre_auton(void) {
+
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
@@ -238,28 +253,17 @@ void autonomous(void) {
 void usercontrol(void) {
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 
-  wait(0.5, sec);
-  vision_system.tare(1, 1, M_PI/4);
-  odom_offset.tare(0,0,0);
+  wait(1, sec);
+  odom_fusion.tare(0,0,0);
 
   // User control code here, inside the loop
   while (1) {
 
-
     Brain.Screen.clearLine(2);
     Brain.Screen.setCursor(2, 1);
-    Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f %.1f", vision_system.pose.x, vision_system.pose.y, vision_system.pose.z, vision_system.pose.pitch, vision_system.pose.yaw, vision_system.pose.roll, vision_system.pose.confidence);
+    Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f", odom_fusion.pose.x, odom_fusion.pose.y, odom_fusion.pose.z, odom_fusion.pose.pitch, odom_fusion.pose.yaw, odom_fusion.pose.roll);
     
-    
-    Brain.Screen.clearLine(3);
-    Brain.Screen.setCursor(3, 1);
-    Brain.Screen.print("Inertial: %.3f", inertial_sensor.get_yaw_radians());
-
-    Brain.Screen.clearLine(4);
-    Brain.Screen.setCursor(4, 1);
-    Brain.Screen.print("Wheel Odom: %.3f %.3f %.3f", to_inches(odom_offset.pose.x), to_inches(odom_offset.pose.y), to_deg(odom_offset.pose.yaw));
-    wait(20, msec); // Sleep the task for a short amount of time to
-                    // prevent wasted resources.
+    wait(20, msec);
   }
 }
 

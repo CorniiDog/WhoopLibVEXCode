@@ -64,13 +64,20 @@ void WhoopOdomFusion::on_vision_pose_received(Pose p){
         odom_offset->tare(pose.x, pose.y, pose.yaw);
     }
     pose.z = p.z; // Adjust Z
+    pose.confidence = p.confidence; // Adjusts confidence
     
     self_lock.unlock();
 }
 
 void WhoopOdomFusion::tare(double x, double y, double z, double yaw){
+    self_lock.lock();
     whoop_vision->tare(x, y, z, 0, yaw, 0);
     odom_offset->tare(x, y, yaw);
+    pose.x = x;
+    pose.y = y;
+    pose.z = z;
+    pose.yaw = yaw;
+    self_lock.unlock();
 }
 
 void WhoopOdomFusion::tare(double x, double y, double yaw){

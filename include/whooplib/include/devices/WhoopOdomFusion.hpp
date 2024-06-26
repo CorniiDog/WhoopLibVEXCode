@@ -49,8 +49,8 @@ public:
      * @param odom_offset Pointer to the wheel odometry offset object.
      * @param min_confidence_threshold Minimum confidence required to consider vision data (0.0 - 1.0).
      * @param fusion_mode Method of fusing vision with wheel odometry (instant, gradual, vision_only, wheel_odom_only).
-     * @param max_fusion_shift_meters Maximum allowable shift in meters for gradual fusion.
-     * @param max_fusion_shift_radians Maximum allowable rotational shift in radians for gradual fusion.
+     * @param max_fusion_shift_meters If FusionMode is fusion_gradual, it is the maximum allowable shift in meters for gradual fusion, per second.
+     * @param max_fusion_shift_radians If FusionMode is fusion_gradual, it is the maximum allowable rotational shift in radians for gradual fusion, per second.
      */
     WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset* odom_offset, double min_confidence_threshold, FusionMode fusion_mode, double max_fusion_shift_meters, double max_fusion_shift_radians);
 
