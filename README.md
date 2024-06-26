@@ -43,7 +43,7 @@ WhoopLibPython Github: https://github.com/ConnorAtmos/WhoopLibPython
 
 On your computer (separate device) Install VSCode
 
-Open up cmd Installing Whooplib VEXCode Template (On your computer):
+Open up command prompt or terminal (On your computer):
 
 ```bash
   cd Desktop
