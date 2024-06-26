@@ -32,6 +32,7 @@ WhoopLibPython Github: https://github.com/ConnorAtmos/WhoopLibPython
 - Communication between V5 Brain and Jetson Nano
 - Fusion Odometry between Visual Odometry and Wheel Odometry
 - Kalman Filter + Forecasting for Fusion Odometry
+- WhoopController Class with auto-configuration for Split Arcade, Tank, Left Stick Arcade, and Right Stick Arcade
 
 ## Roadmap
 
