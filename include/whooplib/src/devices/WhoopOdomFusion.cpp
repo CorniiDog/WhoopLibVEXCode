@@ -11,12 +11,13 @@
 #include "whooplib/include/toolbox.hpp"
 #include <cmath>
 
-WhoopOdomFusion::WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset* odom_offset, double min_confidence_threshold, FusionMode fusion_mode, double max_fusion_shift_meters, double max_fusion_shift_radians){
+WhoopOdomFusion::WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset* odom_offset, double min_confidence_threshold, FusionMode fusion_mode, double max_fusion_shift_meters, double max_fusion_shift_radians, double feedforward_gain){
     this->max_fusion_shift_meters = max_fusion_shift_meters/55.6;
     this->max_fusion_shift_radians = max_fusion_shift_radians/55.6;
     this->fusion_mode = fusion_mode;
     this->whoop_vision = whoop_vision;
     this->odom_offset = odom_offset;
+    this->feedforward_gain = feedforward_gain/10.0;
     this->whoop_vision->on_update(std::bind(&WhoopOdomFusion::on_vision_pose_received, this, std::placeholders::_1));
 }
 
@@ -27,6 +28,10 @@ void WhoopOdomFusion::on_vision_pose_received(Pose p){
     
     self_lock.lock();
     if (p.confidence >= min_confidence_threshold) {
+        double feedforward_x_delta = feedforward_gain * (pose.x - last_pose.x);
+        double feedforward_y_delta = feedforward_gain * (pose.y - last_pose.y);
+        double feedforward_yaw_delta = feedforward_gain * (pose.yaw - last_pose.yaw);
+
         double distance = std::sqrt(std::pow(p.x - pose.x, 2) + std::pow(p.y - pose.y, 2));
         double angle_difference = std::fabs(p.yaw - pose.yaw);
 
@@ -49,6 +54,8 @@ void WhoopOdomFusion::on_vision_pose_received(Pose p){
             pose.x = p.x;
             pose.y = p.y;
         }
+        pose.x += feedforward_x_delta;
+        pose.y += feedforward_y_delta;
 
         // Handle angular position adjustment
         if (fusion_mode == FusionMode::fusion_gradual && angle_difference > max_fusion_shift_radians) {
@@ -59,13 +66,16 @@ void WhoopOdomFusion::on_vision_pose_received(Pose p){
             // If within allowable angle, update yaw to target
             pose.yaw = p.yaw;
         }
+        pose.yaw += feedforward_yaw_delta;
 
         // Tare the odometer to the newly adjusted pose
         odom_offset->tare(pose.x, pose.y, pose.yaw);
     }
     pose.z = p.z; // Adjust Z
     pose.confidence = p.confidence; // Adjusts confidence
-    
+
+    last_pose = pose; // Store last p
+
     self_lock.unlock();
 }
 
@@ -77,6 +87,7 @@ void WhoopOdomFusion::tare(double x, double y, double z, double yaw){
     pose.y = y;
     pose.z = z;
     pose.yaw = yaw;
+    last_pose = pose;
     self_lock.unlock();
 }
 
