@@ -31,6 +31,8 @@ struct Pose{
     double x=0, y=0, z=0;
     double pitch=0, yaw=0, roll=0;
     double confidence = 0; // If for the vision system, it would output a value between 0 and 1 where 1 is the highest confidence. 0.3 or higher means it tracks, and 0.5 or higher means the tracking is good.
+    Pose(){}
+    Pose(double x, double y, double z, double pitch, double yaw, double roll, double confidence=0): x(x), y(y), z(z), pitch(pitch), yaw(yaw), roll(roll), confidence(confidence){}
 };
 
 /**

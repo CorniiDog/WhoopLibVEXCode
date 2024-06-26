@@ -1,6 +1,6 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
-/*    Module:       KalmanFilter.hpp                                          */
+/*    Module:       RollingAverage.hpp                                        */
 /*    Author:       Connor White (WHOOP)                                      */
 /*    Created:      Thu Jun 21 2024                                           */
 /*    Description:  Kalman Filter for Odometry                                */
@@ -15,33 +15,26 @@
 #include <deque>
 
 /**
- * Kalman Filter Object
+ * Rolling Average Filter Object
  */
-class KalmanFilter {
+class RollingAverageFilter {
 private:
-    std::deque<Pose> history;
+    std::deque<Pose> buffer;
     int capacity;
-    Pose estimate;
-    Pose velocity;
 
 public:
-    /**
-   * Kalman Filter Constructor
-   * @param n The number of elements to filter (If we are doing 100Hz system with n=5 elements, delay would be 0.05 seconds, or be equivalent of 20Hz system)
-   */
-    KalmanFilter(int n);
 
     /**
-   * Adds measurement to the Kalman filter
-   * @param newPose The pose to record for the filter
+   * Constructor for Rolling Average
+   * @param n Number of elements for rolling average
    */
-    void addMeasurement(const Pose& newPose);
+    RollingAverageFilter(int capacity);
 
     /**
-   * Returns the estimated pose, including a forecast.
-   * @return The smoothened out + forwarded pose
+   * Processes pose into rolling average
+   * @return rolling average result
    */
-    Pose getEstimate();
+    Pose process(const Pose& newMeasurement);
 };
 
 #endif

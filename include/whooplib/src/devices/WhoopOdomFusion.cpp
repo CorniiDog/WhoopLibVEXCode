@@ -11,8 +11,8 @@
 #include "whooplib/include/toolbox.hpp"
 #include <cmath>
 
-WhoopOdomFusion::WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset* odom_offset, double min_confidence_threshold, FusionMode fusion_mode, double max_fusion_shift_meters, double max_fusion_shift_radians, double feedforward_gain, double kalman_filter_n):
-    kalman_filter(kalman_filter_n){
+WhoopOdomFusion::WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset* odom_offset, double min_confidence_threshold, FusionMode fusion_mode, double max_fusion_shift_meters, double max_fusion_shift_radians, double feedforward_gain, double rolling_average_filter_n):
+    rolling_average_filter(rolling_average_filter_n){
     this->max_fusion_shift_meters = max_fusion_shift_meters/55.6;
     this->max_fusion_shift_radians = max_fusion_shift_radians/55.6;
     this->fusion_mode = fusion_mode;
@@ -20,7 +20,7 @@ WhoopOdomFusion::WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset
     this->odom_offset = odom_offset;
     this->feedforward_gain = feedforward_gain/10.0;
     this->whoop_vision->on_update(std::bind(&WhoopOdomFusion::on_vision_pose_received, this, std::placeholders::_1));
-    this->kalman_filter_n = kalman_filter_n;
+    this->rolling_average_filter_n = rolling_average_filter_n;
 }
 
 void WhoopOdomFusion::on_vision_pose_received(Pose p){
@@ -132,12 +132,11 @@ void WhoopOdomFusion::__step(){
     unfiltered_pose.roll = odom_offset->odom_unit->inertial_sensor->get_roll_radians();
     unfiltered_pose.pitch = odom_offset->odom_unit->inertial_sensor->get_pitch_radians();
 
-    if(kalman_filter_n == 0){
+    if(rolling_average_filter_n == 0){
         pose = unfiltered_pose;
     }
-    else{ // If using kalman filter
-        kalman_filter.addMeasurement(unfiltered_pose);
-        pose = kalman_filter.getEstimate();
+    else{ // If using rolling average filter
+        pose = rolling_average_filter.process(unfiltered_pose);
     }
     self_lock.unlock();
 }
