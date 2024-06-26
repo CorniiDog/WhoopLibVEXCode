@@ -113,6 +113,10 @@ Pose WhoopOdomFusion::get_pose(){
     return p;
 }
 
+bool WhoopOdomFusion::is_moving(double rads_s_threshold){
+    return odom_offset->is_moving(rads_s_threshold);
+}
+
 void WhoopOdomFusion::__step(){
     self_lock.lock();
 

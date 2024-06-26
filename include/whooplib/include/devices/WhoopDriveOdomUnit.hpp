@@ -148,6 +148,9 @@ public:
     void tare(double x, double y, double yaw);
     void tare();
     
+    // Returns true if the system is moving
+    bool is_moving(double rads_s_threshold=0.02);
+
     /**
      * Retrieves the corrected and computed pose.
      * @return The current pose of the system.

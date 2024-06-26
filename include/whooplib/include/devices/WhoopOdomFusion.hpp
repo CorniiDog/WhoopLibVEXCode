@@ -88,6 +88,9 @@ public:
     // Resets the current odometry to the origin (0,0,0).
     void tare();
 
+    // Returns true if moving
+    bool is_moving(double rads_s_threshold=0.02);
+
 public:  // Exceptionally public to allow access from another module.
     /**
      * Processes a single step of odometry updates.

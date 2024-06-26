@@ -63,6 +63,10 @@ void WhoopDriveOdomOffset::__step_down(){
     this->__step();
 }
 
+bool WhoopDriveOdomOffset::is_moving(double rads_s_threshold){
+    return odom_unit->is_moving(rads_s_threshold);
+}
+
 void WhoopDriveOdomOffset::__step(){
     thread_lock.lock();
 

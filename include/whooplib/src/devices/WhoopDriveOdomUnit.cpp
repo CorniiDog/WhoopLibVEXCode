@@ -11,6 +11,7 @@
 #include "vex.h"
 #include <vector>
 #include <memory>
+#include <cmath>
 
 WhoopDriveOdomUnit::WhoopDriveOdomUnit(double drive_width, double drive_wheel_diameter_meters, double drive_gear_ratio, WhoopInertial* inertialSensor, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup): 
     inertial_sensor(inertialSensor){
@@ -107,6 +108,20 @@ TwoDPose WhoopDriveOdomUnit::get_pose(){
     TwoDPose result = pose;
     thread_lock.unlock();
     return result;
+}
+
+bool WhoopDriveOdomUnit::is_moving(double rads_s_threshold){
+    double rad_s = 0;
+
+    if(left_motor_group != nullptr) rad_s += std::abs(left_motor_group->get_velocity_rad_s());
+    if(right_motor_group != nullptr) rad_s += std::abs(right_motor_group->get_velocity_rad_s());
+    if(forward_tracker != nullptr) rad_s += std::abs(forward_tracker->get_velocity_rad_s());
+    if(sideways_tracker != nullptr) rad_s += std::abs(sideways_tracker->get_velocity_rad_s());
+
+    if(rad_s > rads_s_threshold){
+        return true;
+    }
+    return false;
 }
 
 void WhoopDriveOdomUnit::__step(){

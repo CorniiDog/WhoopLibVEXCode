@@ -136,7 +136,7 @@ jetsonCommunication jetson_comms_enabled = jetsonCommunication::disable_comms;
 BufferNode buffer_system(
   256, // The buffer size, in characters. Increase if necessary, but at the cost of computational efficiency.
   debugMode::debug_disabled, // debugMode::debug_disabled for competition use, debugMode::debug_enabled to allow the code to pass errors through
-  "/dev/serial1" // The serial connection of the Jetson Nano ("/dev/serial1" is the micro-usb serial connection on the V5 Brain)
+  "/dev/serial1" // The serial connection of the Jetson Nano ("/dev/serial1" is the micro-usb serial connection on the V5 Brain, "/dev/serial2" is controller)
 ); 
 
 
@@ -212,16 +212,32 @@ void pre_auton(void) {
   vexcodeInit();
 
   manager.start();
-
   robot_drivetrain.set_state(drivetrainState::mode_disabled);
-
-  wait(0.5, sec);
   jetson_commander.initialize();
 
-  odom_fusion.calibrate();
-
-  while (robot_drivetrain.drive_state == drivetrainState::mode_disabled){
-    // Do stuff like calibrate IMU
+  // Calibration protocol
+  bool needs_calibration = true;
+  double calibration_timer = 0;
+  double time_until_calibration = 1000; // ms
+  bool moved_one_time_notif = false;
+  while (robot_drivetrain.drive_state == drivetrainState::mode_disabled || needs_calibration){
+    if(odom_fusion.is_moving()){
+      needs_calibration = true;
+      calibration_timer = 0;
+      if(moved_one_time_notif){
+        controller1.notify("Robot Moved");
+        moved_one_time_notif = false;
+      }
+    }
+    else if(needs_calibration){ // Stationary and needs calibration
+      calibration_timer += 20;
+      if(calibration_timer > time_until_calibration){ // If stationary for more than period of time (like 500 milliseconds) then calibrate
+        controller1.notify("Calibrating Dont Move");
+        odom_fusion.calibrate();
+        needs_calibration = false;
+        moved_one_time_notif = true;
+      }
+    }
     wait(20, msec); // Sleep the task for a short amount of time to
   }
 
