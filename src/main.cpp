@@ -239,11 +239,8 @@ void pre_auton(void) {
         moved_one_time_notif = true;
       }
     }
-    wait(20, msec); // Sleep the task for a short amount of time to
+    wait(20, msec); // Sleep the task for a short amount of time
   }
-
-  // All activities that occur before the competition starts
-  // Example: clearing encoders, setting servo positions, ...
 }
 
 /*---------------------------------------------------------------------------*/
