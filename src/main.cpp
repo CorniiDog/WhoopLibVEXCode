@@ -268,6 +268,10 @@ void usercontrol(void) {
     Brain.Screen.clearLine(3);
     Brain.Screen.setCursor(3, 1);
     Brain.Screen.print("Vision Running: %s", boolToString(vision_system.vision_running()).c_str());
+
+    Brain.Screen.clearLine(4);
+    Brain.Screen.setCursor(4, 1);
+    Brain.Screen.print("Jetson Connected: %s", boolToString(jetson_commander.is_connected_to_jetson()).c_str());
     
 
     wait(20, msec);
