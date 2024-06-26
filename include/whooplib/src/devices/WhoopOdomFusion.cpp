@@ -21,13 +21,17 @@ WhoopOdomFusion::WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset
 }
 
 void WhoopOdomFusion::on_vision_pose_received(Pose p){
+    if(fusion_mode == FusionMode::wheel_odom_only){
+        return;
+    }
+    
     self_lock.lock();
     if (p.confidence >= min_confidence_threshold) {
         double distance = std::sqrt(std::pow(p.x - pose.x, 2) + std::pow(p.y - pose.y, 2));
         double angle_difference = std::fabs(p.yaw - pose.yaw);
 
         // Handle linear position adjustment
-        if (fusion_mode == FusionMode::fusion_gradual_set && distance > max_fusion_shift_meters) {
+        if (fusion_mode == FusionMode::fusion_gradual && distance > max_fusion_shift_meters) {
             // Calculate the direction vector from current to target position
             double dx = p.x - pose.x;
             double dy = p.y - pose.y;
@@ -47,7 +51,7 @@ void WhoopOdomFusion::on_vision_pose_received(Pose p){
         }
 
         // Handle angular position adjustment
-        if (fusion_mode == FusionMode::fusion_gradual_set && angle_difference > max_fusion_shift_radians) {
+        if (fusion_mode == FusionMode::fusion_gradual && angle_difference > max_fusion_shift_radians) {
             // Adjust yaw by the maximum allowable radians directly toward the target yaw
             double dyaw = p.yaw - pose.yaw;
             pose.yaw += std::copysign(max_fusion_shift_radians, dyaw);
@@ -86,11 +90,14 @@ Pose WhoopOdomFusion::get_pose(){
 
 void WhoopOdomFusion::__step(){
     self_lock.lock();
-    odom_offset->__step_down(); // Step down wheel odometry ladder
-    TwoDPose result = odom_offset->get_pose();
-    pose.x = result.x;
-    pose.y = result.y;
-    pose.yaw = result.yaw;
+
+    if(fusion_mode != FusionMode::vision_only){
+        odom_offset->__step_down(); // Step down wheel odometry ladder
+        TwoDPose result = odom_offset->get_pose();
+        pose.x = result.x;
+        pose.y = result.y;
+        pose.yaw = result.yaw;
+    }
     pose.roll = odom_offset->odom_unit->inertial_sensor->get_roll_radians();
     pose.pitch = odom_offset->odom_unit->inertial_sensor->get_pitch_radians();
     self_lock.unlock();

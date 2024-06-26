@@ -20,8 +20,10 @@
 
 // Enumeration defining possible fusion modes between visual and wheel odometry data.
 enum FusionMode {
-    fusion_instant_set,  // Instantly aligns wheel odometry to vision odometry upon data retrieval.
-    fusion_gradual_set   // Gradually aligns wheel odometry to vision odometry over time.
+    fusion_instant,  // Instantly aligns wheel odometry to vision odometry upon data retrieval.
+    fusion_gradual,  // Gradually aligns wheel odometry to vision odometry over time.
+    vision_only,     // Vision Odometry Only
+    wheel_odom_only  // Wheel Odometry Only
 };
 
 // Class responsible for fusing visual and wheel odometry data.
@@ -46,7 +48,7 @@ public:
      * @param whoop_vision Pointer to the vision odometry system.
      * @param odom_offset Pointer to the wheel odometry offset object.
      * @param min_confidence_threshold Minimum confidence required to consider vision data (0.0 - 1.0).
-     * @param fusion_mode Method of fusing vision with wheel odometry (instant or gradual).
+     * @param fusion_mode Method of fusing vision with wheel odometry (instant, gradual, vision_only, wheel_odom_only).
      * @param max_fusion_shift_meters Maximum allowable shift in meters for gradual fusion.
      * @param max_fusion_shift_radians Maximum allowable rotational shift in radians for gradual fusion.
      */
