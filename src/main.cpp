@@ -178,9 +178,9 @@ WhoopOdomFusion odom_fusion(
   &vision_system, // Pointer to the vision system
   &odom_offset, // Pointer to the odometry offset
   0.5, // Minimum confidence threshold to apply vision system to odometry
-  FusionMode::vision_only, // The method of fusing
-  to_meters(1), // If FusionMode is fusion_gradual, it is the maximum allowable shift in meters for gradual fusion, per second.
-  to_rad(1) // If FusionMode is fusion_gradual, it is the maximum allowable rotational shift of the yaw in radians for gradual fusion, per second.
+  FusionMode::fusion_gradual, // The method of fusing
+  to_meters(10), // If FusionMode is fusion_gradual, it is the maximum allowable shift in meters for gradual fusion, per second.
+  to_rad(10) // If FusionMode is fusion_gradual, it is the maximum allowable rotational shift of the yaw in radians for gradual fusion, per second.
 );
 
 ////////////////////////////////////////////////////////////

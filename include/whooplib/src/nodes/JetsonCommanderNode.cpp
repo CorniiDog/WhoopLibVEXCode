@@ -43,6 +43,7 @@ JetsonCommander::JetsonCommander(WhoopController* controller_for_messages, Buffe
     this->keep_alive_time_seconds = keep_alive_time_seconds;
     setup_messenger(bufferSystem, communication_stream);
     this->set_step_time(step_time_s*1000); // Configure step time in milliseconds
+    keepalive_messenger->send(intToString(keep_alive_time_seconds) + " " + "Initialize");
 }
 
 void JetsonCommander::reboot_jetson(){
