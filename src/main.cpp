@@ -215,9 +215,10 @@ void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
   manager.start();
-  jetson_commander.initialize();
   robot_drivetrain.set_state(drivetrainState::mode_disabled);
   controller1.notify("Initializing...");
+  wait(0.5, sec); // The serial port may take some time 
+  jetson_commander.initialize();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -251,28 +252,32 @@ void usercontrol(void) {
 
   // User control code here, inside the loop
   while (1) {
-    Pose current_pose = robot_drivetrain.get_pose();
+    
     Brain.Screen.clearLine(2);
     Brain.Screen.setCursor(2, 1);
-    Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f", current_pose.x, current_pose.y, current_pose.z, current_pose.pitch, current_pose.yaw, current_pose.roll);
-    
-    Brain.Screen.clearLine(3);
-    Brain.Screen.setCursor(3, 1);
     Brain.Screen.print("Vision Running: %s", boolToString(vision_system.vision_running()).c_str());
 
-    Brain.Screen.clearLine(4);
-    Brain.Screen.setCursor(4, 1);
+    Brain.Screen.clearLine(3);
+    Brain.Screen.setCursor(3, 1);
     Brain.Screen.print("Jetson Connected: %s", boolToString(jetson_commander.is_connected_to_jetson()).c_str());
 
+    // Fusion Odometry
+    Pose current_pose = robot_drivetrain.get_pose();
+    Brain.Screen.clearLine(4);
+    Brain.Screen.setCursor(4, 1);
+    Brain.Screen.print("FO (%s): %.1f %.1f %.1f %.1f %.1f %.1f", robot_drivetrain.get_units_str().c_str(), current_pose.x, current_pose.y, current_pose.z, current_pose.pitch, current_pose.yaw, current_pose.roll);
+
+    // Vision Odometry
     Pose vision_pose = vision_system.get_pose();
     Brain.Screen.clearLine(5);
     Brain.Screen.setCursor(5, 1);
-    Brain.Screen.print("Vision P: %.3f %.3f %.3f %.3f %.3f %.3f", vision_pose.x, vision_pose.y, vision_pose.z, vision_pose.pitch, vision_pose.yaw, vision_pose.roll);
+    Brain.Screen.print("VO (m_rad_ccw): %.2f %.2f %.2f %.2f %.2f %.2f", vision_pose.x, vision_pose.y, vision_pose.z, vision_pose.pitch, vision_pose.yaw, vision_pose.roll);
 
+    // Wheel Odometry
     TwoDPose wheel_pose = odom_offset.get_pose();
     Brain.Screen.clearLine(6);
     Brain.Screen.setCursor(6, 1);
-    Brain.Screen.print("Wheel P: %.3f %.3f %.3f", wheel_pose.x, wheel_pose.y, wheel_pose.yaw);
+    Brain.Screen.print("WO (m_rad_ccw): %.2f %.2f %.2f", wheel_pose.x, wheel_pose.y, wheel_pose.yaw);
     
 
     wait(20, msec);

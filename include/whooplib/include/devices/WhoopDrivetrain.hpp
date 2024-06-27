@@ -120,6 +120,18 @@ public:
      */
     void set_pose(double x_in, double y_in, double yaw_deg);
 
+    /**
+     * Gets units that the odometry is using
+     * @returns units desciber, as a string
+     */
+    std::string get_units_str();
+
+    /**
+     * Gets units that the odometry is using
+     * @returns units desciber, as a Pose/UnitsObject
+     */
+    PoseUnits get_units();
+
 protected:
     /**
      * Override of ComputeNode's __step method to update the drivetrain's operation each cycle.

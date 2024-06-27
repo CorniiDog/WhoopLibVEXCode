@@ -162,3 +162,39 @@ void WhoopDrivetrain::__step(){
     }
 
 }
+
+
+/**
+ * Gets units that the odometry is using
+ * @returns units desciber, as a string
+ */
+std::string WhoopDrivetrain::get_units_str() {
+        switch(pose_units) {
+            case m_deg_cw:
+                return "m_deg_cw";
+            case m_deg_ccw:
+                return "m_deg_ccw";
+            case m_rad_cw:
+                return "m_rad_cw";
+            case m_rad_ccw:
+                return "m_rad_ccw";
+            case in_deg_cw:
+                return "in_deg_cw";
+            case in_deg_ccw:
+                return "in_deg_ccw";
+            case in_rad_cw:
+                return "in_rad_cw";
+            case in_rad_ccw:
+                return "in_rad_ccw";
+            default:
+                return "Unknown units";
+        }
+    }
+
+/**
+ * Gets units that the odometry is using
+ * @returns units desciber, as a Pose/UnitsObject
+ */
+PoseUnits WhoopDrivetrain::get_units(){
+    return pose_units;
+}

@@ -27,9 +27,14 @@ void JetsonCommander::_on_message_received(std::string message){
     if(message == "Hello"){
         keepalive_messenger->send(intToString(keep_alive_time_seconds)); //+ " " + "Initialize");
     }
+    else if(message == "Rebooting"){ // If failed to initialize realsense system
+        if(!comms_disabled){
+            controller_for_messages->notify("Rebooting Jetson", 2);
+        }
+    }
     else if(message == "Failed"){ // If failed to initialize realsense system
         if(!comms_disabled){
-            controller_for_messages->notify("Replug RSense USBs", 1);
+            controller_for_messages->notify("Replug RSense USBs", 2);
         }
     }
 }
