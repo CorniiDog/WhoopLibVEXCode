@@ -215,10 +215,9 @@ void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
   manager.start();
+  jetson_commander.initialize();
   robot_drivetrain.set_state(drivetrainState::mode_disabled);
   controller1.notify("Initializing...");
-  wait(0.5, sec);
-  jetson_commander.initialize();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -269,6 +268,11 @@ void usercontrol(void) {
     Brain.Screen.clearLine(5);
     Brain.Screen.setCursor(5, 1);
     Brain.Screen.print("Vision P: %.3f %.3f %.3f %.3f %.3f %.3f", vision_pose.x, vision_pose.y, vision_pose.z, vision_pose.pitch, vision_pose.yaw, vision_pose.roll);
+
+    TwoDPose wheel_pose = odom_offset.get_pose();
+    Brain.Screen.clearLine(6);
+    Brain.Screen.setCursor(6, 1);
+    Brain.Screen.print("Wheel P: %.3f %.3f %.3f", wheel_pose.x, wheel_pose.y, wheel_pose.yaw);
     
 
     wait(20, msec);
