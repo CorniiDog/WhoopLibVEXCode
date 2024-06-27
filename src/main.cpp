@@ -214,7 +214,7 @@ void pre_auton(void) {
 
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-
+  controller1.notify("Initializing...");
   jetson_commander.initialize();
   robot_drivetrain.set_state(drivetrainState::mode_disabled);
   wait(0.5, sec);
