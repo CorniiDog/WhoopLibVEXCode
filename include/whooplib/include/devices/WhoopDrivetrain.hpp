@@ -109,7 +109,7 @@ public:
     /**
      * Sets the pose units for the system. This can be changed at any point in time, even mid-autonomous
      */
-    void setPoseUnits(PoseUnits units);
+    void set_pose_units(PoseUnits units);
 
     /**
      * Gets the x, y, z, pitch, yaw, roll of the robot

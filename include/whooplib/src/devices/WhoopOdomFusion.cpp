@@ -69,8 +69,6 @@ void WhoopOdomFusion::on_vision_pose_received(Pose p){
     pose.z = p.z;
     pose.confidence = p.confidence;
 
-    last_pose = pose;
-
     self_lock.unlock();
 }
 
@@ -114,6 +112,7 @@ bool WhoopOdomFusion::is_moving(double rads_s_threshold){
 
 void WhoopOdomFusion::__step(){
     self_lock.lock();
+    last_pose = pose; // Update last_pose
 
     if(fusion_mode != FusionMode::vision_only){
         odom_offset->__step_down(); // Step down wheel odometry ladder

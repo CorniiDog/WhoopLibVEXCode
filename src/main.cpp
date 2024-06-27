@@ -247,8 +247,7 @@ void autonomous(void) {
 /*---------------------------------------------------------------------------*/
 void usercontrol(void) {
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
-
-  wait(1, sec);
+  robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw); // Inches, degrees, clockwise-positive
   robot_drivetrain.set_pose(0,0,0);
 
   // User control code here, inside the loop

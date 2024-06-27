@@ -199,6 +199,6 @@ PoseUnits WhoopDrivetrain::get_units(){
     return pose_units;
 }
 
-void WhoopDrivetrain::setPoseUnits(PoseUnits units){
+void WhoopDrivetrain::set_pose_units(PoseUnits units){
     pose_units = units;
 }
