@@ -245,11 +245,11 @@ void usercontrol(void) {
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 
   wait(1, sec);
-  odom_fusion.tare(1,1,M_PI/4);
+  robot_drivetrain.set_pose(1,1,M_PI/4);
 
   // User control code here, inside the loop
   while (1) {
-    Pose current_pose = odom_fusion.get_pose();
+    Pose current_pose = robot_drivetrain.get_pose();
     Brain.Screen.clearLine(2);
     Brain.Screen.setCursor(2, 1);
     Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f", current_pose.x, current_pose.y, current_pose.z, current_pose.pitch, current_pose.yaw, current_pose.roll);
