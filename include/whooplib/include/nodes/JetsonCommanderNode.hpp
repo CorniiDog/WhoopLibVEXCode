@@ -37,16 +37,45 @@ private:
 
     bool comms_disabled = false;
 public:
-
-    void initialize();
     std::unique_ptr<Messenger> keepalive_messenger = nullptr; // Handles messaging for pose data from Jetson Nano
 
     bool connected = false;
+
+    /**
+     * Commander for the Jetson Nano
+     * @param controller_for_messages Controller to send notifications
+     * @param bufferSystem The buffer master
+     * @param communication_stream The communication stream identifier
+     * @param keep_alive_time_seconds In seconds. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this time before it shuts off
+     * @param step_time_ms How many seconds to wait before sending anoter keep alive message to Jetson (suggested 2)
+     * @param enable_jetson_comms If you don't have a Vision Tesseract on your robot, set to disable_comms
+    */
     JetsonCommander(WhoopController* controller_for_messages, BufferNode* bufferSystem, std::string communication_stream, int keep_alive_time_seconds, int step_time_ms, jetsonCommunication enable_jetson_comms);
 
+    /**
+     * Restarts Jetson Nano
+    */
     void reboot_jetson();
+
+    /**
+     * Shuts down Jetson Nano
+    */
     void shutdown_jetson();
 
+    /**
+     * Sends initialization message to Jetson Nano
+    */
+    void initialize();
+
+    /**
+     * Restarts the vision process on Jetson Nano
+    */
+    void restart_vision_process();
+    
+    /**
+     * Returns true if connected to Jetson Nano
+     * @returns true if connected, false otherwise (delay 5-6 seconds)
+    */
     bool is_connected_to_jetson();
 
     /**

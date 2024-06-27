@@ -168,7 +168,7 @@ JetsonCommander jetson_commander(
   "C", // The subscribed stream name for keep-alive, shutdown, and reboot
   16, // In seconds. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this time before it shuts off
   2, // How many seconds to wait before sending anoter keep alive message to Jetson (suggested 2)
-  jetsonCommunication::enable_comms // If you have a Vision Tesseract on your robot, set to disable_comms
+  jetsonCommunication::enable_comms // If you don't have a Vision Tesseract on your robot, set to disable_comms
 );
 
 ////////////////////////////////////////////////////////////

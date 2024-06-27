@@ -63,6 +63,10 @@ void JetsonCommander::shutdown_jetson(){
     keepalive_messenger->send("Shutdown");
 }
 
+void JetsonCommander::restart_vision_process(){
+    keepalive_messenger->send("RestartProcess");
+}
+
 bool JetsonCommander::is_connected_to_jetson(){
     return connected;
 }
