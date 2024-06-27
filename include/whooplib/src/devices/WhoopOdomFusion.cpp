@@ -11,8 +11,7 @@
 #include "whooplib/include/toolbox.hpp"
 #include <cmath>
 
-WhoopOdomFusion::WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset* odom_offset, double min_confidence_threshold, FusionMode fusion_mode, double max_fusion_shift_meters, double max_fusion_shift_radians, double feedforward_gain, double rolling_average_filter_n):
-    rolling_average_filter(rolling_average_filter_n){
+WhoopOdomFusion::WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset* odom_offset, double min_confidence_threshold, FusionMode fusion_mode, double max_fusion_shift_meters, double max_fusion_shift_radians, double feedforward_gain){
     this->max_fusion_shift_meters = max_fusion_shift_meters/55.6;
     this->max_fusion_shift_radians = max_fusion_shift_radians/55.6;
     this->fusion_mode = fusion_mode;
@@ -20,7 +19,6 @@ WhoopOdomFusion::WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset
     this->odom_offset = odom_offset;
     this->feedforward_gain = feedforward_gain/10.0;
     this->whoop_vision->on_update(std::bind(&WhoopOdomFusion::on_vision_pose_received, this, std::placeholders::_1));
-    this->rolling_average_filter_n = rolling_average_filter_n;
 }
 
 void WhoopOdomFusion::on_vision_pose_received(Pose p){
@@ -30,53 +28,48 @@ void WhoopOdomFusion::on_vision_pose_received(Pose p){
     
     self_lock.lock();
     if (p.confidence >= min_confidence_threshold) {
-        double feedforward_x_delta = feedforward_gain * (unfiltered_pose.x - last_pose.x);
-        double feedforward_y_delta = feedforward_gain * (unfiltered_pose.y - last_pose.y);
-        double feedforward_yaw_delta = feedforward_gain * (unfiltered_pose.yaw - last_pose.yaw);
+        double feedforward_x_delta = feedforward_gain * (pose.x - last_pose.x);
+        double feedforward_y_delta = feedforward_gain * (pose.y - last_pose.y);
 
-        double distance = std::sqrt(std::pow(p.x - unfiltered_pose.x, 2) + std::pow(p.y - unfiltered_pose.y, 2));
-        double angle_difference = std::fabs(p.yaw - unfiltered_pose.yaw);
+        // Normalize angle difference to handle angle wrapping correctly
+        double yaw_difference = normalize_angle(p.yaw - pose.yaw);
+        double feedforward_yaw_delta = feedforward_gain * yaw_difference;
+
+        double distance = std::sqrt(std::pow(p.x - pose.x, 2) + std::pow(p.y - pose.y, 2));
+        double angle_difference = std::fabs(yaw_difference);
 
         // Handle linear position adjustment
         if (fusion_mode == FusionMode::fusion_gradual && distance > max_fusion_shift_meters) {
-            // Calculate the direction vector from current to target position
-            double dx = p.x - unfiltered_pose.x;
-            double dy = p.y - unfiltered_pose.y;
+            double dx = p.x - pose.x;
+            double dy = p.y - pose.y;
             double norm = std::sqrt(dx * dx + dy * dy);
 
-            // Scale the vector to the maximum allowable length
             dx = (dx / norm) * max_fusion_shift_meters;
             dy = (dy / norm) * max_fusion_shift_meters;
 
-            // Update the unfiltered_pose by the maximum allowable shift
-            unfiltered_pose.x += dx;
-            unfiltered_pose.y += dy;
+            pose.x += dx;
+            pose.y += dy;
         } else {
-            // If within allowable distance, update position to target
-            unfiltered_pose.x = p.x;
-            unfiltered_pose.y = p.y;
+            pose.x = p.x;
+            pose.y = p.y;
         }
-        unfiltered_pose.x += feedforward_x_delta;
-        unfiltered_pose.y += feedforward_y_delta;
+        pose.x += feedforward_x_delta;
+        pose.y += feedforward_y_delta;
 
         // Handle angular position adjustment
         if (fusion_mode == FusionMode::fusion_gradual && angle_difference > max_fusion_shift_radians) {
-            // Adjust yaw by the maximum allowable radians directly toward the target yaw
-            double dyaw = p.yaw - unfiltered_pose.yaw;
-            unfiltered_pose.yaw += std::copysign(max_fusion_shift_radians, dyaw);
+            pose.yaw += std::copysign(max_fusion_shift_radians, yaw_difference);
         } else {
-            // If within allowable angle, update yaw to target
-            unfiltered_pose.yaw = p.yaw;
+            pose.yaw = p.yaw;
         }
-        unfiltered_pose.yaw += feedforward_yaw_delta;
+        pose.yaw += feedforward_yaw_delta;
 
-        // Tare the odometer to the newly adjusted unfiltered_pose
-        odom_offset->tare(unfiltered_pose.x, unfiltered_pose.y, unfiltered_pose.yaw);
+        odom_offset->tare(pose.x, pose.y, pose.yaw);
     }
-    unfiltered_pose.z = p.z; // Adjust Z
-    unfiltered_pose.confidence = p.confidence; // Adjusts confidence
+    pose.z = p.z;
+    pose.confidence = p.confidence;
 
-    last_pose = unfiltered_pose; // Store last p
+    last_pose = pose;
 
     self_lock.unlock();
 }
@@ -85,11 +78,11 @@ void WhoopOdomFusion::tare(double x, double y, double z, double yaw){
     self_lock.lock();
     whoop_vision->tare(x, y, z, 0, yaw, 0);
     odom_offset->tare(x, y, yaw);
-    unfiltered_pose.x = x;
-    unfiltered_pose.y = y;
-    unfiltered_pose.z = z;
-    unfiltered_pose.yaw = yaw;
-    last_pose = unfiltered_pose;
+    pose.x = x;
+    pose.y = y;
+    pose.z = z;
+    pose.yaw = yaw;
+    last_pose = pose;
     self_lock.unlock();
 }
 
@@ -125,18 +118,11 @@ void WhoopOdomFusion::__step(){
     if(fusion_mode != FusionMode::vision_only){
         odom_offset->__step_down(); // Step down wheel odometry ladder
         TwoDPose result = odom_offset->get_pose();
-        unfiltered_pose.x = result.x;
-        unfiltered_pose.y = result.y;
-        unfiltered_pose.yaw = result.yaw;
+        pose.x = result.x;
+        pose.y = result.y;
+        pose.yaw = result.yaw;
     }
-    unfiltered_pose.roll = odom_offset->odom_unit->inertial_sensor->get_roll_radians();
-    unfiltered_pose.pitch = odom_offset->odom_unit->inertial_sensor->get_pitch_radians();
-
-    if(rolling_average_filter_n == 0){
-        pose = unfiltered_pose;
-    }
-    else{ // If using rolling average filter
-        pose = rolling_average_filter.process(unfiltered_pose);
-    }
+    pose.roll = odom_offset->odom_unit->inertial_sensor->get_roll_radians();
+    pose.pitch = odom_offset->odom_unit->inertial_sensor->get_pitch_radians();
     self_lock.unlock();
 }

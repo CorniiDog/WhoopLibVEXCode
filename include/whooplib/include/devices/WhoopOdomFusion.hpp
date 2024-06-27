@@ -43,11 +43,6 @@ protected:
     void on_vision_pose_received(Pose p);
 
     Pose last_pose = Pose();
-
-    RollingAverageFilter rolling_average_filter;
-    double rolling_average_filter_n = 0;
-
-    Pose unfiltered_pose = Pose();  // Current fused pose of the odometry system.
 public:
     Pose pose = Pose();  // Current fused pose of the odometry system.
 
@@ -60,9 +55,8 @@ public:
      * @param max_fusion_shift_meters If FusionMode is fusion_gradual, it is the maximum allowable shift in meters for gradual fusion, per second.
      * @param max_fusion_shift_radians If FusionMode is fusion_gradual, it is the maximum allowable rotational shift in radians for gradual fusion, per second.
      * @param feedforward_gain // Feedforward gain of the vision system as it has delay, in milliseconds (For 100Hz Wheel Odometry)
-     * @param rolling_average_filter_n // The number of elements to filter (If we are doing 100Hz system with n=5 elements, delay would be 0.05 seconds, or be equivalent of 20Hz system). Set to 0 to disable.
      */
-    WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset* odom_offset, double min_confidence_threshold, FusionMode fusion_mode, double max_fusion_shift_meters, double max_fusion_shift_radians, double feedforward_gain, double rolling_average_filter_n);
+    WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset* odom_offset, double min_confidence_threshold, FusionMode fusion_mode, double max_fusion_shift_meters, double max_fusion_shift_radians, double feedforward_gain);
 
     /**
      * Retreives the pose from the odom fusion

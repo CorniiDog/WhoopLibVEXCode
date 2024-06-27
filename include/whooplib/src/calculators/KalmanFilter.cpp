@@ -10,7 +10,7 @@
 #include "whooplib/include/calculators/KalmanFilter.hpp"
 
 KalmanFilter::KalmanFilter(double process_noise, double measurement_noise, double estimated_error, double initial_value)
-        : Q(process_noise), R(measurement_noise), P(estimated_error), x(initial_value) {}
+        : Q(process_noise), R(measurement_noise), x(initial_value), P(estimated_error) {}
 
 // Method to update the filter with a new measurement
 double KalmanFilter::process(double newMeasurement) {
