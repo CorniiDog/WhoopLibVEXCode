@@ -159,6 +159,7 @@ WhoopVision vision_system(
 // Running the following functions (can be a touch screen confirmation button perhaps):
 // jetson_commander.shutdown_jetson();
 // jetson_commander.reboot_jetson();
+// jetson_commander.restart_vision_process();
 // bool is_connected_currently = jetson_commander.is_connected_to_jetson();
 // This is essential to ensure that the nano starts its internal program, stop program, restarts program, 
 // and can be told to reboot or shutdown

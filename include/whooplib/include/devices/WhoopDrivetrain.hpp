@@ -107,6 +107,11 @@ public:
     void calibrate();
 
     /**
+     * Sets the pose units for the system. This can be changed at any point in time, even mid-autonomous
+     */
+    void setPoseUnits(PoseUnits units);
+
+    /**
      * Gets the x, y, z, pitch, yaw, roll of the robot
      * @return Pose object. With Pose.x, Pose.y, etc...
      */

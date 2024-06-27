@@ -198,3 +198,7 @@ std::string WhoopDrivetrain::get_units_str() {
 PoseUnits WhoopDrivetrain::get_units(){
     return pose_units;
 }
+
+void WhoopDrivetrain::setPoseUnits(PoseUnits units){
+    pose_units = units;
+}
