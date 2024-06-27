@@ -166,7 +166,7 @@ JetsonCommander jetson_commander(
   &controller1, // The controller to send messages to upon error
   &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
   "C", // The subscribed stream name for keep-alive, shutdown, and reboot
-  30, // In seconds. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this time
+  16, // In seconds. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this time before it shuts off
   2, // How many seconds to wait before sending anoter keep alive message to Jetson (suggested 2)
   jetsonCommunication::enable_comms // If you have a Vision Tesseract on your robot, set to disable_comms
 );
