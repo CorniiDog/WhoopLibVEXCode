@@ -9,6 +9,7 @@
 
 #include "vex.h"
 #include "whooplib/include/devices/WhoopDrivetrain.hpp"
+#include "whooplib/include/devices/WhoopOdomFusion.hpp"
 #include "whooplib/include/toolbox.hpp"
 #include <cmath>
 #include <iostream>
@@ -26,14 +27,18 @@ void WhoopDrivetrain::init_motor_groups(const std::vector<WhoopMotor*>& leftMoto
     right_motor_group = std::make_unique<WhoopMotorGroup>(rightMotors);
 }
 
-WhoopDrivetrain::WhoopDrivetrain(WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
+WhoopDrivetrain::WhoopDrivetrain(WhoopOdomFusion* odom_fusion, PoseUnits pose_units, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
 : whoop_controller(controller) {
     init_motor_groups(leftMotorGroup, rightMotorGroup);
+    this->odom_fusion = odom_fusion;
+    this->pose_units = pose_units;
 }
 
-WhoopDrivetrain::WhoopDrivetrain(WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
+WhoopDrivetrain::WhoopDrivetrain(WhoopOdomFusion* odom_fusion, PoseUnits pose_units, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
 : whoop_controller(controller) {
     init_motor_groups(leftMotors, rightMotors);
+    this->odom_fusion = odom_fusion;
+    this->pose_units = pose_units;
 }
 
 
@@ -41,8 +46,89 @@ void WhoopDrivetrain::set_state(drivetrainState state){
     drive_state = state;
 }
 
+// This is the protocol for calibrating the drivetrain while in a disabled state.
+void WhoopDrivetrain::run_disabled_calibration_protocol(){
+    if (drive_state == drivetrainState::mode_disabled || needs_calibration){
+        if(odom_fusion->is_moving()){
+            needs_calibration = true;
+            calibration_timer = 0;
+            if(moved_one_time_notif){
+                whoop_controller->notify("Robot Moved");
+                moved_one_time_notif = false;
+            }
+        }
+        else if(needs_calibration){ // Stationary and needs calibration
+            calibration_timer += 20;
+            if(calibration_timer > time_until_calibration){ // If stationary for more than period of time (like 500 milliseconds) then calibrate
+                whoop_controller->notify("Calibrating Dont Move");
+                odom_fusion->calibrate();
+                needs_calibration = false;
+                moved_one_time_notif = true;
+            }
+        }
+    }
+}
+
+/**
+ * Gets the x, y, z, pitch, yaw, roll of the robot
+ * @return Pose object. With Pose.x, Pose.y, etc...
+ */
+Pose WhoopDrivetrain::get_pose(){
+    Pose p = odom_fusion->get_pose();
+
+    // Converting from standardized meters to inches
+    if(pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_ccw || pose_units == PoseUnits::in_rad_cw){
+        p.x = to_inches(p.x); // (meters -> inches)
+        p.y = to_inches(p.y); // (meters -> inches)
+        p.z = to_inches(p.z); // (meters -> inches)
+    }
+
+    // Converting from standardized radians to degrees
+    if(pose_units == PoseUnits::m_deg_cw || pose_units == PoseUnits::m_deg_ccw || pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw){
+        p.pitch = to_deg(p.pitch); // (radians -> degrees)
+        p.roll = to_deg(p.roll); // (radians -> degrees)
+        p.yaw = to_deg(p.yaw); // (radians -> degrees)
+    }
+
+    // Flipping from standardized counter-clockwise to clockwise
+    if(pose_units == PoseUnits::m_deg_cw || pose_units == PoseUnits::m_rad_cw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_cw){
+        p.yaw *= -1; // (counter-clockwise-positive -> degrees clockwise-positive)
+    }
+
+    return p;
+}
+
+/**
+ * Sets the pose of the robot
+ * @param x_in the location, units configured upon initialization, parallel to the width of the driver station
+ * @param y_in the location, units configured upon initialization, perpendicular to the width of the driver station
+ * @param yaw_deg the rotation, units configured upon initialization
+ */
+void WhoopDrivetrain::set_pose(double x, double y, double yaw){
+
+    // Converting from inches to standardized meters (in -> m)
+    if(pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_ccw || pose_units == PoseUnits::in_rad_cw){
+        x = to_meters(x); // (inches -> meters)
+        y = to_meters(y); // (inches -> meters)
+    }
+
+    // Converting from degrees to standardized radians (deg -> rad)
+    if(pose_units == PoseUnits::m_deg_cw || pose_units == PoseUnits::m_deg_ccw || pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw){
+        yaw = to_rad(yaw); // (degrees -> radians)
+    }
+
+    // Flipping from clockwise to standardized counter-clockwise (cw -> ccw)
+    if(pose_units == PoseUnits::m_deg_cw || pose_units == PoseUnits::m_rad_cw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_cw){
+        yaw *= -1; // (counter-clockwise-positive -> degrees clockwise-positive)
+    }
+
+    odom_fusion->tare(x, y, yaw);
+}
+
 
 void WhoopDrivetrain::__step(){
+    odom_fusion->__step(); // Step odometry fusion module
+    run_disabled_calibration_protocol();
 
     // Controller input
     if(drive_state == drivetrainState::mode_usercontrol){

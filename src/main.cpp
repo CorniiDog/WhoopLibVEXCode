@@ -190,12 +190,14 @@ WhoopOdomFusion odom_fusion(
  */
 ////////////////////////////////////////////////////////////
 WhoopDrivetrain robot_drivetrain(
+  &odom_fusion, // Odometry fusion module
+  PoseUnits::in_deg_cw, // Configure the units for the odometry. "m_deg_cw" means "meters, degrees, clockwise-positive yaw", "in_deg_ccw" means "inches, degrees, counter-clockwise-positive yaw", and so forth.
   &controller1, // Pointer to the controller that controls the drivetrain
   &left_motors, // Pointer to the left motor group (optionally can be a list of motors as well)
   &right_motors // Pointer to the right motor group (optionally can be a list of motors as well)
 );
 
-ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &odom_fusion});
+ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain});
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -214,33 +216,6 @@ void pre_auton(void) {
   manager.start();
   robot_drivetrain.set_state(drivetrainState::mode_disabled);
   jetson_commander.initialize();
-
-  // Calibration protocol
-  double time_until_calibration = 1000; // ms
-
-  bool needs_calibration = true;
-  double calibration_timer = 0;
-  bool moved_one_time_notif = false;
-  while (robot_drivetrain.drive_state == drivetrainState::mode_disabled || needs_calibration){
-    if(odom_fusion.is_moving()){
-      needs_calibration = true;
-      calibration_timer = 0;
-      if(moved_one_time_notif){
-        controller1.notify("Robot Moved");
-        moved_one_time_notif = false;
-      }
-    }
-    else if(needs_calibration){ // Stationary and needs calibration
-      calibration_timer += 20;
-      if(calibration_timer > time_until_calibration){ // If stationary for more than period of time (like 500 milliseconds) then calibrate
-        controller1.notify("Calibrating Dont Move");
-        odom_fusion.calibrate();
-        needs_calibration = false;
-        moved_one_time_notif = true;
-      }
-    }
-    wait(20, msec); // Sleep the task for a short amount of time
-  }
 }
 
 /*---------------------------------------------------------------------------*/
