@@ -37,7 +37,7 @@ WhoopDriveOdomUnit::WhoopDriveOdomUnit(double forward_tracker_distance, double f
     this->sideways_tracker = sideways_tracker;
     forward_tracker->set_wheel_diameter(sideways_tracker_wheel_diameter_meters);
     sideways_tracker->set_wheel_diameter(sideways_tracker_wheel_diameter_meters);
-    set_physical_distances(forward_tracker_wheel_diameter_meters, sideways_tracker_distance); // From odom class
+    set_physical_distances(forward_tracker_distance, sideways_tracker_distance); // From odom class
     drive_odom_config = DriveOdomConfig::DRIVE_WITH_BOTH_TRACKERS;
 }
 

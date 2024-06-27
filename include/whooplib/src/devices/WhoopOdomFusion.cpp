@@ -32,7 +32,7 @@ void WhoopOdomFusion::on_vision_pose_received(Pose p){
         double feedforward_y_delta = feedforward_gain * (pose.y - last_pose.y);
 
         // Normalize angle difference to handle angle wrapping correctly
-        double yaw_difference = normalize_angle(p.yaw - pose.yaw);
+        double yaw_difference = normalize_angle(pose.yaw - last_pose.yaw);
         double feedforward_yaw_delta = feedforward_gain * yaw_difference;
 
         double distance = std::sqrt(std::pow(p.x - pose.x, 2) + std::pow(p.y - pose.y, 2));

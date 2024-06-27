@@ -61,15 +61,17 @@ WhoopRotation sideways_tracker(PORT9, reversed::no_reverse);
 // The odom unit center is the virtual intercept of the perpendicular faces of the odometry trackers.
 // The measurement is from the center of the odom unit to the designated tracker distances.
 // Visual Representation of Tracker Distances from Odom Unit: https://imgur.com/rWCCCfz
+
 WhoopDriveOdomUnit odom_unit(
   to_meters(1.51), // The forward tracker distance, in meters, from the odom unit's center. (positive implies a shift to the right from the odom unit's center)
   to_meters(2.5189), // Diameter of the forward tracker, in meters (e.g., 0.08255 for 3.25-inch wheels).
-  -to_meters(-4.468), // The sideways tracker distance, in meters, from the odom unit's center (positive implies a shift forward from the odom unit center)
+  to_meters(-4.468), // The sideways tracker distance, in meters, from the odom unit's center (positive implies a shift forward from the odom unit center)
   to_meters(2.5189), // Diameter of the sideways tracker, in meters (e.g., 0.08255 for 3.25-inch wheels).
   &inertial_sensor, // Pointer to the WhoopInertial sensor
   &forward_tracker, // Pointer to the forward tracker, as a WhoopRotation sensor
   &sideways_tracker // Pointer to the sideways tracker, as a WhoopRotation sensor
 );
+
 
 // Example of a single tracker setup
 // In this configuration, the sideways tracker must be directly in front, behind, or on the center of the robot's rotation.
@@ -110,8 +112,8 @@ WhoopDriveOdomUnit odom_unit(
 // Visual representation of Odom Unit from Center of Robot: https://imgur.com/x8ObCIG
 WhoopDriveOdomOffset odom_offset(
   &odom_unit, // Pointer to the odometry unit (will manage the odom unit)
-  0,//to_meters(-0.6), // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
-  0//to_meters(4.95) // The y offset of the odom unit from the center of the robot (positive implies a shift forward from the center of the robot).
+  to_meters(-0.6), // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
+  to_meters(4.95) // The y offset of the odom unit from the center of the robot (positive implies a shift forward from the center of the robot).
 );
 
 ////////////////////////////////////////////////////////////
@@ -166,7 +168,7 @@ JetsonCommander jetson_commander(
   "C", // The subscribed stream name for keep-alive, shutdown, and reboot
   180, // The number of seconds to stay alive. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this continued
   2, // How many seconds to wait before sending anoter keep alive message (suggested 2)
-  jetsonCommunication::disable_comms // If you have a Vision Tesseract on your robot, set to disable_comms
+  jetsonCommunication::enable_comms // If you have a Vision Tesseract on your robot, set to disable_comms
 );
 
 ////////////////////////////////////////////////////////////
@@ -178,9 +180,9 @@ WhoopOdomFusion odom_fusion(
   &vision_system, // Pointer to the vision system
   &odom_offset, // Pointer to the odometry offset
   0.5, // Minimum confidence threshold to apply vision system to odometry
-  FusionMode::wheel_odom_only, // The method of fusing
-  to_meters(10), // If FusionMode is fusion_gradual, it is the maximum allowable shift in meters for gradual fusion, per second.
-  to_rad(10), // If FusionMode is fusion_gradual, it is the maximum allowable rotational shift of the yaw in radians for gradual fusion, per second.
+  FusionMode::fusion_instant, // The method of fusing
+  to_meters(1), // If FusionMode is fusion_gradual, it is the maximum allowable shift in meters for gradual fusion, per second.
+  to_rad(5), // If FusionMode is fusion_gradual, it is the maximum allowable rotational shift of the yaw in radians for gradual fusion, per second.
   20 // Feedforward gain of the vision system as it has delay, in milliseconds (For 100Hz Wheel Odometry)
 );
 
@@ -213,9 +215,10 @@ void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
-  manager.start();
-  robot_drivetrain.set_state(drivetrainState::mode_disabled);
   jetson_commander.initialize();
+  robot_drivetrain.set_state(drivetrainState::mode_disabled);
+  wait(0.5, sec);
+  manager.start();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -245,11 +248,11 @@ void usercontrol(void) {
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 
   wait(1, sec);
-  robot_drivetrain.set_pose(1,1,M_PI/4);
+  robot_drivetrain.set_pose(0,0,0);
 
   // User control code here, inside the loop
   while (1) {
-    Pose current_pose = robot_drivetrain.get_pose();
+    Pose current_pose = odom_fusion.get_pose();
     Brain.Screen.clearLine(2);
     Brain.Screen.setCursor(2, 1);
     Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f", current_pose.x, current_pose.y, current_pose.z, current_pose.pitch, current_pose.yaw, current_pose.roll);
@@ -261,6 +264,11 @@ void usercontrol(void) {
     Brain.Screen.clearLine(4);
     Brain.Screen.setCursor(4, 1);
     Brain.Screen.print("Jetson Connected: %s", boolToString(jetson_commander.is_connected_to_jetson()).c_str());
+
+    Pose vision_pose = vision_system.get_pose();
+    Brain.Screen.clearLine(5);
+    Brain.Screen.setCursor(5, 1);
+    Brain.Screen.print("Vision P: %.3f %.3f %.3f %.3f %.3f %.3f", vision_pose.x, vision_pose.y, vision_pose.z, vision_pose.pitch, vision_pose.yaw, vision_pose.roll);
     
 
     wait(20, msec);
