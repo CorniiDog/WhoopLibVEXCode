@@ -195,7 +195,7 @@ WhoopOdomFusion odom_fusion(
 WhoopDrivetrain robot_drivetrain(
   &odom_fusion, // Odometry fusion module
   PoseUnits::in_deg_cw, // Configure the units for the odometry. "m_deg_cw" means "meters, degrees, clockwise-positive yaw", "in_deg_ccw" means "inches, degrees, counter-clockwise-positive yaw", and so forth.
-  &controller1, // Pointer to the controller that controls the drivetrain
+  &controller1, // Pointer to the controller 
   &left_motors, // Pointer to the left motor group (optionally can be a list of motors as well)
   &right_motors // Pointer to the right motor group (optionally can be a list of motors as well)
 );
