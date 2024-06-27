@@ -102,6 +102,11 @@ public:
     void set_state(drivetrainState state);
 
     /**
+     * Calibrates the robot drivetrain
+     */
+    void calibrate();
+
+    /**
      * Gets the x, y, z, pitch, yaw, roll of the robot
      * @return Pose object. With Pose.x, Pose.y, etc...
      */

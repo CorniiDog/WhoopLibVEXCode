@@ -48,7 +48,7 @@ void WhoopDrivetrain::set_state(drivetrainState state){
 
 // This is the protocol for calibrating the drivetrain while in a disabled state.
 void WhoopDrivetrain::run_disabled_calibration_protocol(){
-    if (drive_state == drivetrainState::mode_disabled || needs_calibration){
+    if (drive_state == drivetrainState::mode_disabled){
         if(odom_fusion->is_moving()){
             needs_calibration = true;
             calibration_timer = 0;
@@ -68,6 +68,10 @@ void WhoopDrivetrain::run_disabled_calibration_protocol(){
             }
         }
     }
+}
+
+void WhoopDrivetrain::calibrate(){
+    odom_fusion->calibrate();
 }
 
 /**

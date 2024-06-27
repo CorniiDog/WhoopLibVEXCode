@@ -214,11 +214,11 @@ void pre_auton(void) {
 
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-  controller1.notify("Initializing...");
-  jetson_commander.initialize();
-  robot_drivetrain.set_state(drivetrainState::mode_disabled);
-  wait(0.5, sec);
   manager.start();
+  robot_drivetrain.set_state(drivetrainState::mode_disabled);
+  controller1.notify("Initializing...");
+  wait(0.5, sec);
+  jetson_commander.initialize();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -252,7 +252,7 @@ void usercontrol(void) {
 
   // User control code here, inside the loop
   while (1) {
-    Pose current_pose = odom_fusion.get_pose();
+    Pose current_pose = robot_drivetrain.get_pose();
     Brain.Screen.clearLine(2);
     Brain.Screen.setCursor(2, 1);
     Brain.Screen.print("Pose: %.3f %.3f %.3f %.3f %.3f %.3f", current_pose.x, current_pose.y, current_pose.z, current_pose.pitch, current_pose.yaw, current_pose.roll);
