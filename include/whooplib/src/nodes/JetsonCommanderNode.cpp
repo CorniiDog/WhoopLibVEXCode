@@ -73,7 +73,9 @@ void JetsonCommander::__step(){
 
     if (raw_connected <= 0){
         raw_connected = 0;
-        controller_for_messages->notify("Jetson Disconnected", 1);
+        if(!comms_disabled){
+            controller_for_messages->notify("Jetson Disconnected", 1);
+        }
     }
     else if(raw_connected > 5){
         raw_connected = 5;

@@ -64,7 +64,7 @@ WhoopRotation sideways_tracker(PORT9, reversed::no_reverse);
 WhoopDriveOdomUnit odom_unit(
   to_meters(1.51), // The forward tracker distance, in meters, from the odom unit's center. (positive implies a shift to the right from the odom unit's center)
   to_meters(2.5189), // Diameter of the forward tracker, in meters (e.g., 0.08255 for 3.25-inch wheels).
-  to_meters(-4.468), // The sideways tracker distance, in meters, from the odom unit's center (positive implies a shift forward from the odom unit center)
+  -to_meters(-4.468), // The sideways tracker distance, in meters, from the odom unit's center (positive implies a shift forward from the odom unit center)
   to_meters(2.5189), // Diameter of the sideways tracker, in meters (e.g., 0.08255 for 3.25-inch wheels).
   &inertial_sensor, // Pointer to the WhoopInertial sensor
   &forward_tracker, // Pointer to the forward tracker, as a WhoopRotation sensor
@@ -110,8 +110,8 @@ WhoopDriveOdomUnit odom_unit(
 // Visual representation of Odom Unit from Center of Robot: https://imgur.com/x8ObCIG
 WhoopDriveOdomOffset odom_offset(
   &odom_unit, // Pointer to the odometry unit (will manage the odom unit)
-  to_meters(-0.6), // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
-  to_meters(4.95) // The y offset of the odom unit from the center of the robot (positive implies a shift forward from the center of the robot).
+  0,//to_meters(-0.6), // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
+  0//to_meters(4.95) // The y offset of the odom unit from the center of the robot (positive implies a shift forward from the center of the robot).
 );
 
 ////////////////////////////////////////////////////////////
@@ -123,7 +123,7 @@ WhoopDriveOdomOffset odom_offset(
 // If you have a Vision Tesseract on your robot, 
 // switch to jetsonCommunication::enable_comms
 // If not, use jetsonCommunication::disable_comms
-jetsonCommunication jetson_comms_enabled = jetsonCommunication::disable_comms;
+jetsonCommunication jetson_comms_enabled = jetsonCommunication::enable_comms;
 
 ////////////////////////////////////////////////////////////
 /** 
@@ -166,7 +166,7 @@ JetsonCommander jetson_commander(
   "C", // The subscribed stream name for keep-alive, shutdown, and reboot
   180, // The number of seconds to stay alive. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this continued
   2, // How many seconds to wait before sending anoter keep alive message (suggested 2)
-  jetson_comms_enabled // Allow/deny the jetson to send controller notifications
+  jetsonCommunication::disable_comms // If you have a Vision Tesseract on your robot, set to disable_comms
 );
 
 ////////////////////////////////////////////////////////////
@@ -178,7 +178,7 @@ WhoopOdomFusion odom_fusion(
   &vision_system, // Pointer to the vision system
   &odom_offset, // Pointer to the odometry offset
   0.5, // Minimum confidence threshold to apply vision system to odometry
-  FusionMode::fusion_gradual, // The method of fusing
+  FusionMode::wheel_odom_only, // The method of fusing
   to_meters(10), // If FusionMode is fusion_gradual, it is the maximum allowable shift in meters for gradual fusion, per second.
   to_rad(10), // If FusionMode is fusion_gradual, it is the maximum allowable rotational shift of the yaw in radians for gradual fusion, per second.
   20 // Feedforward gain of the vision system as it has delay, in milliseconds (For 100Hz Wheel Odometry)
