@@ -32,6 +32,11 @@ void JetsonCommander::_on_message_received(std::string message){
             controller_for_messages->notify("Rebooting Jetson", 2);
         }
     }
+    else if(message == "ReInitializing" || message == "Initializing"){ // If failed to initialize realsense system
+        if(!comms_disabled){
+            controller_for_messages->notify("Initializing Jetson", 2);
+        }
+    }
     else if(message == "Failed"){ // If failed to initialize realsense system
         if(!comms_disabled){
             controller_for_messages->notify("Replug RSense USBs", 2);
