@@ -63,6 +63,7 @@ void WhoopOdomFusion::on_vision_pose_received(Pose p){
             pose.yaw = p.yaw;
         }
         pose.yaw += feedforward_yaw_delta;
+        pose.yaw = normalize_angle(pose.yaw);
 
         odom_offset->tare(pose.x, pose.y, pose.yaw);
     }

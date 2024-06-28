@@ -167,7 +167,7 @@ JetsonCommander jetson_commander(
   &controller1, // The controller to send messages to upon error
   &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
   "C", // The subscribed stream name for keep-alive, shutdown, and reboot
-  16, // In seconds. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this time before it shuts off
+  60, // In seconds. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this time before it shuts off
   2, // How many seconds to wait before sending anoter keep alive message to Jetson (suggested 2)
   jetsonCommunication::enable_comms // If you don't have a Vision Tesseract on your robot, set to disable_comms
 );
@@ -181,10 +181,10 @@ WhoopOdomFusion odom_fusion(
   &vision_system, // Pointer to the vision system
   &odom_offset, // Pointer to the odometry offset
   0.5, // Minimum confidence threshold to apply vision system to odometry
-  FusionMode::fusion_instant, // The method of fusing
-  to_meters(1), // If FusionMode is fusion_gradual, it is the maximum allowable shift in meters for gradual fusion, per second.
-  to_rad(5), // If FusionMode is fusion_gradual, it is the maximum allowable rotational shift of the yaw in radians for gradual fusion, per second.
-  20 // Feedforward gain of the vision system as it has delay, in milliseconds (For 100Hz Wheel Odometry)
+  FusionMode::fusion_gradual, // The method of fusing
+  to_meters(2), // If FusionMode is fusion_gradual, it is the maximum allowable shift in meters for gradual fusion, per second.
+  to_rad(10), // If FusionMode is fusion_gradual, it is the maximum allowable rotational shift of the yaw in radians for gradual fusion, per second.
+  1 // Feedforward gain of the vision system as it has delay, in milliseconds (For 100Hz Wheel Odometry)
 );
 
 ////////////////////////////////////////////////////////////
