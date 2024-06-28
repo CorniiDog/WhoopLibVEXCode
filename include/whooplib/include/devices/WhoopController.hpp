@@ -28,10 +28,12 @@ enum joystickMode{
 /**
  * Controls and manages inputs from a VEX controller.
  */
-class WhoopController {
+class WhoopController : public ComputeNode{
 public:
     vex::controller vex_controller; // Instance of VEX controller.
     joystickMode joystick_mode; // Current joystick mode.
+
+    int time_left_to_clear = 0;
 
     /**
      * Constructor that initializes the controller with a specific joystick mode.
@@ -127,6 +129,9 @@ public:
     void on_right_bottom_bumper_released_event(void (*callback)());
     void on_left_top_bumper_released_event(void (*callback)());
     void on_left_bottom_bumper_released_event(void (*callback)());
+
+public:
+    void __step() override;  // Protected helper function for processing steps
 
 };
 

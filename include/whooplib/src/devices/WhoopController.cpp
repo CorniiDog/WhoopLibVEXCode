@@ -12,6 +12,7 @@
 #include "whooplib/include/devices/WhoopController.hpp"
 #include <vector>
 #include <functional>
+#include <cmath>
 
 // Initialization Constructors
 WhoopController::WhoopController(joystickMode mode) : vex_controller(controller(controllerType::primary)), joystick_mode(mode){} 
@@ -24,10 +25,8 @@ void WhoopController::notify(std::string message, double duration_seconds){
     vex_controller.Screen.setCursor(1, 1);
     vex_controller.Screen.print("%s", message.c_str());
     vex_controller.rumble(".");
-    if(duration_seconds > 0 ){
-        wait(duration_seconds, sec);
-        vex_controller.Screen.clearLine(1);
-    }
+
+    time_left_to_clear = duration_seconds * std::round(1000 / step_time_ms);
 }
 
 /////////////////////////////////////////////
@@ -184,3 +183,14 @@ void WhoopController::on_left_bottom_bumper_released_event(void (*callback)()){
 }
 
 
+void WhoopController::__step(){
+    time_left_to_clear -= 1;
+
+    if(time_left_to_clear < -1){
+        time_left_to_clear = -1;
+    }
+
+    if(time_left_to_clear == 0){
+        vex_controller.Screen.clearLine(1);
+    }
+}

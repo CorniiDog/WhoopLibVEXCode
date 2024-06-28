@@ -145,7 +145,7 @@ BufferNode buffer_system(
 // Vision Offset of the Vision Tesseract from the Center of Robot
 RobotVisionOffset vision_offset(
   0.00, // The x offset in meters, (right-positive from the center of the robot).
-  15.0/100.0 // The y offset in meters (forward-positive from the center of the robot).
+  240.0/1000.0 // The y offset in meters (forward-positive from the center of the robot).
 );
 
 // Jetson Nano pose retreival object (also configured on Nano-side) 
@@ -182,9 +182,9 @@ WhoopOdomFusion odom_fusion(
   &odom_offset, // Pointer to the odometry offset
   0.5, // Minimum confidence threshold to apply vision system to odometry
   FusionMode::fusion_gradual, // The method of fusing
-  to_meters(100), // If FusionMode is fusion_gradual, it is the maximum allowable shift in meters for gradual fusion, per second.
-  to_rad(2400), // If FusionMode is fusion_gradual, it is the maximum allowable rotational shift of the yaw in radians for gradual fusion, per second.
-  10 // Feedforward gain of the vision system as it has delay, in milliseconds (For 100Hz Wheel Odometry). Better to under-do than over-do
+  to_meters(2), // If FusionMode is fusion_gradual, it is the maximum allowable shift in meters for gradual fusion, per second.
+  to_rad(10), // If FusionMode is fusion_gradual, it is the maximum allowable rotational shift of the yaw in radians for gradual fusion, per second.
+  2 // Feedforward gain of the vision system as it has delay, in milliseconds (For 100Hz Wheel Odometry). Better to under-do than over-do
 );
 
 ////////////////////////////////////////////////////////////
@@ -200,7 +200,7 @@ WhoopDrivetrain robot_drivetrain(
   &right_motors // Pointer to the right motor group (optionally can be a list of motors as well)
 );
 
-ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain});
+ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &controller1});
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -217,10 +217,12 @@ void pre_auton(void) {
   vexcodeInit();
   manager.start();
   robot_drivetrain.set_state(drivetrainState::mode_disabled);
-  controller1.notify("Initializing Robot");
+  controller1.notify("Calibrating", 1);
+  wait(0.5, sec);
   jetson_commander.initialize();
   robot_drivetrain.calibrate();
-  controller1.notify("Calibration Complete");
+  wait(3, sec);
+  controller1.notify("Calibrated", 2);
 }
 
 /*---------------------------------------------------------------------------*/
