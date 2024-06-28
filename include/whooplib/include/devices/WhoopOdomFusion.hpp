@@ -37,7 +37,6 @@ protected:
     FusionMode fusion_mode;  // Current mode of odometry data fusion.
     double max_fusion_shift_meters;  // Maximum shift in meters per step when gradually fusing data.
     double max_fusion_shift_radians;  // Maximum rotational shift in radians per step when gradually fusing data.
-    double feedforward_gain; // Feedforward gain of the vision system as it has delay
 
     // Callback function that handles new vision pose data.
     void on_vision_pose_received(Pose p);
@@ -54,9 +53,8 @@ public:
      * @param fusion_mode Method of fusing vision with wheel odometry (instant, gradual, vision_only, wheel_odom_only).
      * @param max_fusion_shift_meters If FusionMode is fusion_gradual, it is the maximum allowable shift in meters for gradual fusion, per second.
      * @param max_fusion_shift_radians If FusionMode is fusion_gradual, it is the maximum allowable rotational shift in radians for gradual fusion, per second.
-     * @param feedforward_gain // Feedforward gain of the vision system as it has delay, in milliseconds (For 100Hz Wheel Odometry)
      */
-    WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset* odom_offset, double min_confidence_threshold, FusionMode fusion_mode, double max_fusion_shift_meters, double max_fusion_shift_radians, double feedforward_gain);
+    WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset* odom_offset, double min_confidence_threshold, FusionMode fusion_mode, double max_fusion_shift_meters, double max_fusion_shift_radians);
 
     /**
      * Retreives the pose from the odom fusion

@@ -183,8 +183,7 @@ WhoopOdomFusion odom_fusion(
   0.5, // Minimum confidence threshold to apply vision system to odometry
   FusionMode::fusion_gradual, // The method of fusing
   to_meters(2), // If FusionMode is fusion_gradual, it is the maximum allowable shift in meters for gradual fusion, per second.
-  to_rad(10), // If FusionMode is fusion_gradual, it is the maximum allowable rotational shift of the yaw in radians for gradual fusion, per second.
-  2 // Feedforward gain of the vision system as it has delay, in milliseconds (For 100Hz Wheel Odometry). Better to under-do than over-do
+  to_rad(10) // If FusionMode is fusion_gradual, it is the maximum allowable rotational shift of the yaw in radians for gradual fusion, per second.
 );
 
 ////////////////////////////////////////////////////////////
