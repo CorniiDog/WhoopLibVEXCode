@@ -29,7 +29,7 @@ void WhoopOdomFusion::on_vision_pose_received(Pose p){
     if (p.confidence >= min_confidence_threshold) {
 
         // Normalize angle difference to handle angle wrapping correctly
-        double yaw_difference = normalize_angle(pose.yaw - last_pose.yaw);
+        double yaw_difference = normalize_angle(p.yaw - pose.yaw);
 
         double distance = std::sqrt(std::pow(p.x - pose.x, 2) + std::pow(p.y - pose.y, 2));
         double angle_difference = std::fabs(yaw_difference);
@@ -74,7 +74,6 @@ void WhoopOdomFusion::tare(double x, double y, double z, double yaw){
     pose.y = y;
     pose.z = z;
     pose.yaw = yaw;
-    last_pose = pose;
     self_lock.unlock();
 }
 
@@ -106,7 +105,6 @@ bool WhoopOdomFusion::is_moving(double rads_s_threshold){
 
 void WhoopOdomFusion::__step(){
     self_lock.lock();
-    last_pose = pose; // Update last_pose
 
     if(fusion_mode != FusionMode::vision_only){
         odom_offset->__step_down(); // Step down wheel odometry ladder

@@ -40,8 +40,7 @@ protected:
 
     // Callback function that handles new vision pose data.
     void on_vision_pose_received(Pose p);
-
-    Pose last_pose = Pose();
+    
 public:
     Pose pose = Pose();  // Current fused pose of the odometry system.
 
