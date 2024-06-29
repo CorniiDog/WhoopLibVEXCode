@@ -65,9 +65,7 @@ void WhoopDrivetrain::run_disabled_calibration_protocol(){
         else if(needs_calibration){ // Stationary and needs calibration
             calibration_timer += 20;
             if(calibration_timer > time_until_calibration){ // If stationary for more than period of time (like 500 milliseconds) then calibrate
-                whoop_controller->notify("Calibrating Dont Move");
-                odom_fusion->calibrate();
-                whoop_controller->notify("Calibration Finished.", 2);
+                calibrate();
                 needs_calibration = false;
                 moved_one_time_notif = true;
             }
@@ -76,7 +74,9 @@ void WhoopDrivetrain::run_disabled_calibration_protocol(){
 }
 
 void WhoopDrivetrain::calibrate(){
+    whoop_controller->notify("Calibrating Dont Move");
     odom_fusion->calibrate();
+    whoop_controller->notify("Calibration Finished.", 2);
 }
 
 /**

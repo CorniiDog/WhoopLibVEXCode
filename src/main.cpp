@@ -216,12 +216,10 @@ void pre_auton(void) {
   vexcodeInit();
   manager.start();
   robot_drivetrain.set_state(drivetrainState::mode_disabled);
-  controller1.notify("Calibrating", 1);
+  controller1.notify("Initializing", 2);
   wait(0.5, sec);
   jetson_commander.initialize();
   robot_drivetrain.calibrate();
-  wait(3, sec);
-  controller1.notify("Calibrated", 2);
 
   robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw); // Inches, degrees, clockwise-positive
   robot_drivetrain.set_pose(1,1,45);
