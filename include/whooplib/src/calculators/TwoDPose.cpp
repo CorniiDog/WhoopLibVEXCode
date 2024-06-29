@@ -65,10 +65,12 @@ TwoDPose TwoDPose::inverse() const {
     // Calculate the inverse rotation
     double cos_yaw = cos(this->yaw);
     double sin_yaw = sin(this->yaw); 
+    double cos_yaw_flipped = cos(-this->yaw);
+    double sin_yaw_flipped = sin(-this->yaw);
     
     // Apply the inverse rotation to -x, -y
-    double inv_x = -this->x * cos_yaw - this->y * sin_yaw; // Rotate the negated translation
-    double inv_y = this->x * sin_yaw - this->y * cos_yaw;  // components
+    double inv_x = this->y * sin_yaw - this->x * cos_yaw; // Rotate the negated translation
+    double inv_y = this->x * sin_yaw_flipped - this->y * cos_yaw_flipped;  // components
 
     return TwoDPose(inv_x, inv_y, -this->yaw);
 }
