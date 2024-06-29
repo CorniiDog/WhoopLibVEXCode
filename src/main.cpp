@@ -264,10 +264,13 @@ void usercontrol(void) {
 
   // User control code here, inside the loop
   while (1) {
-    
+    Brain.Screen.clearLine(1);
+    Brain.Screen.setCursor(1, 1);
+    Brain.Screen.print("Approving Frames: %s", boolToString(odom_fusion.approving_frames()).c_str());
+
     Brain.Screen.clearLine(2);
     Brain.Screen.setCursor(2, 1);
-    Brain.Screen.print("Vision Running: %s", boolToString(vision_system.vision_running()).c_str());
+    Brain.Screen.print("Vision Running: %s Approving Frames: %s", boolToString(vision_system.vision_running()).c_str());
 
     Brain.Screen.clearLine(3);
     Brain.Screen.setCursor(3, 1);
@@ -298,7 +301,7 @@ void usercontrol(void) {
     Brain.Screen.setCursor(7, 1);
     Brain.Screen.print("Velocities (m/s_rad/s_ccw): %.2f %.2f %.2f", obj_space_velocity.x, obj_space_velocity.y, obj_space_velocity.yaw);
 
-    wait(20, msec);
+    wait(100, msec);
   }
 }
 

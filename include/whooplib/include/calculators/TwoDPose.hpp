@@ -73,46 +73,24 @@ public:
      */
     TwoDPose toObjectSpace(const TwoDPose& other) const;
 
-    // Method to compute the inverse of the pose
+    // Method to retreive world space from object space
+    // Example of getting object space:
+    // TwoDPose b_in_a_object_space = a.toObjectSpace(b);
+    // You can then recover b back with:
+    // TwoDPose b_recovered = a.toWorldSpace(b_in_a_object_space);
     /**
-     * Computes the inverse of this pose, effectively creating a pose that,
-     * when multiplied by this pose, yields the identity pose (zero translation and zero rotation).
-     * This is used to revert transformations or to calculate relative transformations between two poses.
-     * @return A new TwoDPose representing the inverse of this pose.
+     * Transforms a pose from the local coordinate space of this pose back into the global coordinate space.
+     * This is the inverse operation of toObjectSpace, effectively recalculating the global coordinates of a pose
+     * that has been transformed into this pose's local space. It re-applies the global positioning and orientation
+     * of this pose to the local pose.
+     * @param other The pose in this object's local coordinate space to transform back to global space.
+     * @return A new TwoDPose representing the pose in global coordinates.
      */
-    TwoDPose inverse() const;
+    TwoDPose toWorldSpace(const TwoDPose& other) const;
 
-    // Method to multiply by the inverse of another pose
-    /**
-     * Multiplies this pose by the inverse of another pose. This is useful for calculating
-     * the relative transformation from this pose to another pose, effectively undoing the other pose's transformation.
-     * @param other The pose whose inverse is multiplied with this pose.
-     * @return A new TwoDPose representing the result of the multiplication.
-     */
-    TwoDPose inverseMultiply(const TwoDPose& other) const;
 
     // Unary negation operator
     TwoDPose operator-() const;
-
-    // Overloaded / operator to divide one pose by another
-    /**
-     * Divides this pose by another pose using the inverse of the other pose.
-     * This operation is equivalent to multiplying this pose by the inverse of the other pose,
-     * used to calculate the pose that, when multiplied by `other`, would result in this pose.
-     * @param other The pose to divide by.
-     * @return A new TwoDPose representing the division of this pose by the other pose.
-     */
-    TwoDPose operator/(const TwoDPose& other) const;
-
-    // This allows for /= as well
-    /**
-     * Applies and assigns the division of this pose by another pose.
-     * This is essentially the multiplication of this pose by the inverse of the other pose,
-     * and is used to adjust this pose by the inverse of the transformations applied by `other`.
-     * @param other The pose by which this pose is divided.
-     * @return A reference to this pose after the division.
-     */
-    TwoDPose& operator/=(const TwoDPose& other);
     
     // Method to compute relative pose of just given x y and yaw.
     // This is useful for tare.

@@ -42,6 +42,7 @@
 		"string": "cpp",
 		"cerrno": "cpp",
 		"memory": "cpp",
-		"iomanip": "cpp"
+		"iomanip": "cpp",
+		"random": "cpp"
 	}
 }

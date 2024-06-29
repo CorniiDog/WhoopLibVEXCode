@@ -41,7 +41,7 @@ void WheelOdom::update_pose(double forward_tracker_pos, double sideways_tracker_
     orientation_rad += delta_theta;
     orientation_rad = normalize_angle(orientation_rad);
 
-    if (fabs(delta_theta) > 0.001) {  // Arc movement
+    if (fabs(delta_theta) > 0) {  // Arc movement
         double radius = delta_forward / delta_theta;
         double icc_x = X_position - (radius + sideways_tracker_center_distance) * sin(orientation_rad);
         double icc_y = Y_position + (radius + sideways_tracker_center_distance) * cos(orientation_rad);

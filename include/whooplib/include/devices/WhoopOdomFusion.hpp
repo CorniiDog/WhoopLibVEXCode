@@ -38,6 +38,8 @@ protected:
 
     // Callback function that handles new vision pose data.
     void on_vision_pose_received(Pose p);
+
+    bool frame_rejected = true;
     
 public:
     WhoopDriveOdomVirtual odom_virtual;  // Pointer to the wheel odometry offset object.
@@ -64,6 +66,11 @@ public:
      * Runs calibration process
      */
     void calibrate();
+
+    /**
+     * Returns true if approving frames
+     */
+    bool approving_frames();
 
     /**
      * Sets the current odometry to the specified coordinates and yaw.

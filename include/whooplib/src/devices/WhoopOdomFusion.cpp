@@ -27,7 +27,7 @@ void WhoopOdomFusion::on_vision_pose_received(Pose p){
     
     self_lock.lock();
     if (p.confidence >= min_confidence_threshold) {
-
+        frame_rejected = false;
         // Normalize angle difference to handle angle wrapping correctly
         double yaw_difference = normalize_angle(p.yaw - pose.yaw);
 
@@ -59,6 +59,9 @@ void WhoopOdomFusion::on_vision_pose_received(Pose p){
         pose.yaw = normalize_angle(pose.yaw);
 
         odom_virtual.tare(pose.x, pose.y, pose.yaw);
+    }
+    else{
+        frame_rejected = true;
     }
     pose.z = p.z;
     pose.confidence = p.confidence;
@@ -107,6 +110,10 @@ Pose WhoopOdomFusion::get_pose(){
 
 bool WhoopOdomFusion::is_moving(double rads_s_threshold){
     return odom_virtual.is_moving(rads_s_threshold);
+}
+
+bool WhoopOdomFusion::approving_frames(){
+    return !frame_rejected;
 }
 
 void WhoopOdomFusion::__step(){
