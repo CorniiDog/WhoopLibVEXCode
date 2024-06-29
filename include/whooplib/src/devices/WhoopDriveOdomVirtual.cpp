@@ -70,7 +70,7 @@ void WhoopDriveOdomVirtual::hard_tare(){
 }
 
 // Returns true if the system is moving
-bool WhoopDriveOdomVirtual::is_moving(double rads_s_threshold=0.02){
+bool WhoopDriveOdomVirtual::is_moving(double rads_s_threshold){
     return odom_offset->is_moving(rads_s_threshold);
 }
 

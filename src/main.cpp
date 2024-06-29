@@ -181,7 +181,7 @@ WhoopOdomFusion odom_fusion(
   &vision_system, // Pointer to the vision system
   &odom_offset, // Pointer to the odometry offset
   0.9, // Minimum confidence threshold to apply vision system to odometry
-  FusionMode::fusion_gradual, // The method of fusing
+  FusionMode::wheel_odom_only, // The method of fusing
   to_meters(50), // If FusionMode is fusion_gradual, it is the maximum allowable lateral shift the vision camera can update in meters per second.
   to_rad(500) // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
 );
@@ -250,7 +250,7 @@ void autonomous(void) {
 void usercontrol(void) {
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
   robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw); // Inches, degrees, clockwise-positive
-  robot_drivetrain.set_pose(0,0,0);
+  robot_drivetrain.set_pose(0,0,90);
 
   // User control code here, inside the loop
   while (1) {
