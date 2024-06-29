@@ -26,6 +26,9 @@ void WhoopOdomCommunicator::__step(){
     last_pose *= TwoDPose(vision_offset->x, vision_offset->y, 0); // Apply offset to position of realsense device
 
     TwoDPose pose_deltas = last_pose.toObjectSpace(pose);
+    pose_deltas.x /= 0.01; // Convert to meters/second
+    pose_deltas.y /= 0.01; // Convert to meters/second
+    pose_deltas.yaw /= 0.01; // Convert to radians/second
 
     odom_messenger->send(pose_deltas.to_realsense_string(pose_precision));
 }
