@@ -10,8 +10,7 @@
 #ifndef WHOOP_ODOM_FUSION_HPP
 #define WHOOP_ODOM_FUSION_HPP
 
-#include "whooplib/include/devices/WhoopDriveOdomUnit.hpp"
-#include "whooplib/include/devices/WhoopDriveOdomOffset.hpp"
+#include "whooplib/include/devices/WhoopDriveOdomVirtual.hpp"
 #include "whooplib/include/devices/WhoopVision.hpp"
 #include "whooplib/include/toolbox.hpp"
 #include "whooplib/include/calculators/RollingAverage.hpp"
@@ -31,7 +30,7 @@ enum FusionMode {
 class WhoopOdomFusion : public ComputeNode {
 protected:
     vex::mutex self_lock;  // Mutex for thread-safe operations.
-    WhoopDriveOdomOffset* odom_offset;  // Pointer to the wheel odometry offset object.
+    WhoopDriveOdomVirtual odom_virtual;  // Pointer to the wheel odometry offset object.
     WhoopVision* whoop_vision;  // Pointer to the vision odometry unit.
     double min_confidence_threshold;  // Minimum confidence level required to accept new vision data.
     FusionMode fusion_mode;  // Current mode of odometry data fusion.
