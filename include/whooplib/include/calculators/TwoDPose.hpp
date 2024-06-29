@@ -10,6 +10,11 @@
 #ifndef TWODPOSE_HPP
 #define TWODPOSE_HPP
 
+#include <cmath>
+#include <sstream>
+#include <iomanip>
+#include <string>
+
 /**
  * Represents a 2D pose with position and orientation in a Cartesian coordinate system.
  * Yaw is in radians, counter-clockwise.
@@ -142,7 +147,7 @@ public:
      * @param decimal_places The number of decimal places to round to, or -1 for no rounding.
      * @return A string in the format "x y yaw".
      */
-    std::string to_string(int decimal_places);
+    std::string to_string(int decimal_places=4);
 };
 
 #endif // TWODPOSE_HPP
