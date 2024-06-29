@@ -40,6 +40,9 @@ void WhoopDriveOdomOffset::tare(double x, double y, double yaw){
     }
 
     odom_unit->tare(TaredOffset.x, TaredOffset.y, TaredOffset.yaw);
+
+    last_pose = pose; // Just set last_pose to pose to prevent it from flying out the wazoo
+
     thread_lock.unlock();
 }
 
@@ -51,6 +54,13 @@ void WhoopDriveOdomOffset::tare(){
 TwoDPose WhoopDriveOdomOffset::get_pose(){
     thread_lock.lock();
     TwoDPose result = pose;
+    thread_lock.unlock();
+    return result;
+}
+
+TwoDPose WhoopDriveOdomOffset::get_last_pose(){
+    thread_lock.lock();
+    TwoDPose result = last_pose;
     thread_lock.unlock();
     return result;
 }
@@ -76,6 +86,8 @@ void WhoopDriveOdomOffset::__step(){
     else{
         pose = odom_unit->pose * offset; // Update pose with offset
     }
+
+    last_pose = pose;
 
     thread_lock.unlock();
 }

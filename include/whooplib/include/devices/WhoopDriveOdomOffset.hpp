@@ -27,6 +27,7 @@ public:
     WhoopDriveOdomUnit* odom_unit;
 
     TwoDPose pose = TwoDPose(0,0,0);
+    TwoDPose last_pose = TwoDPose(0,0,0);
     TwoDPose offset;
     vex::mutex thread_lock;  // Mutex for synchronizing access to odometry components.
 
@@ -57,6 +58,11 @@ public:
      * @return The current pose of the system.
      */
     TwoDPose get_pose();
+
+    /**
+     * Retrieves the previous pose from a last step
+     */
+    TwoDPose get_last_pose();
 public: // This is one of the ONLY exceptions to be public, as another module requires this step function.
     /**
      * Override of ComputeNode's __step method to update the drivetrain's operation each cycle.
