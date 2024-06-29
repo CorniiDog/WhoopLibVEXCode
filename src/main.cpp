@@ -229,6 +229,7 @@ void pre_auton(void) {
   jetson_commander.initialize();
   robot_drivetrain.calibrate();
 
+  wait(2, sec); // Wait 2 seconds to allow the vision system to initialize to 0
   robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw); // Inches, degrees, clockwise-positive
   robot_drivetrain.set_pose(0,0,0);
 }
