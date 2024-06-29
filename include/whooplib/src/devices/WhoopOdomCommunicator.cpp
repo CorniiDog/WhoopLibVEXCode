@@ -34,8 +34,8 @@ void WhoopOdomCommunicator::__step(){
     pose_deltas.yaw /= 0.01; // Convert to radians/second
 
     pose_deltas.x = rolling_average_x.process(pose_deltas.x);
-    pose_deltas.y = rolling_average_x.process(pose_deltas.y);
-    pose_deltas.yaw = rolling_average_x.process(pose_deltas.yaw);
+    pose_deltas.y = rolling_average_y.process(pose_deltas.y);
+    pose_deltas.yaw = rolling_average_yaw.process(pose_deltas.yaw);
 
     relative_velocity = pose_deltas; // Update pose deltas for robot
 
