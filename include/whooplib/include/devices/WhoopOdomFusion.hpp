@@ -30,7 +30,6 @@ enum FusionMode {
 class WhoopOdomFusion : public ComputeNode {
 protected:
     vex::mutex self_lock;  // Mutex for thread-safe operations.
-    WhoopDriveOdomVirtual odom_virtual;  // Pointer to the wheel odometry offset object.
     WhoopVision* whoop_vision;  // Pointer to the vision odometry unit.
     double min_confidence_threshold;  // Minimum confidence level required to accept new vision data.
     FusionMode fusion_mode;  // Current mode of odometry data fusion.
@@ -41,6 +40,7 @@ protected:
     void on_vision_pose_received(Pose p);
     
 public:
+    WhoopDriveOdomVirtual odom_virtual;  // Pointer to the wheel odometry offset object.
     Pose pose = Pose();  // Current fused pose of the odometry system.
 
     /**

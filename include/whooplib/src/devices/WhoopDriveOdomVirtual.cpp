@@ -60,8 +60,11 @@ void WhoopDriveOdomVirtual::tare(){
 
 void WhoopDriveOdomVirtual::hard_tare(double x, double y, double yaw){
     thread_lock.lock();
-    tared_pose = TwoDPose(0,0,0);
     odom_offset->tare(x, y, yaw);
+    tared_pose = TwoDPose(0,0,0);
+    this->tare_x = 0;
+    this->tare_y = 0;
+    this->tare_yaw = 0;
     thread_lock.unlock();
 }
 

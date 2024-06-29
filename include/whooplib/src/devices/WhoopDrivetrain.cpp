@@ -32,6 +32,7 @@ WhoopDrivetrain::WhoopDrivetrain(WhoopOdomFusion* odom_fusion, PoseUnits pose_un
     init_motor_groups(leftMotorGroup, rightMotorGroup);
     this->odom_fusion = odom_fusion;
     this->pose_units = pose_units;
+    this->default_pose_units = pose_units;
 }
 
 WhoopDrivetrain::WhoopDrivetrain(WhoopOdomFusion* odom_fusion, PoseUnits pose_units, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
@@ -39,10 +40,14 @@ WhoopDrivetrain::WhoopDrivetrain(WhoopOdomFusion* odom_fusion, PoseUnits pose_un
     init_motor_groups(leftMotors, rightMotors);
     this->odom_fusion = odom_fusion;
     this->pose_units = pose_units;
+    this->default_pose_units = pose_units;
 }
 
 
 void WhoopDrivetrain::set_state(drivetrainState state){
+    if(state == drivetrainState::mode_autonomous){
+        pose_units = default_pose_units;
+    }
     drive_state = state;
 }
 

@@ -63,7 +63,8 @@ protected:
     std::unique_ptr<WhoopMotorGroup> left_motor_group; // Group of motors on the left side of the drivetrain.
     std::unique_ptr<WhoopMotorGroup> right_motor_group; // Group of motors on the right side of the drivetrain.
     WhoopOdomFusion* odom_fusion; // Group of motors on the right side of the drivetrain.
-    PoseUnits pose_units;
+    PoseUnits pose_units = PoseUnits::m_rad_ccw;
+    PoseUnits default_pose_units = PoseUnits::m_rad_ccw;
 
     bool drive_calibrated = false;
 private:

@@ -181,7 +181,7 @@ WhoopOdomFusion odom_fusion(
   &vision_system, // Pointer to the vision system
   &odom_offset, // Pointer to the odometry offset
   0.9, // Minimum confidence threshold to apply vision system to odometry
-  FusionMode::wheel_odom_only, // The method of fusing
+  FusionMode::fusion_gradual, // The method of fusing
   to_meters(50), // If FusionMode is fusion_gradual, it is the maximum allowable lateral shift the vision camera can update in meters per second.
   to_rad(500) // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
 );
@@ -193,7 +193,7 @@ WhoopOdomFusion odom_fusion(
 ////////////////////////////////////////////////////////////
 WhoopDrivetrain robot_drivetrain(
   &odom_fusion, // Odometry fusion module
-  PoseUnits::in_deg_cw, // Configure the units for the odometry. "m_deg_cw" means "meters, degrees, clockwise-positive yaw", "in_deg_ccw" means "inches, degrees, counter-clockwise-positive yaw", and so forth.
+  PoseUnits::in_deg_cw, // Set default pose units if not defined. "m_deg_cw" means "meters, degrees, clockwise-positive yaw", "in_deg_ccw" means "inches, degrees, counter-clockwise-positive yaw", and so forth.
   &controller1, // Pointer to the controller 
   &left_motors, // Pointer to the left motor group (optionally can be a list of motors as well)
   &right_motors // Pointer to the right motor group (optionally can be a list of motors as well)
@@ -222,6 +222,9 @@ void pre_auton(void) {
   robot_drivetrain.calibrate();
   wait(3, sec);
   controller1.notify("Calibrated", 2);
+
+  robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw); // Inches, degrees, clockwise-positive
+  robot_drivetrain.set_pose(1,1,45);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -249,8 +252,6 @@ void autonomous(void) {
 /*---------------------------------------------------------------------------*/
 void usercontrol(void) {
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
-  robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw); // Inches, degrees, clockwise-positive
-  robot_drivetrain.set_pose(0,0,90);
 
   // User control code here, inside the loop
   while (1) {
