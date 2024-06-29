@@ -191,7 +191,8 @@ WhoopOdomCommunicator odom_communicator(
   &vision_offset, // Pointer to the vision offset configured above
   &odom_offset, // Pointer to the drive offset object
   "O", // The string that represents the odometry stream to send over 
-  4 // The number of decimal places of the pose data (measurements in meters/radians). Higher decimal places is better precision, but larger serial packets
+  4, // The number of decimal places of the pose data (measurements in meters/radians). Higher decimal places is better precision, but larger serial packets
+  3 // The number of elements for rolling average (recommended 3) to smoothen velocity
 );
 
 ////////////////////////////////////////////////////////////

@@ -11,6 +11,7 @@
 #define WHOOP_ODOM_COMMUNICATOR_HPP
 
 #include "whooplib/include/devices/WhoopDriveOdomOffset.hpp"
+#include "whooplib/include/calculators/RollingAverage.hpp"
 
 /**
  * Class responsible for communicating odometry
@@ -26,6 +27,11 @@ public:
     int pose_precision;
     RobotVisionOffset* vision_offset;
 
+    RollingAverageFilter rolling_average_x;
+    RollingAverageFilter rolling_average_y;
+    RollingAverageFilter rolling_average_yaw;
+    
+
     TwoDPose relative_velocity = TwoDPose(0,0,0);
     /**
      * This constructs an odometry communicator for the drivetrain so that it can send for the T265 to parse
@@ -33,8 +39,9 @@ public:
      * @param odom_offset Pointer to the drive offset object
      * @param odom_stream The string that represents the odometry stream to send over
      * @param pose_precision The number of decimal places of the pose data (measurements in meters/radians). Higher decimal places is better precision, but larger serial packets
+     * @param rolling_average_n The number of elements for rolling average (recommended 3) to smoothen velocity
      */
-    WhoopOdomCommunicator(BufferNode* bufferSystem, RobotVisionOffset* vision_offset, WhoopDriveOdomOffset* odom_offset, std::string odom_stream, int pose_precision);
+    WhoopOdomCommunicator(BufferNode* bufferSystem, RobotVisionOffset* vision_offset, WhoopDriveOdomOffset* odom_offset, std::string odom_stream, int pose_precision, int rolling_average_n);
    
 public: // This is one of the ONLY exceptions to be public, as another module requires this step function.
     /**

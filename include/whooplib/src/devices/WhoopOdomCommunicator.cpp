@@ -10,7 +10,10 @@
 #include "whooplib/include/devices/WhoopOdomCommunicator.hpp"
 
 
-WhoopOdomCommunicator::WhoopOdomCommunicator(BufferNode* bufferSystem, RobotVisionOffset* vision_offset, WhoopDriveOdomOffset* odom_offset, std::string odom_stream, int pose_precision){
+WhoopOdomCommunicator::WhoopOdomCommunicator(BufferNode* bufferSystem, RobotVisionOffset* vision_offset, WhoopDriveOdomOffset* odom_offset, std::string odom_stream, int pose_precision, int rolling_average_n):
+    rolling_average_x(rolling_average_n),
+    rolling_average_y(rolling_average_n),
+    rolling_average_yaw(rolling_average_n){
     odom_messenger = std::make_unique<Messenger>(bufferSystem, odom_stream, deleteAfterRead::no_delete);
     this->odom_offset = odom_offset;
     this->pose_precision = pose_precision;
@@ -29,6 +32,10 @@ void WhoopOdomCommunicator::__step(){
     pose_deltas.x /= 0.01; // Convert to meters/second
     pose_deltas.y /= 0.01; // Convert to meters/second
     pose_deltas.yaw /= 0.01; // Convert to radians/second
+
+    pose_deltas.x = rolling_average_x.process(pose_deltas.x);
+    pose_deltas.y = rolling_average_x.process(pose_deltas.y);
+    pose_deltas.yaw = rolling_average_x.process(pose_deltas.yaw);
 
     relative_velocity = pose_deltas; // Update pose deltas for robot
 
