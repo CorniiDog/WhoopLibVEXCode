@@ -230,7 +230,7 @@ void pre_auton(void) {
   robot_drivetrain.calibrate();
 
   robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw); // Inches, degrees, clockwise-positive
-  robot_drivetrain.set_pose(1,1,45);
+  robot_drivetrain.set_pose(0,0,0);
 }
 
 /*---------------------------------------------------------------------------*/
