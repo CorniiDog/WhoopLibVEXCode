@@ -148,6 +148,15 @@ public:
      * @return A string in the format "x y yaw".
      */
     std::string to_string(int decimal_places=4);
+
+    /**
+     * Returns a string representation of the pose with the coordinates rounded to a specified number of decimal places.
+     * This variant follows pose standard for the T265
+     * If decimal_places is -1, no rounding is applied.
+     * @param decimal_places The number of decimal places to round to, or -1 for no rounding.
+     * @return A string in the format "x y yaw".
+     */
+    std::string to_realsense_string(int decimal_places=4);
 };
 
 #endif // TWODPOSE_HPP

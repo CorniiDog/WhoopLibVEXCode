@@ -19,5 +19,5 @@ WhoopOdomCommunicator::WhoopOdomCommunicator(BufferNode* bufferSystem, WhoopDriv
 
 void WhoopOdomCommunicator::__step(){
     TwoDPose pose = odom_offset->get_pose();
-    odom_messenger->send(pose.to_string(pose_precision));
+    odom_messenger->send(pose.to_realsense_string(pose_precision));
 }

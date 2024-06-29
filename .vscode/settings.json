@@ -41,6 +41,7 @@
 		"typeinfo": "cpp",
 		"string": "cpp",
 		"cerrno": "cpp",
-		"memory": "cpp"
+		"memory": "cpp",
+		"iomanip": "cpp"
 	}
 }

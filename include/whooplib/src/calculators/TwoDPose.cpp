@@ -126,3 +126,13 @@ std::string TwoDPose::to_string(int decimal_places) {
     oss << x << " " << y << " " << yaw;
     return oss.str();
 }
+
+std::string TwoDPose::to_realsense_string(int decimal_places) {
+    std::ostringstream oss;
+    if (decimal_places >= 0) {
+        oss << std::fixed << std::setprecision(decimal_places);
+    }
+    oss << x << " " << -y << " " << yaw;
+    return oss.str();
+}
+
