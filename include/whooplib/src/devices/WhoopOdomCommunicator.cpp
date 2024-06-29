@@ -20,5 +20,5 @@ WhoopOdomCommunicator::WhoopOdomCommunicator(BufferNode* bufferSystem, RobotVisi
 
 void WhoopOdomCommunicator::__step(){
     TwoDPose pose = odom_offset->get_pose();
-    odom_messenger->send(pose.to_realsense_string(pose_precision) + " " + doubleToString(vision_offset->x) + " " + doubleToString(vision_offset->y));
+    odom_messenger->send(pose.to_realsense_string(pose_precision) + " " + doubleToString(vision_offset->x) + " " + doubleToString(-vision_offset->y));
 }
