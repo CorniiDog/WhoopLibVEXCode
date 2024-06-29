@@ -79,6 +79,7 @@ bool WhoopDriveOdomOffset::is_moving(double rads_s_threshold){
 
 void WhoopDriveOdomOffset::__step(){
     thread_lock.lock();
+    last_pose = pose;
 
     if(offset.x == offset.y == offset.yaw == 0){ // If offset is not applied
         pose = odom_unit->pose; // Update pose without offset, to reduce computational time
@@ -86,8 +87,5 @@ void WhoopDriveOdomOffset::__step(){
     else{
         pose = odom_unit->pose * offset; // Update pose with offset
     }
-
-    last_pose = pose;
-
     thread_lock.unlock();
 }

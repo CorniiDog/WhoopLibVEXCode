@@ -294,7 +294,7 @@ void usercontrol(void) {
     TwoDPose obj_space_velocity = odom_communicator.relative_velocity;
     Brain.Screen.clearLine(7);
     Brain.Screen.setCursor(7, 1);
-    Brain.Screen.print("Velocities (m_rad_ccw): %.2f %.2f %.2f", obj_space_velocity.x, obj_space_velocity.y, obj_space_velocity.yaw);
+    Brain.Screen.print("Velocities (m/s_rad/s_ccw): %.2f %.2f %.2f", obj_space_velocity.x, obj_space_velocity.y, obj_space_velocity.yaw);
 
     wait(20, msec);
   }
