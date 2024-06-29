@@ -9,6 +9,9 @@
 
 #include "whooplib/include/calculators/TwoDPose.hpp"
 #include <cmath>
+#include <sstream>
+#include <iomanip>
+#include <string>
 #include "whooplib/include/toolbox.hpp"
 
 TwoDPose::TwoDPose(double x, double y, double yaw) {
@@ -113,3 +116,13 @@ TwoDPose TwoDPose::toWorldSpace(const TwoDPose& other) const {
 
     return TwoDPose(global_x, global_y, global_yaw);
 }
+
+
+std::string TwoDPose::to_string(int decimal_places) {
+        std::ostringstream oss;
+        if (decimal_places >= 0) {
+            oss << std::fixed << std::setprecision(decimal_places);
+        }
+        oss << x << " " << y << " " << yaw;
+        return oss.str();
+    }

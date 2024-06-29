@@ -135,6 +135,14 @@ public:
      * @return A new TwoDPose representing the transformed coordinates.
      */
     TwoDPose toObjectSpace(double x, double y, double yaw) const;
+
+    /**
+     * Returns a string representation of the pose with the coordinates rounded to a specified number of decimal places.
+     * If decimal_places is -1, no rounding is applied.
+     * @param decimal_places The number of decimal places to round to, or -1 for no rounding.
+     * @return A string in the format "x y yaw".
+     */
+    std::string to_string(int decimal_places);
 };
 
 #endif // TWODPOSE_HPP

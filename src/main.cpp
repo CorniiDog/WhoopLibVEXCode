@@ -275,7 +275,7 @@ void usercontrol(void) {
     Brain.Screen.print("VO (m_rad_ccw): %.2f %.2f %.2f %.2f %.2f %.2f", vision_pose.x, vision_pose.y, vision_pose.z, vision_pose.pitch, vision_pose.yaw, vision_pose.roll);
 
     // Wheel Odometry
-    TwoDPose wheel_pose = odom_offset.get_pose();
+    TwoDPose wheel_pose = odom_fusion.odom_virtual.get_pose();
     Brain.Screen.clearLine(6);
     Brain.Screen.setCursor(6, 1);
     Brain.Screen.print("WO (m_rad_ccw): %.2f %.2f %.2f", wheel_pose.x, wheel_pose.y, wheel_pose.yaw);

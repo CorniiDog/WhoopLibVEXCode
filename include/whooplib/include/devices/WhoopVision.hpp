@@ -66,7 +66,6 @@ class WhoopVision {
 protected:
     // Upon initialization
     std::unique_ptr<Messenger> pose_messenger = nullptr; // Handles messaging for pose data from Jetson Nano
-    Pose raw_pose; // Raw pose data from vision sensor.
 
     // Tares
     double tare_x = 0;
@@ -109,6 +108,7 @@ protected:
      */
     void _update_pose(std::string pose_data);
 public:
+    Pose raw_pose; // Raw pose data from vision sensor.
     vex::mutex thread_lock; // Mutex for synchronization of pose data updates.
 
     Pose pose; // The corrected and computed pose of the robot.

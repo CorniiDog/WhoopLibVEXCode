@@ -69,7 +69,13 @@ void WhoopOdomFusion::on_vision_pose_received(Pose p){
 void WhoopOdomFusion::tare(double x, double y, double z, double yaw){
     self_lock.lock();
     whoop_vision->tare(x, y, z, 0, yaw, 0);
-    odom_virtual.hard_tare(x, y, yaw);
+
+    // Hard tare to sync with the Vision System's position
+    Pose raw_pose = whoop_vision->raw_pose;
+    odom_virtual.hard_tare(raw_pose.x, raw_pose.y, raw_pose.yaw);
+
+    // Soft tare to apply transform that applies to what we need
+    odom_virtual.tare(x, y, yaw);
     pose.x = x;
     pose.y = y;
     pose.z = z;
