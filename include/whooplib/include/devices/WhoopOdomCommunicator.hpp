@@ -22,17 +22,17 @@ protected:
     std::unique_ptr<Messenger> odom_messenger = nullptr; // Handles messaging for pose data from Jetson Nano
 
 public:
-    WhoopDriveOdomOffset* drive_offset;
+    WhoopDriveOdomOffset* odom_offset;
     int pose_precision;
 
     /**
      * This constructs an odometry communicator for the drivetrain so that it can send for the T265 to parse
-     * @param bufferSystem The buffer system to communicate the messenger to
-     * @param drive_offset The drive offset object
+     * @param bufferSystem Pointer to the buffer system to communicate the messenger to
+     * @param odom_offset Pointer to the drive offset object
      * @param odom_stream The string that represents the odometry stream to send over
-     * @param pose_precision The number of decimal places of the pose data. Higher decimal places is better precision, but larger serial packets
+     * @param pose_precision The number of decimal places of the pose data (measurements in meters/radians). Higher decimal places is better precision, but larger serial packets
      */
-    WhoopOdomCommunicator(BufferNode* bufferSystem, WhoopDriveOdomOffset* drive_offset, std::string odom_stream, int pose_precision);
+    WhoopOdomCommunicator(BufferNode* bufferSystem, WhoopDriveOdomOffset* odom_offset, std::string odom_stream, int pose_precision);
    
 public: // This is one of the ONLY exceptions to be public, as another module requires this step function.
     /**

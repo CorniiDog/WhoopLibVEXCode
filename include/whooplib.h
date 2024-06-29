@@ -43,5 +43,6 @@
 #include "whooplib/include/devices/WhoopDriveOdomOffset.hpp"
 #include "whooplib/include/devices/WhoopDriveOdomVirtual.hpp"
 #include "whooplib/include/devices/WhoopOdomFusion.hpp"
+#include "whooplib/include/devices/WhoopOdomCommunicator.hpp"
 
 #endif // WHOOP_LIB_H

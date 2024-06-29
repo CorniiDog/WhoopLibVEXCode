@@ -186,6 +186,13 @@ WhoopOdomFusion odom_fusion(
   to_rad(500) // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
 );
 
+WhoopOdomCommunicator odom_communicator(
+  &buffer_system, // Pointer to the buffer system to communicate the messenger to
+  &odom_offset, // Pointer to the drive offset object
+  "O", // The string that represents the odometry stream to send over 
+  4 // The number of decimal places of the pose data (measurements in meters/radians). Higher decimal places is better precision, but larger serial packets
+);
+
 ////////////////////////////////////////////////////////////
 /**
  *    Robot Drivetrain and Manager
@@ -199,7 +206,7 @@ WhoopDrivetrain robot_drivetrain(
   &right_motors // Pointer to the right motor group (optionally can be a list of motors as well)
 );
 
-ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &controller1});
+ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &controller1, &odom_communicator});
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
