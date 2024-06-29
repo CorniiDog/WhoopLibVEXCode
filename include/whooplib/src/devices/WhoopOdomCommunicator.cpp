@@ -22,8 +22,8 @@ void WhoopOdomCommunicator::__step(){
     TwoDPose pose = odom_offset->get_pose(); // get pose
     TwoDPose last_pose = odom_offset->get_last_pose(); // get last pose
 
-    pose *= TwoDPose(vision_offset->x, vision_offset->y, 0); // Apply offset to position of realsense device
-    last_pose *= TwoDPose(vision_offset->x, vision_offset->y, 0); // Apply offset to position of realsense device
+    pose *= TwoDPose(-vision_offset->x, -vision_offset->y, 0); // Apply offset to position of realsense device
+    last_pose *= TwoDPose(-vision_offset->x, -vision_offset->y, 0); // Apply offset to position of realsense device
 
     TwoDPose pose_deltas = last_pose.toObjectSpace(pose);
     pose_deltas.x /= 0.01; // Convert to meters/second

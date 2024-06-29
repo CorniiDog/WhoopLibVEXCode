@@ -8850,531 +8850,530 @@ Linker script and memory map
                 0x03800624       0x28 build/src/main.o
                 0x03800624                ComputeManager::~ComputeManager()
  .text._Z9pre_autonv
-                0x0380064c      0x150 build/src/main.o
+                0x0380064c      0x144 build/src/main.o
                 0x0380064c                pre_auton()
  .text._Z10autonomousv
-                0x0380079c       0x10 build/src/main.o
-                0x0380079c                autonomous()
+                0x03800790       0x10 build/src/main.o
+                0x03800790                autonomous()
  .text._Z11usercontrolv
-                0x038007ac      0x2f0 build/src/main.o
-                0x038007ac                usercontrol()
- *fill*         0x03800a9c        0x4 
- .text.main     0x03800aa0       0x68 build/src/main.o
-                0x03800aa0                main
+                0x038007a0      0x2f0 build/src/main.o
+                0x038007a0                usercontrol()
+ .text.main     0x03800a90       0x68 build/src/main.o
+                0x03800a90                main
  .text.__clang_call_terminate
-                0x03800b08        0x8 build/src/main.o
-                0x03800b08                __clang_call_terminate
+                0x03800af8        0x8 build/src/main.o
+                0x03800af8                __clang_call_terminate
  .text._ZNSt10_HashtableISsSt4pairIKSsSsESaIS2_ENSt8__detail10_Select1stESt8equal_toISsESt4hashISsENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb1ELb0ELb1EEEED2Ev
-                0x03800b10       0x30 build/src/main.o
-                0x03800b10                std::_Hashtable<std::string, std::pair<std::string const, std::string>, std::allocator<std::pair<std::string const, std::string> >, std::__detail::_Select1st, std::equal_to<std::string>, std::hash<std::string>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<true, false, true> >::~_Hashtable()
+                0x03800b00       0x30 build/src/main.o
+                0x03800b00                std::_Hashtable<std::string, std::pair<std::string const, std::string>, std::allocator<std::pair<std::string const, std::string> >, std::__detail::_Select1st, std::equal_to<std::string>, std::hash<std::string>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<true, false, true> >::~_Hashtable()
  .text._ZNSt10_HashtableISsSt4pairIKSsSsESaIS2_ENSt8__detail10_Select1stESt8equal_toISsESt4hashISsENS4_18_Mod_range_hashingENS4_20_Default_ranged_hashENS4_20_Prime_rehash_policyENS4_17_Hashtable_traitsILb1ELb0ELb1EEEE5clearEv
-                0x03800b40       0x5c build/src/main.o
-                0x03800b40                std::_Hashtable<std::string, std::pair<std::string const, std::string>, std::allocator<std::pair<std::string const, std::string> >, std::__detail::_Select1st, std::equal_to<std::string>, std::hash<std::string>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<true, false, true> >::clear()
+                0x03800b30       0x5c build/src/main.o
+                0x03800b30                std::_Hashtable<std::string, std::pair<std::string const, std::string>, std::allocator<std::pair<std::string const, std::string> >, std::__detail::_Select1st, std::equal_to<std::string>, std::hash<std::string>, std::__detail::_Mod_range_hashing, std::__detail::_Default_ranged_hash, std::__detail::_Prime_rehash_policy, std::__detail::_Hashtable_traits<true, false, true> >::clear()
  .text._ZNSt6vectorISt8functionIFv4PoseEESaIS3_EED2Ev
-                0x03800b9c       0x44 build/src/main.o
-                0x03800b9c                std::vector<std::function<void (Pose)>, std::allocator<std::function<void (Pose)> > >::~vector()
+                0x03800b8c       0x44 build/src/main.o
+                0x03800b8c                std::vector<std::function<void (Pose)>, std::allocator<std::function<void (Pose)> > >::~vector()
  .text._ZNSt12_Vector_baseISt8functionIFv4PoseEESaIS3_EED2Ev
-                0x03800be0       0x24 build/src/main.o
-                0x03800be0                std::_Vector_base<std::function<void (Pose)>, std::allocator<std::function<void (Pose)> > >::~_Vector_base()
+                0x03800bd0       0x24 build/src/main.o
+                0x03800bd0                std::_Vector_base<std::function<void (Pose)>, std::allocator<std::function<void (Pose)> > >::~_Vector_base()
  .text._ZNSt12_Destroy_auxILb0EE9__destroyIPSt8functionIFv4PoseEEEEvT_S7_
-                0x03800c04       0x48 build/src/main.o
-                0x03800c04                void std::_Destroy_aux<false>::__destroy<std::function<void (Pose)>*>(std::function<void (Pose)>*, std::function<void (Pose)>*)
+                0x03800bf4       0x48 build/src/main.o
+                0x03800bf4                void std::_Destroy_aux<false>::__destroy<std::function<void (Pose)>*>(std::function<void (Pose)>*, std::function<void (Pose)>*)
  .text._ZNSt6vectorISt8functionIFvSsEESaIS2_EED2Ev
-                0x03800c4c       0x44 build/src/main.o
-                0x03800c4c                std::vector<std::function<void (std::string)>, std::allocator<std::function<void (std::string)> > >::~vector()
+                0x03800c3c       0x44 build/src/main.o
+                0x03800c3c                std::vector<std::function<void (std::string)>, std::allocator<std::function<void (std::string)> > >::~vector()
  .text._ZNSt12_Vector_baseISt8functionIFvSsEESaIS2_EED2Ev
-                0x03800c90       0x24 build/src/main.o
-                0x03800c90                std::_Vector_base<std::function<void (std::string)>, std::allocator<std::function<void (std::string)> > >::~_Vector_base()
+                0x03800c80       0x24 build/src/main.o
+                0x03800c80                std::_Vector_base<std::function<void (std::string)>, std::allocator<std::function<void (std::string)> > >::~_Vector_base()
  .text._ZNSt12_Destroy_auxILb0EE9__destroyIPSt8functionIFvSsEEEEvT_S6_
-                0x03800cb4       0x48 build/src/main.o
-                0x03800cb4                void std::_Destroy_aux<false>::__destroy<std::function<void (std::string)>*>(std::function<void (std::string)>*, std::function<void (std::string)>*)
+                0x03800ca4       0x48 build/src/main.o
+                0x03800ca4                void std::_Destroy_aux<false>::__destroy<std::function<void (std::string)>*>(std::function<void (std::string)>*, std::function<void (std::string)>*)
  .text._ZNSt12_Vector_baseIP10WhoopMotorSaIS1_EE11_M_allocateEj
-                0x03800cfc       0x30 build/src/main.o
-                0x03800cfc                std::_Vector_base<WhoopMotor*, std::allocator<WhoopMotor*> >::_M_allocate(unsigned int)
+                0x03800cec       0x30 build/src/main.o
+                0x03800cec                std::_Vector_base<WhoopMotor*, std::allocator<WhoopMotor*> >::_M_allocate(unsigned int)
  .text._ZNSt12_Vector_baseIP11ComputeNodeSaIS1_EE11_M_allocateEj
-                0x03800d2c       0x30 build/src/main.o
-                0x03800d2c                std::_Vector_base<ComputeNode*, std::allocator<ComputeNode*> >::_M_allocate(unsigned int)
- *fill*         0x03800d5c        0x4 
+                0x03800d1c       0x30 build/src/main.o
+                0x03800d1c                std::_Vector_base<ComputeNode*, std::allocator<ComputeNode*> >::_M_allocate(unsigned int)
+ *fill*         0x03800d4c        0x4 
  .text._GLOBAL__sub_I_main.cpp
-                0x03800d60      0x940 build/src/main.o
+                0x03800d50      0x940 build/src/main.o
  .text._Z11vexcodeInitv
-                0x038016a0        0x4 build/src/robot-config.o
-                0x038016a0                vexcodeInit()
+                0x03801690        0x4 build/src/robot-config.o
+                0x03801690                vexcodeInit()
  .text._GLOBAL__sub_I_robot_config.cpp
-                0x038016a4       0x34 build/src/robot-config.o
+                0x03801694       0x34 build/src/robot-config.o
  .text._Z16find_all_indexesRKSsS0_
-                0x038016d8       0xc0 build/include/whooplib/src/toolbox.o
-                0x038016d8                find_all_indexes(std::string const&, std::string const&)
+                0x038016c8       0xc0 build/include/whooplib/src/toolbox.o
+                0x038016c8                find_all_indexes(std::string const&, std::string const&)
  .text._Z25read_messages_from_bufferRKSsS0_S0_
-                0x03801798      0x3d0 build/include/whooplib/src/toolbox.o
-                0x03801798                read_messages_from_buffer(std::string const&, std::string const&, std::string const&)
+                0x03801788      0x3d0 build/include/whooplib/src/toolbox.o
+                0x03801788                read_messages_from_buffer(std::string const&, std::string const&, std::string const&)
  .text._ZNSt6vectorISsSaISsEED2Ev
-                0x03801b68       0x44 build/include/whooplib/src/toolbox.o
-                0x03801b68                std::vector<std::string, std::allocator<std::string> >::~vector()
+                0x03801b58       0x44 build/include/whooplib/src/toolbox.o
+                0x03801b58                std::vector<std::string, std::allocator<std::string> >::~vector()
  .text._ZNSt6vectorISt4pairIiSsESaIS1_EED2Ev
-                0x03801bac       0x48 build/include/whooplib/src/toolbox.o
-                0x03801bac                std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > >::~vector()
+                0x03801b9c       0x48 build/include/whooplib/src/toolbox.o
+                0x03801b9c                std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > >::~vector()
  .text._Z30get_latest_message_from_bufferRKSsS0_S0_
-                0x03801bf4       0x74 build/include/whooplib/src/toolbox.o
-                0x03801bf4                get_latest_message_from_buffer(std::string const&, std::string const&, std::string const&)
+                0x03801be4       0x74 build/include/whooplib/src/toolbox.o
+                0x03801be4                get_latest_message_from_buffer(std::string const&, std::string const&, std::string const&)
  .text._Z5stripRKSs
-                0x03801c68      0x220 build/include/whooplib/src/toolbox.o
-                0x03801c68                strip(std::string const&)
+                0x03801c58      0x220 build/include/whooplib/src/toolbox.o
+                0x03801c58                strip(std::string const&)
  .text._Z12boolToStringb
-                0x03801e88       0x3c build/include/whooplib/src/toolbox.o
-                0x03801e88                boolToString(bool)
+                0x03801e78       0x3c build/include/whooplib/src/toolbox.o
+                0x03801e78                boolToString(bool)
  .text._Z11intToStringi
-                0x03801ec4       0x80 build/include/whooplib/src/toolbox.o
-                0x03801ec4                intToString(int)
- *fill*         0x03801f44        0x4 
+                0x03801eb4       0x80 build/include/whooplib/src/toolbox.o
+                0x03801eb4                intToString(int)
+ *fill*         0x03801f34        0x4 
  .text._Z6to_radd
-                0x03801f48       0x20 build/include/whooplib/src/toolbox.o
-                0x03801f48                to_rad(double)
+                0x03801f38       0x20 build/include/whooplib/src/toolbox.o
+                0x03801f38                to_rad(double)
  .text._Z6to_degd
-                0x03801f68       0x20 build/include/whooplib/src/toolbox.o
-                0x03801f68                to_deg(double)
+                0x03801f58       0x20 build/include/whooplib/src/toolbox.o
+                0x03801f58                to_deg(double)
  .text._Z9to_metersd
-                0x03801f88       0x20 build/include/whooplib/src/toolbox.o
-                0x03801f88                to_meters(double)
+                0x03801f78       0x20 build/include/whooplib/src/toolbox.o
+                0x03801f78                to_meters(double)
  .text._Z9to_inchesd
-                0x03801fa8       0x20 build/include/whooplib/src/toolbox.o
-                0x03801fa8                to_inches(double)
+                0x03801f98       0x20 build/include/whooplib/src/toolbox.o
+                0x03801f98                to_inches(double)
  .text._Z15normalize_angled
-                0x03801fc8       0x68 build/include/whooplib/src/toolbox.o
-                0x03801fc8                normalize_angle(double)
+                0x03801fb8       0x68 build/include/whooplib/src/toolbox.o
+                0x03801fb8                normalize_angle(double)
  .text._Z27circumference_from_diameterd
-                0x03802030       0x20 build/include/whooplib/src/toolbox.o
-                0x03802030                circumference_from_diameter(double)
+                0x03802020       0x20 build/include/whooplib/src/toolbox.o
+                0x03802020                circumference_from_diameter(double)
  .text._ZNSt6vectorIiSaIiEE19_M_emplace_back_auxIJiEEEvDpOT_
-                0x03802050       0x80 build/include/whooplib/src/toolbox.o
-                0x03802050                void std::vector<int, std::allocator<int> >::_M_emplace_back_aux<int>(int&&)
+                0x03802040       0x80 build/include/whooplib/src/toolbox.o
+                0x03802040                void std::vector<int, std::allocator<int> >::_M_emplace_back_aux<int>(int&&)
  .text._ZNKSt6vectorIiSaIiEE12_M_check_lenEjPKc
-                0x038020d0       0x54 build/include/whooplib/src/toolbox.o
-                0x038020d0                std::vector<int, std::allocator<int> >::_M_check_len(unsigned int, char const*) const
+                0x038020c0       0x54 build/include/whooplib/src/toolbox.o
+                0x038020c0                std::vector<int, std::allocator<int> >::_M_check_len(unsigned int, char const*) const
  .text._ZNSt12_Vector_baseIiSaIiEE11_M_allocateEj
-                0x03802124       0x30 build/include/whooplib/src/toolbox.o
-                0x03802124                std::_Vector_base<int, std::allocator<int> >::_M_allocate(unsigned int)
+                0x03802114       0x30 build/include/whooplib/src/toolbox.o
+                0x03802114                std::_Vector_base<int, std::allocator<int> >::_M_allocate(unsigned int)
  .text._ZNSt6vectorISt4pairIiSsESaIS1_EE12emplace_backIJS1_EEEvDpOT_
-                0x03802154       0x3c build/include/whooplib/src/toolbox.o
-                0x03802154                void std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > >::emplace_back<std::pair<int, std::string> >(std::pair<int, std::string>&&)
+                0x03802144       0x3c build/include/whooplib/src/toolbox.o
+                0x03802144                void std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > >::emplace_back<std::pair<int, std::string> >(std::pair<int, std::string>&&)
  .text._ZNSt6vectorISt4pairIiSsESaIS1_EE19_M_emplace_back_auxIJS1_EEEvDpOT_
-                0x03802190       0xd0 build/include/whooplib/src/toolbox.o
-                0x03802190                void std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > >::_M_emplace_back_aux<std::pair<int, std::string> >(std::pair<int, std::string>&&)
+                0x03802180       0xd0 build/include/whooplib/src/toolbox.o
+                0x03802180                void std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > >::_M_emplace_back_aux<std::pair<int, std::string> >(std::pair<int, std::string>&&)
  .text._ZNKSt6vectorISt4pairIiSsESaIS1_EE12_M_check_lenEjPKc
-                0x03802260       0x54 build/include/whooplib/src/toolbox.o
-                0x03802260                std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > >::_M_check_len(unsigned int, char const*) const
+                0x03802250       0x54 build/include/whooplib/src/toolbox.o
+                0x03802250                std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > >::_M_check_len(unsigned int, char const*) const
  .text._ZNSt12_Vector_baseISt4pairIiSsESaIS1_EE11_M_allocateEj
-                0x038022b4       0x30 build/include/whooplib/src/toolbox.o
-                0x038022b4                std::_Vector_base<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > >::_M_allocate(unsigned int)
+                0x038022a4       0x30 build/include/whooplib/src/toolbox.o
+                0x038022a4                std::_Vector_base<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > >::_M_allocate(unsigned int)
  .text._ZSt16__introsort_loopIN9__gnu_cxx17__normal_iteratorIPSt4pairIiSsESt6vectorIS3_SaIS3_EEEEiNS0_5__ops15_Iter_less_iterEEvT_SB_T0_T1_
-                0x038022e4       0xa0 build/include/whooplib/src/toolbox.o
-                0x038022e4                void std::__introsort_loop<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, int, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, int, __gnu_cxx::__ops::_Iter_less_iter)
+                0x038022d4       0xa0 build/include/whooplib/src/toolbox.o
+                0x038022d4                void std::__introsort_loop<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, int, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, int, __gnu_cxx::__ops::_Iter_less_iter)
  .text._ZSt22__final_insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIiSsESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_T0_
-                0x03802384       0x68 build/include/whooplib/src/toolbox.o
-                0x03802384                void std::__final_insertion_sort<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter)
+                0x03802374       0x68 build/include/whooplib/src/toolbox.o
+                0x03802374                void std::__final_insertion_sort<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter)
  .text._ZSt13__heap_selectIN9__gnu_cxx17__normal_iteratorIPSt4pairIiSsESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_SB_T0_
-                0x038023ec       0x68 build/include/whooplib/src/toolbox.o
-                0x038023ec                void std::__heap_select<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter)
+                0x038023dc       0x68 build/include/whooplib/src/toolbox.o
+                0x038023dc                void std::__heap_select<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter)
  .text._ZSt11__sort_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIiSsESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_T0_
-                0x03802454       0x40 build/include/whooplib/src/toolbox.o
-                0x03802454                void std::__sort_heap<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter)
+                0x03802444       0x40 build/include/whooplib/src/toolbox.o
+                0x03802444                void std::__sort_heap<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter)
  .text._ZSt11__make_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIiSsESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_T0_
-                0x03802494       0xe8 build/include/whooplib/src/toolbox.o
-                0x03802494                void std::__make_heap<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter)
+                0x03802484       0xe8 build/include/whooplib/src/toolbox.o
+                0x03802484                void std::__make_heap<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter)
  .text._ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPSt4pairIiSsESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_
-                0x0380257c       0x5c build/include/whooplib/src/toolbox.o
-                0x0380257c                bool __gnu_cxx::__ops::_Iter_less_iter::operator()<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > > >(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >) const
+                0x0380256c       0x5c build/include/whooplib/src/toolbox.o
+                0x0380256c                bool __gnu_cxx::__ops::_Iter_less_iter::operator()<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > > >(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >) const
  .text._ZSt10__pop_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIiSsESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_SB_T0_
-                0x038025d8      0x100 build/include/whooplib/src/toolbox.o
-                0x038025d8                void std::__pop_heap<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter)
+                0x038025c8      0x100 build/include/whooplib/src/toolbox.o
+                0x038025c8                void std::__pop_heap<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter)
  .text._ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIiSsESt6vectorIS3_SaIS3_EEEEiS3_NS0_5__ops15_Iter_less_iterEEvT_T0_SC_T1_T2_
-                0x038026d8      0x170 build/include/whooplib/src/toolbox.o
-                0x038026d8                void std::__adjust_heap<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, int, std::pair<int, std::string>, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, int, int, std::pair<int, std::string>, __gnu_cxx::__ops::_Iter_less_iter)
+                0x038026c8      0x170 build/include/whooplib/src/toolbox.o
+                0x038026c8                void std::__adjust_heap<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, int, std::pair<int, std::string>, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, int, int, std::pair<int, std::string>, __gnu_cxx::__ops::_Iter_less_iter)
  .text._ZSt11__push_heapIN9__gnu_cxx17__normal_iteratorIPSt4pairIiSsESt6vectorIS3_SaIS3_EEEEiS3_NS0_5__ops14_Iter_less_valEEvT_T0_SC_T1_T2_
-                0x03802848       0xcc build/include/whooplib/src/toolbox.o
-                0x03802848                void std::__push_heap<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, int, std::pair<int, std::string>, __gnu_cxx::__ops::_Iter_less_val>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, int, int, std::pair<int, std::string>, __gnu_cxx::__ops::_Iter_less_val)
+                0x03802838       0xcc build/include/whooplib/src/toolbox.o
+                0x03802838                void std::__push_heap<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, int, std::pair<int, std::string>, __gnu_cxx::__ops::_Iter_less_val>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, int, int, std::pair<int, std::string>, __gnu_cxx::__ops::_Iter_less_val)
  .text._ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPSt4pairIiSsESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_SB_SB_T0_
-                0x03802914       0xec build/include/whooplib/src/toolbox.o
-                0x03802914                void std::__move_median_to_first<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter)
+                0x03802904       0xec build/include/whooplib/src/toolbox.o
+                0x03802904                void std::__move_median_to_first<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter)
  .text._ZSt21__unguarded_partitionIN9__gnu_cxx17__normal_iteratorIPSt4pairIiSsESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEET_SB_SB_SB_T0_
-                0x03802a00       0x8c build/include/whooplib/src/toolbox.o
-                0x03802a00                __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > > std::__unguarded_partition<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter)
+                0x038029f0       0x8c build/include/whooplib/src/toolbox.o
+                0x038029f0                __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > > std::__unguarded_partition<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter)
  .text._ZSt16__insertion_sortIN9__gnu_cxx17__normal_iteratorIPSt4pairIiSsESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_T0_
-                0x03802a8c      0x174 build/include/whooplib/src/toolbox.o
-                0x03802a8c                void std::__insertion_sort<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter)
+                0x03802a7c      0x174 build/include/whooplib/src/toolbox.o
+                0x03802a7c                void std::__insertion_sort<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Iter_less_iter)
  .text._ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPSt4pairIiSsESt6vectorIS3_SaIS3_EEEENS0_5__ops14_Val_less_iterEEvT_T0_
-                0x03802c00      0x13c build/include/whooplib/src/toolbox.o
-                0x03802c00                void std::__unguarded_linear_insert<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Val_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Val_less_iter)
+                0x03802bf0      0x13c build/include/whooplib/src/toolbox.o
+                0x03802bf0                void std::__unguarded_linear_insert<__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Val_less_iter>(__gnu_cxx::__normal_iterator<std::pair<int, std::string>*, std::vector<std::pair<int, std::string>, std::allocator<std::pair<int, std::string> > > >, __gnu_cxx::__ops::_Val_less_iter)
  .text._ZNSt6vectorISsSaISsEE19_M_emplace_back_auxIJSsEEEvDpOT_
-                0x03802d3c       0xa8 build/include/whooplib/src/toolbox.o
-                0x03802d3c                void std::vector<std::string, std::allocator<std::string> >::_M_emplace_back_aux<std::string>(std::string&&)
+                0x03802d2c       0xa8 build/include/whooplib/src/toolbox.o
+                0x03802d2c                void std::vector<std::string, std::allocator<std::string> >::_M_emplace_back_aux<std::string>(std::string&&)
  .text._ZNKSt6vectorISsSaISsEE12_M_check_lenEjPKc
-                0x03802de4       0x54 build/include/whooplib/src/toolbox.o
-                0x03802de4                std::vector<std::string, std::allocator<std::string> >::_M_check_len(unsigned int, char const*) const
+                0x03802dd4       0x54 build/include/whooplib/src/toolbox.o
+                0x03802dd4                std::vector<std::string, std::allocator<std::string> >::_M_check_len(unsigned int, char const*) const
  .text._ZNSt12_Vector_baseISsSaISsEE11_M_allocateEj
-                0x03802e38       0x30 build/include/whooplib/src/toolbox.o
-                0x03802e38                std::_Vector_base<std::string, std::allocator<std::string> >::_M_allocate(unsigned int)
+                0x03802e28       0x30 build/include/whooplib/src/toolbox.o
+                0x03802e28                std::_Vector_base<std::string, std::allocator<std::string> >::_M_allocate(unsigned int)
  .text._ZNSs12_S_constructIN9__gnu_cxx17__normal_iteratorIPKcSsEEEEPcT_S6_RKSaIcESt20forward_iterator_tag
-                0x03802e68       0x84 build/include/whooplib/src/toolbox.o
-                0x03802e68                char* std::string::_S_construct<__gnu_cxx::__normal_iterator<char const*, std::string> >(__gnu_cxx::__normal_iterator<char const*, std::string>, __gnu_cxx::__normal_iterator<char const*, std::string>, std::allocator<char> const&, std::forward_iterator_tag)
- *fill*         0x03802eec        0x4 
+                0x03802e58       0x84 build/include/whooplib/src/toolbox.o
+                0x03802e58                char* std::string::_S_construct<__gnu_cxx::__normal_iterator<char const*, std::string> >(__gnu_cxx::__normal_iterator<char const*, std::string>, __gnu_cxx::__normal_iterator<char const*, std::string>, std::allocator<char> const&, std::forward_iterator_tag)
+ *fill*         0x03802edc        0x4 
  .text._ZN9WheelOdom12set_positionEddd
-                0x03802ef0       0x98 build/include/whooplib/src/calculators/WheelOdom.o
-                0x03802ef0                WheelOdom::set_position(double, double, double)
+                0x03802ee0       0x98 build/include/whooplib/src/calculators/WheelOdom.o
+                0x03802ee0                WheelOdom::set_position(double, double, double)
  .text._ZN9WheelOdom22set_physical_distancesEdd
-                0x03802f88       0x18 build/include/whooplib/src/calculators/WheelOdom.o
-                0x03802f88                WheelOdom::set_physical_distances(double, double)
+                0x03802f78       0x18 build/include/whooplib/src/calculators/WheelOdom.o
+                0x03802f78                WheelOdom::set_physical_distances(double, double)
  .text._ZN9WheelOdom11update_poseEddd
-                0x03802fa0      0x1f0 build/include/whooplib/src/calculators/WheelOdom.o
-                0x03802fa0                WheelOdom::update_pose(double, double, double)
+                0x03802f90      0x1f0 build/include/whooplib/src/calculators/WheelOdom.o
+                0x03802f90                WheelOdom::update_pose(double, double, double)
  .text._ZN8TwoDPoseC2Eddd
-                0x03803190       0x1c build/include/whooplib/src/calculators/TwoDPose.o
-                0x03803190                TwoDPose::TwoDPose(double, double, double)
-                0x03803190                TwoDPose::TwoDPose(double, double, double)
+                0x03803180       0x1c build/include/whooplib/src/calculators/TwoDPose.o
+                0x03803180                TwoDPose::TwoDPose(double, double, double)
+                0x03803180                TwoDPose::TwoDPose(double, double, double)
  .text._ZNK8TwoDPose20multiplicative_deltaERKS_
-                0x038031ac       0x6c build/include/whooplib/src/calculators/TwoDPose.o
-                0x038031ac                TwoDPose::multiplicative_delta(TwoDPose const&) const
+                0x0380319c       0x6c build/include/whooplib/src/calculators/TwoDPose.o
+                0x0380319c                TwoDPose::multiplicative_delta(TwoDPose const&) const
  .text._ZNK8TwoDPosemlERKS_
-                0x03803218       0x78 build/include/whooplib/src/calculators/TwoDPose.o
-                0x03803218                TwoDPose::operator*(TwoDPose const&) const
+                0x03803208       0x78 build/include/whooplib/src/calculators/TwoDPose.o
+                0x03803208                TwoDPose::operator*(TwoDPose const&) const
  .text._ZN8TwoDPosemLERKS_
-                0x03803290       0x44 build/include/whooplib/src/calculators/TwoDPose.o
-                0x03803290                TwoDPose::operator*=(TwoDPose const&)
+                0x03803280       0x44 build/include/whooplib/src/calculators/TwoDPose.o
+                0x03803280                TwoDPose::operator*=(TwoDPose const&)
  .text._ZNK8TwoDPose13toObjectSpaceERKS_
-                0x038032d4       0x24 build/include/whooplib/src/calculators/TwoDPose.o
-                0x038032d4                TwoDPose::toObjectSpace(TwoDPose const&) const
+                0x038032c4       0x24 build/include/whooplib/src/calculators/TwoDPose.o
+                0x038032c4                TwoDPose::toObjectSpace(TwoDPose const&) const
  .text._ZNK8TwoDPose13toObjectSpaceEddd
-                0x038032f8       0x90 build/include/whooplib/src/calculators/TwoDPose.o
-                0x038032f8                TwoDPose::toObjectSpace(double, double, double) const
+                0x038032e8       0x90 build/include/whooplib/src/calculators/TwoDPose.o
+                0x038032e8                TwoDPose::toObjectSpace(double, double, double) const
  .text._ZNK8TwoDPosengEv
-                0x03803388       0x18 build/include/whooplib/src/calculators/TwoDPose.o
-                0x03803388                TwoDPose::operator-() const
+                0x03803378       0x18 build/include/whooplib/src/calculators/TwoDPose.o
+                0x03803378                TwoDPose::operator-() const
  .text._ZN8TwoDPose19to_realsense_stringEi
-                0x038033a0       0xe4 build/include/whooplib/src/calculators/TwoDPose.o
-                0x038033a0                TwoDPose::to_realsense_string(int)
+                0x03803390       0xe4 build/include/whooplib/src/calculators/TwoDPose.o
+                0x03803390                TwoDPose::to_realsense_string(int)
  .text._ZN21WhoopDriveOdomVirtualC2EP20WhoopDriveOdomOffset
-                0x03803484       0xc0 build/include/whooplib/src/devices/WhoopDriveOdomVirtual.o
-                0x03803484                WhoopDriveOdomVirtual::WhoopDriveOdomVirtual(WhoopDriveOdomOffset*)
-                0x03803484                WhoopDriveOdomVirtual::WhoopDriveOdomVirtual(WhoopDriveOdomOffset*)
+                0x03803474       0xc0 build/include/whooplib/src/devices/WhoopDriveOdomVirtual.o
+                0x03803474                WhoopDriveOdomVirtual::WhoopDriveOdomVirtual(WhoopDriveOdomOffset*)
+                0x03803474                WhoopDriveOdomVirtual::WhoopDriveOdomVirtual(WhoopDriveOdomOffset*)
  .text._ZN21WhoopDriveOdomVirtual9calibrateEv
-                0x03803544       0x58 build/include/whooplib/src/devices/WhoopDriveOdomVirtual.o
-                0x03803544                WhoopDriveOdomVirtual::calibrate()
+                0x03803534       0x58 build/include/whooplib/src/devices/WhoopDriveOdomVirtual.o
+                0x03803534                WhoopDriveOdomVirtual::calibrate()
  .text._ZN21WhoopDriveOdomVirtual15_transform_poseEv
-                0x0380359c       0x6c build/include/whooplib/src/devices/WhoopDriveOdomVirtual.o
-                0x0380359c                WhoopDriveOdomVirtual::_transform_pose()
+                0x0380358c       0x6c build/include/whooplib/src/devices/WhoopDriveOdomVirtual.o
+                0x0380358c                WhoopDriveOdomVirtual::_transform_pose()
  .text._ZN21WhoopDriveOdomVirtual4tareEddd
-                0x03803608       0x80 build/include/whooplib/src/devices/WhoopDriveOdomVirtual.o
-                0x03803608                WhoopDriveOdomVirtual::tare(double, double, double)
+                0x038035f8       0x80 build/include/whooplib/src/devices/WhoopDriveOdomVirtual.o
+                0x038035f8                WhoopDriveOdomVirtual::tare(double, double, double)
  .text._ZN21WhoopDriveOdomVirtual9hard_tareEddd
-                0x03803688       0x9c build/include/whooplib/src/devices/WhoopDriveOdomVirtual.o
-                0x03803688                WhoopDriveOdomVirtual::hard_tare(double, double, double)
+                0x03803678       0x9c build/include/whooplib/src/devices/WhoopDriveOdomVirtual.o
+                0x03803678                WhoopDriveOdomVirtual::hard_tare(double, double, double)
  .text._ZN21WhoopDriveOdomVirtual9is_movingEd
-                0x03803724        0x8 build/include/whooplib/src/devices/WhoopDriveOdomVirtual.o
-                0x03803724                WhoopDriveOdomVirtual::is_moving(double)
+                0x03803714        0x8 build/include/whooplib/src/devices/WhoopDriveOdomVirtual.o
+                0x03803714                WhoopDriveOdomVirtual::is_moving(double)
  .text._ZN21WhoopDriveOdomVirtual8get_poseEv
-                0x0380372c       0x3c build/include/whooplib/src/devices/WhoopDriveOdomVirtual.o
-                0x0380372c                WhoopDriveOdomVirtual::get_pose()
+                0x0380371c       0x3c build/include/whooplib/src/devices/WhoopDriveOdomVirtual.o
+                0x0380371c                WhoopDriveOdomVirtual::get_pose()
  .text._ZN21WhoopDriveOdomVirtual6__stepEv
-                0x03803768       0x60 build/include/whooplib/src/devices/WhoopDriveOdomVirtual.o
-                0x03803768                WhoopDriveOdomVirtual::__step()
+                0x03803758       0x60 build/include/whooplib/src/devices/WhoopDriveOdomVirtual.o
+                0x03803758                WhoopDriveOdomVirtual::__step()
  .text._ZN15WhoopDrivetrain17init_motor_groupsEP15WhoopMotorGroupS1_
-                0x038037c8       0xf8 build/include/whooplib/src/devices/WhoopDrivetrain.o
-                0x038037c8                WhoopDrivetrain::init_motor_groups(WhoopMotorGroup*, WhoopMotorGroup*)
+                0x038037b8       0xf8 build/include/whooplib/src/devices/WhoopDrivetrain.o
+                0x038037b8                WhoopDrivetrain::init_motor_groups(WhoopMotorGroup*, WhoopMotorGroup*)
  .text._ZNSt10unique_ptrI15WhoopMotorGroupSt14default_deleteIS0_EEaSEOS3_
-                0x038038c0       0x48 build/include/whooplib/src/devices/WhoopDrivetrain.o
-                0x038038c0                std::unique_ptr<WhoopMotorGroup, std::default_delete<WhoopMotorGroup> >::operator=(std::unique_ptr<WhoopMotorGroup, std::default_delete<WhoopMotorGroup> >&&)
+                0x038038b0       0x48 build/include/whooplib/src/devices/WhoopDrivetrain.o
+                0x038038b0                std::unique_ptr<WhoopMotorGroup, std::default_delete<WhoopMotorGroup> >::operator=(std::unique_ptr<WhoopMotorGroup, std::default_delete<WhoopMotorGroup> >&&)
  .text._ZN15WhoopDrivetrainC2EP15WhoopOdomFusion9PoseUnitsP15WhoopControllerP15WhoopMotorGroupS6_
-                0x03803908      0x10c build/include/whooplib/src/devices/WhoopDrivetrain.o
-                0x03803908                WhoopDrivetrain::WhoopDrivetrain(WhoopOdomFusion*, PoseUnits, WhoopController*, WhoopMotorGroup*, WhoopMotorGroup*)
-                0x03803908                WhoopDrivetrain::WhoopDrivetrain(WhoopOdomFusion*, PoseUnits, WhoopController*, WhoopMotorGroup*, WhoopMotorGroup*)
+                0x038038f8      0x10c build/include/whooplib/src/devices/WhoopDrivetrain.o
+                0x038038f8                WhoopDrivetrain::WhoopDrivetrain(WhoopOdomFusion*, PoseUnits, WhoopController*, WhoopMotorGroup*, WhoopMotorGroup*)
+                0x038038f8                WhoopDrivetrain::WhoopDrivetrain(WhoopOdomFusion*, PoseUnits, WhoopController*, WhoopMotorGroup*, WhoopMotorGroup*)
  .text._ZN15WhoopDrivetrain9set_stateE15drivetrainState
-                0x03803a14       0x14 build/include/whooplib/src/devices/WhoopDrivetrain.o
-                0x03803a14                WhoopDrivetrain::set_state(drivetrainState)
+                0x03803a04       0x14 build/include/whooplib/src/devices/WhoopDrivetrain.o
+                0x03803a04                WhoopDrivetrain::set_state(drivetrainState)
  .text._ZN15WhoopDrivetrain33run_disabled_calibration_protocolEv
-                0x03803a28      0x160 build/include/whooplib/src/devices/WhoopDrivetrain.o
-                0x03803a28                WhoopDrivetrain::run_disabled_calibration_protocol()
+                0x03803a18      0x160 build/include/whooplib/src/devices/WhoopDrivetrain.o
+                0x03803a18                WhoopDrivetrain::run_disabled_calibration_protocol()
  .text._ZN15WhoopDrivetrain9calibrateEv
-                0x03803b88      0x15c build/include/whooplib/src/devices/WhoopDrivetrain.o
-                0x03803b88                WhoopDrivetrain::calibrate()
+                0x03803b78      0x15c build/include/whooplib/src/devices/WhoopDrivetrain.o
+                0x03803b78                WhoopDrivetrain::calibrate()
  .text._ZN15WhoopDrivetrain8get_poseEv
-                0x03803ce4       0xec build/include/whooplib/src/devices/WhoopDrivetrain.o
-                0x03803ce4                WhoopDrivetrain::get_pose()
+                0x03803cd4       0xec build/include/whooplib/src/devices/WhoopDrivetrain.o
+                0x03803cd4                WhoopDrivetrain::get_pose()
  .text._ZN15WhoopDrivetrain8set_poseEddd
-                0x03803dd0       0xb8 build/include/whooplib/src/devices/WhoopDrivetrain.o
-                0x03803dd0                WhoopDrivetrain::set_pose(double, double, double)
+                0x03803dc0       0xb8 build/include/whooplib/src/devices/WhoopDrivetrain.o
+                0x03803dc0                WhoopDrivetrain::set_pose(double, double, double)
  .text._ZN15WhoopDrivetrain6__stepEv
-                0x03803e88      0x1c0 build/include/whooplib/src/devices/WhoopDrivetrain.o
-                0x03803e88                WhoopDrivetrain::__step()
+                0x03803e78      0x1c0 build/include/whooplib/src/devices/WhoopDrivetrain.o
+                0x03803e78                WhoopDrivetrain::__step()
  .text._ZN15WhoopDrivetrain13get_units_strEv
-                0x03804048      0x11c build/include/whooplib/src/devices/WhoopDrivetrain.o
-                0x03804048                WhoopDrivetrain::get_units_str()
+                0x03804038      0x11c build/include/whooplib/src/devices/WhoopDrivetrain.o
+                0x03804038                WhoopDrivetrain::get_units_str()
  .text._ZN15WhoopDrivetrain14set_pose_unitsE9PoseUnits
-                0x03804164        0x8 build/include/whooplib/src/devices/WhoopDrivetrain.o
-                0x03804164                WhoopDrivetrain::set_pose_units(PoseUnits)
+                0x03804154        0x8 build/include/whooplib/src/devices/WhoopDrivetrain.o
+                0x03804154                WhoopDrivetrain::set_pose_units(PoseUnits)
  .text._ZNSt6vectorIP10WhoopMotorSaIS1_EEC2ERKS3_
-                0x0380416c       0x78 build/include/whooplib/src/devices/WhoopDrivetrain.o
-                0x0380416c                std::vector<WhoopMotor*, std::allocator<WhoopMotor*> >::vector(std::vector<WhoopMotor*, std::allocator<WhoopMotor*> > const&)
+                0x0380415c       0x78 build/include/whooplib/src/devices/WhoopDrivetrain.o
+                0x0380415c                std::vector<WhoopMotor*, std::allocator<WhoopMotor*> >::vector(std::vector<WhoopMotor*, std::allocator<WhoopMotor*> > const&)
  .text._GLOBAL__sub_I_WhoopDrivetrain.cpp
-                0x038041e4       0x34 build/include/whooplib/src/devices/WhoopDrivetrain.o
+                0x038041d4       0x34 build/include/whooplib/src/devices/WhoopDrivetrain.o
  .text._ZN15WhoopOdomFusionC2EP11WhoopVisionP20WhoopDriveOdomOffsetd10FusionModedd
-                0x03804218      0x168 build/include/whooplib/src/devices/WhoopOdomFusion.o
-                0x03804218                WhoopOdomFusion::WhoopOdomFusion(WhoopVision*, WhoopDriveOdomOffset*, double, FusionMode, double, double)
-                0x03804218                WhoopOdomFusion::WhoopOdomFusion(WhoopVision*, WhoopDriveOdomOffset*, double, FusionMode, double, double)
+                0x03804208      0x168 build/include/whooplib/src/devices/WhoopOdomFusion.o
+                0x03804208                WhoopOdomFusion::WhoopOdomFusion(WhoopVision*, WhoopDriveOdomOffset*, double, FusionMode, double, double)
+                0x03804208                WhoopOdomFusion::WhoopOdomFusion(WhoopVision*, WhoopDriveOdomOffset*, double, FusionMode, double, double)
  .text._ZN15WhoopOdomFusion23on_vision_pose_receivedE4Pose
-                0x03804380      0x284 build/include/whooplib/src/devices/WhoopOdomFusion.o
-                0x03804380                WhoopOdomFusion::on_vision_pose_received(Pose)
+                0x03804370      0x284 build/include/whooplib/src/devices/WhoopOdomFusion.o
+                0x03804370                WhoopOdomFusion::on_vision_pose_received(Pose)
  .text._ZN15WhoopOdomFusion4tareEdddd
-                0x03804604       0xc0 build/include/whooplib/src/devices/WhoopOdomFusion.o
-                0x03804604                WhoopOdomFusion::tare(double, double, double, double)
+                0x038045f4       0xc0 build/include/whooplib/src/devices/WhoopOdomFusion.o
+                0x038045f4                WhoopOdomFusion::tare(double, double, double, double)
  .text._ZN15WhoopOdomFusion4tareEddd
-                0x038046c4       0x34 build/include/whooplib/src/devices/WhoopOdomFusion.o
-                0x038046c4                WhoopOdomFusion::tare(double, double, double)
+                0x038046b4       0x34 build/include/whooplib/src/devices/WhoopOdomFusion.o
+                0x038046b4                WhoopOdomFusion::tare(double, double, double)
  .text._ZN15WhoopOdomFusion9calibrateEv
-                0x038046f8       0x34 build/include/whooplib/src/devices/WhoopOdomFusion.o
-                0x038046f8                WhoopOdomFusion::calibrate()
+                0x038046e8       0x34 build/include/whooplib/src/devices/WhoopOdomFusion.o
+                0x038046e8                WhoopOdomFusion::calibrate()
  .text._ZN15WhoopOdomFusion8get_poseEv
-                0x0380472c       0x44 build/include/whooplib/src/devices/WhoopOdomFusion.o
-                0x0380472c                WhoopOdomFusion::get_pose()
+                0x0380471c       0x44 build/include/whooplib/src/devices/WhoopOdomFusion.o
+                0x0380471c                WhoopOdomFusion::get_pose()
  .text._ZN15WhoopOdomFusion9is_movingEd
-                0x03804770        0x8 build/include/whooplib/src/devices/WhoopOdomFusion.o
-                0x03804770                WhoopOdomFusion::is_moving(double)
+                0x03804760        0x8 build/include/whooplib/src/devices/WhoopOdomFusion.o
+                0x03804760                WhoopOdomFusion::is_moving(double)
  .text._ZN15WhoopOdomFusion6__stepEv
-                0x03804778       0x8c build/include/whooplib/src/devices/WhoopOdomFusion.o
-                0x03804778                WhoopOdomFusion::__step()
+                0x03804768       0x8c build/include/whooplib/src/devices/WhoopOdomFusion.o
+                0x03804768                WhoopOdomFusion::__step()
  .text._ZNSt17_Function_handlerIFv4PoseESt5_BindIFSt7_Mem_fnIM15WhoopOdomFusionFvS0_EEPS4_St12_PlaceholderILi1EEEEE9_M_invokeERKSt9_Any_dataS0_
-                0x03804804       0x9c build/include/whooplib/src/devices/WhoopOdomFusion.o
-                0x03804804                std::_Function_handler<void (Pose), std::_Bind<std::_Mem_fn<void (WhoopOdomFusion::*)(Pose)> (WhoopOdomFusion*, std::_Placeholder<1>)> >::_M_invoke(std::_Any_data const&, Pose)
+                0x038047f4       0x9c build/include/whooplib/src/devices/WhoopOdomFusion.o
+                0x038047f4                std::_Function_handler<void (Pose), std::_Bind<std::_Mem_fn<void (WhoopOdomFusion::*)(Pose)> (WhoopOdomFusion*, std::_Placeholder<1>)> >::_M_invoke(std::_Any_data const&, Pose)
  .text._ZNSt14_Function_base13_Base_managerISt5_BindIFSt7_Mem_fnIM15WhoopOdomFusionFv4PoseEEPS3_St12_PlaceholderILi1EEEEE10_M_managerERSt9_Any_dataRKSE_St18_Manager_operation
-                0x038048a0       0x6c build/include/whooplib/src/devices/WhoopOdomFusion.o
-                0x038048a0                std::_Function_base::_Base_manager<std::_Bind<std::_Mem_fn<void (WhoopOdomFusion::*)(Pose)> (WhoopOdomFusion*, std::_Placeholder<1>)> >::_M_manager(std::_Any_data&, std::_Any_data const&, std::_Manager_operation)
+                0x03804890       0x6c build/include/whooplib/src/devices/WhoopOdomFusion.o
+                0x03804890                std::_Function_base::_Base_manager<std::_Bind<std::_Mem_fn<void (WhoopOdomFusion::*)(Pose)> (WhoopOdomFusion*, std::_Placeholder<1>)> >::_M_manager(std::_Any_data&, std::_Any_data const&, std::_Manager_operation)
  .text._ZN15WhoopMotorGroupC2ESt6vectorIP10WhoopMotorSaIS2_EE
-                0x0380490c       0xcc build/include/whooplib/src/devices/WhoopMotorGroup.o
-                0x0380490c                WhoopMotorGroup::WhoopMotorGroup(std::vector<WhoopMotor*, std::allocator<WhoopMotor*> >)
-                0x0380490c                WhoopMotorGroup::WhoopMotorGroup(std::vector<WhoopMotor*, std::allocator<WhoopMotor*> >)
+                0x038048fc       0xcc build/include/whooplib/src/devices/WhoopMotorGroup.o
+                0x038048fc                WhoopMotorGroup::WhoopMotorGroup(std::vector<WhoopMotor*, std::allocator<WhoopMotor*> >)
+                0x038048fc                WhoopMotorGroup::WhoopMotorGroup(std::vector<WhoopMotor*, std::allocator<WhoopMotor*> >)
  .text._ZN15WhoopMotorGroup4spinEd
-                0x038049d8       0x38 build/include/whooplib/src/devices/WhoopMotorGroup.o
-                0x038049d8                WhoopMotorGroup::spin(double)
+                0x038049c8       0x38 build/include/whooplib/src/devices/WhoopMotorGroup.o
+                0x038049c8                WhoopMotorGroup::spin(double)
  .text._ZN15WhoopMotorGroup15spin_percentageEd
-                0x03804a10       0x38 build/include/whooplib/src/devices/WhoopMotorGroup.o
-                0x03804a10                WhoopMotorGroup::spin_percentage(double)
+                0x03804a00       0x38 build/include/whooplib/src/devices/WhoopMotorGroup.o
+                0x03804a00                WhoopMotorGroup::spin_percentage(double)
  .text._ZN15WhoopMotorGroup12get_rotationEv
-                0x03804a48      0x168 build/include/whooplib/src/devices/WhoopMotorGroup.o
-                0x03804a48                WhoopMotorGroup::get_rotation()
+                0x03804a38      0x168 build/include/whooplib/src/devices/WhoopMotorGroup.o
+                0x03804a38                WhoopMotorGroup::get_rotation()
  .text._ZN15WhoopMotorGroup19get_distance_metersEv
-                0x03804bb0       0x38 build/include/whooplib/src/devices/WhoopMotorGroup.o
-                0x03804bb0                WhoopMotorGroup::get_distance_meters()
+                0x03804ba0       0x38 build/include/whooplib/src/devices/WhoopMotorGroup.o
+                0x03804ba0                WhoopMotorGroup::get_distance_meters()
  .text._ZN15WhoopMotorGroup12get_velocityEN3vex13velocityUnitsE
-                0x03804be8      0x16c build/include/whooplib/src/devices/WhoopMotorGroup.o
-                0x03804be8                WhoopMotorGroup::get_velocity(vex::velocityUnits)
+                0x03804bd8      0x16c build/include/whooplib/src/devices/WhoopMotorGroup.o
+                0x03804bd8                WhoopMotorGroup::get_velocity(vex::velocityUnits)
  .text._ZN15WhoopMotorGroup18get_velocity_rad_sEv
-                0x03804d54       0x18 build/include/whooplib/src/devices/WhoopMotorGroup.o
-                0x03804d54                WhoopMotorGroup::get_velocity_rad_s()
+                0x03804d44       0x18 build/include/whooplib/src/devices/WhoopMotorGroup.o
+                0x03804d44                WhoopMotorGroup::get_velocity_rad_s()
  .text._ZNSt6vectorIP10WhoopMotorSaIS1_EE19_M_emplace_back_auxIJRKS1_EEEvDpOT_
-                0x03804d6c       0x8c build/include/whooplib/src/devices/WhoopMotorGroup.o
-                0x03804d6c                void std::vector<WhoopMotor*, std::allocator<WhoopMotor*> >::_M_emplace_back_aux<WhoopMotor* const&>(WhoopMotor* const&)
+                0x03804d5c       0x8c build/include/whooplib/src/devices/WhoopMotorGroup.o
+                0x03804d5c                void std::vector<WhoopMotor*, std::allocator<WhoopMotor*> >::_M_emplace_back_aux<WhoopMotor* const&>(WhoopMotor* const&)
  .text._ZNKSt6vectorIP10WhoopMotorSaIS1_EE12_M_check_lenEjPKc
-                0x03804df8       0x54 build/include/whooplib/src/devices/WhoopMotorGroup.o
-                0x03804df8                std::vector<WhoopMotor*, std::allocator<WhoopMotor*> >::_M_check_len(unsigned int, char const*) const
+                0x03804de8       0x54 build/include/whooplib/src/devices/WhoopMotorGroup.o
+                0x03804de8                std::vector<WhoopMotor*, std::allocator<WhoopMotor*> >::_M_check_len(unsigned int, char const*) const
  .text._ZNSt6vectorIdSaIdEE19_M_emplace_back_auxIJRKdEEEvDpOT_
-                0x03804e4c       0x80 build/include/whooplib/src/devices/WhoopMotorGroup.o
-                0x03804e4c                void std::vector<double, std::allocator<double> >::_M_emplace_back_aux<double const&>(double const&)
+                0x03804e3c       0x80 build/include/whooplib/src/devices/WhoopMotorGroup.o
+                0x03804e3c                void std::vector<double, std::allocator<double> >::_M_emplace_back_aux<double const&>(double const&)
  .text._ZNKSt6vectorIdSaIdEE12_M_check_lenEjPKc
-                0x03804ecc       0x54 build/include/whooplib/src/devices/WhoopMotorGroup.o
-                0x03804ecc                std::vector<double, std::allocator<double> >::_M_check_len(unsigned int, char const*) const
+                0x03804ebc       0x54 build/include/whooplib/src/devices/WhoopMotorGroup.o
+                0x03804ebc                std::vector<double, std::allocator<double> >::_M_check_len(unsigned int, char const*) const
  .text._ZNSt12_Vector_baseIdSaIdEE11_M_allocateEj
-                0x03804f20       0x30 build/include/whooplib/src/devices/WhoopMotorGroup.o
-                0x03804f20                std::_Vector_base<double, std::allocator<double> >::_M_allocate(unsigned int)
+                0x03804f10       0x30 build/include/whooplib/src/devices/WhoopMotorGroup.o
+                0x03804f10                std::_Vector_base<double, std::allocator<double> >::_M_allocate(unsigned int)
  .text._ZN20WhoopDriveOdomOffsetC2EP18WhoopDriveOdomUnitdd
-                0x03804f50       0xb8 build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
-                0x03804f50                WhoopDriveOdomOffset::WhoopDriveOdomOffset(WhoopDriveOdomUnit*, double, double)
-                0x03804f50                WhoopDriveOdomOffset::WhoopDriveOdomOffset(WhoopDriveOdomUnit*, double, double)
+                0x03804f40       0xb8 build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
+                0x03804f40                WhoopDriveOdomOffset::WhoopDriveOdomOffset(WhoopDriveOdomUnit*, double, double)
+                0x03804f40                WhoopDriveOdomOffset::WhoopDriveOdomOffset(WhoopDriveOdomUnit*, double, double)
  .text._ZN20WhoopDriveOdomOffset9calibrateEv
-                0x03805008       0x58 build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
-                0x03805008                WhoopDriveOdomOffset::calibrate()
+                0x03804ff8       0x58 build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
+                0x03804ff8                WhoopDriveOdomOffset::calibrate()
  .text._ZN20WhoopDriveOdomOffset4tareEddd
-                0x03805060       0xcc build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
-                0x03805060                WhoopDriveOdomOffset::tare(double, double, double)
+                0x03805050       0xcc build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
+                0x03805050                WhoopDriveOdomOffset::tare(double, double, double)
  .text._ZN20WhoopDriveOdomOffset8get_poseEv
-                0x0380512c       0x3c build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
-                0x0380512c                WhoopDriveOdomOffset::get_pose()
+                0x0380511c       0x3c build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
+                0x0380511c                WhoopDriveOdomOffset::get_pose()
  .text._ZN20WhoopDriveOdomOffset13get_last_poseEv
-                0x03805168       0x3c build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
-                0x03805168                WhoopDriveOdomOffset::get_last_pose()
+                0x03805158       0x3c build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
+                0x03805158                WhoopDriveOdomOffset::get_last_pose()
  .text._ZN20WhoopDriveOdomOffset11__step_downEv
-                0x038051a4       0x44 build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
-                0x038051a4                WhoopDriveOdomOffset::__step_down()
+                0x03805194       0x44 build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
+                0x03805194                WhoopDriveOdomOffset::__step_down()
  .text._ZN20WhoopDriveOdomOffset9is_movingEd
-                0x038051e8        0x8 build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
-                0x038051e8                WhoopDriveOdomOffset::is_moving(double)
+                0x038051d8        0x8 build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
+                0x038051d8                WhoopDriveOdomOffset::is_moving(double)
  .text._ZN20WhoopDriveOdomOffset6__stepEv
-                0x038051f0       0xa8 build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
-                0x038051f0                WhoopDriveOdomOffset::__step()
+                0x038051e0       0xa8 build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
+                0x038051e0                WhoopDriveOdomOffset::__step()
  .text._GLOBAL__sub_I_WhoopDriveOdomOffset.cpp
-                0x03805298       0x34 build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
+                0x03805288       0x34 build/include/whooplib/src/devices/WhoopDriveOdomOffset.o
  .text._ZN13WhoopRotationC2El8reversed
-                0x038052cc       0x58 build/include/whooplib/src/devices/WhoopRotation.o
-                0x038052cc                WhoopRotation::WhoopRotation(long, reversed)
-                0x038052cc                WhoopRotation::WhoopRotation(long, reversed)
+                0x038052bc       0x58 build/include/whooplib/src/devices/WhoopRotation.o
+                0x038052bc                WhoopRotation::WhoopRotation(long, reversed)
+                0x038052bc                WhoopRotation::WhoopRotation(long, reversed)
  .text._ZN13WhoopRotation18set_wheel_diameterEd
-                0x03805324       0x28 build/include/whooplib/src/devices/WhoopRotation.o
-                0x03805324                WhoopRotation::set_wheel_diameter(double)
+                0x03805314       0x28 build/include/whooplib/src/devices/WhoopRotation.o
+                0x03805314                WhoopRotation::set_wheel_diameter(double)
  .text._ZN13WhoopRotation18get_velocity_rad_sEv
-                0x0380534c       0x1c build/include/whooplib/src/devices/WhoopRotation.o
-                0x0380534c                WhoopRotation::get_velocity_rad_s()
+                0x0380533c       0x1c build/include/whooplib/src/devices/WhoopRotation.o
+                0x0380533c                WhoopRotation::get_velocity_rad_s()
  .text._ZN13WhoopRotation19get_distance_metersEv
-                0x03805368       0x48 build/include/whooplib/src/devices/WhoopRotation.o
-                0x03805368                WhoopRotation::get_distance_meters()
+                0x03805358       0x48 build/include/whooplib/src/devices/WhoopRotation.o
+                0x03805358                WhoopRotation::get_distance_meters()
  .text._ZN10WhoopMotorC2ElN3vex11gearSettingE8reversed
-                0x038053b0       0x30 build/include/whooplib/src/devices/WhoopMotor.o
-                0x038053b0                WhoopMotor::WhoopMotor(long, vex::gearSetting, reversed)
-                0x038053b0                WhoopMotor::WhoopMotor(long, vex::gearSetting, reversed)
+                0x038053a0       0x30 build/include/whooplib/src/devices/WhoopMotor.o
+                0x038053a0                WhoopMotor::WhoopMotor(long, vex::gearSetting, reversed)
+                0x038053a0                WhoopMotor::WhoopMotor(long, vex::gearSetting, reversed)
  .text._ZN10WhoopMotor4spinEd
-                0x038053e0       0x30 build/include/whooplib/src/devices/WhoopMotor.o
-                0x038053e0                WhoopMotor::spin(double)
+                0x038053d0       0x30 build/include/whooplib/src/devices/WhoopMotor.o
+                0x038053d0                WhoopMotor::spin(double)
  .text._ZN10WhoopMotor15spin_percentageEd
-                0x03805410       0x50 build/include/whooplib/src/devices/WhoopMotor.o
-                0x03805410                WhoopMotor::spin_percentage(double)
+                0x03805400       0x50 build/include/whooplib/src/devices/WhoopMotor.o
+                0x03805400                WhoopMotor::spin_percentage(double)
  .text._ZN10WhoopMotor12get_rotationEv
-                0x03805460       0x2c build/include/whooplib/src/devices/WhoopMotor.o
-                0x03805460                WhoopMotor::get_rotation()
+                0x03805450       0x2c build/include/whooplib/src/devices/WhoopMotor.o
+                0x03805450                WhoopMotor::get_rotation()
  .text._ZN10WhoopMotor12get_velocityEN3vex13velocityUnitsE
-                0x0380548c        0x8 build/include/whooplib/src/devices/WhoopMotor.o
-                0x0380548c                WhoopMotor::get_velocity(vex::velocityUnits)
+                0x0380547c        0x8 build/include/whooplib/src/devices/WhoopMotor.o
+                0x0380547c                WhoopMotor::get_velocity(vex::velocityUnits)
  .text._ZN18WhoopDriveOdomUnitC2EddddP13WhoopInertialP13WhoopRotationS3_
-                0x03805494      0x17c build/include/whooplib/src/devices/WhoopDriveOdomUnit.o
-                0x03805494                WhoopDriveOdomUnit::WhoopDriveOdomUnit(double, double, double, double, WhoopInertial*, WhoopRotation*, WhoopRotation*)
-                0x03805494                WhoopDriveOdomUnit::WhoopDriveOdomUnit(double, double, double, double, WhoopInertial*, WhoopRotation*, WhoopRotation*)
+                0x03805484      0x17c build/include/whooplib/src/devices/WhoopDriveOdomUnit.o
+                0x03805484                WhoopDriveOdomUnit::WhoopDriveOdomUnit(double, double, double, double, WhoopInertial*, WhoopRotation*, WhoopRotation*)
+                0x03805484                WhoopDriveOdomUnit::WhoopDriveOdomUnit(double, double, double, double, WhoopInertial*, WhoopRotation*, WhoopRotation*)
  .text._ZN18WhoopDriveOdomUnit9calibrateEv
-                0x03805610       0x44 build/include/whooplib/src/devices/WhoopDriveOdomUnit.o
-                0x03805610                WhoopDriveOdomUnit::calibrate()
+                0x03805600       0x44 build/include/whooplib/src/devices/WhoopDriveOdomUnit.o
+                0x03805600                WhoopDriveOdomUnit::calibrate()
  .text._ZN18WhoopDriveOdomUnit4tareEddd
-                0x03805654       0x68 build/include/whooplib/src/devices/WhoopDriveOdomUnit.o
-                0x03805654                WhoopDriveOdomUnit::tare(double, double, double)
+                0x03805644       0x68 build/include/whooplib/src/devices/WhoopDriveOdomUnit.o
+                0x03805644                WhoopDriveOdomUnit::tare(double, double, double)
  .text._ZN18WhoopDriveOdomUnit9is_movingEd
-                0x038056bc       0xa8 build/include/whooplib/src/devices/WhoopDriveOdomUnit.o
-                0x038056bc                WhoopDriveOdomUnit::is_moving(double)
+                0x038056ac       0xa8 build/include/whooplib/src/devices/WhoopDriveOdomUnit.o
+                0x038056ac                WhoopDriveOdomUnit::is_moving(double)
  .text._ZN18WhoopDriveOdomUnit6__stepEv
-                0x03805764       0xe4 build/include/whooplib/src/devices/WhoopDriveOdomUnit.o
-                0x03805764                WhoopDriveOdomUnit::__step()
+                0x03805754       0xe4 build/include/whooplib/src/devices/WhoopDriveOdomUnit.o
+                0x03805754                WhoopDriveOdomUnit::__step()
  .text._ZN15WhoopControllerC2E12joystickMode
-                0x03805848       0x44 build/include/whooplib/src/devices/WhoopController.o
-                0x03805848                WhoopController::WhoopController(joystickMode)
-                0x03805848                WhoopController::WhoopController(joystickMode)
+                0x03805838       0x44 build/include/whooplib/src/devices/WhoopController.o
+                0x03805838                WhoopController::WhoopController(joystickMode)
+                0x03805838                WhoopController::WhoopController(joystickMode)
  .text._ZN15WhoopController6notifyESsd
-                0x0380588c       0x98 build/include/whooplib/src/devices/WhoopController.o
-                0x0380588c                WhoopController::notify(std::string, double)
+                0x0380587c       0x98 build/include/whooplib/src/devices/WhoopController.o
+                0x0380587c                WhoopController::notify(std::string, double)
  .text._ZN15WhoopController19get_left_joystick_xEv
-                0x03805924       0x2c build/include/whooplib/src/devices/WhoopController.o
-                0x03805924                WhoopController::get_left_joystick_x()
+                0x03805914       0x2c build/include/whooplib/src/devices/WhoopController.o
+                0x03805914                WhoopController::get_left_joystick_x()
  .text._ZN15WhoopController19get_left_joystick_yEv
-                0x03805950       0x2c build/include/whooplib/src/devices/WhoopController.o
-                0x03805950                WhoopController::get_left_joystick_y()
+                0x03805940       0x2c build/include/whooplib/src/devices/WhoopController.o
+                0x03805940                WhoopController::get_left_joystick_y()
  .text._ZN15WhoopController20get_right_joystick_xEv
-                0x0380597c       0x2c build/include/whooplib/src/devices/WhoopController.o
-                0x0380597c                WhoopController::get_right_joystick_x()
+                0x0380596c       0x2c build/include/whooplib/src/devices/WhoopController.o
+                0x0380596c                WhoopController::get_right_joystick_x()
  .text._ZN15WhoopController20get_right_joystick_yEv
-                0x038059a8       0x2c build/include/whooplib/src/devices/WhoopController.o
-                0x038059a8                WhoopController::get_right_joystick_y()
+                0x03805998       0x2c build/include/whooplib/src/devices/WhoopController.o
+                0x03805998                WhoopController::get_right_joystick_y()
  .text._ZN15WhoopController6__stepEv
-                0x038059d4       0x28 build/include/whooplib/src/devices/WhoopController.o
-                0x038059d4                WhoopController::__step()
+                0x038059c4       0x28 build/include/whooplib/src/devices/WhoopController.o
+                0x038059c4                WhoopController::__step()
  .text._ZN13WhoopInertialC2El
-                0x038059fc       0x30 build/include/whooplib/src/devices/WhoopInertial.o
-                0x038059fc                WhoopInertial::WhoopInertial(long)
-                0x038059fc                WhoopInertial::WhoopInertial(long)
- *fill*         0x03805a2c        0x4 
+                0x038059ec       0x30 build/include/whooplib/src/devices/WhoopInertial.o
+                0x038059ec                WhoopInertial::WhoopInertial(long)
+                0x038059ec                WhoopInertial::WhoopInertial(long)
+ *fill*         0x03805a1c        0x4 
  .text._ZN13WhoopInertial7get_yawEv
-                0x03805a30       0x98 build/include/whooplib/src/devices/WhoopInertial.o
-                0x03805a30                WhoopInertial::get_yaw()
+                0x03805a20       0x98 build/include/whooplib/src/devices/WhoopInertial.o
+                0x03805a20                WhoopInertial::get_yaw()
  .text._ZN13WhoopInertial15get_yaw_radiansEv
-                0x03805ac8       0x14 build/include/whooplib/src/devices/WhoopInertial.o
-                0x03805ac8                WhoopInertial::get_yaw_radians()
+                0x03805ab8       0x14 build/include/whooplib/src/devices/WhoopInertial.o
+                0x03805ab8                WhoopInertial::get_yaw_radians()
  .text._ZN13WhoopInertial16get_roll_radiansEv
-                0x03805adc       0x1c build/include/whooplib/src/devices/WhoopInertial.o
-                0x03805adc                WhoopInertial::get_roll_radians()
+                0x03805acc       0x1c build/include/whooplib/src/devices/WhoopInertial.o
+                0x03805acc                WhoopInertial::get_roll_radians()
  .text._ZN13WhoopInertial17get_pitch_radiansEv
-                0x03805af8       0x1c build/include/whooplib/src/devices/WhoopInertial.o
-                0x03805af8                WhoopInertial::get_pitch_radians()
+                0x03805ae8       0x1c build/include/whooplib/src/devices/WhoopInertial.o
+                0x03805ae8                WhoopInertial::get_pitch_radians()
  .text._ZN13WhoopInertial9calibrateEv
-                0x03805b14        0xc build/include/whooplib/src/devices/WhoopInertial.o
-                0x03805b14                WhoopInertial::calibrate()
+                0x03805b04        0xc build/include/whooplib/src/devices/WhoopInertial.o
+                0x03805b04                WhoopInertial::calibrate()
  .text._ZN13WhoopInertial12tare_radiansEd
-                0x03805b20       0x28 build/include/whooplib/src/devices/WhoopInertial.o
-                0x03805b20                WhoopInertial::tare_radians(double)
+                0x03805b10       0x28 build/include/whooplib/src/devices/WhoopInertial.o
+                0x03805b10                WhoopInertial::tare_radians(double)
  .text._ZN17RobotVisionOffsetC2Edd
-                0x03805b48       0x1c build/include/whooplib/src/devices/WhoopVision.o
-                0x03805b48                RobotVisionOffset::RobotVisionOffset(double, double)
-                0x03805b48                RobotVisionOffset::RobotVisionOffset(double, double)
+                0x03805b38       0x1c build/include/whooplib/src/devices/WhoopVision.o
+                0x03805b38                RobotVisionOffset::RobotVisionOffset(double, double)
+                0x03805b38                RobotVisionOffset::RobotVisionOffset(double, double)
  .text._ZN11WhoopVision15setup_messengerEP10BufferNodeRKSs
-                0x03805b64      0x11c build/include/whooplib/src/devices/WhoopVision.o
-                0x03805b64                WhoopVision::setup_messenger(BufferNode*, std::string const&)
+                0x03805b54      0x11c build/include/whooplib/src/devices/WhoopVision.o
+                0x03805b54                WhoopVision::setup_messenger(BufferNode*, std::string const&)
  .text._ZSt11make_uniqueI9MessengerJRP10BufferNodeRKSs15deleteAfterReadEENSt9_MakeUniqIT_E15__single_objectEDpOT0_
-                0x03805c80       0xe0 build/include/whooplib/src/devices/WhoopVision.o
-                0x03805c80                std::_MakeUniq<Messenger>::__single_object std::make_unique<Messenger, BufferNode*&, std::string const&, deleteAfterRead>(BufferNode*&, std::string const&, deleteAfterRead&&)
+                0x03805c70       0xe0 build/include/whooplib/src/devices/WhoopVision.o
+                0x03805c70                std::_MakeUniq<Messenger>::__single_object std::make_unique<Messenger, BufferNode*&, std::string const&, deleteAfterRead>(BufferNode*&, std::string const&, deleteAfterRead&&)
  .text._ZN11WhoopVision12_update_poseESs
-                0x03805d60      0x26c build/include/whooplib/src/devices/WhoopVision.o
-                0x03805d60                WhoopVision::_update_pose(std::string)
+                0x03805d50      0x26c build/include/whooplib/src/devices/WhoopVision.o
+                0x03805d50                WhoopVision::_update_pose(std::string)
  .text._ZN11WhoopVisionC2EP17RobotVisionOffsetP10BufferNodeSs
-                0x03805fcc      0x190 build/include/whooplib/src/devices/WhoopVision.o
-                0x03805fcc                WhoopVision::WhoopVision(RobotVisionOffset*, BufferNode*, std::string)
-                0x03805fcc                WhoopVision::WhoopVision(RobotVisionOffset*, BufferNode*, std::string)
+                0x03805fbc      0x190 build/include/whooplib/src/devices/WhoopVision.o
+                0x03805fbc                WhoopVision::WhoopVision(RobotVisionOffset*, BufferNode*, std::string)
+                0x03805fbc                WhoopVision::WhoopVision(RobotVisionOffset*, BufferNode*, std::string)
  .text._ZN11WhoopVision4tareEv
-                0x0380615c       0x4c build/include/whooplib/src/devices/WhoopVision.o
-                0x0380615c                WhoopVision::tare()
+                0x0380614c       0x4c build/include/whooplib/src/devices/WhoopVision.o
+                0x0380614c                WhoopVision::tare()
  .text._ZN11WhoopVision15_transform_poseEb
-                0x038061a8      0x118 build/include/whooplib/src/devices/WhoopVision.o
-                0x038061a8                WhoopVision::_transform_pose(bool)
+                0x03806198      0x118 build/include/whooplib/src/devices/WhoopVision.o
+                0x03806198                WhoopVision::_transform_pose(bool)
  .text._ZN11WhoopVision4tareEdddddd
-                0x038062c0       0xb4 build/include/whooplib/src/devices/WhoopVision.o
-                0x038062c0                WhoopVision::tare(double, double, double, double, double, double)
+                0x038062b0       0xb4 build/include/whooplib/src/devices/WhoopVision.o
+                0x038062b0                WhoopVision::tare(double, double, double, double, double, double)
  .text._ZN11WhoopVision9on_updateESt8functionIFv4PoseEE
-                0x03806374        0x8 build/include/whooplib/src/devices/WhoopVision.o
-                0x03806374                WhoopVision::on_update(std::function<void (Pose)>)
+                0x03806364        0x8 build/include/whooplib/src/devices/WhoopVision.o
+                0x03806364                WhoopVision::on_update(std::function<void (Pose)>)
  .text._ZNSt6vectorISt8functionIFv4PoseEESaIS3_EE9push_backERKS3_
-                0x0380637c       0x3c build/include/whooplib/src/devices/WhoopVision.o
-                0x0380637c                std::vector<std::function<void (Pose)>, std::allocator<std::function<void (Pose)> > >::push_back(std::function<void (Pose)> const&)
+                0x0380636c       0x3c build/include/whooplib/src/devices/WhoopVision.o
+                0x0380636c                std::vector<std::function<void (Pose)>, std::allocator<std::function<void (Pose)> > >::push_back(std::function<void (Pose)> const&)
  .text._ZN11WhoopVision14vision_runningEv
-                0x038063b8       0x58 build/include/whooplib/src/devices/WhoopVision.o
-                0x038063b8                WhoopVision::vision_running()
+                0x038063a8       0x58 build/include/whooplib/src/devices/WhoopVision.o
+                0x038063a8                WhoopVision::vision_running()
  .text._ZN11WhoopVision8get_poseEv
-                0x03806410       0x44 build/include/whooplib/src/devices/WhoopVision.o
-                0x03806410                WhoopVision::get_pose()
+                0x03806400       0x44 build/include/whooplib/src/devices/WhoopVision.o
+                0x03806400                WhoopVision::get_pose()
  .text._ZNSt17_Function_handlerIFvSsESt5_BindIFSt7_Mem_fnIM11WhoopVisionFvSsEEPS3_St12_PlaceholderILi1EEEEE9_M_invokeERKSt9_Any_dataSs
-                0x03806454       0x10 build/include/whooplib/src/devices/WhoopVision.o
-                0x03806454                std::_Function_handler<void (std::string), std::_Bind<std::_Mem_fn<void (WhoopVision::*)(std::string)> (WhoopVision*, std::_Placeholder<1>)> >::_M_invoke(std::_Any_data const&, std::string)
+                0x03806444       0x10 build/include/whooplib/src/devices/WhoopVision.o
+                0x03806444                std::_Function_handler<void (std::string), std::_Bind<std::_Mem_fn<void (WhoopVision::*)(std::string)> (WhoopVision*, std::_Placeholder<1>)> >::_M_invoke(std::_Any_data const&, std::string)
  .text._ZNSt14_Function_base13_Base_managerISt5_BindIFSt7_Mem_fnIM11WhoopVisionFvSsEEPS3_St12_PlaceholderILi1EEEEE10_M_managerERSt9_Any_dataRKSD_St18_Manager_operation
-                0x03806464       0x6c build/include/whooplib/src/devices/WhoopVision.o
-                0x03806464                std::_Function_base::_Base_manager<std::_Bind<std::_Mem_fn<void (WhoopVision::*)(std::string)> (WhoopVision*, std::_Placeholder<1>)> >::_M_manager(std::_Any_data&, std::_Any_data const&, std::_Manager_operation)
+                0x03806454       0x6c build/include/whooplib/src/devices/WhoopVision.o
+                0x03806454                std::_Function_base::_Base_manager<std::_Bind<std::_Mem_fn<void (WhoopVision::*)(std::string)> (WhoopVision*, std::_Placeholder<1>)> >::_M_manager(std::_Any_data&, std::_Any_data const&, std::_Manager_operation)
  .text._ZNKSt7_Mem_fnIM11WhoopVisionFvSsEEclIJSsEvEEvPS0_DpOT_
-                0x038064d0       0xb0 build/include/whooplib/src/devices/WhoopVision.o
-                0x038064d0                void std::_Mem_fn<void (WhoopVision::*)(std::string)>::operator()<std::string, void>(WhoopVision*, std::string&&) const
+                0x038064c0       0xb0 build/include/whooplib/src/devices/WhoopVision.o
+                0x038064c0                void std::_Mem_fn<void (WhoopVision::*)(std::string)>::operator()<std::string, void>(WhoopVision*, std::string&&) const
  .text._ZNSt6vectorISt8functionIFv4PoseEESaIS3_EE19_M_emplace_back_auxIJRKS3_EEEvDpOT_
-                0x03806580      0x100 build/include/whooplib/src/devices/WhoopVision.o
-                0x03806580                void std::vector<std::function<void (Pose)>, std::allocator<std::function<void (Pose)> > >::_M_emplace_back_aux<std::function<void (Pose)> const&>(std::function<void (Pose)> const&)
+                0x03806570      0x100 build/include/whooplib/src/devices/WhoopVision.o
+                0x03806570                void std::vector<std::function<void (Pose)>, std::allocator<std::function<void (Pose)> > >::_M_emplace_back_aux<std::function<void (Pose)> const&>(std::function<void (Pose)> const&)
  .text._ZNSt8functionIFv4PoseEEC2ERKS2_
-                0x03806680       0x74 build/include/whooplib/src/devices/WhoopVision.o
-                0x03806680                std::function<void (Pose)>::function(std::function<void (Pose)> const&)
+                0x03806670       0x74 build/include/whooplib/src/devices/WhoopVision.o
+                0x03806670                std::function<void (Pose)>::function(std::function<void (Pose)> const&)
  .text._ZNKSt6vectorISt8functionIFv4PoseEESaIS3_EE12_M_check_lenEjPKc
-                0x038066f4       0x54 build/include/whooplib/src/devices/WhoopVision.o
-                0x038066f4                std::vector<std::function<void (Pose)>, std::allocator<std::function<void (Pose)> > >::_M_check_len(unsigned int, char const*) const
+                0x038066e4       0x54 build/include/whooplib/src/devices/WhoopVision.o
+                0x038066e4                std::vector<std::function<void (Pose)>, std::allocator<std::function<void (Pose)> > >::_M_check_len(unsigned int, char const*) const
  .text._ZNSt12_Vector_baseISt8functionIFv4PoseEESaIS3_EE11_M_allocateEj
-                0x03806748       0x30 build/include/whooplib/src/devices/WhoopVision.o
-                0x03806748                std::_Vector_base<std::function<void (Pose)>, std::allocator<std::function<void (Pose)> > >::_M_allocate(unsigned int)
+                0x03806738       0x30 build/include/whooplib/src/devices/WhoopVision.o
+                0x03806738                std::_Vector_base<std::function<void (Pose)>, std::allocator<std::function<void (Pose)> > >::_M_allocate(unsigned int)
  .text._ZNSt20__uninitialized_copyILb0EE13__uninit_copyIPSt8functionIFv4PoseEES6_EET0_T_S8_S7_
-                0x03806778       0x70 build/include/whooplib/src/devices/WhoopVision.o
-                0x03806778                std::function<void (Pose)>* std::__uninitialized_copy<false>::__uninit_copy<std::function<void (Pose)>*, std::function<void (Pose)>*>(std::function<void (Pose)>*, std::function<void (Pose)>*, std::function<void (Pose)>*)
+                0x03806768       0x70 build/include/whooplib/src/devices/WhoopVision.o
+                0x03806768                std::function<void (Pose)>* std::__uninitialized_copy<false>::__uninit_copy<std::function<void (Pose)>*, std::function<void (Pose)>*>(std::function<void (Pose)>*, std::function<void (Pose)>*, std::function<void (Pose)>*)
  .text._GLOBAL__sub_I_WhoopVision.cpp
-                0x038067e8       0x34 build/include/whooplib/src/devices/WhoopVision.o
+                0x038067d8       0x34 build/include/whooplib/src/devices/WhoopVision.o
  .text._ZN21WhoopOdomCommunicatorC2EP10BufferNodeP17RobotVisionOffsetP20WhoopDriveOdomOffsetSsi
-                0x0380681c       0xfc build/include/whooplib/src/devices/WhoopOdomCommunicator.o
-                0x0380681c                WhoopOdomCommunicator::WhoopOdomCommunicator(BufferNode*, RobotVisionOffset*, WhoopDriveOdomOffset*, std::string, int)
-                0x0380681c                WhoopOdomCommunicator::WhoopOdomCommunicator(BufferNode*, RobotVisionOffset*, WhoopDriveOdomOffset*, std::string, int)
+                0x0380680c       0xfc build/include/whooplib/src/devices/WhoopOdomCommunicator.o
+                0x0380680c                WhoopOdomCommunicator::WhoopOdomCommunicator(BufferNode*, RobotVisionOffset*, WhoopDriveOdomOffset*, std::string, int)
+                0x0380680c                WhoopOdomCommunicator::WhoopOdomCommunicator(BufferNode*, RobotVisionOffset*, WhoopDriveOdomOffset*, std::string, int)
  .text._ZSt11make_uniqueI9MessengerJRP10BufferNodeRSs15deleteAfterReadEENSt9_MakeUniqIT_E15__single_objectEDpOT0_
-                0x03806918       0xe0 build/include/whooplib/src/devices/WhoopOdomCommunicator.o
-                0x03806918                std::_MakeUniq<Messenger>::__single_object std::make_unique<Messenger, BufferNode*&, std::string&, deleteAfterRead>(BufferNode*&, std::string&, deleteAfterRead&&)
+                0x03806908       0xe0 build/include/whooplib/src/devices/WhoopOdomCommunicator.o
+                0x03806908                std::_MakeUniq<Messenger>::__single_object std::make_unique<Messenger, BufferNode*&, std::string&, deleteAfterRead>(BufferNode*&, std::string&, deleteAfterRead&&)
  .text._ZN21WhoopOdomCommunicator6__stepEv
-                0x038069f8      0x178 build/include/whooplib/src/devices/WhoopOdomCommunicator.o
-                0x038069f8                WhoopOdomCommunicator::__step()
+                0x038069e8      0x188 build/include/whooplib/src/devices/WhoopOdomCommunicator.o
+                0x038069e8                WhoopOdomCommunicator::__step()
  .text._ZN15JetsonCommander15setup_messengerEP10BufferNodeRKSs
                 0x03806b70      0x11c build/include/whooplib/src/nodes/JetsonCommanderNode.o
                 0x03806b70                JetsonCommander::setup_messenger(BufferNode*, std::string const&)
