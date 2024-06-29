@@ -13,6 +13,7 @@
 #include <sstream>
 #include <cmath>
 #include <memory>
+#include <iomanip>  // Include for std::setprecision
 
 // Function to find all indexes of a substring in a string
 std::vector<int> find_all_indexes(const std::string& str, const std::string& substring) {
@@ -99,9 +100,9 @@ std::string intToString(int value) {
     return ss.str();
 }
 
-std::string doubleToString(double value) {
+std::string doubleToString(double value, int decimal_places) {
     std::stringstream ss;
-    ss << value;
+    ss << std::fixed << std::setprecision(decimal_places) << value;
     return ss.str();
 }
 

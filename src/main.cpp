@@ -188,6 +188,7 @@ WhoopOdomFusion odom_fusion(
 
 WhoopOdomCommunicator odom_communicator(
   &buffer_system, // Pointer to the buffer system to communicate the messenger to
+  &vision_offset, // Pointer to the vision offset configured above
   &odom_offset, // Pointer to the drive offset object
   "O", // The string that represents the odometry stream to send over 
   4 // The number of decimal places of the pose data (measurements in meters/radians). Higher decimal places is better precision, but larger serial packets

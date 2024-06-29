@@ -49,7 +49,7 @@ std::string strip(const std::string& str);
 // Conversion functions
 std::string boolToString(bool b);
 std::string intToString(int value);
-std::string doubleToString(double value);
+std::string doubleToString(double value, int decimal_places=4);
 int stringToInt(const std::string& str);
 double stringToDouble(const std::string& str);
 float intToFloat(int value);
