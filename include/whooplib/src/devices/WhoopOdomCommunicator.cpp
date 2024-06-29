@@ -30,5 +30,7 @@ void WhoopOdomCommunicator::__step(){
     pose_deltas.y /= 0.01; // Convert to meters/second
     pose_deltas.yaw /= 0.01; // Convert to radians/second
 
+    relative_velocity = pose_deltas; // Update pose deltas for robot
+
     odom_messenger->send(pose_deltas.to_realsense_string(pose_precision));
 }

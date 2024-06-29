@@ -25,6 +25,8 @@ public:
     WhoopDriveOdomOffset* odom_offset;
     int pose_precision;
     RobotVisionOffset* vision_offset;
+
+    TwoDPose relative_velocity = TwoDPose(0,0,0);
     /**
      * This constructs an odometry communicator for the drivetrain so that it can send for the T265 to parse
      * @param bufferSystem Pointer to the buffer system to communicate the messenger to

@@ -290,6 +290,12 @@ void usercontrol(void) {
     Brain.Screen.print("WO (m_rad_ccw): %.2f %.2f %.2f", wheel_pose.x, wheel_pose.y, wheel_pose.yaw);
     
 
+    // Object-Space Velocity
+    TwoDPose obj_space_velocity = odom_communicator.relative_velocity;
+    Brain.Screen.clearLine(7);
+    Brain.Screen.setCursor(7, 1);
+    Brain.Screen.print("Velocities (m_rad_ccw): %.2f %.2f %.2f", obj_space_velocity.x, obj_space_velocity.y, obj_space_velocity.yaw);
+
     wait(20, msec);
   }
 }
