@@ -21,29 +21,13 @@ TwoDPose::TwoDPose(double x, double y, double yaw) {
 }
 
 TwoDPose TwoDPose::multiplicative_delta(const TwoDPose& other) const{
-    // Calculate the new position
-    double cos_yaw = cos(yaw);
-    double sin_yaw = sin(yaw);
-
-    double delta_x = other.x * cos_yaw - other.y * sin_yaw;
-    double delta_y = other.x * sin_yaw + other.y * cos_yaw;
-    double delta_yaw = other.yaw;
-
-    return TwoDPose(delta_x, delta_y, normalize_angle(delta_yaw));
+    TwoDPose p = toWorldSpace(other);
+    p.yaw = yaw;
+    return p;
 }
 
 TwoDPose TwoDPose::operator*(const TwoDPose& other) const {
-    // Calculate the new position
-    double cos_yaw = cos(yaw);
-    double sin_yaw = sin(yaw);
-
-    double new_x = x + other.x * cos_yaw - other.y * sin_yaw;
-    double new_y = y + other.x * sin_yaw + other.y * cos_yaw;
-
-    // Calculate the new yaw
-    double new_yaw = yaw + other.yaw;
-
-    return TwoDPose(new_x, new_y, normalize_angle(new_yaw));
+    return toWorldSpace(other);
 }
 
 TwoDPose& TwoDPose::operator*=(const TwoDPose& other) {
@@ -60,9 +44,8 @@ TwoDPose TwoDPose::toObjectSpace(double x, double y, double yaw) const {
     double dx = x - this->x;
     double dy = y - this->y;
 
-    // Create the rotation matrix for -yaw
-    double cos_yaw = cos(-this->yaw);
-    double sin_yaw = sin(-this->yaw);
+    double cos_yaw = cos(this->yaw);
+    double sin_yaw = sin(this->yaw);
     
     // Apply the rotation matrix
     double relative_x = dx * cos_yaw - dy * sin_yaw;
@@ -79,16 +62,17 @@ TwoDPose TwoDPose::operator-() const {
 }
 
 TwoDPose TwoDPose::inverse() const {
-    // Calculate the inverse rotation and translation
-    double cos_yaw = cos(-this->yaw); // Inverse rotation is simply the negative of the yaw
-    double sin_yaw = sin(-this->yaw);
+    // Calculate the inverse rotation
+    double cos_yaw = cos(this->yaw);
+    double sin_yaw = sin(this->yaw); 
     
     // Apply the inverse rotation to -x, -y
-    double inv_x = -this->x * cos_yaw - -this->y * sin_yaw;
-    double inv_y = -this->x * sin_yaw + -this->y * cos_yaw;
+    double inv_x = -this->x * cos_yaw - this->y * sin_yaw; // Rotate the negated translation
+    double inv_y = this->x * sin_yaw - this->y * cos_yaw;  // components
 
     return TwoDPose(inv_x, inv_y, -this->yaw);
 }
+
 
 TwoDPose TwoDPose::inverseMultiply(const TwoDPose& other) const {
     TwoDPose inv = this->inverse();
@@ -107,12 +91,12 @@ TwoDPose& TwoDPose::operator/=(const TwoDPose& other){
 
 TwoDPose TwoDPose::toWorldSpace(const TwoDPose& other) const {
     // Apply rotation to the point using this object's yaw
-    double cos_yaw = cos(this->yaw);
-    double sin_yaw = sin(this->yaw);
+    double cos_yaw = cos(other.yaw - this->yaw);
+    double sin_yaw = sin(other.yaw - this->yaw);
 
-    double global_x = this->x + other.x * cos_yaw - other.y * sin_yaw;
-    double global_y = this->y + other.x * sin_yaw + other.y * cos_yaw;
-    double global_yaw = normalize_angle(this->yaw + other.yaw);
+    double global_x = this->x + other.x * sin_yaw + other.y * cos_yaw;
+    double global_y = this->y + other.y * sin_yaw - other.x * cos_yaw;
+    double global_yaw = normalize_angle(other.yaw - this->yaw);
 
     return TwoDPose(global_x, global_y, global_yaw);
 }
