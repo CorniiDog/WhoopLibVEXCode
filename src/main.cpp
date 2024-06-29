@@ -270,7 +270,7 @@ void usercontrol(void) {
 
     Brain.Screen.clearLine(2);
     Brain.Screen.setCursor(2, 1);
-    Brain.Screen.print("Vision Running: %s Approving Frames: %s", boolToString(vision_system.vision_running()).c_str());
+    Brain.Screen.print("Vision Running: %s", boolToString(vision_system.vision_running()).c_str());
 
     Brain.Screen.clearLine(3);
     Brain.Screen.setCursor(3, 1);

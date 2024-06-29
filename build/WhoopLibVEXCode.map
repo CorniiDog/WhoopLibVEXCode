@@ -10273,7 +10273,7 @@ Linker script and memory map
  *(.rodata.*)
  .rodata.str1.1
                 0x0380cd88       0xef build/src/main.o
-                                0x111 (size before relaxing)
+                                 0xfc (size before relaxing)
  *fill*         0x0380ce77        0x1 
  .rodata..Lconstinit
                 0x0380ce78       0x14 build/src/main.o
