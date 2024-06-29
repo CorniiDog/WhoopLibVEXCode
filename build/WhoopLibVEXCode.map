@@ -356,12 +356,6 @@ Discarded input sections
                 0x00000000        0xc build/include/whooplib/src/calculators/TwoDPose.o
  .ARM.exidx.text._ZN8TwoDPosedVERKS_
                 0x00000000        0x8 build/include/whooplib/src/calculators/TwoDPose.o
- .text._ZNK8TwoDPose12toWorldSpaceERKS_
-                0x00000000       0x78 build/include/whooplib/src/calculators/TwoDPose.o
- .ARM.extab.text._ZNK8TwoDPose12toWorldSpaceERKS_
-                0x00000000        0xc build/include/whooplib/src/calculators/TwoDPose.o
- .ARM.exidx.text._ZNK8TwoDPose12toWorldSpaceERKS_
-                0x00000000        0x8 build/include/whooplib/src/calculators/TwoDPose.o
  .text._ZN8TwoDPose9to_stringEi
                 0x00000000       0xe4 build/include/whooplib/src/calculators/TwoDPose.o
  .ARM.extab.text._ZN8TwoDPose9to_stringEi

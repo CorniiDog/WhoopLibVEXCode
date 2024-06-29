@@ -73,21 +73,6 @@ public:
      */
     TwoDPose toObjectSpace(const TwoDPose& other) const;
 
-    // Method to retreive world space from object space
-    // Example of getting object space:
-    // TwoDPose b_in_a_object_space = a.toObjectSpace(b);
-    // You can then recover b back with:
-    // TwoDPose b_recovered = a.toWorldSpace(b_in_a_object_space);
-    /**
-     * Transforms a pose from the local coordinate space of this pose back into the global coordinate space.
-     * This is the inverse operation of toObjectSpace, effectively recalculating the global coordinates of a pose
-     * that has been transformed into this pose's local space. It re-applies the global positioning and orientation
-     * of this pose to the local pose.
-     * @param other The pose in this object's local coordinate space to transform back to global space.
-     * @return A new TwoDPose representing the pose in global coordinates.
-     */
-    TwoDPose toWorldSpace(const TwoDPose& other) const;
-
     // Method to compute the inverse of the pose
     /**
      * Computes the inverse of this pose, effectively creating a pose that,
