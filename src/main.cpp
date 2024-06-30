@@ -50,7 +50,7 @@ WhoopMotorGroup right_motors({&r1, &r2, &r3, &r4});
 // Sensors
 WhoopInertial inertial_sensor(PORT7);
 WhoopRotation forward_tracker(PORT6, reversed::yes_reverse);
-WhoopRotation sideways_tracker(PORT9, reversed::no_reverse);
+WhoopRotation sideways_tracker(PORT9, reversed::yes_reverse);
 
 ////////////////////////////////////////////////////////////
 /**

@@ -93,9 +93,8 @@ void WhoopDriveOdomUnit::calibrate(){
 
 void WhoopDriveOdomUnit::tare(double x, double y, double yaw){
     thread_lock.lock();
-    set_position(x, y, yaw);
-
     inertial_sensor->tare_radians(yaw);
+    set_position(x, y, yaw);
     thread_lock.unlock();
 }
 
