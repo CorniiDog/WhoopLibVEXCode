@@ -36,7 +36,7 @@ void WhoopDriveOdomOffset::tare(double x, double y, double yaw){
 
     // If there is an offset
     if(offset.x != 0 or offset.y != 0 or offset.yaw != 0){ 
-        TaredOffset *= -offset;
+        TaredOffset *= offset;
     }
 
     odom_unit->tare(TaredOffset.x, TaredOffset.y, TaredOffset.yaw);
@@ -45,7 +45,7 @@ void WhoopDriveOdomOffset::tare(double x, double y, double yaw){
         pose = odom_unit->pose; // Update pose without offset, to reduce computational time
     }
     else{
-        pose = odom_unit->pose * offset; // Update pose with offset
+        pose = odom_unit->pose * -offset; // Update pose with offset
     }
 
     last_pose = pose; // Just set last_pose to pose to prevent it from flying out the wazoo
@@ -92,7 +92,7 @@ void WhoopDriveOdomOffset::__step(){
         pose = odom_unit->pose; // Update pose without offset, to reduce computational time
     }
     else{
-        pose = odom_unit->pose * offset; // Update pose with offset
+        pose = odom_unit->pose * -offset; // Update pose with offset
     }
     thread_lock.unlock();
 }
