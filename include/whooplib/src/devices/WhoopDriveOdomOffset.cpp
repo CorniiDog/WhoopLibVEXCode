@@ -16,7 +16,7 @@
 #include <iostream>
 
 WhoopDriveOdomOffset::WhoopDriveOdomOffset(WhoopDriveOdomUnit* odom_unit, double x_offset, double y_offset):
-    offset(-x_offset, -y_offset, 0){
+    offset(x_offset, y_offset, 0){
     this->odom_unit = odom_unit;
 }
 
@@ -35,13 +35,13 @@ void WhoopDriveOdomOffset::tare(double x, double y, double yaw){
     TwoDPose TaredOffset = TwoDPose(x, y, yaw);
 
     // If there is an offset
-    if(offset.x != 0 or offset.y != 0 or offset.yaw != 0){ 
+    if(offset.x != 0 || offset.y != 0 || offset.yaw != 0){ 
         TaredOffset *= offset;
     }
 
     odom_unit->tare(TaredOffset.x, TaredOffset.y, TaredOffset.yaw);
 
-    if(offset.x == offset.y == offset.yaw == 0){ // If offset is not applied
+    if(offset.x == 0 && offset.y == 0 && offset.yaw == 0){ // If offset is not applied
         pose = odom_unit->pose; // Update pose without offset, to reduce computational time
     }
     else{
@@ -88,7 +88,7 @@ void WhoopDriveOdomOffset::__step(){
     thread_lock.lock();
     last_pose = pose;
 
-    if(offset.x == offset.y == offset.yaw == 0){ // If offset is not applied
+    if(offset.x == 0 && offset.y == 0 && offset.yaw == 0){ // If offset is not applied
         pose = odom_unit->pose; // Update pose without offset, to reduce computational time
     }
     else{
