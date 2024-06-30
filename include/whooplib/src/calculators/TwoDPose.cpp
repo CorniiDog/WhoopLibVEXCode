@@ -14,7 +14,7 @@
 #include <string>
 #include "whooplib/include/toolbox.hpp"
 
-const int MAX_POSE_WORLD_LIMIT = 1000; // We do this to ensure a conversion to world space won't be extreme. This is in meters, and 1000 meters implies a range of [-1000, 1000]
+const int MAX_POSE_WORLD_LIMIT = 200; // We do this to ensure a conversion to world space won't be extreme. This is in meters, and 1000 meters implies a range of [-1000, 1000]
 
 TwoDPose::TwoDPose(double x, double y, double yaw) {
     this->x = x;
@@ -73,8 +73,10 @@ TwoDPose TwoDPose::operator-() const {
 
 TwoDPose TwoDPose::toWorldSpace(const TwoDPose& other) const {
     // Apply rotation to the point using this object's yaw
-    double const cos_yaw = cos(this->yaw);
-    double const sin_yaw = sin(this->yaw);
+    double this_yaw_safe = std::abs(this->yaw) < 1e-10 ? 1e-10 : this->yaw;
+
+    double const cos_yaw = cos(this_yaw_safe);
+    double const sin_yaw = sin(this_yaw_safe);
 
     double global_x = this->y + other.y * sin_yaw + other.x * cos_yaw;
     double global_y = safeDivide(((other.y * sin_yaw + other.x * cos_yaw) * cos_yaw - other.x + sin_yaw * this->y), sin_yaw, MAX_POSE_WORLD_LIMIT); // Use our pre-built safeDivide function to avoid divide by zero error
