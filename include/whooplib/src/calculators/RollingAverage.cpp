@@ -10,7 +10,7 @@
 #include "vex.h"
 #include "whooplib/include/calculators/RollingAverage.hpp"
 
- RollingAverageFilter::RollingAverageFilter(int capacity) : capacity(capacity) {}
+RollingAverageFilter::RollingAverageFilter(int capacity) : capacity(capacity) {}
 
 Pose RollingAverageFilter::process(const Pose& newMeasurement) {
     if (buffer_pose.size() >= capacity) {

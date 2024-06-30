@@ -26,7 +26,7 @@ void WhoopController::notify(std::string message, double duration_seconds){
     vex_controller.Screen.print("%s", message.c_str());
     vex_controller.rumble(".");
 
-    time_left_to_clear = duration_seconds * std::round(1000 / step_time_ms);
+    time_left_to_clear = duration_seconds * std::round(safeDivide(1000, step_time_ms, 10000)); // in milliseconds
 }
 
 /////////////////////////////////////////////

@@ -12,7 +12,11 @@
 
 #include <string>
 #include <vector>
-
+#include <algorithm>
+#include <sstream>
+#include <cmath>
+#include <memory>
+#include <iomanip>
 /**
  * Finds all indices of a substring within a string.
  * @param str The main string to search within.
@@ -122,5 +126,13 @@ double area_from_radius(double radius);
  * @return Area of the circle in square meters.
  */
 double area_from_diameter(double diameter);
+
+/**
+ * Does a safe divide calculation that completely avoids
+ * divide by zero errors.
+ * @param numerator the numerator, or the value that will be divided
+ * @param denominator  the denominator, or the value to divide from the numerator
+ */
+double safeDivide(double numerator, double denominator, double max_possible_number=std::numeric_limits<double>::infinity());
 
 #endif // TOOLBOX_HPP

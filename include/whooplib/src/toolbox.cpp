@@ -209,3 +209,35 @@ double area_from_diameter(double diameter) {
     double radius = diameter / 2;
     return M_PI * radius * radius;
 }
+
+const double SMALL_NUMBER_THRESHOLD = 1e-10;
+
+double safeDivide(double numerator, double denominator, double max_possible_number){
+    if (std::abs(denominator) < SMALL_NUMBER_THRESHOLD) {
+        if (std::abs(numerator) < SMALL_NUMBER_THRESHOLD) {
+            // Both numerator and denominator are very small
+            // Calculate an appropriate scaling factor to bring values into a numerically stable range
+            double maxAbsValue = std::max(std::abs(numerator), std::abs(denominator));
+            double scaleFactor = 1.0 / maxAbsValue;
+            
+            numerator *= scaleFactor;
+            denominator *= scaleFactor;
+
+            // This may not be sufficient if their discrepency of decimal places are still high, so we do a recheck
+            // Recheck to ensure the scaling factor is sufficient
+            if (std::abs(denominator) < SMALL_NUMBER_THRESHOLD) {
+                return (numerator >= 0) ? max_possible_number : -max_possible_number;
+            }
+        } else {
+            // Denominator is very small, but numerator is not
+            return (numerator > 0) ? max_possible_number : -max_possible_number;
+        }
+    }
+
+    double result = numerator / denominator;
+    if(std::abs(result) > max_possible_number){
+        return (result > 0) ? max_possible_number : -max_possible_number;
+    }
+    
+    return result;
+}
