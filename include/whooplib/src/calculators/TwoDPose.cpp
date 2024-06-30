@@ -23,15 +23,11 @@ TwoDPose::TwoDPose(double x, double y, double yaw) {
 }
 
 TwoDPose TwoDPose::multiplicative_delta(const TwoDPose& other) const{
-    // Calculate the new position
-    double cos_yaw = cos(yaw);
-    double sin_yaw = sin(yaw);
+    // Calculate the new position, preserving yaw
+    TwoDPose result = toWorldSpace(other);
+    result.yaw = this->yaw;
 
-    double delta_x = other.x * cos_yaw - other.y * sin_yaw;
-    double delta_y = other.x * sin_yaw + other.y * cos_yaw;
-    double delta_yaw = other.yaw;
-
-    return TwoDPose(delta_x, delta_y, normalize_angle(delta_yaw));
+    return result;
 }
 
 TwoDPose TwoDPose::operator*(const TwoDPose& other) const {

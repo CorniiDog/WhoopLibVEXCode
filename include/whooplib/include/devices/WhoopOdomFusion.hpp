@@ -10,7 +10,7 @@
 #ifndef WHOOP_ODOM_FUSION_HPP
 #define WHOOP_ODOM_FUSION_HPP
 
-#include "whooplib/include/devices/WhoopDriveOdomVirtual.hpp"
+#include "whooplib/include/devices/WhoopDriveOdomOffset.hpp"
 #include "whooplib/include/devices/WhoopVision.hpp"
 #include "whooplib/include/toolbox.hpp"
 #include "whooplib/include/calculators/RollingAverage.hpp"
@@ -36,13 +36,14 @@ protected:
     double max_fusion_shift_meters;  // Maximum shift in meters per step when gradually fusing data.
     double max_fusion_shift_radians;  // Maximum rotational shift in radians per step when gradually fusing data.
 
+    WhoopDriveOdomOffset* odom_offset;
+
     // Callback function that handles new vision pose data.
     void on_vision_pose_received(Pose p);
 
     bool frame_rejected = true;
     
 public:
-    WhoopDriveOdomVirtual odom_virtual;  // Pointer to the wheel odometry offset object.
     Pose pose = Pose();  // Current fused pose of the odometry system.
 
     /**

@@ -11,8 +11,8 @@
 #include "whooplib/include/toolbox.hpp"
 #include <cmath>
 
-WhoopOdomFusion::WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset* odom_offset, double min_confidence_threshold, FusionMode fusion_mode, double max_fusion_shift_meters, double max_fusion_shift_radians):
-    odom_virtual(WhoopDriveOdomVirtual(odom_offset)){
+WhoopOdomFusion::WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset* odom_offset, double min_confidence_threshold, FusionMode fusion_mode, double max_fusion_shift_meters, double max_fusion_shift_radians){
+    this->odom_offset = odom_offset;
     this->max_fusion_shift_meters = max_fusion_shift_meters/55.6;
     this->max_fusion_shift_radians = max_fusion_shift_radians/55.6;
     this->fusion_mode = fusion_mode;
@@ -25,7 +25,6 @@ void WhoopOdomFusion::on_vision_pose_received(Pose p){
         return;
     }
     
-    self_lock.lock();
     if (p.confidence >= min_confidence_threshold) {
         frame_rejected = false;
         // Normalize angle difference to handle angle wrapping correctly
@@ -39,18 +38,25 @@ void WhoopOdomFusion::on_vision_pose_received(Pose p){
             double dx = p.x - pose.x;
             double dy = p.y - pose.y;
             double norm = std::sqrt(dx * dx + dy * dy);
+            
+            if(std::abs(norm) > 1e-10){
+                dx = safeDivide(dx * max_fusion_shift_meters, norm, max_fusion_shift_meters);
+                dy = safeDivide(dy * max_fusion_shift_meters, norm, max_fusion_shift_meters);
 
-            dx = (dx / norm) * max_fusion_shift_meters;
-            dy = (dy / norm) * max_fusion_shift_meters;
-
-            pose.x += dx;
-            pose.y += dy;
+                self_lock.lock();
+                pose.x += dx;
+                pose.y += dy;
+                self_lock.unlock();
+            }
         } else {
+            self_lock.lock();
             pose.x = p.x;
             pose.y = p.y;
+            self_lock.unlock();
         }
 
         // Handle angular position adjustment
+        self_lock.lock();
         if (fusion_mode == FusionMode::fusion_gradual && angle_difference > max_fusion_shift_radians) {
             pose.yaw += std::copysign(max_fusion_shift_radians, yaw_difference);
         } else {
@@ -58,14 +64,15 @@ void WhoopOdomFusion::on_vision_pose_received(Pose p){
         }
         pose.yaw = normalize_angle(pose.yaw);
 
-        odom_virtual.tare(pose.x, pose.y, pose.yaw);
+        odom_offset->tare(pose.x, pose.y, pose.yaw);
+        self_lock.unlock();
     }
     else{
         frame_rejected = true;
     }
+    self_lock.lock();
     pose.z = p.z;
     pose.confidence = p.confidence;
-
     self_lock.unlock();
 }
 
@@ -73,12 +80,8 @@ void WhoopOdomFusion::tare(double x, double y, double z, double yaw){
     self_lock.lock();
     whoop_vision->tare(x, y, z, 0, yaw, 0);
 
-    // Hard tare to sync with the Vision System's position
-    Pose raw_pose = whoop_vision->raw_pose;
-    odom_virtual.hard_tare(raw_pose.x, raw_pose.y, raw_pose.yaw);
-
-    // Soft tare to apply transform that applies to what we need
-    odom_virtual.tare(x, y, yaw);
+    // Tare
+    odom_offset->tare(x, y, yaw);
     pose.x = x;
     pose.y = y;
     pose.z = z;
@@ -96,8 +99,9 @@ void WhoopOdomFusion::tare(){
 
 void WhoopOdomFusion::calibrate(){
     self_lock.lock();
-    odom_virtual.calibrate();
+    odom_offset->calibrate();
     whoop_vision->tare();
+    odom_offset->tare();
     self_lock.unlock();
 }
 
@@ -109,7 +113,7 @@ Pose WhoopOdomFusion::get_pose(){
 }
 
 bool WhoopOdomFusion::is_moving(double rads_s_threshold){
-    return odom_virtual.is_moving(rads_s_threshold);
+    return odom_offset->is_moving(rads_s_threshold);
 }
 
 bool WhoopOdomFusion::approving_frames(){
@@ -120,13 +124,13 @@ void WhoopOdomFusion::__step(){
     self_lock.lock();
 
     if(fusion_mode != FusionMode::vision_only){
-        odom_virtual.__step(); // Step down wheel odometry ladder
-        TwoDPose result = odom_virtual.get_pose();
+        odom_offset->__step_down(); // Step down wheel odometry ladder
+        TwoDPose result = odom_offset->get_pose();
         pose.x = result.x;
         pose.y = result.y;
         pose.yaw = result.yaw;
     }
-    pose.roll = odom_virtual.odom_offset->odom_unit->inertial_sensor->get_roll_radians();
-    pose.pitch = odom_virtual.odom_offset->odom_unit->inertial_sensor->get_pitch_radians();
+    pose.roll = odom_offset->odom_unit->inertial_sensor->get_roll_radians();
+    pose.pitch = odom_offset->odom_unit->inertial_sensor->get_pitch_radians();
     self_lock.unlock();
 }

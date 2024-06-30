@@ -127,7 +127,7 @@ double WhoopMotorGroup::get_distance_meters() {
 
 // Receiving velocity
 double WhoopMotorGroup::get_velocity(vex::velocityUnits vel){
-    if (whoop_motors.empty()) return 0;
+    if (whoop_motors.empty()) return 0; // Prevent divide by zero error
     double total = 0;
     std::vector<double> velocities;
     for (auto& motor : whoop_motors) {
@@ -135,6 +135,7 @@ double WhoopMotorGroup::get_velocity(vex::velocityUnits vel){
         velocities.push_back(velocity);
         total += velocity;
     }
+
     double avg = total / whoop_motors.size();
     
     // If there are more than 2 motors, remove a single outlier
