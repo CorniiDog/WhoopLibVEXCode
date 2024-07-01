@@ -22,22 +22,20 @@ WhoopOdomCommunicator::WhoopOdomCommunicator(BufferNode* bufferSystem, RobotVisi
 
 
 void WhoopOdomCommunicator::__step(){
-    TwoDPose pose = odom_offset->get_pose(); // get pose
-    TwoDPose last_pose = odom_offset->get_last_pose(); // get last pose
 
-    pose *= TwoDPose(vision_offset->x, vision_offset->y, 0); // Apply offset to position of realsense device
-    last_pose *= TwoDPose(vision_offset->x, vision_offset->y, 0); // Apply offset to position of realsense device
+    velocityVector vel_vector = odom_offset->get_velocity_vector(TwoDPose(vision_offset->x, vision_offset->y, 0));
 
-    TwoDPose pose_deltas = last_pose.toObjectSpace(pose);
-    pose_deltas.x /= 0.01; // Convert to meters/second
-    pose_deltas.y /= 0.01; // Convert to meters/second
-    pose_deltas.yaw /= 0.01; // Convert to radians/second
+    if(!vel_vector.is_clean){ // If dirty (tared)
+        return;
+    }
 
-    pose_deltas.x = rolling_average_x.process(pose_deltas.x);
-    pose_deltas.y = rolling_average_y.process(pose_deltas.y);
-    pose_deltas.yaw = rolling_average_yaw.process(pose_deltas.yaw);
+    TwoDPose vel_vector_2d = TwoDPose(vel_vector.x, vel_vector.y, vel_vector.yaw);
 
-    relative_velocity = pose_deltas; // Update pose deltas for robot
+    vel_vector_2d.x = rolling_average_x.process(vel_vector_2d.x);
+    vel_vector_2d.y = rolling_average_y.process(vel_vector_2d.y);
+    vel_vector_2d.yaw = rolling_average_yaw.process(vel_vector_2d.yaw);
 
-    odom_messenger->send(pose_deltas.to_realsense_string(pose_precision));
+    relative_velocity = vel_vector_2d; // Update pose deltas for robot
+
+    odom_messenger->send(vel_vector_2d.to_realsense_string(pose_precision));
 }

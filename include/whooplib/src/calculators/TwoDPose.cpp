@@ -95,6 +95,6 @@ std::string TwoDPose::to_realsense_string(int decimal_places) {
     if (decimal_places >= 0) {
         oss << std::fixed << std::setprecision(decimal_places);
     }
-    oss << x << " " << -y << " " << yaw;
+    oss << -y << " " << -x << " " << yaw;
     return oss.str();
 }

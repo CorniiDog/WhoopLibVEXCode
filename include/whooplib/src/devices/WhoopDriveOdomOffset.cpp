@@ -31,7 +31,7 @@ void WhoopDriveOdomOffset::calibrate(){
 
 void WhoopDriveOdomOffset::tare(double x, double y, double yaw){
     thread_lock.lock();
-
+    is_clean = false;
     TwoDPose TaredOffset = TwoDPose(x, y, yaw);
 
     // If there is an offset
@@ -84,9 +84,28 @@ bool WhoopDriveOdomOffset::is_moving(double rads_s_threshold){
     return odom_unit->is_moving(rads_s_threshold);
 }
 
+velocityVector WhoopDriveOdomOffset::get_velocity_vector(){
+    thread_lock.lock();
+    velocityVector vel((pose.x - last_pose.x)/0.01, (pose.y - last_pose.y)/0.01, (pose.yaw - last_pose.yaw)/0.01, is_clean);
+    thread_lock.unlock();
+
+    return vel;
+}
+
+velocityVector WhoopDriveOdomOffset::get_velocity_vector(TwoDPose offset){
+    thread_lock.lock();
+    TwoDPose p = pose * offset; // Apply offset to position of realsense device, or whatever
+    TwoDPose l_p = last_pose * offset;
+    velocityVector vel((p.x - l_p.x)/0.01, (p.y - l_p.y)/0.01, (p.yaw - l_p.yaw)/0.01, is_clean);
+    thread_lock.unlock();
+
+    return vel;
+}
+
 void WhoopDriveOdomOffset::__step(){
     thread_lock.lock();
     last_pose = pose;
+    is_clean = true;
 
     if(offset.x == offset.y == offset.yaw == 0){ // If offset is not applied
         pose = odom_unit->pose; // Update pose without offset, to reduce computational time

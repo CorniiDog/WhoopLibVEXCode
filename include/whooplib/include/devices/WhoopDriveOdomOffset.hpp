@@ -17,7 +17,19 @@
 #include <vector>
 #include <memory>
 
+struct velocityVector{
+    double x = 0;
+    double y = 0;
+    double yaw = 0;
+    bool is_clean = false;
 
+    velocityVector(double x, double y, double yaw, bool is_clean){
+        this->x = x;
+        this->y = y;
+        this->yaw = yaw;
+        this->is_clean = is_clean;
+    }
+};
 
 /**
  * Class responsible for managing the odometry unit.
@@ -30,6 +42,8 @@ public:
     TwoDPose last_pose = TwoDPose(0,0,0);
     TwoDPose offset;
     vex::mutex thread_lock;  // Mutex for synchronizing access to odometry components.
+
+    bool is_clean = false;
 
     /**
      * Constructor for Drive Odom Offset.
@@ -60,6 +74,18 @@ public:
     TwoDPose get_pose();
 
     /**
+     * Returns a velocity vector of the odometry. Note: Is if fusion make sure it's a clean velocity vector before applying
+     * @returns velocity vector, in m/s and rad/s (counter-clockwise-positive)
+     */
+    velocityVector get_velocity_vector();
+
+    /**
+     * Returns a velocity vector of the odometry, with an offset of the positions. Note: Is if fusion make sure it's a clean velocity vector before applying
+     * @returns velocity vector, in m/s and rad/s (counter-clockwise-positive)
+     */
+    velocityVector get_velocity_vector(TwoDPose offset);
+
+    /**
      * Retrieves the previous pose from a last step
      */
     TwoDPose get_last_pose();
@@ -72,5 +98,5 @@ public: // This is one of the ONLY exceptions to be public, as another module re
 };
 
 
-#endif // WHOOP_DRIVETRAIN_HPP
+#endif // WHOOP_DRIVE_ODOM_OFFSET_HPP
 
