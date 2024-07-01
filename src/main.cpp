@@ -112,7 +112,7 @@ WhoopDriveOdomUnit odom_unit(
 // Visual representation of Odom Unit from Center of Robot: https://imgur.com/x8ObCIG
 WhoopDriveOdomOffset odom_offset(
   &odom_unit, // Pointer to the odometry unit (will manage the odom unit)
-  to_meters(-0.6), // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
+  to_meters(0.6), // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
   to_meters(4.95) // The y offset of the odom unit from the center of the robot (positive implies a shift forward from the center of the robot).
 );
 
@@ -230,7 +230,6 @@ void pre_auton(void) {
   jetson_commander.initialize();
   robot_drivetrain.calibrate();
 
-  wait(5, sec); // Wait 2 seconds to allow the vision system to initialize to 0
   robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw); // Inches, degrees, clockwise-positive
   robot_drivetrain.set_pose(0,0,0); // Note: Yaw of 0 implies looking towards +Y direction. This is VERY important
 

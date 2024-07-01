@@ -14,8 +14,6 @@
 #include <string>
 #include "whooplib/include/toolbox.hpp"
 
-const int MAX_POSE_WORLD_LIMIT = 200; // We do this to ensure a conversion to world space won't be extreme. This is in meters, and 1000 meters implies a range of [-1000, 1000]
-
 TwoDPose::TwoDPose(double x, double y, double yaw) {
     this->x = x;
     this->y = y;
@@ -49,12 +47,12 @@ TwoDPose TwoDPose::toObjectSpace(double x, double y, double yaw) const {
     double dy = y - this->y;
 
     // Create the rotation matrix for -yaw
-    double cos_yaw = cos(-this->yaw);
-    double sin_yaw = sin(-this->yaw);
+    double cos_yaw = cos(this->yaw);
+    double sin_yaw = sin(this->yaw);
     
     // Apply the rotation matrix
-    double relative_x = dx * cos_yaw - dy * sin_yaw;
-    double relative_y = dx * sin_yaw + dy * cos_yaw;
+    double relative_x = dx * sin_yaw - dy * cos_yaw;
+    double relative_y = dx * cos_yaw + dy * sin_yaw; 
 
     // Calculate the relative yaw
     double relative_yaw = yaw - this->yaw;
@@ -68,12 +66,14 @@ TwoDPose TwoDPose::operator-() const {
 
 
 TwoDPose TwoDPose::toWorldSpace(const TwoDPose& other) const {
+    // Apply rotation to the point using this object's yaw
+    double this_yaw_safe = std::abs(this->yaw) < 1e-10 ? 1e-10 : this->yaw;
 
-    double const cos_yaw = cos(this->yaw + M_PI_2);
-    double const sin_yaw = sin(this->yaw + M_PI_2);
+    double const cos_yaw = cos(this_yaw_safe);
+    double const sin_yaw = sin(this_yaw_safe);
 
-    double global_x = this->x + other.x * cos_yaw + other.y * sin_yaw;
-    double global_y = this->y - other.x * sin_yaw + other.y * cos_yaw;
+    double global_x = this->x + other.x * sin_yaw + other.y * cos_yaw;
+    double global_y = this->y - other.x * cos_yaw + other.y * sin_yaw;
 
     double global_yaw = normalize_angle(this->yaw + other.yaw);
 

@@ -61,8 +61,8 @@ void WheelOdom::update_pose(double forward_tracker_pos, double sideways_tracker_
 
     double global_polar_angle = local_polar_angle + prev_orientation_rad + (orientation_delta_rad/2);
 
-    double X_position_delta = local_polar_length*cos(global_polar_angle); 
-    double Y_position_delta = local_polar_length*sin(global_polar_angle);
+    double X_position_delta = local_polar_length*sin(global_polar_angle); 
+    double Y_position_delta = -local_polar_length*cos(global_polar_angle);
 
     X_position+=X_position_delta;
     Y_position+=Y_position_delta;
