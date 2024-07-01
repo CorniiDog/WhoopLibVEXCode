@@ -42,7 +42,7 @@ void WhoopVision::_transform_pose(bool apply_delta){
 
     // Acquire relative delta change of robot relative to vision system if tare
     if(apply_delta){
-        this->offset_change = transposed.global_xy_delta_only(-offset);
+        this->offset_change = transposed.toWorldSpace(-offset);
     }
 
     // Apply robot offset to transformation

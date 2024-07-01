@@ -144,8 +144,8 @@ BufferNode buffer_system(
 
 // Vision Offset of the Vision Tesseract from the Center of Robot
 RobotVisionOffset vision_offset(
-  0.00, // The x offset in meters, (right-positive from the center of the robot).
-  240.0/1000.0 // The y offset in meters (forward-positive from the center of the robot).
+  0.0, // The x offset in meters, (right-positive from the center of the robot).
+  220.0/1000.0 // The y offset in meters (forward-positive from the center of the robot).
 );
 
 // Jetson Nano pose retreival object (also configured on Nano-side) 
@@ -181,7 +181,7 @@ WhoopOdomFusion odom_fusion(
   &vision_system, // Pointer to the vision system
   &odom_offset, // Pointer to the odometry offset
   0.9, // Minimum confidence threshold to apply vision system to odometry
-  FusionMode::wheel_odom_only, // The method of fusing
+  FusionMode::vision_only, // The method of fusing
   to_meters(50), // If FusionMode is fusion_gradual, it is the maximum allowable lateral shift the vision camera can update in meters per second.
   to_rad(500) // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
 );
@@ -229,6 +229,8 @@ void pre_auton(void) {
   wait(0.5, sec);
   jetson_commander.initialize();
   robot_drivetrain.calibrate();
+
+  wait(2, sec);
 
   robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw); // Inches, degrees, clockwise-positive
   robot_drivetrain.set_pose(0,0,0); // Note: Yaw of 0 implies looking towards +Y direction. This is VERY important
