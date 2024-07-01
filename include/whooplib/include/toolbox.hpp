@@ -100,6 +100,13 @@ double to_inches(double meters);
 double normalize_angle(double angle_radians);
 
 /**
+ * Normalizes a radian angle to the range [0, 2π].
+ * @param angle_radians Angle in radians to normalize.
+ * @return Normalized angle in radians.
+ */
+double denormalize_angle(double angle_radians) ;
+
+/**
  * Calculates the circumference of a circle given its radius.
  * @param radius Radius of the circle in meters.
  * @return Circumference of the circle in meters.

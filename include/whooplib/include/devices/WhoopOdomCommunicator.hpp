@@ -29,7 +29,6 @@ public:
 
     RollingAverageFilter rolling_average_x;
     RollingAverageFilter rolling_average_y;
-    RollingAverageFilter rolling_average_yaw;
     
 
     TwoDPose relative_velocity = TwoDPose(0,0,0);

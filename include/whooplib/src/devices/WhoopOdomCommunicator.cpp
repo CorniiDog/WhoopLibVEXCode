@@ -12,8 +12,7 @@
 
 WhoopOdomCommunicator::WhoopOdomCommunicator(BufferNode* bufferSystem, RobotVisionOffset* vision_offset, WhoopDriveOdomOffset* odom_offset, std::string odom_stream, int pose_precision, int rolling_average_n):
     rolling_average_x(rolling_average_n),
-    rolling_average_y(rolling_average_n),
-    rolling_average_yaw(rolling_average_n){
+    rolling_average_y(rolling_average_n){
     odom_messenger = std::make_unique<Messenger>(bufferSystem, odom_stream, deleteAfterRead::no_delete);
     this->odom_offset = odom_offset;
     this->pose_precision = pose_precision;
@@ -33,7 +32,6 @@ void WhoopOdomCommunicator::__step(){
 
     vel_vector_2d.x = rolling_average_x.process(vel_vector_2d.x);
     vel_vector_2d.y = rolling_average_y.process(vel_vector_2d.y);
-    vel_vector_2d.yaw = rolling_average_yaw.process(vel_vector_2d.yaw);
 
     relative_velocity = vel_vector_2d; // Update pose deltas for robot
 

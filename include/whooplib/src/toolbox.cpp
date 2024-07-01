@@ -193,6 +193,16 @@ double normalize_angle(double angle_radians){
     return angle_radians;
 }
 
+// De-normalizes a radian angle to [0, 2pi)
+double denormalize_angle(double angle_radians) {
+    angle_radians = fmod(angle_radians, 2 * M_PI);
+    if (angle_radians < 0) {
+        angle_radians += 2 * M_PI;
+    }
+    return angle_radians;
+}
+
+
 double circumference_from_radius(double radius) {
     return 2 * M_PI * radius;
 }
