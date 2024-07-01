@@ -289,16 +289,22 @@ void usercontrol(void) {
     Brain.Screen.print("VO (m_rad_ccw): %.2f %.2f %.2f %.2f %.2f %.2f", vision_pose.x, vision_pose.y, vision_pose.z, vision_pose.pitch, vision_pose.yaw, vision_pose.roll);
 
     // Wheel Odometry
-    TwoDPose wheel_pose = odom_offset.get_pose(); // raw odometry (untranslated) readings
+    TwoDPose wheel_pose = odom_offset.get_pose(); // Wheel odometry (translated) readings
     Brain.Screen.clearLine(6);
     Brain.Screen.setCursor(6, 1);
     Brain.Screen.print("WO (m_rad_ccw): %.2f %.2f %.2f", wheel_pose.x, wheel_pose.y, wheel_pose.yaw);
+
+    // Wheel Odometry offset
+    TwoDPose unt_pose = odom_unit.get_pose(); // raw odometry (untranslated) readings
+    Brain.Screen.clearLine(7);
+    Brain.Screen.setCursor(7, 1);
+    Brain.Screen.print("WU (m_rad_ccw): %.2f %.2f %.2f", unt_pose.x, unt_pose.y, unt_pose.yaw);
     
 
     // Object-Space Velocity
     TwoDPose obj_space_velocity = odom_communicator.relative_velocity;
-    Brain.Screen.clearLine(7);
-    Brain.Screen.setCursor(7, 1);
+    Brain.Screen.clearLine(8);
+    Brain.Screen.setCursor(8, 1);
     Brain.Screen.print("Velocities (m/s_rad/s_ccw): %.2f %.2f %.2f", obj_space_velocity.x, obj_space_velocity.y, obj_space_velocity.yaw);
 
     wait(100, msec);
