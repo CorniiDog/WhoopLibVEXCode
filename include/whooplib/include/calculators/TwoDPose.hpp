@@ -59,7 +59,7 @@ public:
      * @param other The pose to which the transformation is calculated.
      * @return A TwoDPose representing the required transformation.
      */
-    TwoDPose multiplicative_delta(const TwoDPose& other) const;
+    TwoDPose global_xy_delta_only(const TwoDPose& other) const;
 
     // Method to compute the relative pose
     // Think of it as Roblox's CFrame1:ToObjectSpace(CFrame2)

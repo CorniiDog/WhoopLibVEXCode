@@ -22,7 +22,7 @@ TwoDPose::TwoDPose(double x, double y, double yaw) {
     this->yaw = yaw;
 }
 
-TwoDPose TwoDPose::multiplicative_delta(const TwoDPose& other) const{
+TwoDPose TwoDPose::global_xy_delta_only(const TwoDPose& other) const{
     // Calculate the new position, preserving yaw
     TwoDPose result = toWorldSpace(other);
     result.yaw = this->yaw;
@@ -53,8 +53,8 @@ TwoDPose TwoDPose::toObjectSpace(double x, double y, double yaw) const {
     double sin_yaw = sin(this->yaw);
     
     // Apply the rotation matrix
-    double relative_x = dx * sin_yaw - dy * cos_yaw;
-    double relative_y = dx * cos_yaw + dy * sin_yaw;
+    double relative_x = dx * cos_yaw + dy * sin_yaw;
+    double relative_y = dx * sin_yaw - dy * cos_yaw; 
 
     // Calculate the relative yaw
     double relative_yaw = yaw - this->yaw;
@@ -74,8 +74,8 @@ TwoDPose TwoDPose::toWorldSpace(const TwoDPose& other) const {
     double const cos_yaw = cos(this_yaw_safe);
     double const sin_yaw = sin(this_yaw_safe);
 
-    double global_x = this->x + other.x * sin_yaw + other.y * cos_yaw;
-    double global_y = this->y + safeDivide((other.y - other.x * sin_yaw * cos_yaw - other.y * cos_yaw * cos_yaw), sin_yaw, MAX_POSE_WORLD_LIMIT); // Use our pre-built safeDivide function to avoid divide by zero error
+    double global_x = this->x + other.x * cos_yaw + other.y * sin_yaw;
+    double global_y = this->y + safeDivide((other.x - other.x * cos_yaw * cos_yaw - other.y * sin_yaw * cos_yaw), sin_yaw, MAX_POSE_WORLD_LIMIT); // Use our pre-built safeDivide function to avoid divide by zero error
 
     double global_yaw = normalize_angle(this->yaw + other.yaw);
 
