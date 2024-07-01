@@ -49,8 +49,8 @@ TwoDPose TwoDPose::toObjectSpace(double x, double y, double yaw) const {
     double dy = y - this->y;
 
     // Create the rotation matrix for -yaw
-    double cos_yaw = cos(this->yaw);
-    double sin_yaw = sin(this->yaw);
+    double cos_yaw = cos(-this->yaw);
+    double sin_yaw = sin(-this->yaw);
     
     // Apply the rotation matrix
     double relative_x = dx * cos_yaw - dy * sin_yaw;
@@ -69,11 +69,11 @@ TwoDPose TwoDPose::operator-() const {
 
 TwoDPose TwoDPose::toWorldSpace(const TwoDPose& other) const {
 
-    double const cos_yaw = cos(this->yaw);
-    double const sin_yaw = sin(this->yaw);
+    double const cos_yaw = cos(this->yaw + M_PI_2);
+    double const sin_yaw = sin(this->yaw + M_PI_2);
 
     double global_x = this->x + other.x * cos_yaw + other.y * sin_yaw;
-    double global_y = this->y + safeDivide((other.y - other.x * cos_yaw * sin_yaw - other.y * sin_yaw * sin_yaw), cos_yaw, MAX_POSE_WORLD_LIMIT); // Use our pre-built safeDivide function to avoid divide by zero error
+    double global_y = this->y - other.x * sin_yaw + other.y * cos_yaw;
 
     double global_yaw = normalize_angle(this->yaw + other.yaw);
 
