@@ -127,8 +127,6 @@ WhoopOdomFusion odom_fusion(
   to_rad(500) // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
 );
 
-WhoopOdomFusion odom_fusion(&odom_offset);
-
 ////////////////////////////////////////////////////////////
 /**
  *    Robot Drivetrain and Manager
