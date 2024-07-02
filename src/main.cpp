@@ -167,7 +167,7 @@ void pre_auton(void) {
   wait(5, sec);
 
   robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw); // Inches, degrees, clockwise-positive
-  robot_drivetrain.set_pose(1,1,-45); // Note: Yaw of 0 implies looking towards +Y direction. This is VERY important
+  robot_drivetrain.set_pose(1,1,-45); // Note: Yaw of 0 implies looking towards +X direction. This is VERY important
 
 }
 
