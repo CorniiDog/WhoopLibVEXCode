@@ -44,7 +44,7 @@ WhoopMotor r4(PORT4, gearSetting::ratio6_1, reversed::yes_reverse);
 WhoopMotorGroup right_motors({&r1, &r2, &r3, &r4});
 ```
 
-PORT1 is well... Port 1 on the V5 Brain. There are 21 ports. We don't talk about PORT22. Rumor had it a goblin ate that port.
+PORT1 is well... Port 1 on the V5 Brain. You can assume the rest for ports 1 through 21.
 
 Most of this is self-explanatory. However, just for the sake of it:
 
