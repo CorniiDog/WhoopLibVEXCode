@@ -58,6 +58,12 @@ public:
     WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset* odom_offset, double min_confidence_threshold, FusionMode fusion_mode, double max_fusion_shift_meters, double max_fusion_shift_radians);
 
     /**
+     * Constructor for just wheel odometry
+     * @param odom_offset Pointer to the wheel odometry offset object.
+     */
+    WhoopOdomFusion(WhoopDriveOdomOffset* odom_offset);
+
+    /**
      * Retreives the pose from the odom fusion
      * @returns Pose object
      */

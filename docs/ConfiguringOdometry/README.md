@@ -1,4 +1,4 @@
-# Configuring
+# Configuring Odometry
 
 ## Configuring Sensors
 
@@ -17,12 +17,12 @@ As you see, we have initialized the primary controller. If you wish to use the s
 
 There are several joystick modes:
 
-| Enum     | Definition | 
+| ```joystickMode```     | Definition | 
 |----------|:--------:|
-| joystickmode_split_arcade    | Left Joystick Moves Forward/Backward, Right Joystick Turns Left/Right     |
-| joystickmode_left_arcade    | Left Joystick Moves Forward/Backward and Turns Left/Right     |
-| joystickmode_right_arcade    | Right Joystick Moves Forward/Backward and Turns Left/Right     |
-| joystickmode_tank    | Left Joystick Moves Left Side of Drive, Right Joystick Moves Right Side of Drive     |
+| ```joystickmode_split_arcade```    | Left Joystick Moves Forward/Backward, Right Joystick Turns Left/Right     |
+| ```joystickmode_left_arcade```    | Left Joystick Moves Forward/Backward and Turns Left/Right     |
+| ```joystickmode_right_arcade```    | Right Joystick Moves Forward/Backward and Turns Left/Right     |
+| ```joystickmode_tank```    | Left Joystick Moves Left Side of Drive, Right Joystick Moves Right Side of Drive     |
 
 Next step is configuring the motors and drive groups using WhoopMotors
 
@@ -50,18 +50,18 @@ Most of this is self-explanatory. However, just for the sake of it:
 
 Gear Setting Options:
 
-| gearSetting     | Definition | 
+| ```gearSetting```     | Definition | 
 |----------|:--------:|
-| ratio6_1    | Blue cartridge     |
-| ratio18_1    | Green cartridge     |
-| ratio36_1    | Red cartridge     |
+| ```ratio6_1```    | Blue cartridge     |
+| ```ratio18_1```    | Green cartridge     |
+| ```ratio36_1```    | Red cartridge     |
 
 Reverse options
 
-| reversed     | Definition | 
+| ```reversed```     | Definition | 
 |----------|:--------:|
-| no_reverse    | Clockwise-Positive (Direction of the arrow printed on the back of the motor)     |
-| yes_reverse    | Counter-Clockwise-Positive     |
+| ```no_reverse```    | Clockwise-Positive (Direction of the arrow printed on the back of the motor)     |
+| ```yes_reverse```    | Counter-Clockwise-Positive     |
 
 Next, we want to configure an inertial sensor and additional sensors that we plan to use for the drivetrain
 
@@ -122,7 +122,7 @@ Based upon the image, the odometry offset would be:
 ```cpp
 WhoopDriveOdomOffset odom_offset(
   &odom_unit, // Pointer to the odometry unit (will manage the odom unit)
-  to_meters(0.6), // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
+  to_meters(-0.6), // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
   to_meters(4.95) // The y offset of the odom unit from the center of the robot (positive implies a shift forward from the center of the robot).
 );
 ```
@@ -136,12 +136,14 @@ NOTE: If your Odom Unit's Center IS the center of the robot, set to 0,0.
 The procedure for one sideways tracker will be identical to the two trackers. However you assume that the center of the odometry unit forwards/backwards is the center of the robot forward/backwards, but may be left or right of the center of the robot depending on the location of the sideways tracker
 
 
+NOTE: The width of the drivetrain is a measurement from the left side to the right. If the distance between the left and right side if 0.3 meters, then input ```0.3```, or ```to_meters(11.81)```
+
 ```cpp
 WhoopDriveOdomUnit odom_unit(
   to_meters(12.625), // Width of the drivetrain, in meters. Measured as the distance between the left wheels and right wheels
   to_meters(3), // Diameter of drivetrain wheels, in meters 
   1.0/2.0, // Gear Ratio of Drivetrain (If [motor is powering 32t] connected to [64t sharing shaft with drive wheel], it would be ratio = 32/64 = 1.0/2.0) 
-  to_meters(0), // Sideways tracker distance from the center of the robot's rotation. (positive implies a shift forward from the drivetrain's center)
+  to_meters(1.2), // Sideways tracker distance from the center of the robot's rotation. (positive implies a shift forward from the drivetrain's center)
   to_meters(2.5189), // Diameter of the sideways tracker, in meters (e.g., 0.08255 for 3.25-inch wheels).
   &inertial_sensor, 
   &sideways_tracker, 
@@ -150,7 +152,7 @@ WhoopDriveOdomUnit odom_unit(
 );
 ```
 
-Next is configuring the offsets. Since the forward/backwards location for the wheels is the same as the center of the robot, the forwards/backwards would be 0.
+Next is configuring the offsets. Since the forward/backwards location for the wheels is the same as the center of the robot, the forwards/backwards offset would be 0.
 
 ![Image](../images/OneWheelOdomOffsets.png)
 
@@ -159,6 +161,40 @@ Next is configuring the offsets. Since the forward/backwards location for the wh
 WhoopDriveOdomOffset odom_offset(
   &odom_unit, // Pointer to the odometry unit (will manage the odom unit)
   to_meters(-0.6), // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
-  to_meters(0) // The y offset of the odom unit from the center of the robot (positive implies a shift forward from the center of the robot).
+  to_meters(0) // Zero as one-tracker odom has no y-offset from the center of the robot
 );
 ```
+
+#### Configure With No Tracker
+
+![Image](../images/NoWheelOdom.png)
+
+If you are not using any trackers, this is very clear-cut.
+
+
+```cpp
+WhoopDriveOdomUnit odom_unit(
+  to_meters(12.625), // Width of the drivetrain, in meters. Measured as the distance between the left wheels and right wheels
+  to_meters(3), // Diameter of drivetrain wheels, in meters 
+  1.0/2.0, // Gear Ratio of Drivetrain (If [motor is powering 32t] connected to [64t sharing shaft with drive wheel], it would be ratio = 32/64 = 1.0/2.0) 
+  &inertial_sensor, 
+  &left_motors, 
+  &right_motors
+);
+```
+
+And then configure offset
+
+```cpp
+WhoopDriveOdomOffset odom_offset(
+  &odom_unit, // Pointer to the odometry unit (will manage the odom unit)
+  to_meters(0), // Zero offset as no trackercenter of the robot).
+  to_meters(0) // Zero offset as no tracker
+);
+```
+
+Now you are ready to continue to the next step!
+
+If you have a Vision Tesseract, go to the following step: [Configuring Vision Odometry](ConfiguringVisionOdom/README.md)
+
+If you do not have a Vision Tesseract, proceed to the following step: [Configuring Odometry Fusion](ConfiguringOdomFusion/README.md)

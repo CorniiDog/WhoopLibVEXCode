@@ -20,6 +20,15 @@ WhoopOdomFusion::WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset
     this->whoop_vision->on_update(std::bind(&WhoopOdomFusion::on_vision_pose_received, this, std::placeholders::_1));
 }
 
+WhoopOdomFusion::WhoopOdomFusion(WhoopDriveOdomOffset* odom_offset){
+    this->odom_offset = odom_offset;
+    this->max_fusion_shift_meters = 0;
+    this->max_fusion_shift_radians = 0;
+    this->fusion_mode = FusionMode::wheel_odom_only;
+    this->whoop_vision = nullptr;
+
+}
+
 void WhoopOdomFusion::on_vision_pose_received(Pose p){
     if(fusion_mode == FusionMode::wheel_odom_only){
         return;
@@ -78,7 +87,10 @@ void WhoopOdomFusion::on_vision_pose_received(Pose p){
 
 void WhoopOdomFusion::tare(double x, double y, double z, double yaw){
     self_lock.lock();
-    whoop_vision->tare(x, y, z, 0, yaw, 0);
+
+    if(whoop_vision != nullptr){
+        whoop_vision->tare(x, y, z, 0, yaw, 0);
+    }
 
     // Tare
     odom_offset->tare(x, y, yaw);
@@ -100,7 +112,11 @@ void WhoopOdomFusion::tare(){
 void WhoopOdomFusion::calibrate(){
     self_lock.lock();
     odom_offset->calibrate();
-    whoop_vision->tare();
+
+    if(whoop_vision != nullptr){
+        whoop_vision->tare();
+    }
+
     odom_offset->tare();
     self_lock.unlock();
 }

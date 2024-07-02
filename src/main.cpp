@@ -19,11 +19,6 @@ using namespace vex;
 // A global instance of competition
 competition Competition;
 
-//TODO: Merge the wheel odom pose and vision pose
-// Use inertial for pitch, yaw, roll
-// Use wheel odom for x, y, yaw
-// Use vision system for x, y, z, pitch, yaw, roll, confidence, which confidence is [0,1] and conf>0.5 is good, conf>0.3 is acceptable
-
 ////////////////////////////////////////////////////////////
 /**
  *    Globals
@@ -58,10 +53,6 @@ WhoopRotation sideways_tracker(PORT9, reversed::yes_reverse);
  */
 ////////////////////////////////////////////////////////////
 
-// The odom unit center is the virtual intercept of the perpendicular faces of the odometry trackers.
-// The measurement is from the center of the odom unit to the designated tracker distances.
-// Visual Representation of Tracker Distances from Odom Unit: https://imgur.com/rWCCCfz
-
 WhoopDriveOdomUnit odom_unit(
   to_meters(1.51), // The forward tracker distance, in meters, from the odom unit's center. (positive implies a shift to the right from the odom unit's center)
   to_meters(2.5189), // Diameter of the forward tracker, in meters (e.g., 0.08255 for 3.25-inch wheels).
@@ -72,44 +63,6 @@ WhoopDriveOdomUnit odom_unit(
   &sideways_tracker // Pointer to the sideways tracker, as a WhoopRotation sensor
 );
 
-
-// Example of a single tracker setup
-// In this configuration, the sideways tracker must be directly in front, behind, or on the center of the robot's rotation.
-// It cannot be right or left shifted from the center. This is a similar configuration to the JAR-Template's one-tracker odom.
-// After, configure the odom_offset to 0,0
-/*
-WhoopDriveOdomUnit odom_unit(
-  to_meters(12.625), // Width of the drivetrain, in meters. Measured as the distance between the left wheels and right wheels
-  to_meters(3), // Diameter of drivetrain wheels, in meters 
-  1.0/2.0, // Gear Ratio of Drivetrain (If [motor is powering 32t] connected to [64t sharing shaft with drive wheel], it would be ratio = 32/64 = 1.0/2.0) 
-  to_meters(0), // Sideways tracker distance from the center of the robot's rotation. (positive implies a shift forward from the drivetrain's center)
-  to_meters(2.5189), // Diameter of the sideways tracker, in meters (e.g., 0.08255 for 3.25-inch wheels).
-  &inertial_sensor, 
-  &sideways_tracker, 
-  &left_motors, 
-  &right_motors
-);
-*/
-
-// Example of a no-tracker setup
-// In this configuration, there is not much you really need to do.
-// After, configure the odom_offset below to 0,0
-/*
-WhoopDriveOdomUnit odom_unit(
-  to_meters(12.625), // Width of the drivetrain, in meters. Measured as the distance between the left wheels and right wheels
-  to_meters(3), // Diameter of drivetrain wheels, in meters 
-  1.0/2.0, // Gear Ratio of Drivetrain (If [motor is powering 32t] connected to [64t sharing shaft with drive wheel], it would be ratio = 32/64 = 1.0/2.0) 
-  &inertial_sensor, 
-  &left_motors, 
-  &right_motors
-);
-*/
-
-// If your Odom Unit's Center is NOT the center of the robot, apply the offset here.
-// The measurement is from the center of the robot to the odom unit center.
-// If your Odom Unit's Center IS the center of the robot, set to 0,0.
-// ALSO If using one tracker or no tracker, set to 0,0.
-// Visual representation of Odom Unit from Center of Robot: https://imgur.com/x8ObCIG
 WhoopDriveOdomOffset odom_offset(
   &odom_unit, // Pointer to the odometry unit (will manage the odom unit)
   to_meters(-0.6), // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
@@ -169,10 +122,12 @@ WhoopOdomFusion odom_fusion(
   &vision_system, // Pointer to the vision system
   &odom_offset, // Pointer to the odometry offset
   0.9, // Minimum confidence threshold to apply vision system to odometry
-  FusionMode::wheel_odom_only, // The method of fusing
+  FusionMode::fusion_gradual, // The method of fusing
   to_meters(50), // If FusionMode is fusion_gradual, it is the maximum allowable lateral shift the vision camera can update in meters per second.
   to_rad(500) // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
 );
+
+WhoopOdomFusion odom_fusion(&odom_offset);
 
 ////////////////////////////////////////////////////////////
 /**
