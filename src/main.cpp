@@ -186,6 +186,12 @@ WhoopOdomFusion odom_fusion(
   to_rad(500) // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
 );
 
+/**
+ * NOTE: The Odometry Communicator is not in an acceptable state and therefore not
+ * something that is going to be implemented lately. More testing needs to be done.
+ */
+
+/*
 WhoopOdomCommunicator odom_communicator(
   &buffer_system, // Pointer to the buffer system to communicate the messenger to
   &vision_offset, // Pointer to the vision offset configured above
@@ -194,6 +200,7 @@ WhoopOdomCommunicator odom_communicator(
   4, // The number of decimal places of the pose data (measurements in meters/radians). Higher decimal places is better precision, but larger serial packets
   3 // The number of elements for rolling average (recommended 3) to smoothen velocity
 );
+*/
 
 ////////////////////////////////////////////////////////////
 /**
@@ -208,7 +215,7 @@ WhoopDrivetrain robot_drivetrain(
   &right_motors // Pointer to the right motor group (optionally can be a list of motors as well)
 );
 
-ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &controller1, &odom_communicator});
+ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &controller1}); // &odom_communicator
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
@@ -301,13 +308,13 @@ void usercontrol(void) {
     Brain.Screen.setCursor(7, 1);
     Brain.Screen.print("WU (m_rad_ccw): %.2f %.2f %.2f", unt_pose.x, unt_pose.y, unt_pose.yaw);
     
-
+    /*
     // Object-Space Velocity
     TwoDPose obj_space_velocity = odom_communicator.relative_velocity;
     Brain.Screen.clearLine(8);
     Brain.Screen.setCursor(8, 1);
     Brain.Screen.print("Velocities (m/s_rad/s_ccw): %.2f %.2f %.2f", obj_space_velocity.x, obj_space_velocity.y, obj_space_velocity.yaw);
-
+    */
     wait(100, msec);
   }
 }

@@ -3,6 +3,10 @@
 /*    Module:       WheelOdom.cpp                                             */
 /*    Author:       Connor White (WHOOP)                                      */
 /*    Created:      Thu Jun 21 2024                                           */
+/*                                                                            */
+/*    Reference:    Jar-Template                                              */
+/*    Ref Link:     https://github.com/JacksonAreaRobotics/JAR-Template       */
+/*                                                                            */
 /*    Description:  Wheel X, Y, Yaw Tracking                                  */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
