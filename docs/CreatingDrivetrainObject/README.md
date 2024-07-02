@@ -29,7 +29,7 @@ PoseUnits has several types that you can use as your standardized field system. 
 
 ![Image](../images/OdomUnits.png)
 
-As you see, ```(0,0)``` with a yaw of 0 displays the robot at position ```(0,0)``` facing parallel to the auton line.
+As you see, ```(0,0)``` with a yaw of ```0``` displays the robot at position ```(0,0)``` facing parallel to the auton line.
 
 If we move the robot to ```(24, 43)``` with a yaw of ```-130```, the position of the robot will be as follows:
 
