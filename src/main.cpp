@@ -29,7 +29,7 @@ competition Competition;
 WhoopController controller1(joystickMode::joystickmode_tank, controllerType::primary);
 
 // Left drive motors
-WhoopMotor l1(PORT12, gearSetting::ratio36_1, reversed::no_reverse);
+WhoopMotor l1(PORT12, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotor l2(PORT13, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotor l3(PORT14, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotor l4(PORT15, gearSetting::ratio6_1, reversed::no_reverse);
