@@ -55,7 +55,7 @@ TwoDPose TwoDPose::toObjectSpace(double x, double y, double yaw) const {
     double relative_y = dx * cos_yaw + dy * sin_yaw; 
 
     // Calculate the relative yaw
-    double relative_yaw = normalize_angle(denormalize_angle(yaw) - denormalize_angle(this->yaw));
+    double relative_yaw = normalize_angle(normalize_angle(yaw) - normalize_angle(this->yaw));
 
     return TwoDPose(relative_x, relative_y, relative_yaw);
 }
@@ -66,16 +66,14 @@ TwoDPose TwoDPose::operator-() const {
 
 
 TwoDPose TwoDPose::toWorldSpace(const TwoDPose& other) const {
-    // Apply rotation to the point using this object's yaw
-    double this_yaw_safe = std::abs(this->yaw) < 1e-10 ? 1e-10 : this->yaw;
 
-    double const cos_yaw = cos(this_yaw_safe);
-    double const sin_yaw = sin(this_yaw_safe);
+    double const cos_yaw = cos(this->yaw);
+    double const sin_yaw = sin(this->yaw);
 
     double global_x = this->x + other.x * sin_yaw + other.y * cos_yaw;
     double global_y = this->y - other.x * cos_yaw + other.y * sin_yaw;
 
-    double global_yaw = normalize_angle(denormalize_angle(this->yaw) + denormalize_angle(other.yaw));
+    double global_yaw = normalize_angle(normalize_angle(this->yaw) + normalize_angle(other.yaw));
 
     return TwoDPose(global_x, global_y, global_yaw);
 }
