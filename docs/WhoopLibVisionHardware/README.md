@@ -10,4 +10,4 @@ Here is the hardware required for the WhoopLib Vision System: [Hardware](https:/
 
 ![Image](../images/Tesseract.jpg)
 
-You can download and STL files, or Modify the f3z in Fusion 360 Here: [Files Link](https://drive.google.com/drive/folders/1pIy2cVaYX3QHmOdXU2QQLdknpQxjxq2o?usp=sharing)
+You can download and STL files, or Modify the .f3z files in Fusion 360 Here: [Files Link](https://drive.google.com/drive/folders/1pIy2cVaYX3QHmOdXU2QQLdknpQxjxq2o?usp=sharing)

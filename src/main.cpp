@@ -31,10 +31,10 @@ competition Competition;
 ////////////////////////////////////////////////////////////
 
 // Primary controller
-WhoopController controller1(joystickMode::joystickmode_split_arcade);
+WhoopController controller1(joystickMode::joystickmode_tank, controllerType::primary);
 
 // Left drive motors
-WhoopMotor l1(PORT12, gearSetting::ratio6_1, reversed::no_reverse);
+WhoopMotor l1(PORT12, gearSetting::ratio36_1, reversed::no_reverse);
 WhoopMotor l2(PORT13, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotor l3(PORT14, gearSetting::ratio6_1, reversed::no_reverse);
 WhoopMotor l4(PORT15, gearSetting::ratio6_1, reversed::no_reverse);
@@ -112,7 +112,7 @@ WhoopDriveOdomUnit odom_unit(
 // Visual representation of Odom Unit from Center of Robot: https://imgur.com/x8ObCIG
 WhoopDriveOdomOffset odom_offset(
   &odom_unit, // Pointer to the odometry unit (will manage the odom unit)
-  to_meters(0.6), // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
+  to_meters(-0.6), // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
   to_meters(4.95) // The y offset of the odom unit from the center of the robot (positive implies a shift forward from the center of the robot).
 );
 
@@ -120,18 +120,6 @@ WhoopDriveOdomOffset odom_offset(
 /**
  *    VISION TESSERACT
  */
-////////////////////////////////////////////////////////////
-
-// If you have a Vision Tesseract on your robot, 
-// switch to jetsonCommunication::enable_comms
-// If not, use jetsonCommunication::disable_comms
-jetsonCommunication jetson_comms_enabled = jetsonCommunication::enable_comms;
-
-////////////////////////////////////////////////////////////
-/** 
- *    Skip the rest of this section if you don't have a
- *    Tesseract on your robot
-*/ 
 ////////////////////////////////////////////////////////////
 
 // Serial communication module
@@ -181,7 +169,7 @@ WhoopOdomFusion odom_fusion(
   &vision_system, // Pointer to the vision system
   &odom_offset, // Pointer to the odometry offset
   0.9, // Minimum confidence threshold to apply vision system to odometry
-  FusionMode::fusion_gradual, // The method of fusing
+  FusionMode::wheel_odom_only, // The method of fusing
   to_meters(50), // If FusionMode is fusion_gradual, it is the maximum allowable lateral shift the vision camera can update in meters per second.
   to_rad(500) // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
 );
@@ -221,10 +209,10 @@ void pre_auton(void) {
   jetson_commander.initialize();
   robot_drivetrain.calibrate();
 
-  wait(2, sec);
+  wait(5, sec);
 
   robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw); // Inches, degrees, clockwise-positive
-  robot_drivetrain.set_pose(0,0,0); // Note: Yaw of 0 implies looking towards +Y direction. This is VERY important
+  robot_drivetrain.set_pose(1,1,-45); // Note: Yaw of 0 implies looking towards +Y direction. This is VERY important
 
 }
 
