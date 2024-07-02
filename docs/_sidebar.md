@@ -3,6 +3,7 @@
 </div>
 
 - [Home](/)
+- [Getting Started](GettingStarted/README.md)
 - [Configuring Odometry](ConfiguringOdometry/README.md)
 - [WhoopLib Vision Hardware](WhoopLibVisionHardware/README.md)
 - [WhoopLib Vision OS Install](WhoopLibVisionInstall/README.md)
