@@ -43,6 +43,7 @@
 		"cerrno": "cpp",
 		"memory": "cpp",
 		"iomanip": "cpp",
-		"random": "cpp"
+		"random": "cpp",
+		"dubins.h": "c"
 	}
 }

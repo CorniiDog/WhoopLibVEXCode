@@ -61,9 +61,10 @@ You should be prompted to install the C++ extension by Microsoft. This would be 
 
 ## Acknowledgements
 
- - [E-Bots πLons](http://thepilons.ca/wp-content/uploads/2018/10/Tracking.pdf)
- - [Librealsense](https://github.com/IntelRealSense/librealsense)
+ - [E-Bots πLons](http://thepilons.ca/wp-content/uploads/2018/10/Tracking.pdf): Odometry Documentation
+ - [Librealsense](https://github.com/IntelRealSense/librealsense): Depth Capturing
  - [VEX Robotics](https://github.com/VEX-Robotics-AI)
+ - [Andrew Walker](https://github.com/AndrewWalker/Dubins-Curves/tree/master): Path Generation with Dubins-Curves
 
 <!-- LICENSE -->
 ## License

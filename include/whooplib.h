@@ -24,6 +24,7 @@
 #include "whooplib/include/calculators/RollingAverage.hpp"
 #include "whooplib/include/calculators/LowPassFilter.hpp"
 #include "whooplib/include/calculators/KalmanFilter.hpp"
+#include "whooplib/include/calculators/PurePursuit.hpp"
 
 // Nodes
 #include "whooplib/include/toolbox.hpp"

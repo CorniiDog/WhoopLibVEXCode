@@ -31,7 +31,7 @@ public:
      * @param y The y-coordinate of the pose, where positive values indicate forward movement.
      * @param yaw The orientation of the pose in radians, where positive values indicate counter-clockwise rotation.
      */
-    TwoDPose(double x, double y, double yaw);
+    TwoDPose(double x=0, double y=0, double yaw=0);
 
     // Overloaded * operator to combine two poses
     // Think of it as Roblox's CF = CFrame1 * CFrame2
