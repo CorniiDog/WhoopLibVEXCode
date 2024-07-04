@@ -16,6 +16,7 @@
 #include "whooplib/include/nodes/NodeManager.hpp"
 #include "whooplib/include/nodes/BufferNode.hpp"
 #include "whooplib/include/calculators/WheelOdom.hpp"
+#include "whooplib/include/calculators/PurePursuit.hpp"
 #include "whooplib/include/devices/WhoopOdomFusion.hpp"
 #include "vex.h"
 #include <vector>
@@ -57,6 +58,7 @@ private:
     bool moved_one_time_notif = false;
     // This runs the calibration protocol for the drivetrain
     void run_disabled_calibration_protocol();
+
 protected:
     // Upon initialization
     WhoopController* whoop_controller; // Controller object for receiving input from VEX controllers.
@@ -72,6 +74,7 @@ private:
     void init_motor_groups(WhoopMotorGroup* leftGroup, WhoopMotorGroup* rightGroup);
     // Initializes motor groups from a vector of motors.
     void init_motor_groups(const std::vector<WhoopMotor*>& leftMotors, const std::vector<WhoopMotor*>& rightMotors);
+
 public:
     vex::mutex thread_lock;  // Mutex for synchronizing access to drivetrain components.
     drivetrainState drive_state = drivetrainState::mode_disabled; // Current operational state of the drivetrain.

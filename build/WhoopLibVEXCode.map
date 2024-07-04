@@ -254,11 +254,11 @@ Discarded input sections
                 0x00000000        0xc build/include/whooplib/src/calculators/PurePursuit.o
  .ARM.exidx.text._ZN15PurePursuitPath17computeDubinsPathEv
                 0x00000000        0x8 build/include/whooplib/src/calculators/PurePursuit.o
- .text._ZN15PurePursuitPath26calculate_pursuit_estimateE8TwoDPose
-                0x00000000      0x174 build/include/whooplib/src/calculators/PurePursuit.o
- .ARM.extab.text._ZN15PurePursuitPath26calculate_pursuit_estimateE8TwoDPose
+ .text._ZN15PurePursuitPath26calculate_pursuit_estimateE8TwoDPoseb
+                0x00000000      0x260 build/include/whooplib/src/calculators/PurePursuit.o
+ .ARM.extab.text._ZN15PurePursuitPath26calculate_pursuit_estimateE8TwoDPoseb
                 0x00000000        0xc build/include/whooplib/src/calculators/PurePursuit.o
- .ARM.exidx.text._ZN15PurePursuitPath26calculate_pursuit_estimateE8TwoDPose
+ .ARM.exidx.text._ZN15PurePursuitPath26calculate_pursuit_estimateE8TwoDPoseb
                 0x00000000        0x8 build/include/whooplib/src/calculators/PurePursuit.o
  .comment       0x00000000       0x2e build/include/whooplib/src/calculators/PurePursuit.o
  .note.GNU-stack

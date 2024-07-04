@@ -54,19 +54,19 @@ WhoopRotation sideways_tracker(PORT9, reversed::yes_reverse);
 ////////////////////////////////////////////////////////////
 
 WhoopDriveOdomUnit odom_unit(
-  to_meters(1.51), // The forward tracker distance, in meters, from the odom unit's center. (positive implies a shift to the right from the odom unit's center)
-  to_meters(2.5189), // Diameter of the forward tracker, in meters (e.g., 0.08255 for 3.25-inch wheels).
-  to_meters(-4.468), // The sideways tracker distance, in meters, from the odom unit's center (positive implies a shift forward from the odom unit center)
-  to_meters(2.5189), // Diameter of the sideways tracker, in meters (e.g., 0.08255 for 3.25-inch wheels).
-  &inertial_sensor, // Pointer to the WhoopInertial sensor
-  &forward_tracker, // Pointer to the forward tracker, as a WhoopRotation sensor
-  &sideways_tracker // Pointer to the sideways tracker, as a WhoopRotation sensor
+    to_meters(1.51),   // The forward tracker distance, in meters, from the odom unit's center. (positive implies a shift to the right from the odom unit's center)
+    to_meters(2.5189), // Diameter of the forward tracker, in meters (e.g., 0.08255 for 3.25-inch wheels).
+    to_meters(-4.468), // The sideways tracker distance, in meters, from the odom unit's center (positive implies a shift forward from the odom unit center)
+    to_meters(2.5189), // Diameter of the sideways tracker, in meters (e.g., 0.08255 for 3.25-inch wheels).
+    &inertial_sensor,  // Pointer to the WhoopInertial sensor
+    &forward_tracker,  // Pointer to the forward tracker, as a WhoopRotation sensor
+    &sideways_tracker  // Pointer to the sideways tracker, as a WhoopRotation sensor
 );
 
 WhoopDriveOdomOffset odom_offset(
-  &odom_unit, // Pointer to the odometry unit (will manage the odom unit)
-  to_meters(-0.6), // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
-  to_meters(4.95) // The y offset of the odom unit from the center of the robot (positive implies a shift forward from the center of the robot).
+    &odom_unit,      // Pointer to the odometry unit (will manage the odom unit)
+    to_meters(-0.6), // The x offset of the odom unit from the center of the robot (positive implies a shift right from the center of the robot).
+    to_meters(4.95)  // The y offset of the odom unit from the center of the robot (positive implies a shift forward from the center of the robot).
 );
 
 ////////////////////////////////////////////////////////////
@@ -77,23 +77,22 @@ WhoopDriveOdomOffset odom_offset(
 
 // Serial communication module
 BufferNode buffer_system(
-  256, // The buffer size, in characters. Increase if necessary, but at the cost of computational efficiency.
-  debugMode::debug_disabled, // debugMode::debug_disabled for competition use, debugMode::debug_enabled to allow the code to pass errors through
-  "/dev/serial1" // The serial connection of the Jetson Nano ("/dev/serial1" is the micro-usb serial connection on the V5 Brain, "/dev/serial2" is controller)
-); 
-
+    256,                       // The buffer size, in characters. Increase if necessary, but at the cost of computational efficiency.
+    debugMode::debug_disabled, // debugMode::debug_disabled for competition use, debugMode::debug_enabled to allow the code to pass errors through
+    "/dev/serial1"             // The serial connection of the Jetson Nano ("/dev/serial1" is the micro-usb serial connection on the V5 Brain, "/dev/serial2" is controller)
+);
 
 // Vision Offset of the Vision Tesseract from the Center of Robot
 RobotVisionOffset vision_offset(
-  0.0, // The x offset in meters, (right-positive from the center of the robot).
-  220.0/1000.0 // The y offset in meters (forward-positive from the center of the robot).
+    0.0,           // The x offset in meters, (right-positive from the center of the robot).
+    220.0 / 1000.0 // The y offset in meters (forward-positive from the center of the robot).
 );
 
-// Jetson Nano pose retreival object (also configured on Nano-side) 
+// Jetson Nano pose retreival object (also configured on Nano-side)
 WhoopVision vision_system(
-  &vision_offset, // pointer to the vision offset
-  &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
-  "P" // The subscribed stream name to receive the pose from the Jetson Nano
+    &vision_offset, // pointer to the vision offset
+    &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
+    "P"             // The subscribed stream name to receive the pose from the Jetson Nano
 );
 
 // This is the jetson commander. It sends keep-alive messages intermittently and also allows
@@ -102,15 +101,15 @@ WhoopVision vision_system(
 // jetson_commander.reboot_jetson();
 // jetson_commander.restart_vision_process();
 // bool is_connected_currently = jetson_commander.is_connected_to_jetson();
-// This is essential to ensure that the nano starts its internal program, stop program, restarts program, 
+// This is essential to ensure that the nano starts its internal program, stop program, restarts program,
 // and can be told to reboot or shutdown
 JetsonCommander jetson_commander(
-  &controller1, // The controller to send messages to upon error
-  &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
-  "C", // The subscribed stream name for keep-alive, shutdown, and reboot
-  60, // In seconds. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this time before it shuts off
-  2, // How many seconds to wait before sending anoter keep alive message to Jetson (suggested 2)
-  jetsonCommunication::enable_comms // If you don't have a Vision Tesseract on your robot, set to disable_comms
+    &controller1,                     // The controller to send messages to upon error
+    &buffer_system,                   // Pointer to the buffer system (will be managed by the buffer system)
+    "C",                              // The subscribed stream name for keep-alive, shutdown, and reboot
+    60,                               // In seconds. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this time before it shuts off
+    2,                                // How many seconds to wait before sending anoter keep alive message to Jetson (suggested 2)
+    jetsonCommunication::enable_comms // If you don't have a Vision Tesseract on your robot, set to disable_comms
 );
 
 ////////////////////////////////////////////////////////////
@@ -119,12 +118,12 @@ JetsonCommander jetson_commander(
  */
 ////////////////////////////////////////////////////////////
 WhoopOdomFusion odom_fusion(
-  &vision_system, // Pointer to the vision system
-  &odom_offset, // Pointer to the odometry offset
-  0.9, // Minimum confidence threshold to apply vision system to odometry
-  FusionMode::fusion_gradual, // The method of fusing
-  to_meters(50), // If FusionMode is fusion_gradual, it is the maximum allowable lateral shift the vision camera can update in meters per second.
-  to_rad(500) // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
+    &vision_system,             // Pointer to the vision system
+    &odom_offset,               // Pointer to the odometry offset
+    0.9,                        // Minimum confidence threshold to apply vision system to odometry
+    FusionMode::fusion_gradual, // The method of fusing
+    to_meters(50),              // If FusionMode is fusion_gradual, it is the maximum allowable lateral shift the vision camera can update in meters per second.
+    to_rad(500)                 // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
 );
 
 ////////////////////////////////////////////////////////////
@@ -133,11 +132,11 @@ WhoopOdomFusion odom_fusion(
  */
 ////////////////////////////////////////////////////////////
 WhoopDrivetrain robot_drivetrain(
-  &odom_fusion, // Odometry fusion module
-  PoseUnits::in_deg_cw, // Set default pose units if not defined. "m_deg_cw" means "meters, degrees, clockwise-positive yaw", "in_deg_ccw" means "inches, degrees, counter-clockwise-positive yaw", and so forth.
-  &controller1, // Pointer to the controller 
-  &left_motors, // Pointer to the left motor group (optionally can be a list of motors as well)
-  &right_motors // Pointer to the right motor group (optionally can be a list of motors as well)
+    &odom_fusion,         // Odometry fusion module
+    PoseUnits::in_deg_cw, // Set default pose units if not defined. "m_deg_cw" means "meters, degrees, clockwise-positive yaw", "in_deg_ccw" means "inches, degrees, counter-clockwise-positive yaw", and so forth.
+    &controller1,         // Pointer to the controller
+    &left_motors,         // Pointer to the left motor group (optionally can be a list of motors as well)
+    &right_motors         // Pointer to the right motor group (optionally can be a list of motors as well)
 );
 
 ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &controller1});
@@ -151,7 +150,8 @@ ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &c
 /*  function is only called once after the V5 has been powered on and        */
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
-void pre_auton(void) {
+void pre_auton(void)
+{
 
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
@@ -165,8 +165,7 @@ void pre_auton(void) {
   wait(5, sec);
 
   robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw); // Inches, degrees, clockwise-positive
-  robot_drivetrain.set_pose(1,1,-45); // Note: Yaw of 0 implies looking towards +X direction. This is VERY important
-
+  robot_drivetrain.set_pose(1, 1, -45);                  // Note: Yaw of 0 implies looking towards +X direction. This is VERY important
 }
 
 /*---------------------------------------------------------------------------*/
@@ -179,7 +178,8 @@ void pre_auton(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-void autonomous(void) {
+void autonomous(void)
+{
   robot_drivetrain.set_state(drivetrainState::mode_autonomous);
 }
 
@@ -192,11 +192,13 @@ void autonomous(void) {
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
-void usercontrol(void) {
+void usercontrol(void)
+{
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 
   // User control code here, inside the loop
-  while (1) {
+  while (1)
+  {
     Brain.Screen.clearLine(1);
     Brain.Screen.setCursor(1, 1);
     Brain.Screen.print("Approving Frames: %s", boolToString(odom_fusion.approving_frames()).c_str());
@@ -232,7 +234,7 @@ void usercontrol(void) {
     Brain.Screen.clearLine(7);
     Brain.Screen.setCursor(7, 1);
     Brain.Screen.print("WU (m_rad_ccw): %.2f %.2f %.2f", unt_pose.x, unt_pose.y, unt_pose.yaw);
-    
+
     wait(100, msec);
   }
 }
@@ -240,9 +242,11 @@ void usercontrol(void) {
 //
 // Main will set up the competition functions and callbacks.
 //
-int main() {
+int main()
+{
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
   pre_auton();
-  while (true) wait(100, msec);
+  while (true)
+    wait(100, msec);
 }
