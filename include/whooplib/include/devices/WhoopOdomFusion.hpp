@@ -70,6 +70,12 @@ public:
     Pose get_pose();
 
     /**
+     * Retreives the pose from the odom fusion
+     * @returns Pose object, two dimension
+     */
+    TwoDPose get_pose_2d();
+
+    /**
      * Runs calibration process
      */
     void calibrate();

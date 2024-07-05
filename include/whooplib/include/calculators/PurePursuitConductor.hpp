@@ -14,6 +14,7 @@
 #include "whooplib/include/calculators/PurePursuit.hpp"
 #include "whooplib/include/calculators/PID.hpp"
 #include "whooplib/include/toolbox.hpp"
+#include <vector>
 
 struct PursuitParams
 {
@@ -59,16 +60,16 @@ struct PursuitParams
                   double settle_time = 0.4, double timeout = 0,
                   double turning_kp = 0.3, double turning_ki = 0.001, double turning_kd = 2, double turning_i_activation = to_meters(15),
                   double forward_kp = 1.5, double forward_ki = 0, double forward_kd = 10, double forward_i_activation = to_meters(0),
-                  int num_path_segments = 200) : 
-                    turning_radius(turning_radius), lookahead_distance(lookahead_distance),
-                    settle_distance(settle_distance), settle_rotation(settle_rotation),
-                    settle_time(settle_time), timeout(timeout),
-                    turning_kp(turning_kp), turning_ki(turning_ki), turning_kd(turning_kd), turning_i_activation(turning_i_activation),
-                    forward_kp(forward_kp), forward_ki(forward_ki), forward_kd(forward_kd), forward_i_activation(forward_i_activation),
-                    num_path_segments(num_path_segments) {}
+                  int num_path_segments = 200) : turning_radius(turning_radius), lookahead_distance(lookahead_distance),
+                                                 settle_distance(settle_distance), settle_rotation(settle_rotation),
+                                                 settle_time(settle_time), timeout(timeout),
+                                                 turning_kp(turning_kp), turning_ki(turning_ki), turning_kd(turning_kd), turning_i_activation(turning_i_activation),
+                                                 forward_kp(forward_kp), forward_ki(forward_ki), forward_kd(forward_kd), forward_i_activation(forward_i_activation),
+                                                 num_path_segments(num_path_segments) {}
 };
 
-struct PursuitResult{
+struct PursuitResult
+{
     bool is_valid;
     double steering_angle;
     double distance;
@@ -83,31 +84,54 @@ struct PursuitResult{
      * @param steering_power the suggestedmotor power for steering
      * @param is_completed if true, the pure pursuit is complete
      */
-    PursuitResult(bool is_valid = false, double steering_angle = 0, double distance = 0, double forward_power = 0, double steering_power = 0, bool is_completed=false) : 
-        is_valid(is_valid), steering_angle(steering_angle), distance(distance), forward_power(forward_power), steering_power(steering_power), is_completed(is_completed) {}
+    PursuitResult(bool is_valid = false, double steering_angle = 0, double distance = 0, double forward_power = 0, double steering_power = 0, bool is_completed = false) : is_valid(is_valid), steering_angle(steering_angle), distance(distance), forward_power(forward_power), steering_power(steering_power), is_completed(is_completed) {}
 };
 
-
-class PurePursuitConductor{
+class PurePursuitConductor
+{
     PID turn_pid;
     PID forward_pid;
 
     PurePursuitPath pursuit_path;
-    PursuitParams* default_pursuit_parameters = nullptr;
+    PursuitParams *default_pursuit_parameters = nullptr;
 
     bool enabled = false;
-public:
-    PurePursuitConductor(PursuitParams* default_pursuit_parameters);
 
+public:
+    /**
+     * Constructs the conductor for the pure pursuit object
+     * @param default_pursuit_parameters The parameters for the pure pursuit
+     */
+    PurePursuitConductor(PursuitParams *default_pursuit_parameters);
+
+    /**
+     * Generates the path for the point
+     * @param start_position The TwoDPose of the start position
+     * @param destination_position The TwoDPose of the destination position
+     */
     void generate_path(TwoDPose start_position, TwoDPose destination_position);
 
+    /**
+     * Generates the path for the point
+     * @param start_position The TwoDPose of the start position
+     * @param destination_position The TwoDPose of the destination position
+     * @param timeout The timeout of the movement, in seconds
+     */
     void generate_path(TwoDPose start_position, TwoDPose destination_position, double timeout);
 
+    /**
+     * Generates the path for the point
+     * @param start_position The TwoDPose of the start position
+     * @param destination_position The TwoDPose of the destination position
+     * @param timeout The timeout of the movement, in seconds
+     * @param turning_radius The radius, in meters, of the turning
+     */
     void generate_path(TwoDPose start_position, TwoDPose destination_position, double timeout, double turning_radius);
 
+    /**
+     * Steps the conductor
+     */
     PursuitResult step(TwoDPose current_pose);
-
 };
-
 
 #endif

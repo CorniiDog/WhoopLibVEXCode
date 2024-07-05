@@ -8,13 +8,18 @@
 /*----------------------------------------------------------------------------*/
 
 #include "whooplib/include/calculators/PurePursuit.hpp"
-#include "whooplib/include/calculators/Dubins.h"
+#include "whooplib/include/calculators/Dubins.hpp"
 #include "whooplib/include/toolbox.hpp"
 
 PurePursuitPath::PurePursuitPath(const TwoDPose start, const TwoDPose end, double turning_radius, double lookahead_distance, double num_segments)
     : start(start), end(end), turning_radius(turning_radius), lookahead_distance(lookahead_distance), num_segments(num_segments)
 {
     computeDubinsPath();
+}
+
+static int create_points_bridge(double q[3], double t, void *user_data)
+{
+    return static_cast<PurePursuitPath *>(user_data)->create_points(q, t);
 }
 
 void PurePursuitPath::computeDubinsPath()
@@ -33,7 +38,20 @@ void PurePursuitPath::computeDubinsPath()
     {
         t_max = dubins_path_length(&path);
         step_size = t_max / num_segments;
+
+        pursuit_points = {};
+        if (dubins_path_sample_many(&path, step_size, create_points_bridge, this) != EDUBOK)
+        {
+            path_valid = false;
+        }
     }
+}
+
+int PurePursuitPath::create_points(double q[3], double x)
+{
+    barebonesPose p(q[0], q[1], q[2]);
+    pursuit_points.push_back(p);
+    return 0;
 }
 
 PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_position, bool find_closest_if_off_course)
@@ -43,79 +61,62 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
         return PursuitEstimate();
     }
     double point_ahead_distance = lookahead_distance;
-    double closest_t = 0.0;
-    double q[3]; // Sample point on the path
-    bool found = false;
+    double closest_distance = std::numeric_limits<double>::max();
+    barebonesPose look_ahead_position;
+    barebonesPose closest_position;
+    bool lookahead_found = false;
+    bool closest_found = false;
 
     double rough_distance;
     double distance;
 
     // Reverse iteration
-    for (double t = t_max; t >= 0; t -= step_size)
+    for (double i = pursuit_points.size(); i >= 0; --i)
     {
-        if (dubins_path_sample(&path, t, q) != EDUBOK)
-        {
-            continue; // Skip if there's an error in sampling
-        }
-
         // Rough distance first to avoid un-needed computational cost
-        rough_distance = (std::abs(q[0] - current_position.x) + std::abs(q[1] - current_position.y)) / 2;
+        rough_distance = (std::abs(pursuit_points[i].x - current_position.x) + std::abs(pursuit_points[i].y - current_position.y)) / 2;
         if (rough_distance > point_ahead_distance)
         {
             continue;
         }
 
-        distance = sqrt(pow(q[0] - current_position.x, 2) + pow(q[1] - current_position.y, 2));
+        distance = sqrt(pow(pursuit_points[i].x - current_position.x, 2) + pow(pursuit_points[i].y - current_position.y, 2));
         if (distance <= point_ahead_distance)
         {
-            point_ahead_distance = distance; // Replace, as point_ahead_distance
-            closest_t = t;
-            found = true;
-            break; // Break on finding the look ahead point
+            if (!lookahead_found)
+            {
+                point_ahead_distance = distance;
+                look_ahead_position = pursuit_points[i];
+                lookahead_found = true;
+            }
+            if (!find_closest_if_off_course)
+            {
+                break;
+            }
+        }
+
+        if (find_closest_if_off_course)
+        {
+            if (distance <= closest_distance)
+            {
+                closest_distance = distance;
+                closest_position = pursuit_points[i];
+                closest_found = true;
+            }
         }
     }
 
-    if (!found)
+    if (!lookahead_found)
     {
-        if (!find_closest_if_off_course)
+        if (!closest_found)
         {
             return PursuitEstimate(); // Return invalid pursuit estimate if no point is found
         }
-        else
-        { // Find closest point and turn to
-            point_ahead_distance = std::numeric_limits<double>::max();
-            for (double t = t_max; t >= 0; t -= step_size)
-            {
-                if (dubins_path_sample(&path, t, q) != EDUBOK)
-                {
-                    continue; // Skip if there's an error in sampling
-                }
-
-                // Rough distance first to avoid un-needed computational cost
-                rough_distance = (std::abs(q[0] - current_position.x) + std::abs(q[1] - current_position.y)) / 2;
-                if (rough_distance > point_ahead_distance)
-                {
-                    continue;
-                }
-
-                distance = sqrt(pow(q[0] - current_position.x, 2) + pow(q[1] - current_position.y, 2));
-                if (distance <= point_ahead_distance)
-                {
-                    point_ahead_distance = distance; // Replace, as point_ahead_distance
-                    closest_t = t;
-                    found = true;
-                }
-            }
-
-            if (!found)
-            {                             // If still not found, return empty
-                return PursuitEstimate(); // Return invalid pursuit estimate if no point is found
-            }
-        }
+        look_ahead_position = closest_position;
     }
 
-    double dx = q[0] - current_position.x;
-    double dy = q[1] - current_position.y;
+    double dx = look_ahead_position.x - current_position.x;
+    double dy = look_ahead_position.y - current_position.y;
     double path_angle = atan2(dy, dx);
     double steering_angle = normalize_angle(path_angle - current_position.yaw);
 

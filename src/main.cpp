@@ -133,10 +133,10 @@ WhoopOdomFusion odom_fusion(
 ////////////////////////////////////////////////////////////
 
 PursuitParams pursuit_parameters(
-    0.2,           // Radius of the turns, in meters
-    0.1,           // Pure Pursuit look ahead distance, in meters
-    0.025,         // Settle Distance. Exits when within this distance of target, in meters
-    0.09,          // Settle Rotation. Exits when within this rotation of target, in radians
+    to_meters(10), // Radius of the turns, in meters
+    to_meters(5),  // Pure Pursuit look ahead distance, in meters
+    to_meters(3),  // Settle Distance. Exits when within this distance of target, in meters
+    to_rad(15),    // Settle Rotation. Exits when within this rotation of target, in radians
     0.4,           // Minimum time to be considered settled, in seconds
     0,             // Time after which to give up and move on, in seconds (set to 0 to disable)
     0.3,           // Turning (kP) Proportional Tuning
@@ -206,6 +206,9 @@ void pre_auton(void)
 void autonomous(void)
 {
   robot_drivetrain.set_state(drivetrainState::mode_autonomous);
+
+  wait(10, sec);
+  robot_drivetrain.drive_to_pose(15, 15, -35);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -219,6 +222,7 @@ void autonomous(void)
 /*---------------------------------------------------------------------------*/
 void usercontrol(void)
 {
+
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 
   // User control code here, inside the loop

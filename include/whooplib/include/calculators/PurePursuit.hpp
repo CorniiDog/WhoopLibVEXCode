@@ -12,6 +12,7 @@
 
 #include "whooplib/include/calculators/Dubins.hpp"
 #include "whooplib/include/calculators/TwoDPose.hpp"
+#include <vector>
 
 struct PursuitEstimate
 {
@@ -27,23 +28,35 @@ struct PursuitEstimate
     PursuitEstimate(bool is_valid = false, double steering_angle = 0, double distance = 0) : is_valid(is_valid), steering_angle(steering_angle), distance(distance) {}
 };
 
+struct barebonesPose
+{
+    double x = 0;
+    double y = 0;
+    double yaw = 0;
+    barebonesPose(double x = 0, double y = 0, double yaw = 0) : x(x), y(y), yaw(yaw) {}
+};
+
 class PurePursuitPath
 {
+private:
     TwoDPose start, end;
     double turning_radius;
     double lookahead_distance;
-    double q0[3] = {0,0,0};
-    double q1[3] = {0,0,0};
+    double q0[3] = {0, 0, 0};
+    double q1[3] = {0, 0, 0};
     DubinsPath path;
     bool path_valid;
     double t_max = 0;
     double num_segments;
     double step_size;
 
-private:
+    std::vector<barebonesPose> pursuit_points;
+
     void computeDubinsPath();
 
 public:
+    int create_points(double q[3], double x);
+
     /**
      * Creates a path for pure pursuit, using Dubin-Curves. NOTE: Yaw is ccw-positive
      * You can find more information about Dubin-Curves here: https://github.com/AndrewWalker/Dubins-Curves?tab=readme-ov-file

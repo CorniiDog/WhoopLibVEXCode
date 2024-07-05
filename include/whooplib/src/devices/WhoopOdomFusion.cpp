@@ -128,6 +128,11 @@ Pose WhoopOdomFusion::get_pose(){
     return p;
 }
 
+TwoDPose WhoopOdomFusion::get_pose_2d(){
+    Pose p = get_pose();
+    return TwoDPose(p.x, p.y, p.yaw);
+}
+
 bool WhoopOdomFusion::is_moving(double rads_s_threshold){
     return odom_offset->is_moving(rads_s_threshold);
 }

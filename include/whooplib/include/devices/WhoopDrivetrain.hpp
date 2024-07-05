@@ -63,6 +63,8 @@ private:
     void step_disabled();
     void step_autonomous();
 
+    bool auton_traveling = false;
+
 protected:
     // Upon initialization
     WhoopController* whoop_controller; // Controller object for receiving input from VEX controllers.
@@ -75,12 +77,13 @@ protected:
     PurePursuitConductor pursuit_conductor;
 
     bool drive_calibrated = false;
+
+    bool autonomous_driving = false;
 private:
     // Initializes motor groups directly from pointers.
     void init_motor_groups(WhoopMotorGroup* leftGroup, WhoopMotorGroup* rightGroup);
     // Initializes motor groups from a vector of motors.
     void init_motor_groups(const std::vector<WhoopMotor*>& leftMotors, const std::vector<WhoopMotor*>& rightMotors);
-
 public:
     vex::mutex thread_lock;  // Mutex for synchronizing access to drivetrain components.
     drivetrainState drive_state = drivetrainState::mode_disabled; // Current operational state of the drivetrain.
@@ -106,6 +109,49 @@ public:
      * @param rightMotors Vector of motors on the right side.
      */
     WhoopDrivetrain(PursuitParams* default_pursuit_parameters, WhoopOdomFusion* odom_fusion, PoseUnits pose_units, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors); 
+
+    /**
+     * This drives to a designated point using pure pursuit on a dubins curve
+     * @param x The x position to travel to, in specified units configured
+     * @param y The y position to travel to, in specified units configured
+     */
+    void drive_to_point(double x, double y);
+
+    /**
+     * This drives to a designated point using pure pursuit on a dubins curve
+     * @param x The x position to travel to, in specified units configured
+     * @param y The y position to travel to, in specified units configured
+     * @param timeout_seconds The timeout of the movement, in seconds
+     */
+    void drive_to_point(double x, double y, double timeout_seconds);
+
+    /**
+     * This drives to a designated pose using pure pursuit on a dubins curve
+     * @param x The x position to travel to, in specified units configured
+     * @param y The y position to travel to, in specified units configured
+     * @param yaw The yaw rotation to travel to, in specified units configured
+     */
+    void drive_to_pose(double x, double y, double yaw);
+
+    /**
+     * This drives to a designated pose using pure pursuit on a dubins curve
+     * @param x The x position to travel to, in specified units configured
+     * @param y The y position to travel to, in specified units configured
+     * @param yaw The yaw rotation to travel to, in specified units configured
+     * @param timeout_seconds The timeout of the movement, in seconds
+     */
+    void drive_to_pose(double x, double y, double yaw, double timeout_seconds);
+
+    /**
+     * This drives to a designated pose using pure pursuit on a dubins curve
+     * @param x The x position to travel to, in specified units configured
+     * @param y The y position to travel to, in specified units configured
+     * @param yaw The yaw rotation to travel to, in specified units configured
+     * @param timeout_seconds The timeout of the movement, in seconds
+     * @param turning_radius The radius, in meters, of the turning
+     */
+    void drive_to_pose(double x, double y, double yaw, double timeout_seconds, double turning_radius);
+
 
     /**
      * Sets the operational state of the drivetrain.
