@@ -296,8 +296,29 @@ Discarded input sections
  .ARM.attributes
                 0x00000000       0x3a build/include/whooplib/src/calculators/LowPassFilter.o
  .llvm_addrsig  0x00000000        0x0 build/include/whooplib/src/calculators/LowPassFilter.o
- .text          0x00000000        0x0 build/include/whooplib/src/calculators/WheelOdom.o
- .llvm_addrsig  0x00000000        0x0 build/include/whooplib/src/calculators/WheelOdom.o
+ .text          0x00000000        0x0 build/include/whooplib/src/calculators/PID.o
+ .text._ZN3PIDC2Efffff
+                0x00000000       0x38 build/include/whooplib/src/calculators/PID.o
+ .ARM.exidx.text._ZN3PIDC2Efffff
+                0x00000000        0x8 build/include/whooplib/src/calculators/PID.o
+ .text._ZN3PIDC2Effffffff
+                0x00000000       0x50 build/include/whooplib/src/calculators/PID.o
+ .ARM.exidx.text._ZN3PIDC2Effffffff
+                0x00000000        0x8 build/include/whooplib/src/calculators/PID.o
+ .text._ZN3PID4stepEf
+                0x00000000       0xd0 build/include/whooplib/src/calculators/PID.o
+ .ARM.exidx.text._ZN3PID4stepEf
+                0x00000000        0x8 build/include/whooplib/src/calculators/PID.o
+ .text._ZN3PID10is_settledEv
+                0x00000000       0x58 build/include/whooplib/src/calculators/PID.o
+ .ARM.exidx.text._ZN3PID10is_settledEv
+                0x00000000        0x8 build/include/whooplib/src/calculators/PID.o
+ .comment       0x00000000       0x2e build/include/whooplib/src/calculators/PID.o
+ .note.GNU-stack
+                0x00000000        0x0 build/include/whooplib/src/calculators/PID.o
+ .ARM.attributes
+                0x00000000       0x3a build/include/whooplib/src/calculators/PID.o
+ .llvm_addrsig  0x00000000        0x0 build/include/whooplib/src/calculators/PID.o
  .text          0x00000000        0x0 build/include/whooplib/src/calculators/RollingAverage.o
  .text._ZN20RollingAverageFilterC2Ei
                 0x00000000       0xbc build/include/whooplib/src/calculators/RollingAverage.o
@@ -449,6 +470,8 @@ Discarded input sections
  .rodata.str1.1
                 0x00000000        0x2 build/include/whooplib/src/calculators/TwoDPose.o
  .llvm_addrsig  0x00000000        0x2 build/include/whooplib/src/calculators/TwoDPose.o
+ .text          0x00000000        0x0 build/include/whooplib/src/calculators/WheelOdom.o
+ .llvm_addrsig  0x00000000        0x0 build/include/whooplib/src/calculators/WheelOdom.o
  .text          0x00000000        0x0 build/include/whooplib/src/devices/WhoopDrivetrain.o
  .group         0x00000000       0x10 build/include/whooplib/src/devices/WhoopDrivetrain.o
  .text._ZN15WhoopDrivetrain17init_motor_groupsERKSt6vectorIP10WhoopMotorSaIS2_EES6_
@@ -9010,35 +9033,35 @@ Linker script and memory map
  .text._ZNSs12_S_constructIN9__gnu_cxx17__normal_iteratorIPKcSsEEEEPcT_S6_RKSaIcESt20forward_iterator_tag
                 0x03802ee8       0x84 build/include/whooplib/src/toolbox.o
                 0x03802ee8                char* std::string::_S_construct<__gnu_cxx::__normal_iterator<char const*, std::string> >(__gnu_cxx::__normal_iterator<char const*, std::string>, __gnu_cxx::__normal_iterator<char const*, std::string>, std::allocator<char> const&, std::forward_iterator_tag)
- *fill*         0x03802f6c        0x4 
- .text._ZN9WheelOdom12set_positionEddd
-                0x03802f70       0x98 build/include/whooplib/src/calculators/WheelOdom.o
-                0x03802f70                WheelOdom::set_position(double, double, double)
- .text._ZN9WheelOdom22set_physical_distancesEdd
-                0x03803008       0x18 build/include/whooplib/src/calculators/WheelOdom.o
-                0x03803008                WheelOdom::set_physical_distances(double, double)
- .text._ZN9WheelOdom11update_poseEddd
-                0x03803020      0x144 build/include/whooplib/src/calculators/WheelOdom.o
-                0x03803020                WheelOdom::update_pose(double, double, double)
  .text._ZN8TwoDPoseC2Eddd
-                0x03803164       0x1c build/include/whooplib/src/calculators/TwoDPose.o
-                0x03803164                TwoDPose::TwoDPose(double, double, double)
-                0x03803164                TwoDPose::TwoDPose(double, double, double)
+                0x03802f6c       0x1c build/include/whooplib/src/calculators/TwoDPose.o
+                0x03802f6c                TwoDPose::TwoDPose(double, double, double)
+                0x03802f6c                TwoDPose::TwoDPose(double, double, double)
  .text._ZNK8TwoDPose12toWorldSpaceERKS_
-                0x03803180       0xac build/include/whooplib/src/calculators/TwoDPose.o
-                0x03803180                TwoDPose::toWorldSpace(TwoDPose const&) const
+                0x03802f88       0xac build/include/whooplib/src/calculators/TwoDPose.o
+                0x03802f88                TwoDPose::toWorldSpace(TwoDPose const&) const
  .text._ZNK8TwoDPosemlERKS_
-                0x0380322c       0x10 build/include/whooplib/src/calculators/TwoDPose.o
-                0x0380322c                TwoDPose::operator*(TwoDPose const&) const
+                0x03803034       0x10 build/include/whooplib/src/calculators/TwoDPose.o
+                0x03803034                TwoDPose::operator*(TwoDPose const&) const
  .text._ZN8TwoDPosemLERKS_
-                0x0380323c       0x44 build/include/whooplib/src/calculators/TwoDPose.o
-                0x0380323c                TwoDPose::operator*=(TwoDPose const&)
+                0x03803044       0x44 build/include/whooplib/src/calculators/TwoDPose.o
+                0x03803044                TwoDPose::operator*=(TwoDPose const&)
  .text._ZNK8TwoDPose13toObjectSpaceEddd
-                0x03803280       0xcc build/include/whooplib/src/calculators/TwoDPose.o
-                0x03803280                TwoDPose::toObjectSpace(double, double, double) const
+                0x03803088       0xcc build/include/whooplib/src/calculators/TwoDPose.o
+                0x03803088                TwoDPose::toObjectSpace(double, double, double) const
  .text._ZNK8TwoDPosengEv
-                0x0380334c       0x18 build/include/whooplib/src/calculators/TwoDPose.o
-                0x0380334c                TwoDPose::operator-() const
+                0x03803154       0x18 build/include/whooplib/src/calculators/TwoDPose.o
+                0x03803154                TwoDPose::operator-() const
+ *fill*         0x0380316c        0x4 
+ .text._ZN9WheelOdom12set_positionEddd
+                0x03803170       0x98 build/include/whooplib/src/calculators/WheelOdom.o
+                0x03803170                WheelOdom::set_position(double, double, double)
+ .text._ZN9WheelOdom22set_physical_distancesEdd
+                0x03803208       0x18 build/include/whooplib/src/calculators/WheelOdom.o
+                0x03803208                WheelOdom::set_physical_distances(double, double)
+ .text._ZN9WheelOdom11update_poseEddd
+                0x03803220      0x144 build/include/whooplib/src/calculators/WheelOdom.o
+                0x03803220                WheelOdom::update_pose(double, double, double)
  .text._ZN15WhoopDrivetrain17init_motor_groupsEP15WhoopMotorGroupS1_
                 0x03803364       0xf8 build/include/whooplib/src/devices/WhoopDrivetrain.o
                 0x03803364                WhoopDrivetrain::init_motor_groups(WhoopMotorGroup*, WhoopMotorGroup*)
@@ -11519,17 +11542,8 @@ Linker script and memory map
                                   0x8 (size before relaxing)
  .ARM.exidx.text._ZNSs12_S_constructIN9__gnu_cxx17__normal_iteratorIPKcSsEEEEPcT_S6_RKSaIcESt20forward_iterator_tag
                 0x0380dbdc        0x8 build/include/whooplib/src/toolbox.o
- .ARM.exidx.text._ZN9WheelOdom12set_positionEddd
-                0x0380dbe4        0x8 build/include/whooplib/src/calculators/WheelOdom.o
- .ARM.exidx.text._ZN9WheelOdom22set_physical_distancesEdd
-                0x0380dbec        0x0 build/include/whooplib/src/calculators/WheelOdom.o
-                                  0x8 (size before relaxing)
- .ARM.exidx.text._ZN9WheelOdom11update_poseEddd
-                0x0380dbec        0x0 build/include/whooplib/src/calculators/WheelOdom.o
-                                  0x8 (size before relaxing)
  .ARM.exidx.text._ZN8TwoDPoseC2Eddd
-                0x0380dbec        0x0 build/include/whooplib/src/calculators/TwoDPose.o
-                                  0x8 (size before relaxing)
+                0x0380dbe4        0x8 build/include/whooplib/src/calculators/TwoDPose.o
  .ARM.exidx.text._ZNK8TwoDPose12toWorldSpaceERKS_
                 0x0380dbec        0x8 build/include/whooplib/src/calculators/TwoDPose.o
  .ARM.exidx.text._ZNK8TwoDPosemlERKS_
@@ -11540,6 +11554,15 @@ Linker script and memory map
                 0x0380dc04        0x8 build/include/whooplib/src/calculators/TwoDPose.o
  .ARM.exidx.text._ZNK8TwoDPosengEv
                 0x0380dc0c        0x8 build/include/whooplib/src/calculators/TwoDPose.o
+ .ARM.exidx.text._ZN9WheelOdom12set_positionEddd
+                0x0380dc14        0x0 build/include/whooplib/src/calculators/WheelOdom.o
+                                  0x8 (size before relaxing)
+ .ARM.exidx.text._ZN9WheelOdom22set_physical_distancesEdd
+                0x0380dc14        0x0 build/include/whooplib/src/calculators/WheelOdom.o
+                                  0x8 (size before relaxing)
+ .ARM.exidx.text._ZN9WheelOdom11update_poseEddd
+                0x0380dc14        0x0 build/include/whooplib/src/calculators/WheelOdom.o
+                                  0x8 (size before relaxing)
  .ARM.exidx.text._ZN15WhoopDrivetrain17init_motor_groupsEP15WhoopMotorGroupS1_
                 0x0380dc14        0x8 build/include/whooplib/src/devices/WhoopDrivetrain.o
  .ARM.exidx.text._ZNSt10unique_ptrI15WhoopMotorGroupSt14default_deleteIS0_EEaSEOS3_
@@ -11935,9 +11958,9 @@ Linker script and memory map
  .ARM.attributes
                 0x0380e156       0x3a build/include/whooplib/src/toolbox.o
  .ARM.attributes
-                0x0380e190       0x3a build/include/whooplib/src/calculators/WheelOdom.o
+                0x0380e190       0x3a build/include/whooplib/src/calculators/TwoDPose.o
  .ARM.attributes
-                0x0380e1ca       0x3a build/include/whooplib/src/calculators/TwoDPose.o
+                0x0380e1ca       0x3a build/include/whooplib/src/calculators/WheelOdom.o
  .ARM.attributes
                 0x0380e204       0x3a build/include/whooplib/src/devices/WhoopDrivetrain.o
  .ARM.attributes
@@ -12279,9 +12302,10 @@ LOAD build/include/whooplib/src/toolbox.o
 LOAD build/include/whooplib/src/calculators/PurePursuit.o
 LOAD build/include/whooplib/src/calculators/KalmanFilter.o
 LOAD build/include/whooplib/src/calculators/LowPassFilter.o
-LOAD build/include/whooplib/src/calculators/WheelOdom.o
+LOAD build/include/whooplib/src/calculators/PID.o
 LOAD build/include/whooplib/src/calculators/RollingAverage.o
 LOAD build/include/whooplib/src/calculators/TwoDPose.o
+LOAD build/include/whooplib/src/calculators/WheelOdom.o
 LOAD build/include/whooplib/src/devices/WhoopDrivetrain.o
 LOAD build/include/whooplib/src/devices/WhoopOdomFusion.o
 LOAD build/include/whooplib/src/devices/WhoopMotorGroup.o
@@ -12309,8 +12333,8 @@ OUTPUT(build/WhoopLibVEXCode.elf elf32-littlearm)
                                  0x2e (size before relaxing)
  .comment       0x00000000       0x2e build/src/robot-config.o
  .comment       0x00000000       0x2e build/include/whooplib/src/toolbox.o
- .comment       0x00000000       0x2e build/include/whooplib/src/calculators/WheelOdom.o
  .comment       0x00000000       0x2e build/include/whooplib/src/calculators/TwoDPose.o
+ .comment       0x00000000       0x2e build/include/whooplib/src/calculators/WheelOdom.o
  .comment       0x00000000       0x2e build/include/whooplib/src/devices/WhoopDrivetrain.o
  .comment       0x00000000       0x2e build/include/whooplib/src/devices/WhoopOdomFusion.o
  .comment       0x00000000       0x2e build/include/whooplib/src/devices/WhoopMotorGroup.o
@@ -12356,9 +12380,9 @@ OUTPUT(build/WhoopLibVEXCode.elf elf32-littlearm)
  .note.GNU-stack
                 0x00000000        0x0 build/include/whooplib/src/toolbox.o
  .note.GNU-stack
-                0x00000000        0x0 build/include/whooplib/src/calculators/WheelOdom.o
- .note.GNU-stack
                 0x00000000        0x0 build/include/whooplib/src/calculators/TwoDPose.o
+ .note.GNU-stack
+                0x00000000        0x0 build/include/whooplib/src/calculators/WheelOdom.o
  .note.GNU-stack
                 0x00000000        0x0 build/include/whooplib/src/devices/WhoopDrivetrain.o
  .note.GNU-stack

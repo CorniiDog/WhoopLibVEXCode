@@ -25,6 +25,7 @@
 #include "whooplib/include/calculators/LowPassFilter.hpp"
 #include "whooplib/include/calculators/KalmanFilter.hpp"
 #include "whooplib/include/calculators/PurePursuit.hpp"
+#include "whooplib/include/calculators/PurePursuitConductor.hpp"
 
 // Nodes
 #include "whooplib/include/toolbox.hpp"

@@ -116,8 +116,7 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
     double dx = q[0] - current_position.x;
     double dy = q[1] - current_position.y;
     double path_angle = atan2(dy, dx);
-    double steering_angle = path_angle - current_position.yaw;
-    steering_angle = atan2(sin(steering_angle), cos(steering_angle)); // Normalize angle
+    double steering_angle = normalize_angle(path_angle - current_position.yaw);
 
     return PursuitEstimate(true, steering_angle, point_ahead_distance);
 }

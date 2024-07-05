@@ -15,9 +15,9 @@
 
 struct PursuitEstimate
 {
-    bool is_valid = false;
-    double steering_angle = 0;
-    double distance = 0;
+    bool is_valid;
+    double steering_angle;
+    double distance;
 
     /**
      * @param is_valid would be true if the pursuit estimate returned no error
