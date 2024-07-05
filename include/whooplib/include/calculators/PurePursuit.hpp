@@ -50,11 +50,11 @@ private:
     double num_segments;
     double step_size;
 
-    std::vector<barebonesPose> pursuit_points;
-
     void computeDubinsPath();
 
 public:
+    std::vector<barebonesPose> pursuit_points;
+
     int create_points(double q[3], double x);
 
     /**

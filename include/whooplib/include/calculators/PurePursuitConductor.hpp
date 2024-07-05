@@ -89,15 +89,16 @@ struct PursuitResult
 
 class PurePursuitConductor
 {
+private:
     PID turn_pid;
     PID forward_pid;
-
+public:
     PurePursuitPath pursuit_path;
+private:
     PursuitParams *default_pursuit_parameters = nullptr;
-
+public:
     bool enabled = false;
 
-public:
     /**
      * Constructs the conductor for the pure pursuit object
      * @param default_pursuit_parameters The parameters for the pure pursuit

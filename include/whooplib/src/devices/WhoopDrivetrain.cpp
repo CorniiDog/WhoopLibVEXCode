@@ -248,8 +248,8 @@ void WhoopDrivetrain::step_autonomous()
 {
     if (auton_traveling)
     {
-        PursuitResult result = pursuit_conductor.step(odom_fusion->get_pose_2d());
-        if (result.is_completed)
+        pursuit_result = pursuit_conductor.step(odom_fusion->get_pose_2d());
+        if (pursuit_result.is_completed)
         {   
             Brain.Screen.clearLine(1);
             Brain.Screen.setCursor(1,1);
@@ -258,19 +258,16 @@ void WhoopDrivetrain::step_autonomous()
             return;
         }
 
-        if (!result.is_valid)
+        if (!pursuit_result.is_valid)
         {
             Brain.Screen.clearLine(1);
             Brain.Screen.setCursor(1,1);
             Brain.Screen.print("Not accepting valid");
             return;
         }
-        Brain.Screen.clearLine(1);
-        Brain.Screen.setCursor(1,1);
-        Brain.Screen.print("Running");
 
-        //left_motor_group->spin(result.forward_power + std::min(-result.steering_power, 0.0));
-        //right_motor_group->spin(result.forward_power + std::min(result.steering_power, 0.0));
+        //left_motor_group->spin(pursuit_result.forward_power + std::min(pursuit_result.steering_power, 0.0));
+        //right_motor_group->spin(pursuit_result.forward_power + std::min(-pursuit_result.steering_power, 0.0));
     }
     else
     {
@@ -295,6 +292,40 @@ void WhoopDrivetrain::__step()
         step_disabled();
         break;
     }
+}
+
+void WhoopDrivetrain::display_map(){
+    double m_to_pixels = 30;
+    double screen_offset = 3.6*30;
+    Brain.Screen.clearScreen();
+    Brain.Screen.setPenColor(color(0, 255, 0));
+    Brain.Screen.setFillColor(color::transparent);
+    if(pursuit_conductor.enabled){
+        int size = pursuit_conductor.pursuit_path.pursuit_points.size();
+        for(int i = 0; i < size; ++i){
+            barebonesPose pose = pursuit_conductor.pursuit_path.pursuit_points[i];
+            TwoDPose position_on_screen(pose.x*m_to_pixels+screen_offset, -pose.y*m_to_pixels+screen_offset, pose.yaw);
+            Brain.Screen.drawPixel(position_on_screen.x, position_on_screen.y);
+        }
+    }
+
+
+    // Display robot position
+    TwoDPose robot_pose = odom_fusion->get_pose_2d();
+    TwoDPose position_on_screen(robot_pose.x*m_to_pixels+screen_offset, -robot_pose.y*m_to_pixels+screen_offset, robot_pose.yaw);
+    Brain.Screen.setPenColor(color(255, 0, 0));
+    Brain.Screen.drawCircle(position_on_screen.x, position_on_screen.y, 4);
+    Brain.Screen.drawLine(position_on_screen.x, position_on_screen.y, position_on_screen.x+10*cos(position_on_screen.yaw), position_on_screen.y-10*sin(position_on_screen.yaw));
+    Brain.Screen.setPenColor(color(255, 255, 255));
+
+    Brain.Screen.setCursor(1,1);
+    Brain.Screen.print("Distance: %s", doubleToString(pursuit_result.distance).c_str());
+    Brain.Screen.setCursor(2,1);
+    Brain.Screen.print("Turn: %s", doubleToString(pursuit_result.steering_angle).c_str());
+    Brain.Screen.setCursor(3,1);
+    Brain.Screen.print("Distance Power: %s", doubleToString(pursuit_result.forward_power).c_str());
+    Brain.Screen.setCursor(4,1);
+    Brain.Screen.print("Steering Power: %s", doubleToString(pursuit_result.steering_power).c_str());
 }
 
 /**

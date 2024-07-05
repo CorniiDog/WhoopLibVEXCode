@@ -79,12 +79,15 @@ protected:
     bool drive_calibrated = false;
 
     bool autonomous_driving = false;
+
+    PursuitResult pursuit_result;
 private:
     // Initializes motor groups directly from pointers.
     void init_motor_groups(WhoopMotorGroup* leftGroup, WhoopMotorGroup* rightGroup);
     // Initializes motor groups from a vector of motors.
     void init_motor_groups(const std::vector<WhoopMotor*>& leftMotors, const std::vector<WhoopMotor*>& rightMotors);
 public:
+
     vex::mutex thread_lock;  // Mutex for synchronizing access to drivetrain components.
     drivetrainState drive_state = drivetrainState::mode_disabled; // Current operational state of the drivetrain.
 
@@ -194,6 +197,11 @@ public:
      * @returns units desciber, as a Pose/UnitsObject
      */
     PoseUnits get_units();
+
+    /**
+     * Displays the map onto the screen that the robot consides itself to be
+     */
+    void display_map();
 
 protected:
     /**

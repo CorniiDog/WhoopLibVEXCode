@@ -139,7 +139,7 @@ PursuitParams pursuit_parameters(
     to_rad(15),    // Settle Rotation. Exits when within this rotation of target, in radians
     0.4,           // Minimum time to be considered settled, in seconds
     0,             // Time after which to give up and move on, in seconds (set to 0 to disable)
-    10,            // Turning (kP) Proportional Tuning
+    5,            // Turning (kP) Proportional Tuning
     0,             // Turning (kI) Integral Tuning
     0,             // Turning (kD) Derivative Tuning
     to_rad(0),     // The rotation distance (error), in radians, to activate turning_ki
@@ -208,10 +208,11 @@ void autonomous(void)
   robot_drivetrain.set_state(drivetrainState::mode_autonomous);
 
   wait(10, sec);
-  robot_drivetrain.drive_to_pose(30, 30, 180);
+  robot_drivetrain.drive_to_pose(20, 20, -45);
   while (1)
   {
-    wait(1, sec);
+    robot_drivetrain.display_map();
+    wait(20, msec);
   }
 }
 

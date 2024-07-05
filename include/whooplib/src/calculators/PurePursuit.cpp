@@ -45,12 +45,6 @@ void PurePursuitPath::computeDubinsPath()
         {
             path_valid = false;
         }
-
-        if(path_valid){
-            Brain.Screen.clearLine(6);
-            Brain.Screen.setCursor(6,1);
-            Brain.Screen.print("Path Length: %s", doubleToString(to_inches(t_max)).c_str());
-        }
     }
 }
 
