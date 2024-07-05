@@ -19,13 +19,15 @@ struct PursuitEstimate
     bool is_valid;
     double steering_angle;
     double distance;
+    bool is_past_point;
 
     /**
      * @param is_valid would be true if the pursuit estimate returned no error
      * @param steering_angle would be the angle to turn towards for course correction in radians, counter-clockwise-positive
      * @param distance would be the distance from the target, in meters
+     * @param is_past_point Returns true if the robot passes the point slightly
      */
-    PursuitEstimate(bool is_valid = false, double steering_angle = 0, double distance = 0) : is_valid(is_valid), steering_angle(steering_angle), distance(distance) {}
+    PursuitEstimate(bool is_valid = false, double steering_angle = 0, double distance = 0, bool is_past_point = false) : is_valid(is_valid), steering_angle(steering_angle), distance(distance), is_past_point(is_past_point) {}
 };
 
 struct barebonesPose
@@ -41,7 +43,12 @@ class PurePursuitPath
 private:
     TwoDPose start, end;
     double turning_radius;
+
+    TwoDPose end_pushed_back;
+public:
     double lookahead_distance;
+    barebonesPose lookahead_pos;
+private:
     double q0[3] = {0, 0, 0};
     double q1[3] = {0, 0, 0};
     DubinsPath path;
@@ -76,7 +83,7 @@ public:
      * Also includes "steering_angle" which is the angle to steer to (if + means steer left, if - means steer right).
      * "distance" is how far away from the lookahead point.
      */
-    PursuitEstimate calculate_pursuit_estimate(TwoDPose current_position, bool find_closest_if_off_course = true);
+    PursuitEstimate calculate_pursuit_estimate(TwoDPose current_position, bool find_closest_if_off_course = true, double deviation_min=0);
 };
 
 #endif // PURE_PURSUIT_HPP

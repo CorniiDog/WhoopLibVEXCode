@@ -56,12 +56,12 @@ void WhoopDrivetrain::set_state(drivetrainState state)
     drive_state = state;
 }
 
-void WhoopDrivetrain::drive_to_point(double x, double y)
+void WhoopDrivetrain::drive_to_point(double x, double y, bool wait_until_completed)
 {
-    drive_to_point(x, y, -1);
+    drive_to_point(x, y, -1, wait_until_completed);
 }
 
-void WhoopDrivetrain::drive_to_point(double x, double y, double timeout_seconds)
+void WhoopDrivetrain::drive_to_point(double x, double y, double timeout_seconds, bool wait_until_completed)
 {
     // Converting from standardized meters to inches
     if (pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_ccw || pose_units == PoseUnits::in_rad_cw)
@@ -76,19 +76,26 @@ void WhoopDrivetrain::drive_to_point(double x, double y, double timeout_seconds)
     TwoDPose pose(x, y, yaw);
     pursuit_conductor.generate_path(robot_pose, pose, timeout_seconds);
     auton_traveling = true;
+
+    if(wait_until_completed){
+        this->wait_until_completed();
+    }
+
+    last_desired_position = desired_position;
+    desired_position = pose;
 }
 
-void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw)
+void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, bool wait_until_completed)
 {
-    drive_to_pose(x, y, yaw, -1, -1);
+    drive_to_pose(x, y, yaw, -1, -1, wait_until_completed);
 }
 
-void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, double timeout_seconds)
+void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, double timeout_seconds, bool wait_until_completed)
 {
-    drive_to_pose(x, y, yaw, timeout_seconds, -1);
+    drive_to_pose(x, y, yaw, timeout_seconds, -1, wait_until_completed);
 }
 
-void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, double timeout_seconds, double turning_radius)
+void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, double timeout_seconds, double turning_radius, bool wait_until_completed)
 {
     // Converting from inches to standardized meters
     if (pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_ccw || pose_units == PoseUnits::in_rad_cw)
@@ -113,6 +120,13 @@ void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, double timeo
     TwoDPose pose(x, y, yaw);
     pursuit_conductor.generate_path(odom_fusion->get_pose_2d(), pose, timeout_seconds, turning_radius);
     auton_traveling = true;
+
+    if(wait_until_completed){
+        this->wait_until_completed();
+    }
+
+    last_desired_position = desired_position;
+    desired_position = pose;
 }
 
 // This is the protocol for calibrating the drivetrain while in a disabled state.
@@ -214,6 +228,12 @@ void WhoopDrivetrain::set_pose(double x, double y, double yaw)
     odom_fusion->tare(x, y, yaw);
 }
 
+void WhoopDrivetrain::wait_until_completed(){
+    while(auton_traveling){
+        wait(5, msec);
+    }
+}
+
 void WhoopDrivetrain::step_usercontrol()
 {
     switch (whoop_controller->joystick_mode)
@@ -251,23 +271,24 @@ void WhoopDrivetrain::step_autonomous()
         pursuit_result = pursuit_conductor.step(odom_fusion->get_pose_2d());
         if (pursuit_result.is_completed)
         {   
-            Brain.Screen.clearLine(1);
-            Brain.Screen.setCursor(1,1);
-            Brain.Screen.print("Completed");
             auton_traveling = false;
             return;
         }
 
         if (!pursuit_result.is_valid)
         {
-            Brain.Screen.clearLine(1);
-            Brain.Screen.setCursor(1,1);
-            Brain.Screen.print("Not accepting valid");
+            auton_traveling = false;
             return;
         }
 
-        //left_motor_group->spin(pursuit_result.forward_power + std::min(pursuit_result.steering_power, 0.0));
-        //right_motor_group->spin(pursuit_result.forward_power + std::min(-pursuit_result.steering_power, 0.0));
+        if(pursuit_conductor.forward_pid.is_settled()){
+            left_motor_group->spin(pursuit_result.forward_power - pursuit_result.steering_power/1.5);
+            right_motor_group->spin(pursuit_result.forward_power + pursuit_result.steering_power/1.5); 
+        }
+        else{
+            left_motor_group->spin(pursuit_result.forward_power + std::min(-pursuit_result.steering_power, 0.0));
+            right_motor_group->spin(pursuit_result.forward_power + std::min(pursuit_result.steering_power, 0.0)); 
+        }
     }
     else
     {
@@ -304,28 +325,45 @@ void WhoopDrivetrain::display_map(){
         int size = pursuit_conductor.pursuit_path.pursuit_points.size();
         for(int i = 0; i < size; ++i){
             barebonesPose pose = pursuit_conductor.pursuit_path.pursuit_points[i];
-            TwoDPose position_on_screen(pose.x*m_to_pixels+screen_offset, -pose.y*m_to_pixels+screen_offset, pose.yaw);
-            Brain.Screen.drawPixel(position_on_screen.x, position_on_screen.y);
+            TwoDPose pose_on_screen(pose.x*m_to_pixels+screen_offset, -pose.y*m_to_pixels+screen_offset, pose.yaw);
+            Brain.Screen.drawPixel(pose_on_screen.x, pose_on_screen.y);
         }
     }
 
 
     // Display robot position
     TwoDPose robot_pose = odom_fusion->get_pose_2d();
-    TwoDPose position_on_screen(robot_pose.x*m_to_pixels+screen_offset, -robot_pose.y*m_to_pixels+screen_offset, robot_pose.yaw);
+    TwoDPose robot_pose_on_screen(robot_pose.x*m_to_pixels+screen_offset, -robot_pose.y*m_to_pixels+screen_offset, robot_pose.yaw);
     Brain.Screen.setPenColor(color(255, 0, 0));
-    Brain.Screen.drawCircle(position_on_screen.x, position_on_screen.y, 4);
-    Brain.Screen.drawLine(position_on_screen.x, position_on_screen.y, position_on_screen.x+10*cos(position_on_screen.yaw), position_on_screen.y-10*sin(position_on_screen.yaw));
+    Brain.Screen.drawCircle(robot_pose_on_screen.x, robot_pose_on_screen.y, 2);
+    Brain.Screen.drawLine(robot_pose_on_screen.x, robot_pose_on_screen.y, robot_pose_on_screen.x+10*cos(robot_pose_on_screen.yaw), robot_pose_on_screen.y-10*sin(robot_pose_on_screen.yaw));
+
+    // Draw robot lookahead radius
+    Brain.Screen.setPenColor(color(255, 150, 0));
+    Brain.Screen.drawCircle(robot_pose_on_screen.x, robot_pose_on_screen.y, pursuit_conductor.pursuit_path.lookahead_distance*m_to_pixels);
+    
+    // Draw lookahead point
+    Brain.Screen.setPenColor(color(255, 255, 255));
+    barebonesPose lookahead_pos = pursuit_conductor.pursuit_path.lookahead_pos;
+    TwoDPose lookahead_pose_on_screen(lookahead_pos.x*m_to_pixels+screen_offset, -lookahead_pos.y*m_to_pixels+screen_offset, 0);
+    Brain.Screen.drawCircle(lookahead_pose_on_screen.x, lookahead_pose_on_screen.y, 2);
+
+
     Brain.Screen.setPenColor(color(255, 255, 255));
 
     Brain.Screen.setCursor(1,1);
-    Brain.Screen.print("Distance: %s", doubleToString(pursuit_result.distance).c_str());
+    Brain.Screen.print("Distance: %.1f | Distance Power %.1f", pursuit_result.distance, pursuit_result.forward_power);
     Brain.Screen.setCursor(2,1);
-    Brain.Screen.print("Turn: %s", doubleToString(pursuit_result.steering_angle).c_str());
-    Brain.Screen.setCursor(3,1);
-    Brain.Screen.print("Distance Power: %s", doubleToString(pursuit_result.forward_power).c_str());
-    Brain.Screen.setCursor(4,1);
-    Brain.Screen.print("Steering Power: %s", doubleToString(pursuit_result.steering_power).c_str());
+    Brain.Screen.print("Turn: %.1f | Turn Power: %.1f", pursuit_result.steering_angle, pursuit_result.steering_power);
+
+    TwoDPose current_pose = odom_fusion->get_pose_2d();
+    Brain.Screen.setCursor(3, 1);
+    Brain.Screen.print("Position: %.2f %.2f %.2f", current_pose.x, current_pose.y, current_pose.yaw);
+
+    Brain.Screen.setCursor(4, 1);
+    Brain.Screen.print("Lookahead Point: %.2f %.2f %.2f", get_units_str().c_str(), lookahead_pos.x, lookahead_pos.y, lookahead_pos.yaw);
+
+
 }
 
 /**

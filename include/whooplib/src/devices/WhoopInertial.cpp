@@ -11,17 +11,20 @@
 #include "whooplib/include/devices/WhoopInertial.hpp"
 #include "whooplib/include/toolbox.hpp"
 
+#include "whooplib/include/devices/WhoopMotor.hpp"
+
 // Initialization Constructors
 WhoopInertial::WhoopInertial(std::int32_t port) : vex_inertial(inertial(port)){} 
 
-WhoopInertial::WhoopInertial(std::int32_t port, bool reversed) : is_reversed(reversed), vex_inertial(inertial(port)){} 
+WhoopInertial::WhoopInertial(std::int32_t port, double correction_multiplier): 
+    vex_inertial(inertial(port))
+{
+    this->correction_multiplier = correction_multiplier;
+}
 
 // Receiving rotation
 double WhoopInertial::get_yaw(){
-    double yaw = -vex_inertial.heading(rotationUnits::deg);
-
-    if (is_reversed)
-        yaw *= -1;
+    double yaw = -(vex_inertial.heading(rotationUnits::deg) * correction_multiplier);
 
     yaw += yaw_offset;
 

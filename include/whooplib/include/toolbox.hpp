@@ -142,6 +142,20 @@ double area_from_diameter(double diameter);
  */
 double safeDivide(double numerator, double denominator, double max_possible_number=std::numeric_limits<double>::infinity());
 
-
+/**
+ * This clamps to volts value [-12.0, 12.0]
+ * @param volts is the volts to pass through, as a double
+ * @returns the clamped variables
+ */
 double volts_clamp(double volts);
+
+/**
+ * Clamps a value between [min, max]
+ */
+double clamp(double val, double min, double max);
+
+/**
+ * The opposite of a deadband function. If within the deadband, it returns the deadband or -deadband, based upon 0 at middle
+ */
+double deadband_inverse(double val, double deadband);
 #endif // TOOLBOX_HPP

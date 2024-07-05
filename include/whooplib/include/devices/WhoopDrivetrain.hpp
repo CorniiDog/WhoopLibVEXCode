@@ -81,6 +81,9 @@ protected:
     bool autonomous_driving = false;
 
     PursuitResult pursuit_result;
+
+    TwoDPose desired_position;
+    TwoDPose last_desired_position;
 private:
     // Initializes motor groups directly from pointers.
     void init_motor_groups(WhoopMotorGroup* leftGroup, WhoopMotorGroup* rightGroup);
@@ -117,24 +120,27 @@ public:
      * This drives to a designated point using pure pursuit on a dubins curve
      * @param x The x position to travel to, in specified units configured
      * @param y The y position to travel to, in specified units configured
+     * @param wait_until_completed Set to false to set to non-blocking
      */
-    void drive_to_point(double x, double y);
+    void drive_to_point(double x, double y, bool wait_until_completed=true);
 
     /**
      * This drives to a designated point using pure pursuit on a dubins curve
      * @param x The x position to travel to, in specified units configured
      * @param y The y position to travel to, in specified units configured
      * @param timeout_seconds The timeout of the movement, in seconds
+     * @param wait_until_completed Set to false to set to non-blocking
      */
-    void drive_to_point(double x, double y, double timeout_seconds);
+    void drive_to_point(double x, double y, double timeout_seconds, bool wait_until_completed=true);
 
     /**
      * This drives to a designated pose using pure pursuit on a dubins curve
      * @param x The x position to travel to, in specified units configured
      * @param y The y position to travel to, in specified units configured
      * @param yaw The yaw rotation to travel to, in specified units configured
+     * @param wait_until_completed Set to false to set to non-blocking
      */
-    void drive_to_pose(double x, double y, double yaw);
+    void drive_to_pose(double x, double y, double yaw, bool wait_until_completed=true);
 
     /**
      * This drives to a designated pose using pure pursuit on a dubins curve
@@ -142,8 +148,9 @@ public:
      * @param y The y position to travel to, in specified units configured
      * @param yaw The yaw rotation to travel to, in specified units configured
      * @param timeout_seconds The timeout of the movement, in seconds
+     * @param wait_until_completed Set to false to set to non-blocking
      */
-    void drive_to_pose(double x, double y, double yaw, double timeout_seconds);
+    void drive_to_pose(double x, double y, double yaw, double timeout_seconds, bool wait_until_completed=true);
 
     /**
      * This drives to a designated pose using pure pursuit on a dubins curve
@@ -152,9 +159,14 @@ public:
      * @param yaw The yaw rotation to travel to, in specified units configured
      * @param timeout_seconds The timeout of the movement, in seconds
      * @param turning_radius The radius, in meters, of the turning
+     * @param wait_until_completed Set to false to set to non-blocking
      */
-    void drive_to_pose(double x, double y, double yaw, double timeout_seconds, double turning_radius);
+    void drive_to_pose(double x, double y, double yaw, double timeout_seconds, double turning_radius, bool wait_until_completed=true);
 
+    /**
+     * Waits until a drivetrain action during auton is complete.
+     */
+    void wait_until_completed();
 
     /**
      * Sets the operational state of the drivetrain.

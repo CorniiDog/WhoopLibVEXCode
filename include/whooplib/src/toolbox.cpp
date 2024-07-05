@@ -63,14 +63,28 @@ std::vector<std::string> read_messages_from_buffer(const std::string& buffer, co
     return messages;
 }
 
+double clamp(double val, double min, double max){
+    if(val > max){
+        return max;
+    }
+    if(val < min){
+        return min;
+    }
+    return val;
+}
+
+double deadband_inverse(double val, double deadband){
+    if(val > -deadband && val < 0){
+        return -deadband;
+    }
+    if(val < deadband && val > 0){
+        return deadband;
+    }
+    return val;
+}
+
 double volts_clamp(double volts){
-    if(volts > 12.0){
-        return 12.0;
-    }
-    if(volts < -12.0){
-        return -12.0;
-    }
-    return volts;
+    return clamp(volts, -12.0, 12.0);
 }
 
 // Function to get the latest message from buffer

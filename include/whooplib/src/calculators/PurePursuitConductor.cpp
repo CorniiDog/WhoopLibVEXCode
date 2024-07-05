@@ -51,7 +51,7 @@ void PurePursuitConductor::generate_path(TwoDPose start_position, TwoDPose desti
     forward_pid = PID(0, default_pursuit_parameters->forward_kp, default_pursuit_parameters->forward_ki, default_pursuit_parameters->forward_kp, default_pursuit_parameters->forward_i_activation, default_pursuit_parameters->settle_distance, default_pursuit_parameters->settle_time, t_out),
     turn_pid = PID(0, default_pursuit_parameters->turning_kp, default_pursuit_parameters->turning_ki, default_pursuit_parameters->turning_kd, default_pursuit_parameters->turning_i_activation, default_pursuit_parameters->settle_rotation, default_pursuit_parameters->settle_time, t_out),
     pursuit_path = PurePursuitPath(start_position, destination_position, turn_rad, default_pursuit_parameters->lookahead_distance, default_pursuit_parameters->num_path_segments);
-
+    this->end_position = destination_position;
     enabled = true;
 }
 
@@ -62,7 +62,7 @@ PursuitResult PurePursuitConductor::step(TwoDPose current_pose)
         return PursuitResult(true, 0, 0, 0, 0, true);
     }
 
-    PursuitEstimate estimate = pursuit_path.calculate_pursuit_estimate(current_pose);
+    PursuitEstimate estimate = pursuit_path.calculate_pursuit_estimate(current_pose, true, forward_pid.settle_error);
 
     if (!estimate.is_valid)
     { // If error or something, return is_valid as false
@@ -72,11 +72,20 @@ PursuitResult PurePursuitConductor::step(TwoDPose current_pose)
     double forward_power = forward_pid.step(estimate.distance);
     double turn_power = turn_pid.step(estimate.steering_angle);
 
-    PursuitResult result = PursuitResult(true, estimate.steering_angle, estimate.distance, volts_clamp(forward_power), volts_clamp(turn_power), false);
+    PursuitResult result = PursuitResult(true, estimate.steering_angle, estimate.distance, 
+        clamp(forward_power, -default_pursuit_parameters->forward_max_voltage, default_pursuit_parameters->forward_max_voltage), 
+        clamp(turn_power, -default_pursuit_parameters->turning_max_voltage, default_pursuit_parameters->turning_max_voltage), 
+        false);
 
-    if (forward_pid.is_settled() && turn_pid.is_settled())
+    bool forward_starting_to_settle = fabs(forward_pid.error) < forward_pid.settle_error;
+    bool turning_starting_to_settle = fabs(turn_pid.error) < turn_pid.settle_error;
+
+    if ((forward_pid.is_settled()) && turn_pid.is_settled())
     {
         result.is_completed = true;
+    }
+    else if(turning_starting_to_settle && !forward_starting_to_settle){
+        turn_pid.time_spent_settled = 0;
     }
 
     return result;

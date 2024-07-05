@@ -21,6 +21,9 @@ struct PursuitParams
     double turning_radius;
     double lookahead_distance;
 
+    double forward_max_voltage;
+    double turning_max_voltage;
+
     double settle_distance;
     double settle_rotation;
     double settle_time;
@@ -41,6 +44,8 @@ struct PursuitParams
     /**
      * @param turning_radius Radius of the turns, in meters
      * @param lookahead_distance Pure Pursuit look ahead distance, in meters
+     * @param forward_max_voltage The maximum voltage the motors can spin while going forward
+     * @param turning_max_voltage The maximum voltage the motors can spin while turning
      * @param settle_distance Exits when within this distance of target, in meters
      * @param settle_rotation Exits when within this rotation of target, in radians
      * @param settle_time Minimum time to be considered settled, in seconds
@@ -56,11 +61,13 @@ struct PursuitParams
      * @param num_path_segments The number of points when generating the path. More points mean higher detail of the path, but at a higher computational cost
      */
     PursuitParams(double turning_radius = 0.2, double lookahead_distance = 0.1,
+                  double forward_max_voltage = 12.0, double turning_max_voltage = 12.0,
                   double settle_distance = 0.025, double settle_rotation = 0.09,
                   double settle_time = 0.4, double timeout = 0,
                   double turning_kp = 0.3, double turning_ki = 0.001, double turning_kd = 2, double turning_i_activation = to_meters(15),
                   double forward_kp = 1.5, double forward_ki = 0, double forward_kd = 10, double forward_i_activation = to_meters(0),
                   int num_path_segments = 200) : turning_radius(turning_radius), lookahead_distance(lookahead_distance),
+                                                 forward_max_voltage(forward_max_voltage), turning_max_voltage(turning_max_voltage),
                                                  settle_distance(settle_distance), settle_rotation(settle_rotation),
                                                  settle_time(settle_time), timeout(timeout),
                                                  turning_kp(turning_kp), turning_ki(turning_ki), turning_kd(turning_kd), turning_i_activation(turning_i_activation),
@@ -89,13 +96,14 @@ struct PursuitResult
 
 class PurePursuitConductor
 {
-private:
+
+public:
     PID turn_pid;
     PID forward_pid;
-public:
     PurePursuitPath pursuit_path;
-private:
+    TwoDPose end_position;
     PursuitParams *default_pursuit_parameters = nullptr;
+
 public:
     bool enabled = false;
 

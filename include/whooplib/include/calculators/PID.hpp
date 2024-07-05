@@ -18,19 +18,22 @@
 
 class PID
 {
-private:
+public:
     double error = 0;
     double kp = 0;
     double ki = 0;
     double kd = 0;
     double starti = 0;
     double settle_error = 0;
+private:
     double settle_time = 0;
     double timeout = 0;
     double accumulated_error = 0;
     double previous_error = 0;
     double output = 0;
+public:
     double time_spent_settled = 0;
+private:
     double time_spent_running = 0;
     double update_period = 10;
 
