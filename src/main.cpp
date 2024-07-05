@@ -139,13 +139,13 @@ PursuitParams pursuit_parameters(
     to_rad(15),    // Settle Rotation. Exits when within this rotation of target, in radians
     0.4,           // Minimum time to be considered settled, in seconds
     0,             // Time after which to give up and move on, in seconds (set to 0 to disable)
-    0.3,           // Turning (kP) Proportional Tuning
-    0.001,         // Turning (kI) Integral Tuning
-    2,             // Turning (kD) Derivative Tuning
-    to_meters(15), // The rotation distance (error), in radians, to activate turning_ki
-    1.5,           // Forward (kP) Proportional Tuning
+    10,           // Turning (kP) Proportional Tuning
+    0,         // Turning (kI) Integral Tuning
+    0,             // Turning (kD) Derivative Tuning
+    to_rad(15), // The rotation distance (error), in radians, to activate turning_ki
+    5,           // Forward (kP) Proportional Tuning
     0,             // Forward (kI) Integral Tuning
-    10,            // Forward (kD) Derivative Tuning
+    0,            // Forward (kD) Derivative Tuning
     to_meters(0),  // The forward distance (error), in meters, to activate forward_ki
     200            // The number of points when generating the path. More points mean higher detail of the path, but at a higher computational cost
 );
@@ -190,7 +190,7 @@ void pre_auton(void)
   wait(5, sec);
 
   robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw); // Inches, degrees, clockwise-positive
-  robot_drivetrain.set_pose(1, 1, -45);                  // Note: Yaw of 0 implies looking towards +X direction. This is VERY important
+  robot_drivetrain.set_pose(0,0,0);                  // Note: Yaw of 0 implies looking towards +X direction. This is VERY important
 }
 
 /*---------------------------------------------------------------------------*/
@@ -209,6 +209,7 @@ void autonomous(void)
 
   wait(10, sec);
   robot_drivetrain.drive_to_pose(15, 15, -35);
+  wait(20, sec);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -222,6 +223,7 @@ void autonomous(void)
 /*---------------------------------------------------------------------------*/
 void usercontrol(void)
 {
+  autonomous();
 
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 
