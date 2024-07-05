@@ -142,4 +142,6 @@ double area_from_diameter(double diameter);
  */
 double safeDivide(double numerator, double denominator, double max_possible_number=std::numeric_limits<double>::infinity());
 
+
+double volts_clamp(double volts);
 #endif // TOOLBOX_HPP

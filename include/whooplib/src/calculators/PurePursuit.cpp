@@ -67,6 +67,9 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
     bool lookahead_found = false;
     bool closest_found = false;
 
+    double length_lookahead = 0;
+    double length_closest = 0;
+
     double rough_distance;
     double distance;
 
@@ -87,6 +90,7 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
             {
                 point_ahead_distance = distance;
                 look_ahead_position = pursuit_points[i];
+                length_lookahead = (pursuit_points.size() - i) * step_size;
                 lookahead_found = true;
             }
             if (!find_closest_if_off_course)
@@ -101,6 +105,7 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
             {
                 closest_distance = distance;
                 closest_position = pursuit_points[i];
+                length_closest = (pursuit_points.size() - i) * step_size;
                 closest_found = true;
             }
         }
@@ -113,6 +118,8 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
             return PursuitEstimate(); // Return invalid pursuit estimate if no point is found
         }
         look_ahead_position = closest_position;
+        point_ahead_distance = closest_distance;
+        length_lookahead = length_closest;
     }
 
     double dx = look_ahead_position.x - current_position.x;
@@ -120,5 +127,5 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
     double path_angle = atan2(dy, dx);
     double steering_angle = normalize_angle(path_angle - current_position.yaw);
 
-    return PursuitEstimate(true, steering_angle, point_ahead_distance);
+    return PursuitEstimate(true, steering_angle, point_ahead_distance + length_closest);
 }

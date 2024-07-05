@@ -121,7 +121,7 @@ WhoopOdomFusion odom_fusion(
     &vision_system,             // Pointer to the vision system
     &odom_offset,               // Pointer to the odometry offset
     0.9,                        // Minimum confidence threshold to apply vision system to odometry
-    FusionMode::fusion_gradual, // The method of fusing
+    FusionMode::wheel_odom_only, // The method of fusing
     to_meters(50),              // If FusionMode is fusion_gradual, it is the maximum allowable lateral shift the vision camera can update in meters per second.
     to_rad(500)                 // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
 );
@@ -142,8 +142,8 @@ PursuitParams pursuit_parameters(
     10,           // Turning (kP) Proportional Tuning
     0,         // Turning (kI) Integral Tuning
     0,             // Turning (kD) Derivative Tuning
-    to_rad(15), // The rotation distance (error), in radians, to activate turning_ki
-    5,           // Forward (kP) Proportional Tuning
+    to_rad(0), // The rotation distance (error), in radians, to activate turning_ki
+    10,           // Forward (kP) Proportional Tuning
     0,             // Forward (kI) Integral Tuning
     0,            // Forward (kD) Derivative Tuning
     to_meters(0),  // The forward distance (error), in meters, to activate forward_ki
@@ -208,8 +208,10 @@ void autonomous(void)
   robot_drivetrain.set_state(drivetrainState::mode_autonomous);
 
   wait(10, sec);
-  robot_drivetrain.drive_to_pose(15, 15, -35);
-  wait(20, sec);
+  robot_drivetrain.drive_to_pose(30, 30, 180);
+  while(1){
+    wait(1, sec);
+  }
 }
 
 /*---------------------------------------------------------------------------*/

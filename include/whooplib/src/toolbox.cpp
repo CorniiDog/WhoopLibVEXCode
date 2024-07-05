@@ -63,6 +63,16 @@ std::vector<std::string> read_messages_from_buffer(const std::string& buffer, co
     return messages;
 }
 
+double volts_clamp(double volts){
+    if(volts > 12.0){
+        return 12.0;
+    }
+    if(volts < -12.0){
+        return -12.0;
+    }
+    return volts;
+}
+
 // Function to get the latest message from buffer
 std::string get_latest_message_from_buffer(const std::string& buffer, const std::string& start_marker, const std::string& end_marker) {
     std::vector<std::string> messages = read_messages_from_buffer(buffer, start_marker, end_marker);

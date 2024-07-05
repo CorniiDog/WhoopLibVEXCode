@@ -50,7 +50,6 @@ void PurePursuitConductor::generate_path(TwoDPose start_position, TwoDPose desti
 
     forward_pid = PID(0, default_pursuit_parameters->forward_kp, default_pursuit_parameters->forward_ki, default_pursuit_parameters->forward_kp, default_pursuit_parameters->forward_i_activation, default_pursuit_parameters->settle_distance, default_pursuit_parameters->settle_time, t_out),
     turn_pid = PID(0, default_pursuit_parameters->turning_kp, default_pursuit_parameters->turning_ki, default_pursuit_parameters->turning_kd, default_pursuit_parameters->turning_i_activation, default_pursuit_parameters->settle_rotation, default_pursuit_parameters->settle_time, t_out),
-
     pursuit_path = PurePursuitPath(start_position, destination_position, turn_rad, default_pursuit_parameters->lookahead_distance, default_pursuit_parameters->num_path_segments);
 
     enabled = true;
@@ -73,8 +72,7 @@ PursuitResult PurePursuitConductor::step(TwoDPose current_pose)
     double forward_power = forward_pid.step(estimate.distance);
     double turn_power = turn_pid.step(estimate.steering_angle);
 
-    PursuitResult result = PursuitResult(true, estimate.steering_angle, estimate.distance, forward_power, turn_power, false);
-    ;
+    PursuitResult result = PursuitResult(true, estimate.steering_angle, estimate.distance, volts_clamp(forward_power), volts_clamp(turn_power), false);
 
     if (forward_pid.is_settled() && turn_pid.is_settled())
     {

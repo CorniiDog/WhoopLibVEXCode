@@ -36,8 +36,9 @@ WhoopLibPython Github: https://github.com/ConnorAtmos/WhoopLibPython
 
 ## Roadmap
 
-- Object Detection and Gridded Permanence systenm
 - Moving between Point A and Point B
+- Turning, Moving Forward Functions, and Remembering Previous Movement Positions
+- Object Detection and Gridded Permanence system
 - Detecting other robots that impede the path of the robot, and drive around
 - Virtual Highway system
 

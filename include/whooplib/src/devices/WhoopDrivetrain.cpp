@@ -250,15 +250,24 @@ void WhoopDrivetrain::step_autonomous()
     {
         PursuitResult result = pursuit_conductor.step(odom_fusion->get_pose_2d());
         if (result.is_completed)
-        {
+        {   
+            Brain.Screen.clearLine(1);
+            Brain.Screen.setCursor(1,1);
+            Brain.Screen.print("Completed");
             auton_traveling = false;
             return;
         }
 
         if (!result.is_valid)
         {
+            Brain.Screen.clearLine(1);
+            Brain.Screen.setCursor(1,1);
+            Brain.Screen.print("Not accepting valid");
             return;
         }
+        Brain.Screen.clearLine(1);
+        Brain.Screen.setCursor(1,1);
+        Brain.Screen.print("Running");
 
         left_motor_group->spin(result.forward_power + std::min(-result.steering_power, 0.0));
         right_motor_group->spin(result.forward_power + std::min(result.steering_power, 0.0));
