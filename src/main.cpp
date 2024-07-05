@@ -128,10 +128,35 @@ WhoopOdomFusion odom_fusion(
 
 ////////////////////////////////////////////////////////////
 /**
+ *    Pure Pursuit Default Parameters
+ */
+////////////////////////////////////////////////////////////
+
+PursuitParams pursuit_parameters(
+    0.2,           // Radius of the turns, in meters
+    0.1,           // Pure Pursuit look ahead distance, in meters
+    0.025,         // Settle Distance. Exits when within this distance of target, in meters
+    0.09,          // Settle Rotation. Exits when within this rotation of target, in radians
+    0.4,           // Minimum time to be considered settled, in seconds
+    0,             // Time after which to give up and move on, in seconds (set to 0 to disable)
+    0.3,           // Turning (kP) Proportional Tuning
+    0.001,         // Turning (kI) Integral Tuning
+    2,             // Turning (kD) Derivative Tuning
+    to_meters(15), // The rotation distance (error), in radians, to activate turning_ki
+    1.5,           // Forward (kP) Proportional Tuning
+    0,             // Forward (kI) Integral Tuning
+    10,            // Forward (kD) Derivative Tuning
+    to_meters(0),  // The forward distance (error), in meters, to activate forward_ki
+    200            // The number of points when generating the path. More points mean higher detail of the path, but at a higher computational cost
+);
+
+////////////////////////////////////////////////////////////
+/**
  *    Robot Drivetrain and Manager
  */
 ////////////////////////////////////////////////////////////
 WhoopDrivetrain robot_drivetrain(
+    &pursuit_parameters,  // The default pure pursuit parameters for operating the robot in autonomous
     &odom_fusion,         // Odometry fusion module
     PoseUnits::in_deg_cw, // Set default pose units if not defined. "m_deg_cw" means "meters, degrees, clockwise-positive yaw", "in_deg_ccw" means "inches, degrees, counter-clockwise-positive yaw", and so forth.
     &controller1,         // Pointer to the controller

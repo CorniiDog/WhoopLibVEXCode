@@ -27,16 +27,16 @@ void WhoopDrivetrain::init_motor_groups(const std::vector<WhoopMotor*>& leftMoto
     right_motor_group = std::make_unique<WhoopMotorGroup>(rightMotors);
 }
 
-WhoopDrivetrain::WhoopDrivetrain(WhoopOdomFusion* odom_fusion, PoseUnits pose_units, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
-: whoop_controller(controller) {
+WhoopDrivetrain::WhoopDrivetrain(PursuitParams* default_pursuit_parameters, WhoopOdomFusion* odom_fusion, PoseUnits pose_units, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup)
+: whoop_controller(controller), pursuit_conductor(default_pursuit_parameters) {
     init_motor_groups(leftMotorGroup, rightMotorGroup);
     this->odom_fusion = odom_fusion;
     this->pose_units = pose_units;
     this->default_pose_units = pose_units;
 }
 
-WhoopDrivetrain::WhoopDrivetrain(WhoopOdomFusion* odom_fusion, PoseUnits pose_units, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
-: whoop_controller(controller) {
+WhoopDrivetrain::WhoopDrivetrain(PursuitParams* default_pursuit_parameters, WhoopOdomFusion* odom_fusion, PoseUnits pose_units, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors)
+: whoop_controller(controller), pursuit_conductor(default_pursuit_parameters) {
     init_motor_groups(leftMotors, rightMotors);
     this->odom_fusion = odom_fusion;
     this->pose_units = pose_units;
@@ -136,36 +136,51 @@ void WhoopDrivetrain::set_pose(double x, double y, double yaw){
 }
 
 
-void WhoopDrivetrain::__step(){
-    odom_fusion->__step(); // Step odometry fusion module
-    run_disabled_calibration_protocol();
-
-    // Controller input
-    if(drive_state == drivetrainState::mode_usercontrol){
-        if(whoop_controller->joystick_mode == joystickMode::joystickmode_tank){
+void WhoopDrivetrain::step_usercontrol(){
+    switch(whoop_controller->joystick_mode){
+        case joystickMode::joystickmode_tank:
             left_motor_group->spin_percentage(whoop_controller->get_left_joystick_y());
             right_motor_group->spin_percentage(whoop_controller->get_right_joystick_y());
-        }
-        else if(whoop_controller->joystick_mode == joystickMode::joystickmode_split_arcade){
+            break;
+        case joystickMode::joystickmode_split_arcade:
             left_motor_group->spin_percentage(whoop_controller->get_left_joystick_y() + whoop_controller->get_right_joystick_x());
             right_motor_group->spin_percentage(whoop_controller->get_left_joystick_y() - whoop_controller->get_right_joystick_x());
-        }
-        else if(whoop_controller->joystick_mode == joystickMode::joystickmode_left_arcade){
+            break;
+        case joystickMode::joystickmode_left_arcade:
             left_motor_group->spin_percentage(whoop_controller->get_left_joystick_y() + whoop_controller->get_left_joystick_x());
             right_motor_group->spin_percentage(whoop_controller->get_left_joystick_y() - whoop_controller->get_left_joystick_x());
-        }
-        else if(whoop_controller->joystick_mode == joystickMode::joystickmode_right_arcade){
+            break;
+        case joystickMode::joystickmode_right_arcade:
             left_motor_group->spin_percentage(whoop_controller->get_right_joystick_y() + whoop_controller->get_right_joystick_x());
             right_motor_group->spin_percentage(whoop_controller->get_right_joystick_y() - whoop_controller->get_right_joystick_x());
-        }
+            break;
     }
-    
-    //Disabled
-    else if(drive_state == drivetrainState::mode_disabled){
-        left_motor_group->spin(0);
-        right_motor_group->spin(0);
-    }
+}
 
+void WhoopDrivetrain::step_disabled(){
+    left_motor_group->spin(0);
+    right_motor_group->spin(0);
+    run_disabled_calibration_protocol();
+}
+
+void WhoopDrivetrain::step_autonomous(){
+
+}
+
+void WhoopDrivetrain::__step(){
+    odom_fusion->__step(); // Step odometry fusion module
+
+    switch(drive_state){
+        case drivetrainState::mode_usercontrol:
+            step_usercontrol();
+            break;
+        case drivetrainState::mode_autonomous:
+            step_autonomous();
+            break;
+        case drivetrainState::mode_disabled:
+            step_disabled();
+            break;
+    }
 }
 
 

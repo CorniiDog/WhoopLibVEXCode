@@ -22,8 +22,8 @@
 #ifdef WIN32
 #define _USE_MATH_DEFINES
 #endif
+#include "whooplib/include/calculators/Dubins.hpp"
 #include <math.h>
-#include "whooplib/include/calculators/Dubins.h"
 
 #define EPSILON (10e-10)
 

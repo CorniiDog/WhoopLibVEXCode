@@ -19,20 +19,20 @@
 class PID
 {
 private:
-    float error = 0;
-    float kp = 0;
-    float ki = 0;
-    float kd = 0;
-    float starti = 0;
-    float settle_error = 0;
-    float settle_time = 0;
-    float timeout = 0;
-    float accumulated_error = 0;
-    float previous_error = 0;
-    float output = 0;
-    float time_spent_settled = 0;
-    float time_spent_running = 0;
-    float update_period = 10;
+    double error = 0;
+    double kp = 0;
+    double ki = 0;
+    double kd = 0;
+    double starti = 0;
+    double settle_error = 0;
+    double settle_time = 0;
+    double timeout = 0;
+    double accumulated_error = 0;
+    double previous_error = 0;
+    double output = 0;
+    double time_spent_settled = 0;
+    double time_spent_running = 0;
+    double update_period = 10;
 
 public:
     /**
@@ -52,7 +52,7 @@ public:
      * @param settle_time Minimum time to be considered settled
      * @param timeout Time after which to give up and move on
      */
-    PID(float error, float kp, float ki, float kd, float starti);
+    PID(double error, double kp, double ki, double kd, double starti);
 
     /**
      * PID constructor with custom update period
@@ -68,7 +68,7 @@ public:
      * @param settle_time Minimum time to be considered settled, in seconds
      * @param timeout Time after which to give up and move on, in seconds
      */
-    PID(float error, float kp, float ki, float kd, float starti, float settle_error, float settle_time, float timeout);
+    PID(double error, double kp, double ki, double kd, double starti, double settle_error, double settle_time, double timeout);
 
     /**
      * Computes the output power based on the error
@@ -80,7 +80,7 @@ public:
      * @param error Difference in desired and current position
      * @return Output power
      */
-    float step(float error);
+    double step(double error);
 
     /**
      * Computes whether or not the movement has settled

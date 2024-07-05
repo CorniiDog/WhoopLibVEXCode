@@ -16,7 +16,7 @@
 #include "whooplib/include/nodes/NodeManager.hpp"
 #include "whooplib/include/nodes/BufferNode.hpp"
 #include "whooplib/include/calculators/WheelOdom.hpp"
-#include "whooplib/include/calculators/PurePursuit.hpp"
+#include "whooplib/include/calculators/PurePursuitConductor.hpp"
 #include "whooplib/include/devices/WhoopOdomFusion.hpp"
 #include "vex.h"
 #include <vector>
@@ -59,6 +59,10 @@ private:
     // This runs the calibration protocol for the drivetrain
     void run_disabled_calibration_protocol();
 
+    void step_usercontrol();
+    void step_disabled();
+    void step_autonomous();
+
 protected:
     // Upon initialization
     WhoopController* whoop_controller; // Controller object for receiving input from VEX controllers.
@@ -67,6 +71,8 @@ protected:
     WhoopOdomFusion* odom_fusion; // Group of motors on the right side of the drivetrain.
     PoseUnits pose_units = PoseUnits::m_rad_ccw;
     PoseUnits default_pose_units = PoseUnits::m_rad_ccw;
+
+    PurePursuitConductor pursuit_conductor;
 
     bool drive_calibrated = false;
 private:
@@ -81,23 +87,25 @@ public:
 
     /**
      * Constructor for initializing the drivetrain with predefined motor groups.
+     * @param default_pursuit_parameters The default pure pursuit parameters for operating the robot in autonomous
      * @param odom_fusion The odometry fusion system for pose estimation
      * @param pose_units Configure the units for the odometry. "m_deg_cw" means "meters, degrees, clockwise-positive yaw", "in_deg_ccw" means "inches, degrees, counter-clockwise-positive yaw", and so forth.
      * @param controller Pointer to the controller managing user input.
      * @param leftMotorGroup Pointer to the motor group controlling the left side.
      * @param rightMotorGroup Pointer to the motor group controlling the right side.
      */
-    WhoopDrivetrain(WhoopOdomFusion* odom_fusion, PoseUnits pose_units, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup);
+    WhoopDrivetrain(PursuitParams* default_pursuit_parameters, WhoopOdomFusion* odom_fusion, PoseUnits pose_units, WhoopController* controller, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup);
 
     /**
      * Constructor for initializing the drivetrain with a list of motors for each side.
+     * @param default_pursuit_parameters The default pure pursuit parameters for operating the robot in autonomous
      * @param odom_fusion The odometry fusion system for pose estimation
      * @param pose_units Configure the units for the odometry. "m_deg_cw" means "meters, degrees, clockwise-positive yaw", "in_deg_ccw" means "inches, degrees, counter-clockwise-positive yaw", and so forth.
      * @param controller Pointer to the controller managing user input.
      * @param leftMotors Vector of motors on the left side.
      * @param rightMotors Vector of motors on the right side.
      */
-    WhoopDrivetrain(WhoopOdomFusion* odom_fusion, PoseUnits pose_units, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors); 
+    WhoopDrivetrain(PursuitParams* default_pursuit_parameters, WhoopOdomFusion* odom_fusion, PoseUnits pose_units, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors); 
 
     /**
      * Sets the operational state of the drivetrain.

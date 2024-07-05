@@ -10,7 +10,7 @@
 #ifndef PURE_PURSUIT_HPP
 #define PURE_PURSUIT_HPP
 
-#include "whooplib/include/calculators/Dubins.h"
+#include "whooplib/include/calculators/Dubins.hpp"
 #include "whooplib/include/calculators/TwoDPose.hpp"
 
 struct PursuitEstimate
@@ -32,8 +32,8 @@ class PurePursuitPath
     TwoDPose start, end;
     double turning_radius;
     double lookahead_distance;
-    double q0[3];
-    double q1[3];
+    double q0[3] = {0,0,0};
+    double q1[3] = {0,0,0};
     DubinsPath path;
     bool path_valid;
     double t_max = 0;

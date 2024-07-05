@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-#ifndef DUBINS_H
-#define DUBINS_H
+#ifndef DUBINS_HPP
+#define DUBINS_HPP
 
 typedef enum 
 {
@@ -166,4 +166,4 @@ int dubins_path_endpoint(DubinsPath* path, double q[3]);
 int dubins_extract_subpath(DubinsPath* path, double t, DubinsPath* newpath);
 
 
-#endif /* DUBINS_H */
+#endif /* DUBINS_HPP */

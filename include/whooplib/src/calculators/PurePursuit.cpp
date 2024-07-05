@@ -8,6 +8,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "whooplib/include/calculators/PurePursuit.hpp"
+#include "whooplib/include/calculators/Dubins.h"
 #include "whooplib/include/toolbox.hpp"
 
 PurePursuitPath::PurePursuitPath(const TwoDPose start, const TwoDPose end, double turning_radius, double lookahead_distance, double num_segments)

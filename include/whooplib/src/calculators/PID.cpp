@@ -22,7 +22,7 @@
  * @param starti Maximum error to start integrating
  */
 
-PID::PID(float error, float kp, float ki, float kd, float starti) : error(error),
+PID::PID(double error, double kp, double ki, double kd, double starti) : error(error),
                                                                     kp(kp),
                                                                     ki(ki),
                                                                     kd(kd),
@@ -30,8 +30,8 @@ PID::PID(float error, float kp, float ki, float kd, float starti) : error(error)
 {
 }
 
-PID::PID(float error, float kp, float ki, float kd, float starti,
-         float settle_error, float settle_time, float timeout) : error(error),
+PID::PID(double error, double kp, double ki, double kd, double starti,
+         double settle_error, double settle_time, double timeout) : error(error),
                                                                  kp(kp),
                                                                  ki(ki),
                                                                  kd(kd),
@@ -42,7 +42,7 @@ PID::PID(float error, float kp, float ki, float kd, float starti,
 {
 }
 
-float PID::step(float error)
+double PID::step(double error)
 {
   if (fabs(error) < starti)
   {
