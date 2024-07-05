@@ -10,6 +10,7 @@
 #include "whooplib/include/calculators/PurePursuit.hpp"
 #include "whooplib/include/calculators/Dubins.hpp"
 #include "whooplib/include/toolbox.hpp"
+#include "vex.h"
 
 PurePursuitPath::PurePursuitPath(const TwoDPose start, const TwoDPose end, double turning_radius, double lookahead_distance, double num_segments)
     : start(start), end(end), turning_radius(turning_radius), lookahead_distance(lookahead_distance), num_segments(num_segments)
@@ -43,6 +44,12 @@ void PurePursuitPath::computeDubinsPath()
         if (dubins_path_sample_many(&path, step_size, create_points_bridge, this) != EDUBOK)
         {
             path_valid = false;
+        }
+
+        if(path_valid){
+            Brain.Screen.clearLine(6);
+            Brain.Screen.setCursor(6,1);
+            Brain.Screen.print("Path Length: %s", doubleToString(to_inches(t_max)).c_str());
         }
     }
 }

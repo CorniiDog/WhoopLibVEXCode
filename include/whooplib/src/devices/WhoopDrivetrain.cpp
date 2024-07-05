@@ -66,8 +66,8 @@ void WhoopDrivetrain::drive_to_point(double x, double y, double timeout_seconds)
     // Converting from standardized meters to inches
     if (pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_ccw || pose_units == PoseUnits::in_rad_cw)
     {
-        x = to_inches(x); // (meters -> inches)
-        y = to_inches(y); // (meters -> inches)
+        x = to_meters(x); // (meters -> inches)
+        y = to_meters(y); // (meters -> inches)
     }
 
     TwoDPose robot_pose = odom_fusion->get_pose_2d();
@@ -90,24 +90,24 @@ void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, double timeo
 
 void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, double timeout_seconds, double turning_radius)
 {
-    // Converting from standardized meters to inches
+    // Converting from inches to standardized meters
     if (pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_ccw || pose_units == PoseUnits::in_rad_cw)
     {
-        x = to_inches(x);                           // (meters -> inches)
-        y = to_inches(y);                           // (meters -> inches)
-        turning_radius = to_inches(turning_radius); // (meters -> inches)
+        x = to_meters(x);                           // (inches -> meters)
+        y = to_meters(y);                           // (inches -> meters)
+        turning_radius = to_meters(turning_radius); // (inches -> meters)
     }
 
-    // Converting from standardized radians to degrees
+    // Converting from degrees to standardized radians
     if (pose_units == PoseUnits::m_deg_cw || pose_units == PoseUnits::m_deg_ccw || pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw)
     {
-        yaw = to_deg(yaw); // (radians -> degrees)
+        yaw = to_rad(yaw); // (degrees -> radians)
     }
 
-    // Flipping from standardized counter-clockwise to clockwise
+    // Flipping from clockwise to standardized counter-clockwise
     if (pose_units == PoseUnits::m_deg_cw || pose_units == PoseUnits::m_rad_cw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_cw)
     {
-        yaw *= -1; // (counter-clockwise-positive -> clockwise-positive)
+        yaw *= -1; // (clockwise-positive -> counter-clockwise-positive)
     }
 
     TwoDPose pose(x, y, yaw);
@@ -269,8 +269,8 @@ void WhoopDrivetrain::step_autonomous()
         Brain.Screen.setCursor(1,1);
         Brain.Screen.print("Running");
 
-        left_motor_group->spin(result.forward_power + std::min(-result.steering_power, 0.0));
-        right_motor_group->spin(result.forward_power + std::min(result.steering_power, 0.0));
+        //left_motor_group->spin(result.forward_power + std::min(-result.steering_power, 0.0));
+        //right_motor_group->spin(result.forward_power + std::min(result.steering_power, 0.0));
     }
     else
     {

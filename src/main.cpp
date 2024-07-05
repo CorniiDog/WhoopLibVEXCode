@@ -104,12 +104,12 @@ WhoopVision vision_system(
 // This is essential to ensure that the nano starts its internal program, stop program, restarts program,
 // and can be told to reboot or shutdown
 JetsonCommander jetson_commander(
-    &controller1,                     // The controller to send messages to upon error
-    &buffer_system,                   // Pointer to the buffer system (will be managed by the buffer system)
-    "C",                              // The subscribed stream name for keep-alive, shutdown, and reboot
-    60,                               // In seconds. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this time before it shuts off
-    2,                                // How many seconds to wait before sending anoter keep alive message to Jetson (suggested 2)
-    jetsonCommunication::enable_comms // If you don't have a Vision Tesseract on your robot, set to disable_comms
+    &controller1,                      // The controller to send messages to upon error
+    &buffer_system,                    // Pointer to the buffer system (will be managed by the buffer system)
+    "C",                               // The subscribed stream name for keep-alive, shutdown, and reboot
+    60,                                // In seconds. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this time before it shuts off
+    2,                                 // How many seconds to wait before sending anoter keep alive message to Jetson (suggested 2)
+    jetsonCommunication::disable_comms // If you don't have a Vision Tesseract on your robot, set to disable_comms
 );
 
 ////////////////////////////////////////////////////////////
@@ -118,12 +118,12 @@ JetsonCommander jetson_commander(
  */
 ////////////////////////////////////////////////////////////
 WhoopOdomFusion odom_fusion(
-    &vision_system,             // Pointer to the vision system
-    &odom_offset,               // Pointer to the odometry offset
-    0.9,                        // Minimum confidence threshold to apply vision system to odometry
+    &vision_system,              // Pointer to the vision system
+    &odom_offset,                // Pointer to the odometry offset
+    0.9,                         // Minimum confidence threshold to apply vision system to odometry
     FusionMode::wheel_odom_only, // The method of fusing
-    to_meters(50),              // If FusionMode is fusion_gradual, it is the maximum allowable lateral shift the vision camera can update in meters per second.
-    to_rad(500)                 // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
+    to_meters(50),               // If FusionMode is fusion_gradual, it is the maximum allowable lateral shift the vision camera can update in meters per second.
+    to_rad(500)                  // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
 );
 
 ////////////////////////////////////////////////////////////
@@ -139,13 +139,13 @@ PursuitParams pursuit_parameters(
     to_rad(15),    // Settle Rotation. Exits when within this rotation of target, in radians
     0.4,           // Minimum time to be considered settled, in seconds
     0,             // Time after which to give up and move on, in seconds (set to 0 to disable)
-    10,           // Turning (kP) Proportional Tuning
-    0,         // Turning (kI) Integral Tuning
+    10,            // Turning (kP) Proportional Tuning
+    0,             // Turning (kI) Integral Tuning
     0,             // Turning (kD) Derivative Tuning
-    to_rad(0), // The rotation distance (error), in radians, to activate turning_ki
-    10,           // Forward (kP) Proportional Tuning
+    to_rad(0),     // The rotation distance (error), in radians, to activate turning_ki
+    10,            // Forward (kP) Proportional Tuning
     0,             // Forward (kI) Integral Tuning
-    0,            // Forward (kD) Derivative Tuning
+    0,             // Forward (kD) Derivative Tuning
     to_meters(0),  // The forward distance (error), in meters, to activate forward_ki
     200            // The number of points when generating the path. More points mean higher detail of the path, but at a higher computational cost
 );
@@ -190,7 +190,7 @@ void pre_auton(void)
   wait(5, sec);
 
   robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw); // Inches, degrees, clockwise-positive
-  robot_drivetrain.set_pose(0,0,0);                  // Note: Yaw of 0 implies looking towards +X direction. This is VERY important
+  robot_drivetrain.set_pose(0, 0, 0);                    // Note: Yaw of 0 implies looking towards +X direction. This is VERY important
 }
 
 /*---------------------------------------------------------------------------*/
@@ -209,7 +209,8 @@ void autonomous(void)
 
   wait(10, sec);
   robot_drivetrain.drive_to_pose(30, 30, 180);
-  while(1){
+  while (1)
+  {
     wait(1, sec);
   }
 }
