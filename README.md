@@ -33,6 +33,8 @@ WhoopLibPython Github: https://github.com/ConnorAtmos/WhoopLibPython
 - Fusion Odometry between Visual Odometry and Wheel Odometry
 - Rolling Average Filter for Fusion Odometry
 - WhoopController Class with auto-configuration for Split Arcade, Tank, Left Stick Arcade, and Right Stick Arcade
+- Dubins-Curves Path Creation
+- Pure Pursuit
 - Moving between Point A and Point B
 
 ## Roadmap
