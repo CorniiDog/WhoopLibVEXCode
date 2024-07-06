@@ -33,10 +33,10 @@ WhoopLibPython Github: https://github.com/ConnorAtmos/WhoopLibPython
 - Fusion Odometry between Visual Odometry and Wheel Odometry
 - Rolling Average Filter for Fusion Odometry
 - WhoopController Class with auto-configuration for Split Arcade, Tank, Left Stick Arcade, and Right Stick Arcade
+- Moving between Point A and Point B
 
 ## Roadmap
 
-- Moving between Point A and Point B
 - Turning, Moving Forward Functions, and Remembering Previous Movement Positions
 - Object Detection and Gridded Permanence system
 - Detecting other robots that impede the path of the robot, and drive around
