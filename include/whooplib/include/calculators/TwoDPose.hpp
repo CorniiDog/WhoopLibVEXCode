@@ -109,7 +109,7 @@ public:
      * @param target_x the x position to look at
      * @param target_y the y position to look at
      */
-    TwoDPose TwoDPose::lookAt(double target_x, double target_y);
+    TwoDPose lookAt(double target_x, double target_y);
 
     /**
      * Returns a string representation of the pose with the coordinates rounded to a specified number of decimal places.
