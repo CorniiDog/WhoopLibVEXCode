@@ -28,14 +28,16 @@ WhoopLibPython Github: https://github.com/ConnorAtmos/WhoopLibPython
 ## Features
 
 - Visual Odometry/Pose Estimation with FeedForward
-- Wheel Odometry/Pose Estimation
+- Wheel Odometry/Pose Estimation, inspired by JAR-Template
 - Communication between V5 Brain and Jetson Nano
 - Fusion Odometry between Visual Odometry and Wheel Odometry
 - Rolling Average Filter for Fusion Odometry
 - WhoopController Class with auto-configuration for Split Arcade, Tank, Left Stick Arcade, and Right Stick Arcade
-- Dubins-Curves Path Creation
-- Pure Pursuit
+- Dubins-Curves Path Creation, thanks to Andrew Walker
+- Pure Pursuit Algorithm
 - Moving between Point A and Point B
+- Rolling Average, Kalman, and Low-Pass Filters
+- General PID, modified from JAR-Template
 
 ## Roadmap
 
@@ -65,6 +67,7 @@ You should be prompted to install the C++ extension by Microsoft. This would be 
 ## Acknowledgements
 
  - [E-Bots πLons](http://thepilons.ca/wp-content/uploads/2018/10/Tracking.pdf): Odometry Documentation
+ - [JAR-Template](https://github.com/JacksonAreaRobotics/JAR-Template): Odometry Inspiration
  - [Librealsense](https://github.com/IntelRealSense/librealsense): Depth Capturing
  - [VEX Robotics](https://github.com/VEX-Robotics-AI)
  - [Andrew Walker](https://github.com/AndrewWalker/Dubins-Curves/tree/master): Path Generation with Dubins-Curves
