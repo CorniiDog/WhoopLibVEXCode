@@ -32,6 +32,13 @@ TwoDPose TwoDPose::operator*(const TwoDPose& other) const {
     return toWorldSpace(other);
 }
 
+TwoDPose TwoDPose::lookAt(double target_x, double target_y) {
+    double dx = target_x - this->x;
+    double dy = target_y - this->y;
+
+    return TwoDPose(x, y, atan2(dy, dx));
+}
+
 TwoDPose& TwoDPose::operator*=(const TwoDPose& other) {
     *this = *this * other;
     return *this;

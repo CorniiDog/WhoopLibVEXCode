@@ -103,6 +103,13 @@ public:
      * @return A new TwoDPose representing the transformed coordinates.
      */
     TwoDPose toObjectSpace(double x, double y, double yaw) const;
+    
+    /**
+     * Returns a pose with the same x and y, but with the yaw turned to face the designated x and y
+     * @param target_x the x position to look at
+     * @param target_y the y position to look at
+     */
+    TwoDPose TwoDPose::lookAt(double target_x, double target_y);
 
     /**
      * Returns a string representation of the pose with the coordinates rounded to a specified number of decimal places.
