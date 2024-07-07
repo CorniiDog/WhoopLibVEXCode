@@ -103,7 +103,7 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
     for (std::size_t i = points_size; i-- > 0; )
     {
         // Rough distance first to avoid un-needed computational cost
-        rough_distance = (std::abs(pursuit_points[i].x - current_position.x) + std::abs(pursuit_points[i].y - current_position.y)) / 2;
+        rough_distance = std::max(std::abs(pursuit_points[i].x - current_position.x), std::abs(pursuit_points[i].y - current_position.y));
         if (rough_distance > closest_distance)
         {
             continue;
