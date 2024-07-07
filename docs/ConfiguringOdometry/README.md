@@ -185,7 +185,7 @@ And then configure offset
 ```cpp
 WhoopDriveOdomOffset odom_offset(
   &odom_unit, // Pointer to the odometry unit (will manage the odom unit)
-  to_meters(0), // Zero offset as no trackercenter of the robot).
+  to_meters(0), // Zero offset as no tracker.
   to_meters(0) // Zero offset as no tracker
 );
 ```
