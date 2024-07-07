@@ -133,14 +133,11 @@ NOTE: If your Odom Unit's Center IS the center of the robot, set to 0,0.
 
 ![Image](../images/OneWheelOdomCenter.png)
 
-The procedure for one sideways tracker will be identical to the two trackers. However you assume that the center of the odometry unit forwards/backwards is the center of the robot forward/backwards, but may be left or right of the center of the robot depending on the location of the sideways tracker
-
-
-NOTE: The width of the drivetrain is a measurement from the left side to the right. If the distance between the left and right side if 0.3 meters, then input ```0.3```, or ```to_meters(11.81)```
+For this, you assume that the right wheels is the forwards tracker.
 
 ```cpp
 WhoopDriveOdomUnit odom_unit(
-  to_meters(12.625), // Width of the drivetrain, in meters. Measured as the distance between the left wheels and right wheels
+  to_meters(6.313), // Distance between the center of the odom unit and the right wheels, in meters.
   to_meters(3), // Diameter of drivetrain wheels, in meters 
   1.0/2.0, // Gear Ratio of Drivetrain (If [motor is powering 32t] connected to [64t sharing shaft with drive wheel], it would be ratio = 32/64 = 1.0/2.0) 
   to_meters(1.2), // Sideways tracker distance from the center of the robot's rotation. (positive implies a shift forward from the drivetrain's center)

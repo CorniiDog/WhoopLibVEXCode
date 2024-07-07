@@ -83,7 +83,7 @@ public:
      * Constructor for Drive Odom.
      * The odom unit center is the virtual intercept of the perpendicular faces of the odometry trackers.
      * Visual Representation of Tracker Distances: https://imgur.com/rWCCCfz
-     * @param drive_width Distance between the left and right wheels, in meters.
+     * @param drive_center_distance Distance between the center of the robot and the right wheels, in meters.
      * @param drive_wheel_diameter_meters Diameter of the wheel, in meters (e.g., 0.08255 for 3.25-inch wheels).
      * @param drive_gear_ratio motor on 32 tooth powering the 64 tooth: ratio = 32.0/64.0
      * @param sideways_tracker_distance Distance from the odom unit center to the sideways tracker, in meters (positive implies a shift forward from the odom unit center).
@@ -93,7 +93,7 @@ public:
      * @param leftMotorGroup Pointer to the motor group controlling the left side.
      * @param rightMotorGroup Pointer to the motor group controlling the right side.
      */
-    WhoopDriveOdomUnit(double drive_width, double drive_wheel_diameter_meters, double drive_gear_ratio, double sideways_tracker_distance, double sideways_tracker_wheel_diameter_meters, WhoopInertial* inertialSensor, WhoopRotation* sideways_tracker, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup);
+    WhoopDriveOdomUnit(double drive_center_distance, double drive_wheel_diameter_meters, double drive_gear_ratio, double sideways_tracker_distance, double sideways_tracker_wheel_diameter_meters, WhoopInertial* inertialSensor, WhoopRotation* sideways_tracker, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup);
     
 
     /**
@@ -127,7 +127,7 @@ public:
      * Constructor for Drive Odom.
      * The odom unit center is the virtual intercept of the perpendicular faces of the odometry trackers.
      * Visual Representation of Tracker Distances: https://imgur.com/rWCCCfz
-     * @param drive_width Distance between the left and right wheels, in meters.
+     * @param drive_center_distance Distance between the center of the robot and the right wheels, in meters.
      * @param drive_wheel_diameter_meters Diameter of the drive wheels, in meters (e.g., 0.08255 for 3.25-inch wheels).
      * @param drive_gear_ratio motor on 32 tooth powering the 64 tooth: ratio = 32.0/64.0
      * @param sideways_tracker_distance Distance from the odom unit center to the sideways tracker, in meters (positive implies a shift forward from the odom unit center).
@@ -137,7 +137,7 @@ public:
      * @param leftMotors Vector of pointers to motors on the left side.
      * @param rightMotors Vector of pointers to motors on the right side.
      */
-    WhoopDriveOdomUnit(double drive_width, double drive_wheel_diameter_meters, double drive_gear_ratio, double sideways_tracker_distance, double sideways_tracker_wheel_diameter_meters, WhoopInertial* inertialSensor, WhoopRotation* sideways_tracker, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors);
+    WhoopDriveOdomUnit(double drive_center_distance, double drive_wheel_diameter_meters, double drive_gear_ratio, double sideways_tracker_distance, double sideways_tracker_wheel_diameter_meters, WhoopInertial* inertialSensor, WhoopRotation* sideways_tracker, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors);
 
     /**
      * Calibrates the IMU and tares all devices

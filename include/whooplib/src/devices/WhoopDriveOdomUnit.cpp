@@ -21,13 +21,13 @@ WhoopDriveOdomUnit::WhoopDriveOdomUnit(double drive_width, double drive_wheel_di
     drive_odom_config = DriveOdomConfig::DRIVE_ONLY;
 }
 
-WhoopDriveOdomUnit::WhoopDriveOdomUnit(double drive_width, double drive_wheel_diameter_meters, double drive_gear_ratio, double sideways_tracker_distance, double sideways_tracker_wheel_diameter_meters, WhoopInertial* inertialSensor, WhoopRotation* sideways_tracker, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup):
+WhoopDriveOdomUnit::WhoopDriveOdomUnit(double drive_center_distance, double drive_wheel_diameter_meters, double drive_gear_ratio, double sideways_tracker_distance, double sideways_tracker_wheel_diameter_meters, WhoopInertial* inertialSensor, WhoopRotation* sideways_tracker, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup):
     inertial_sensor(inertialSensor){
     init_motor_groups(leftMotorGroup, rightMotorGroup);
     set_motor_ratio_and_diameter(drive_wheel_diameter_meters, drive_gear_ratio);
     this->sideways_tracker = sideways_tracker;
     sideways_tracker->set_wheel_diameter(sideways_tracker_wheel_diameter_meters);
-    set_physical_distances(drive_width/2.0, sideways_tracker_distance); // From odom class
+    set_physical_distances(drive_center_distance, sideways_tracker_distance); // From odom class
     drive_odom_config = DriveOdomConfig::DRIVE_WITH_SIDEWAYS_TRACKER;
 }
 
@@ -49,13 +49,13 @@ WhoopDriveOdomUnit::WhoopDriveOdomUnit(double drive_width, double drive_wheel_di
     drive_odom_config = DriveOdomConfig::DRIVE_ONLY;
 }
 
-WhoopDriveOdomUnit::WhoopDriveOdomUnit(double drive_width, double drive_wheel_diameter_meters, double drive_gear_ratio, double sideways_tracker_distance, double sideways_tracker_wheel_diameter_meters, WhoopInertial* inertialSensor, WhoopRotation* sideways_tracker, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors):
+WhoopDriveOdomUnit::WhoopDriveOdomUnit(double drive_center_distance, double drive_wheel_diameter_meters, double drive_gear_ratio, double sideways_tracker_distance, double sideways_tracker_wheel_diameter_meters, WhoopInertial* inertialSensor, WhoopRotation* sideways_tracker, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors):
     inertial_sensor(inertialSensor){
     init_motor_groups(leftMotors, rightMotors);
     set_motor_ratio_and_diameter(drive_wheel_diameter_meters, drive_gear_ratio);
     this->sideways_tracker = sideways_tracker;
     sideways_tracker->set_wheel_diameter(sideways_tracker_wheel_diameter_meters);
-    set_physical_distances(drive_width/2.0, sideways_tracker_distance); // From odom class
+    set_physical_distances(drive_center_distance, sideways_tracker_distance); // From odom class
     drive_odom_config = DriveOdomConfig::DRIVE_WITH_SIDEWAYS_TRACKER;
 }
 

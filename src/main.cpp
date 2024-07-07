@@ -219,6 +219,7 @@ void autonomous(void)
   }
 }
 
+
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
 /*                              User Control Task                            */
@@ -230,6 +231,7 @@ void autonomous(void)
 /*---------------------------------------------------------------------------*/
 void usercontrol(void)
 {
+
   autonomous();
 
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
