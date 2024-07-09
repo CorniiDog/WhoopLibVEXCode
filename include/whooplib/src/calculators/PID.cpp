@@ -23,22 +23,22 @@
  */
 
 PID::PID(double error, double kp, double ki, double kd, double starti) : error(error),
-                                                                    kp(kp),
-                                                                    ki(ki),
-                                                                    kd(kd),
-                                                                    starti(starti)
+                                                                         kp(kp),
+                                                                         ki(ki),
+                                                                         kd(kd),
+                                                                         starti(starti)
 {
 }
 
 PID::PID(double error, double kp, double ki, double kd, double starti,
          double settle_error, double settle_time, double timeout) : error(error),
-                                                                 kp(kp),
-                                                                 ki(ki),
-                                                                 kd(kd),
-                                                                 starti(starti),
-                                                                 settle_error(settle_error),
-                                                                 settle_time(settle_time),
-                                                                 timeout(timeout)
+                                                                    kp(kp),
+                                                                    ki(ki),
+                                                                    kd(kd),
+                                                                    starti(starti),
+                                                                    settle_error(settle_error),
+                                                                    settle_time(settle_time),
+                                                                    timeout(timeout)
 {
 }
 
@@ -84,4 +84,22 @@ bool PID::is_settled()
     return (true);
   }
   return (false);
+}
+
+bool PID::settling()
+{
+  if (is_settled())
+  {
+    return true;
+  }
+  if (time_spent_settled > (settle_time / 5) * 1000)
+  {
+    return true;
+  }
+  return false;
+}
+
+void PID::zeroize_accumulated()
+{
+  accumulated_error = 0;
 }

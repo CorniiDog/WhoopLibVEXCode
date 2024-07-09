@@ -77,7 +77,8 @@ void WhoopDrivetrain::drive_to_point(double x, double y, double timeout_seconds,
     pursuit_conductor.generate_path(robot_pose, pose, timeout_seconds);
     auton_traveling = true;
 
-    if(wait_until_completed){
+    if (wait_until_completed)
+    {
         this->wait_until_completed();
     }
 
@@ -121,7 +122,8 @@ void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, double timeo
     pursuit_conductor.generate_path(odom_fusion->get_pose_2d(), pose, timeout_seconds, turning_radius);
     auton_traveling = true;
 
-    if(wait_until_completed){
+    if (wait_until_completed)
+    {
         this->wait_until_completed();
     }
 
@@ -228,8 +230,10 @@ void WhoopDrivetrain::set_pose(double x, double y, double yaw)
     odom_fusion->tare(x, y, yaw);
 }
 
-void WhoopDrivetrain::wait_until_completed(){
-    while(auton_traveling){
+void WhoopDrivetrain::wait_until_completed()
+{
+    while (auton_traveling)
+    {
         wait(5, msec);
     }
 }
@@ -270,7 +274,7 @@ void WhoopDrivetrain::step_autonomous()
     {
         pursuit_result = pursuit_conductor.step(odom_fusion->get_pose_2d());
         if (pursuit_result.is_completed)
-        {   
+        {
             auton_traveling = false;
             return;
         }
@@ -281,13 +285,15 @@ void WhoopDrivetrain::step_autonomous()
             return;
         }
 
-        if(pursuit_conductor.forward_pid.is_settled()){
-            left_motor_group->spin(pursuit_result.forward_power - pursuit_result.steering_power/1.5);
-            right_motor_group->spin(pursuit_result.forward_power + pursuit_result.steering_power/1.5); 
+        if (pursuit_conductor.forward_pid.is_settled() || pursuit_result.suggest_point_turn)
+        {
+            left_motor_group->spin(pursuit_result.forward_power - pursuit_result.steering_power / 1.5);
+            right_motor_group->spin(pursuit_result.forward_power + pursuit_result.steering_power / 1.5);
         }
-        else{
+        else
+        {
             left_motor_group->spin(pursuit_result.forward_power + std::min(-pursuit_result.steering_power, 0.0));
-            right_motor_group->spin(pursuit_result.forward_power + std::min(pursuit_result.steering_power, 0.0)); 
+            right_motor_group->spin(pursuit_result.forward_power + std::min(pursuit_result.steering_power, 0.0));
         }
     }
     else
@@ -315,45 +321,46 @@ void WhoopDrivetrain::__step()
     }
 }
 
-void WhoopDrivetrain::display_map(){
+void WhoopDrivetrain::display_map()
+{
     double m_to_pixels = 30;
-    double screen_offset = 3.6*30;
+    double screen_offset = 3.6 * 30;
     Brain.Screen.clearScreen();
     Brain.Screen.setPenColor(color(0, 255, 0));
     Brain.Screen.setFillColor(color::transparent);
-    if(pursuit_conductor.enabled){
+    if (pursuit_conductor.enabled)
+    {
         int size = pursuit_conductor.pursuit_path.pursuit_points.size();
-        for(int i = 0; i < size; ++i){
+        for (int i = 0; i < size; ++i)
+        {
             barebonesPose pose = pursuit_conductor.pursuit_path.pursuit_points[i];
-            TwoDPose pose_on_screen(pose.x*m_to_pixels+screen_offset, -pose.y*m_to_pixels+screen_offset, pose.yaw);
+            TwoDPose pose_on_screen(pose.x * m_to_pixels + screen_offset, -pose.y * m_to_pixels + screen_offset, pose.yaw);
             Brain.Screen.drawPixel(pose_on_screen.x, pose_on_screen.y);
         }
     }
 
-
     // Display robot position
     TwoDPose robot_pose = odom_fusion->get_pose_2d();
-    TwoDPose robot_pose_on_screen(robot_pose.x*m_to_pixels+screen_offset, -robot_pose.y*m_to_pixels+screen_offset, robot_pose.yaw);
+    TwoDPose robot_pose_on_screen(robot_pose.x * m_to_pixels + screen_offset, -robot_pose.y * m_to_pixels + screen_offset, robot_pose.yaw);
     Brain.Screen.setPenColor(color(255, 0, 0));
     Brain.Screen.drawCircle(robot_pose_on_screen.x, robot_pose_on_screen.y, 2);
-    Brain.Screen.drawLine(robot_pose_on_screen.x, robot_pose_on_screen.y, robot_pose_on_screen.x+10*cos(robot_pose_on_screen.yaw), robot_pose_on_screen.y-10*sin(robot_pose_on_screen.yaw));
+    Brain.Screen.drawLine(robot_pose_on_screen.x, robot_pose_on_screen.y, robot_pose_on_screen.x + 10 * cos(robot_pose_on_screen.yaw), robot_pose_on_screen.y - 10 * sin(robot_pose_on_screen.yaw));
 
     // Draw robot lookahead radius
     Brain.Screen.setPenColor(color(255, 150, 0));
-    Brain.Screen.drawCircle(robot_pose_on_screen.x, robot_pose_on_screen.y, pursuit_conductor.pursuit_path.lookahead_distance*m_to_pixels);
-    
+    Brain.Screen.drawCircle(robot_pose_on_screen.x, robot_pose_on_screen.y, pursuit_conductor.pursuit_path.lookahead_distance * m_to_pixels);
+
     // Draw lookahead point
     Brain.Screen.setPenColor(color(255, 255, 255));
     barebonesPose lookahead_pos = pursuit_conductor.pursuit_path.lookahead_pos;
-    TwoDPose lookahead_pose_on_screen(lookahead_pos.x*m_to_pixels+screen_offset, -lookahead_pos.y*m_to_pixels+screen_offset, 0);
+    TwoDPose lookahead_pose_on_screen(lookahead_pos.x * m_to_pixels + screen_offset, -lookahead_pos.y * m_to_pixels + screen_offset, 0);
     Brain.Screen.drawCircle(lookahead_pose_on_screen.x, lookahead_pose_on_screen.y, 2);
-
 
     Brain.Screen.setPenColor(color(255, 255, 255));
 
-    Brain.Screen.setCursor(1,1);
+    Brain.Screen.setCursor(1, 1);
     Brain.Screen.print("Distance: %.1f | Distance Power %.1f", pursuit_result.distance, pursuit_result.forward_power);
-    Brain.Screen.setCursor(2,1);
+    Brain.Screen.setCursor(2, 1);
     Brain.Screen.print("Turn: %.1f | Turn Power: %.1f", pursuit_result.steering_angle, pursuit_result.steering_power);
 
     TwoDPose current_pose = odom_fusion->get_pose_2d();
@@ -362,8 +369,6 @@ void WhoopDrivetrain::display_map(){
 
     Brain.Screen.setCursor(4, 1);
     Brain.Screen.print("Lookahead Point: %.2f %.2f %.2f", get_units_str().c_str(), lookahead_pos.x, lookahead_pos.y, lookahead_pos.yaw);
-
-
 }
 
 /**

@@ -83,6 +83,7 @@ struct PursuitResult
     double forward_power;
     double steering_power;
     bool is_completed;
+    bool suggest_point_turn;
     /**
      * @param is_valid would be true if the pursuit estimate returned no error
      * @param steering_angle would be the angle to turn towards for course correction in radians, counter-clockwise-positive
@@ -90,8 +91,9 @@ struct PursuitResult
      * @param forward_power the suggested motor power to go forward
      * @param steering_power the suggestedmotor power for steering
      * @param is_completed if true, the pure pursuit is complete
+     * @param suggest_point_turn is true when it suggests a point turn instead of swing turn
      */
-    PursuitResult(bool is_valid = false, double steering_angle = 0, double distance = 0, double forward_power = 0, double steering_power = 0, bool is_completed = false) : is_valid(is_valid), steering_angle(steering_angle), distance(distance), forward_power(forward_power), steering_power(steering_power), is_completed(is_completed) {}
+    PursuitResult(bool is_valid = false, double steering_angle = 0, double distance = 0, double forward_power = 0, double steering_power = 0, bool is_completed = false, bool suggest_point_turn = false) : is_valid(is_valid), steering_angle(steering_angle), distance(distance), forward_power(forward_power), steering_power(steering_power), is_completed(is_completed), suggest_point_turn(suggest_point_turn) {}
 };
 
 class PurePursuitConductor

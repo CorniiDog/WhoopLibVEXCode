@@ -23,7 +23,7 @@
  * @param substring The substring to find.
  * @return A vector of integers representing the starting indices of each occurrence of substring in str.
  */
-std::vector<int> find_all_indexes(const std::string& str, const std::string& substring);
+std::vector<int> find_all_indexes(const std::string &str, const std::string &substring);
 
 /**
  * Extracts messages from a buffer delimited by start and end markers.
@@ -32,7 +32,7 @@ std::vector<int> find_all_indexes(const std::string& str, const std::string& sub
  * @param end_marker The string marking the end of a message.
  * @return A vector of strings, each representing a message found between a pair of start and end markers.
  */
-std::vector<std::string> read_messages_from_buffer(const std::string& buffer, const std::string& start_marker, const std::string& end_marker);
+std::vector<std::string> read_messages_from_buffer(const std::string &buffer, const std::string &start_marker, const std::string &end_marker);
 
 /**
  * Retrieves the latest message from a buffer based on the specified start and end markers.
@@ -41,28 +41,28 @@ std::vector<std::string> read_messages_from_buffer(const std::string& buffer, co
  * @param end_marker The string marking the end of a message.
  * @return The most recently added message found in the buffer.
  */
-std::string get_latest_message_from_buffer(const std::string& buffer, const std::string& start_marker, const std::string& end_marker);
+std::string get_latest_message_from_buffer(const std::string &buffer, const std::string &start_marker, const std::string &end_marker);
 
 /**
  * Removes leading, trailing, and excess embedded whitespace characters from a string.
  * @param str The string to clean up.
  * @return A trimmed and cleaned string with no leading/trailing or consecutive whitespace characters.
  */
-std::string strip(const std::string& str);
+std::string strip(const std::string &str);
 
 // Conversion functions
 std::string boolToString(bool b);
 std::string intToString(int value);
-std::string doubleToString(double value, int decimal_places=4);
-int stringToInt(const std::string& str);
-double stringToDouble(const std::string& str);
+std::string doubleToString(double value, int decimal_places = 4);
+int stringToInt(const std::string &str);
+double stringToDouble(const std::string &str);
 float intToFloat(int value);
 int floatToInt(float value);
 double intToDouble(int value);
 int doubleToInt(double value);
 bool intToBool(int value);
 int boolToInt(bool value);
-double stringToDouble(const std::string& str);
+double stringToDouble(const std::string &str);
 
 /**
  * Converts degrees to radians.
@@ -104,7 +104,7 @@ double normalize_angle(double angle_radians);
  * @param angle_radians Angle in radians to normalize.
  * @return Normalized angle in radians.
  */
-double denormalize_angle(double angle_radians) ;
+double denormalize_angle(double angle_radians);
 
 /**
  * Calculates the circumference of a circle given its radius.
@@ -140,7 +140,7 @@ double area_from_diameter(double diameter);
  * @param numerator the numerator, or the value that will be divided
  * @param denominator  the denominator, or the value to divide from the numerator
  */
-double safeDivide(double numerator, double denominator, double max_possible_number=std::numeric_limits<double>::infinity());
+double safeDivide(double numerator, double denominator, double max_possible_number = std::numeric_limits<double>::infinity());
 
 /**
  * This clamps to volts value [-12.0, 12.0]
@@ -158,4 +158,9 @@ double clamp(double val, double min, double max);
  * The opposite of a deadband function. If within the deadband, it returns the deadband or -deadband, based upon 0 at middle
  */
 double deadband_inverse(double val, double deadband);
+
+/**
+ * Attempts to linearize the motor power
+ */
+double linearize_voltage(double volt);
 #endif // TOOLBOX_HPP

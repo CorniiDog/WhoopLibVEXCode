@@ -133,23 +133,23 @@ WhoopOdomFusion odom_fusion(
 ////////////////////////////////////////////////////////////
 
 PursuitParams pursuit_parameters(
-    to_meters(5),   // Radius of the turns, in meters
-    to_meters(5),   // Pure Pursuit look ahead distance, in meters
-    8.0,            // Pure pursuit forward max motor voltage (0.0, 12.0]
-    11.0,           // Pure pursuit turning max motor voltage (0.0, 12.0]
-    to_meters(1), // Settle Distance. Exits when within this distance of target, in meters
-    to_rad(1),      // Settle Rotation. Exits when within this rotation of target, in radians
-    0.4,            // Minimum time to be considered settled, in seconds
-    0,              // Time after which to give up and move on, in seconds (set to 0 to disable)
-    16,             // Turning (kP) Proportional Tuning
-    0.2,            // Turning (kI) Integral Tuning
-    40,             // Turning (kD) Derivative Tuning
+    to_meters(5),    // Radius of the turns, in meters
+    to_meters(5),    // Pure Pursuit look ahead distance, in meters
+    8.0,             // Pure pursuit forward max motor voltage (0.0, 12.0]
+    11.0,            // Pure pursuit turning max motor voltage (0.0, 12.0]
+    to_meters(1.25), // Settle Distance. Exits when within this distance of target, in meters
+    to_rad(1),       // Settle Rotation. Exits when within this rotation of target, in radians
+    0.4,             // Minimum time to be considered settled, in seconds
+    0,               // Time after which to give up and move on, in seconds (set to 0 to disable)
+    14,              // Turning (kP) Proportional Tuning
+    0.1,             // Turning (kI) Integral Tuning
+    18,              // Turning (kD) Derivative Tuning
     to_rad(15),      // The rotation distance (error), in radians, to activate turning_ki
-    60,             // Forward (kP) Proportional Tuning
-    0.0,              // Forward (kI) Integral Tuning
-    400,            // Forward (kD) Derivative Tuning
-    to_meters(0),   // The forward distance (error), in meters, to activate forward_ki
-    200             // The number of points when generating the path. More points mean higher detail of the path, but at a higher computational cost
+    55,              // Forward (kP) Proportional Tuning
+    0.01,            // Forward (kI) Integral Tuning
+    250,             // Forward (kD) Derivative Tuning
+    to_meters(2),    // The forward distance (error), in meters, to activate forward_ki
+    200              // The number of points when generating the path. More points mean higher detail of the path, but at a higher computational cost
 );
 
 ////////////////////////////////////////////////////////////
@@ -218,7 +218,6 @@ void autonomous(void)
     wait(100, msec);
   }
 }
-
 
 /*---------------------------------------------------------------------------*/
 /*                                                                           */

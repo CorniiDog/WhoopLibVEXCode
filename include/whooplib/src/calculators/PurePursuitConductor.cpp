@@ -69,22 +69,32 @@ PursuitResult PurePursuitConductor::step(TwoDPose current_pose)
         return PursuitResult(false, 0, 0, 0, 0, false);
     }
 
-    double forward_power = forward_pid.step(estimate.distance);
-    double turn_power = turn_pid.step(estimate.steering_angle);
+    double forward_power = linearize_voltage(forward_pid.step(estimate.distance));
+    if (forward_pid.settling())
+    {
+        forward_power = 0;
+        forward_pid.zeroize_accumulated();
+        estimate.steering_angle = estimate.last_steering;
+    }
 
-    PursuitResult result = PursuitResult(true, estimate.steering_angle, estimate.distance, 
-        clamp(forward_power, -default_pursuit_parameters->forward_max_voltage, default_pursuit_parameters->forward_max_voltage), 
-        clamp(turn_power, -default_pursuit_parameters->turning_max_voltage, default_pursuit_parameters->turning_max_voltage), 
-        false);
+    double turn_power = linearize_voltage(turn_pid.step(estimate.steering_angle));
+    if (turn_pid.settling())
+    {
+        turn_power = 0;
+        turn_pid.zeroize_accumulated();
+    }
 
-    bool forward_starting_to_settle = fabs(forward_pid.error) < forward_pid.settle_error;
-    bool turning_starting_to_settle = fabs(turn_pid.error) < turn_pid.settle_error;
+    PursuitResult result = PursuitResult(true, estimate.steering_angle, estimate.distance,
+                                         clamp(forward_power, -default_pursuit_parameters->forward_max_voltage, default_pursuit_parameters->forward_max_voltage),
+                                         clamp(turn_power, -default_pursuit_parameters->turning_max_voltage, default_pursuit_parameters->turning_max_voltage),
+                                         false, estimate.suggest_point_turn);
 
     if ((forward_pid.is_settled()) && turn_pid.is_settled())
     {
         result.is_completed = true;
     }
-    else if(turning_starting_to_settle && !forward_starting_to_settle){
+    else if (turn_pid.settling() && !forward_pid.settling())
+    {
         turn_pid.time_spent_settled = 0;
     }
 

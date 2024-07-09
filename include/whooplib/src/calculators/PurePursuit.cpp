@@ -15,7 +15,7 @@
 PurePursuitPath::PurePursuitPath(const TwoDPose start, const TwoDPose end, double turning_radius, double lookahead_distance, double num_segments)
     : start(start), end(end), turning_radius(turning_radius), lookahead_distance(lookahead_distance), num_segments(num_segments)
 {
-    end_pushed_back = end * TwoDPose(0,-lookahead_distance,0);
+    end_pushed_back = end * TwoDPose(0, -lookahead_distance, 0);
 
     computeDubinsPath();
 }
@@ -44,12 +44,11 @@ void PurePursuitPath::computeDubinsPath()
 
         pursuit_points = {};
 
-        
         if (dubins_path_sample_many(&path, step_size, create_points_bridge, this) != EDUBOK)
         {
             path_valid = false;
         }
-        
+
         // Create extrapolated forward steps
         double dx = end.x - end_pushed_back.x;
         double dy = end.y - end_pushed_back.y;
@@ -58,14 +57,14 @@ void PurePursuitPath::computeDubinsPath()
         int n = static_cast<int>(distance / step_size); // Calculate the number of full steps
         double fraction_step = step_size / distance;
 
-        for (int i = 1; i < n; ++i) {
+        for (int i = 1; i < n; ++i)
+        {
             double fraction = i * fraction_step;
             barebonesPose intermediate;
             intermediate.x = end_pushed_back.x + fraction * dx;
             intermediate.y = end_pushed_back.y + fraction * dy;
             pursuit_points.push_back(intermediate);
         }
-
     }
 }
 
@@ -99,8 +98,8 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
     double rough_distance;
     double distance;
 
-    // Reverse iteration
-    for (std::size_t i = points_size; i-- > 0; )
+    // Reverse iteration from points_size - 1 to 0 (via subtracting before compare)
+    for (std::size_t i = points_size; i-- > 0;)
     {
         // Rough distance first to avoid un-needed computational cost
         rough_distance = std::max(std::abs(pursuit_points[i].x - current_position.x), std::abs(pursuit_points[i].y - current_position.y));
@@ -116,7 +115,7 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
             {
                 point_ahead_distance = distance;
                 look_ahead_position = pursuit_points[i];
-                length_lookahead = (points_size - 1 - i) * step_size;
+                length_lookahead = (points_size - (i + 1)) * step_size;
                 lookahead_found = true;
             }
             if (!find_closest_if_off_course)
@@ -131,7 +130,7 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
             {
                 closest_distance = distance;
                 closest_position = pursuit_points[i];
-                length_closest = (points_size - 1 - i) * step_size;
+                length_closest = (points_size - (i + 1)) * step_size;
                 closest_found = true;
             }
         }
@@ -153,13 +152,12 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
     double path_angle = atan2(dy, dx);
     double steering_angle = normalize_angle(path_angle - current_position.yaw);
 
-
     lookahead_pos = look_ahead_position;
 
     bool is_past_point = false;
 
-    if(length_lookahead == 0) {
-        is_past_point = true;
+    if (length_lookahead <= step_size)
+    {
         // If robot is within a respective distance, then just turn
         /*double dist_from_end = std::sqrt(std::pow(q1[0] - current_position.x, 2)+ std::pow(q1[1] - current_position.y, 2));
         if(dist_from_end < deviation_min){
@@ -168,12 +166,23 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
 
         // If the angle of the robot at the end point, facing the same direction roughly as the end point, and over-passes (designated by steering angle)
         // Go in reverse
-        if(std::abs(normalize_angle(q1[2] - current_position.yaw)) < M_PI_2 && std::abs(steering_angle) > M_PI_2){
+        if (std::abs(normalize_angle(end.yaw - current_position.yaw)) < M_PI_2 && std::abs(steering_angle) > M_PI_2)
+        {
+            is_past_point = true;
             point_ahead_distance *= -1;
             steering_angle = normalize_angle(steering_angle + M_PI);
         }
     }
-    
 
-    return PursuitEstimate(true, steering_angle, point_ahead_distance + length_lookahead, is_past_point);
+    double end_steering = end.yaw - current_position.yaw;
+
+    bool suggest_point_turn = false; // Suggesting point turn if the robot is facing the opposite direction
+    if (std::abs(steering_angle) > M_PI_2)
+    {
+        suggest_point_turn = true;
+    }
+
+    // point_ahead_distance is the distance from the robot to the center of the track.
+    // length_lookahead is the path distance from target (like a racecar track length to finish line)
+    return PursuitEstimate(true, steering_angle, point_ahead_distance + length_lookahead, is_past_point, end_steering, suggest_point_turn);
 }

@@ -20,14 +20,18 @@ struct PursuitEstimate
     double steering_angle;
     double distance;
     bool is_past_point;
+    double last_steering;
+    bool suggest_point_turn;
 
     /**
      * @param is_valid would be true if the pursuit estimate returned no error
      * @param steering_angle would be the angle to turn towards for course correction in radians, counter-clockwise-positive
      * @param distance would be the distance from the target, in meters
      * @param is_past_point Returns true if the robot passes the point slightly
+     * @param last_steering Is the suggested steering for last point
+     * @param suggest_point_turn Would be true if the pure pursuits suggest a point turn instead of swing turn
      */
-    PursuitEstimate(bool is_valid = false, double steering_angle = 0, double distance = 0, bool is_past_point = false) : is_valid(is_valid), steering_angle(steering_angle), distance(distance), is_past_point(is_past_point) {}
+    PursuitEstimate(bool is_valid = false, double steering_angle = 0, double distance = 0, bool is_past_point = false, double last_steering = 0, bool suggest_point_turn = false) : is_valid(is_valid), steering_angle(steering_angle), distance(distance), is_past_point(is_past_point), last_steering(last_steering), suggest_point_turn(suggest_point_turn) {}
 };
 
 struct barebonesPose
@@ -42,12 +46,15 @@ class PurePursuitPath
 {
 private:
     TwoDPose start, end;
+    
     double turning_radius;
 
     TwoDPose end_pushed_back;
+
 public:
     double lookahead_distance;
     barebonesPose lookahead_pos;
+
 private:
     double q0[3] = {0, 0, 0};
     double q1[3] = {0, 0, 0};
@@ -76,6 +83,17 @@ public:
     PurePursuitPath(const TwoDPose start, const TwoDPose end, double turning_radius, double lookahead_distance, double num_segments = 200);
 
     /**
+     * Creates a path for pure pursuit, using Dubin-Curves. NOTE: Yaw is ccw-positive
+     * You can find more information about Dubin-Curves here: https://github.com/AndrewWalker/Dubins-Curves?tab=readme-ov-file
+     * @param waypoints The points to generate a path for. The starting point should be the position the robot is already in for best results
+     * @param turning_radius Turning radius of the dubin curve, in meters. You can see visual representations of the turning radius here: https://imgur.com/BahIst0
+     * @param lookahead_distance The look-ahead distance for pure pursuit along a path, in meters. Visual representation of lookahead distance here: https://imgur.com/WT5G0Z1
+     * @param num_segments The number of points when generating the path. More points mean higher detail of the path, but at a higher computational cost
+     */
+    PurePursuitPath(std::vector<TwoDPose> waypoints, double turning_radius, double lookahead_distance, double num_segments = 200);
+
+
+    /**
      * Calculates the pure pursuit estimate relative to the path. NOTE: Yaw is ccw-positive
      * @param current_position The TwoDPose of the current position
      * @param find_closest_if_off_course Set to true to find the closest point of the path
@@ -83,7 +101,7 @@ public:
      * Also includes "steering_angle" which is the angle to steer to (if + means steer left, if - means steer right).
      * "distance" is how far away from the lookahead point.
      */
-    PursuitEstimate calculate_pursuit_estimate(TwoDPose current_position, bool find_closest_if_off_course = true, double deviation_min=0);
+    PursuitEstimate calculate_pursuit_estimate(TwoDPose current_position, bool find_closest_if_off_course = true, double deviation_min = 0);
 };
 
 #endif // PURE_PURSUIT_HPP
