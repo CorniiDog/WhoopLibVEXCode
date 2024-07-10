@@ -8,6 +8,8 @@
 /*----------------------------------------------------------------------------*/
 
 #include "whooplib/include/calculators/PurePursuitConductor.hpp"
+#include "vex.h"
+#include <iostream>
 
 PurePursuitConductor::PurePursuitConductor(PursuitParams *default_pursuit_parameters) : turn_pid(0, default_pursuit_parameters->turning_kp, default_pursuit_parameters->turning_ki, default_pursuit_parameters->turning_kd, default_pursuit_parameters->turning_i_activation, default_pursuit_parameters->settle_rotation, default_pursuit_parameters->settle_time, default_pursuit_parameters->timeout),
                                                                                         forward_pid(0, default_pursuit_parameters->forward_kp, default_pursuit_parameters->forward_ki, default_pursuit_parameters->forward_kp, default_pursuit_parameters->forward_i_activation, default_pursuit_parameters->settle_distance, default_pursuit_parameters->settle_time, default_pursuit_parameters->timeout),
@@ -28,6 +30,74 @@ void PurePursuitConductor::generate_path(TwoDPose start_position, TwoDPose desti
 
 void PurePursuitConductor::generate_path(TwoDPose start_position, TwoDPose destination_position, double timeout, double turning_radius)
 {
+    generate_path({start_position, destination_position}, timeout, turning_radius);
+}
+
+void PurePursuitConductor::generate_path(std::vector<std::vector<double>> waypoints)
+{
+    generate_path(waypoints, -1, -1);
+}
+
+void PurePursuitConductor::generate_path(std::vector<std::vector<double>> waypoints, double timeout)
+{
+    generate_path(waypoints, timeout, -1);
+}
+
+void PurePursuitConductor::generate_path(std::vector<std::vector<double>> waypoints, double timeout, double turning_radius)
+{
+    // Ensure that waypoints are 2 or greater
+    size_t waypoints_size = waypoints.size();
+
+    // Generate waypoints constructed with TwoDPose
+    std::vector<TwoDPose> constructed_waypoints;
+
+    size_t size_of;
+    for (size_t i = 0; i < waypoints_size; i++)
+    {
+        size_of = waypoints[i].size();
+        if (size_of == 3)
+        { // If size is 3 then just push back
+            constructed_waypoints.push_back(TwoDPose(waypoints[i][0], waypoints[i][1], waypoints[i][2]));
+        }
+        else
+        { // Size is 2
+            if (i == waypoints_size - 1)
+            { // If last element and size is 2. Use x and y of last element and yaw of first
+                constructed_waypoints.push_back(TwoDPose(waypoints[i][0], waypoints[i][1], waypoints[0][2]));
+            }
+            else
+            {
+                // Push back waypoint, but with yaw looking at the next target
+                constructed_waypoints.push_back(TwoDPose(waypoints[i][0], waypoints[i][1], 0).lookAt(waypoints[i + 1][0], waypoints[i + 1][1]));
+            }
+        }
+    }
+
+    generate_path(constructed_waypoints, timeout, turning_radius);
+}
+
+/**
+ * Generates the path
+ * @param waypoints The waypoints for generating the path. Example would be {TwoDPose(0,0,0), TwoDPose(20,10,M_PI_2)}
+ * The yaw for each position in the list must be explicitly stated when using TwoDPose objects
+ */
+void PurePursuitConductor::generate_path(std::vector<TwoDPose> waypoints)
+{
+    generate_path(waypoints, -1, -1);
+}
+
+void PurePursuitConductor::generate_path(std::vector<TwoDPose> waypoints, double timeout)
+{
+    generate_path(waypoints, timeout, -1);
+}
+
+void PurePursuitConductor::generate_path(std::vector<TwoDPose> waypoints, double timeout, double turning_radius)
+{
+    if (waypoints.size() < 2)
+    {
+        Brain.Screen.print("A path requires at least 2 waypoints");
+        std::cout << "A path requires at least 2 waypoints" << std::endl;
+    }
     double turn_rad;
     if (turning_radius >= 0)
     {
@@ -50,8 +120,8 @@ void PurePursuitConductor::generate_path(TwoDPose start_position, TwoDPose desti
 
     forward_pid = PID(0, default_pursuit_parameters->forward_kp, default_pursuit_parameters->forward_ki, default_pursuit_parameters->forward_kp, default_pursuit_parameters->forward_i_activation, default_pursuit_parameters->settle_distance, default_pursuit_parameters->settle_time, t_out),
     turn_pid = PID(0, default_pursuit_parameters->turning_kp, default_pursuit_parameters->turning_ki, default_pursuit_parameters->turning_kd, default_pursuit_parameters->turning_i_activation, default_pursuit_parameters->settle_rotation, default_pursuit_parameters->settle_time, t_out),
-    pursuit_path = PurePursuitPath(start_position, destination_position, turn_rad, default_pursuit_parameters->lookahead_distance, default_pursuit_parameters->num_path_segments);
-    this->end_position = destination_position;
+    this->end_position = waypoints[waypoints.size() - 1]; // Last element of the waypoints list (as starting index is 0 instead of 1)
+    pursuit_path = PurePursuitPath(waypoints, turn_rad, default_pursuit_parameters->lookahead_distance, default_pursuit_parameters->num_path_segments);
     enabled = true;
 }
 

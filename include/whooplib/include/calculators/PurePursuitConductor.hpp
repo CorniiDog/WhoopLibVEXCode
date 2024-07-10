@@ -140,6 +140,57 @@ public:
     void generate_path(TwoDPose start_position, TwoDPose destination_position, double timeout, double turning_radius);
 
     /**
+     * Generates the path
+     * @param waypoints The waypoints for generating the path. Example would be {{0,0,0}, {20,10,M_PI_2}}
+     * As long as the start has a yaw, the rest does not really need one, however not providing the end yaw explicitly will cause the end position to have the same yaw as the start yaw.
+     * Additional valid path examples would be {{0,0,0}, {5,5}, {10,20}} and {{0,0,0}, {5,5}, {10,20, M_PI_2}}
+     */
+    void generate_path(std::vector<std::vector<double>> waypoints);
+
+    /**
+     * Generates the path
+     * @param waypoints The waypoints for generating the path. Example would be {{0,0,0}, {20,10,M_PI_2}}
+     * As long as the start has a yaw, the rest does not really need one, however not providing the end yaw explicitly will cause the end position to have the same yaw as the start yaw.
+     * Additional valid path examples would be {{0,0,0}, {5,5}, {10,20}} and {{0,0,0}, {5,5}, {10,20, M_PI_2}}
+     * @param timeout The timeout of the movement, in seconds
+     */
+    void generate_path(std::vector<std::vector<double>> waypoints, double timeout);
+
+    /**
+     * Generates the path
+     * @param waypoints The waypoints for generating the path. Example would be {{0,0,0}, {20,10,M_PI_2}}
+     * As long as the start has a yaw, the rest does not really need one, however not providing the end yaw explicitly will cause the end position to have the same yaw as the start yaw.
+     * Additional valid path examples would be {{0,0,0}, {5,5}, {10,20}} and {{0,0,0}, {5,5}, {10,20, M_PI_2}}
+     * @param timeout The timeout of the movement, in seconds
+     * @param turning_radius The radius, in meters, of the turning
+     */
+    void generate_path(std::vector<std::vector<double>> waypoints, double timeout, double turning_radius);
+
+    /**
+     * Generates the path
+     * @param waypoints The waypoints for generating the path. Example would be {TwoDPose(0,0,0), TwoDPose(20,10,M_PI_2)}
+     * The yaw for each position in the list must be explicitly stated when using TwoDPose objects
+     */
+    void generate_path(std::vector<TwoDPose> waypoints);
+
+    /**
+     * Generates the path
+     * @param waypoints The waypoints for generating the path. Example would be {TwoDPose(0,0,0), TwoDPose(20,10,M_PI_2)}
+     * The yaw for each position in the list must be explicitly stated when using TwoDPose objects
+     * @param timeout The timeout of the movement, in seconds
+     */
+    void generate_path(std::vector<TwoDPose> waypoints, double timeout);
+
+    /**
+     * Generates the path
+     * @param waypoints The waypoints for generating the path. Example would be {TwoDPose(0,0,0), TwoDPose(20,10,M_PI_2)}
+     * The yaw for each position in the list must be explicitly stated when using TwoDPose objects
+     * @param timeout The timeout of the movement, in seconds
+     * @param turning_radius The radius, in meters, of the turning
+     */
+    void generate_path(std::vector<TwoDPose> waypoints, double timeout, double turning_radius);
+
+    /**
      * Steps the conductor
      */
     PursuitResult step(TwoDPose current_pose);

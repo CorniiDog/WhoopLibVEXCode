@@ -118,8 +118,8 @@ void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, double timeo
         yaw *= -1; // (clockwise-positive -> counter-clockwise-positive)
     }
 
-    TwoDPose pose(x, y, yaw);
-    pursuit_conductor.generate_path(odom_fusion->get_pose_2d(), pose, timeout_seconds, turning_radius);
+    TwoDPose target_pose(x, y, yaw);
+    pursuit_conductor.generate_path(odom_fusion->get_pose_2d(), target_pose, timeout_seconds, turning_radius);
     auton_traveling = true;
 
     if (wait_until_completed)
@@ -128,7 +128,127 @@ void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, double timeo
     }
 
     last_desired_position = desired_position;
-    desired_position = pose;
+    desired_position = target_pose;
+}
+
+void WhoopDrivetrain::drive_through_path(std::vector<std::vector<double>> waypoints, bool wait_until_completed)
+{
+    drive_through_path(waypoints, -1, -1, wait_until_completed);
+}
+
+void WhoopDrivetrain::drive_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, bool wait_until_completed)
+{
+    drive_through_path(waypoints, -1, -1, wait_until_completed);
+}
+
+void WhoopDrivetrain::drive_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, double turning_radius, bool wait_until_completed)
+{
+
+    // Ensure that waypoints are 2 or greater
+    size_t waypoints_size = waypoints.size();
+    if (waypoints_size < 1)
+    {
+        Brain.Screen.print("A path requires at least 1 waypoint");
+        std::cout << "A path requires at least 1 waypoint" << std::endl;
+    }
+
+    // First check the validity of the list of lists to be appropriately structured
+    size_t size_of;
+    for (size_t i = 0; i < waypoints_size; i++)
+    {
+        size_of = waypoints[i].size();
+        if (size_of != 2 || size_of != 3)
+        { // If regular waypoint, must be either 2 or 3 variables
+            Brain.Screen.print("Waypoints must consist of either 3 variables {x, y, yaw}, or 2 variables {x, y}");
+            std::cout << "Waypoints must consist of either 3 variables {x, y, yaw}, or 2 variables {x, y}" << std::endl;
+        }
+    }
+
+    // Converting from inches to standardized meters
+    bool convert_to_meters = false;
+    if (pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_ccw || pose_units == PoseUnits::in_rad_cw)
+    {
+        convert_to_meters = true;
+        turning_radius = to_meters(turning_radius); // (inches -> meters)
+    }
+
+    bool convert_to_radians = false;
+    // Converting from degrees to standardized radians
+    if (pose_units == PoseUnits::m_deg_cw || pose_units == PoseUnits::m_deg_ccw || pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw)
+    {
+        convert_to_radians = true;
+    }
+
+    bool reverse_rotation = false;
+    // Flipping from clockwise to standardized counter-clockwise
+    if (pose_units == PoseUnits::m_deg_cw || pose_units == PoseUnits::m_rad_cw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_cw)
+    {
+        reverse_rotation = true;
+    }
+
+    // Create a new waypoints list
+    std::vector<std::vector<double>> validated_waypoints;
+
+    // Add start pose to the beginning
+    TwoDPose start_pose = odom_fusion->get_pose_2d();
+    validated_waypoints.push_back({start_pose.x, start_pose.y, start_pose.yaw});
+
+    TwoDPose target_pose;
+
+    // Adjust to valid sizes with respect to configured units, then add to validated
+    for (size_t i = 0; i < waypoints_size; i++)
+    {
+        size_of = waypoints[i].size();
+
+        std::vector<double> waypoint_data;
+        waypoint_data.push_back(waypoints[i][0]);
+        waypoint_data.push_back(waypoints[i][1]);
+
+        // Converting from inches to standardized meters
+        if (convert_to_meters)
+        {
+            waypoint_data[0] = to_meters(waypoint_data[0]); // (inches -> meters)
+            waypoint_data[1] = to_meters(waypoint_data[1]); // (inches -> meters)
+        }
+
+        if (size_of == 3) // If contains yaw
+        {
+            waypoint_data.push_back(waypoints[i][2]);
+
+            if (convert_to_radians)
+                waypoint_data[2] = to_rad(waypoint_data[2]); // (degrees -> radians)
+
+            if (reverse_rotation)
+                waypoint_data[2] *= -1; // (clockwise-positive -> counter-clockwise-positive)
+        }
+        validated_waypoints.push_back(waypoint_data);
+
+        // If last element, we need to document it
+        if (i == waypoints_size - 1)
+        {
+            if (size_of == 3)
+            {
+                target_pose = TwoDPose(waypoint_data[0], waypoint_data[1], waypoint_data[2]);
+            }
+            else
+            { // 2
+                // Yoink yaw from start pose with its own pose
+                target_pose = TwoDPose(waypoint_data[0], waypoint_data[1], validated_waypoints[0][2]);
+            }
+        }
+    }
+
+    pursuit_conductor.generate_path(validated_waypoints, timeout_seconds, turning_radius);
+
+    auton_traveling = true;
+
+    if (wait_until_completed)
+    {
+        this->wait_until_completed();
+    }
+
+    last_desired_position = desired_position;
+    desired_position = target_pose;
 }
 
 // This is the protocol for calibrating the drivetrain while in a disabled state.

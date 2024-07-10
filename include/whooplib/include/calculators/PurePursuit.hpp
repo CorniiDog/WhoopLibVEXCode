@@ -46,10 +46,12 @@ class PurePursuitPath
 {
 private:
     TwoDPose start, end;
-    
+
+    std::vector<TwoDPose> waypoints;
+
     double turning_radius;
 
-    TwoDPose end_pushed_back;
+    TwoDPose end_translated_back;
 
 public:
     double lookahead_distance;
@@ -64,6 +66,7 @@ private:
     double num_segments;
     double step_size;
 
+    void initializeWaypoints(std::vector<TwoDPose> waypoints);
     void computeDubinsPath();
 
 public:

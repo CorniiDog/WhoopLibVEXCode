@@ -164,6 +164,34 @@ public:
     void drive_to_pose(double x, double y, double yaw, double timeout_seconds, double turning_radius, bool wait_until_completed=true);
 
     /**
+     * This drives to a designated pose using pure pursuit on a dubins curve
+     * @param waypoints The waypoints for generating the path. Example would be {TwoDPose(0,0,0), TwoDPose(20,10,M_PI_2)}
+     * The yaw for each position in the list must be explicitly stated when using TwoDPose objects
+     * @param wait_until_completed Set to false to set to non-blocking
+     */
+    void drive_through_path(std::vector<std::vector<double>> waypoints, bool wait_until_completed=true);
+
+    /**
+     * This drives to a designated pose using pure pursuit on a dubins curve
+     * @param waypoints The waypoints for generating the path. Example would be {TwoDPose(0,0,0), TwoDPose(20,10,M_PI_2)}
+     * The yaw for each position in the list must be explicitly stated when using TwoDPose objects
+     * @param timeout_seconds The timeout of the movement, in seconds
+     * @param wait_until_completed Set to false to set to non-blocking
+     */
+    void drive_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, bool wait_until_completed=true);
+
+    /**
+     * This drives to a designated pose using pure pursuit on a dubins curve
+     * @param waypoints The waypoints for generating the path. Example would be {TwoDPose(0,0,0), TwoDPose(20,10,M_PI_2)}
+     * The yaw for each position in the list must be explicitly stated when using TwoDPose objects
+     * @param timeout_seconds The timeout of the movement, in seconds
+     * @param turning_radius The radius, in meters, of the turning
+     * @param wait_until_completed Set to false to set to non-blocking
+     */
+    void drive_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, double turning_radius, bool wait_until_completed=true);
+
+
+    /**
      * Waits until a drivetrain action during auton is complete.
      */
     void wait_until_completed();

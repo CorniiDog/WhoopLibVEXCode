@@ -10,13 +10,45 @@
 #include "whooplib/include/calculators/PurePursuit.hpp"
 #include "whooplib/include/calculators/Dubins.hpp"
 #include "whooplib/include/toolbox.hpp"
+#include <iostream>
 #include "vex.h"
 
-PurePursuitPath::PurePursuitPath(const TwoDPose start, const TwoDPose end, double turning_radius, double lookahead_distance, double num_segments)
-    : start(start), end(end), turning_radius(turning_radius), lookahead_distance(lookahead_distance), num_segments(num_segments)
+void PurePursuitPath::initializeWaypoints(std::vector<TwoDPose> waypoints)
 {
-    end_pushed_back = end * TwoDPose(0, -lookahead_distance, 0);
+    if (waypoints.size() < 2)
+    {
+        Brain.Screen.print("Error. Waypoints must have 2 or more points.");
+        std::cout << "Error. Waypoints must have 2 or more points." << std::endl;
+    }
 
+    end = waypoints[waypoints.size() - 1]; // Retreieve last element (end)
+
+    waypoints.pop_back(); // Remove last element
+
+    end_translated_back = end * TwoDPose(0, -lookahead_distance, 0); // Translate the end back so that the end of the path is a decent straight line for the look ahead
+
+    waypoints.push_back(end_translated_back); // Add the translated back point to the waypoints
+
+    start = waypoints[0]; // Assign start as the first point of the list of waypoints
+
+    // Now copy over to initialization
+    for (size_t i = 0; i < waypoints.size(); i++)
+    {
+        this->waypoints.push_back(waypoints[i]);
+    }
+}
+
+PurePursuitPath::PurePursuitPath(std::vector<TwoDPose> waypoints, double turning_radius, double lookahead_distance, double num_segments)
+    : turning_radius(turning_radius), lookahead_distance(lookahead_distance), num_segments(num_segments)
+{
+    initializeWaypoints(waypoints);
+    computeDubinsPath();
+}
+
+PurePursuitPath::PurePursuitPath(const TwoDPose start, const TwoDPose end, double turning_radius, double lookahead_distance, double num_segments)
+    : turning_radius(turning_radius), lookahead_distance(lookahead_distance), num_segments(num_segments)
+{
+    initializeWaypoints({start, end});
     computeDubinsPath();
 }
 
@@ -27,44 +59,70 @@ static int create_points_bridge(double q[3], double t, void *user_data)
 
 void PurePursuitPath::computeDubinsPath()
 {
-    q0[0] = start.x;
-    q0[1] = start.y;
-    q0[2] = start.yaw;
+    // Wipe pursuit points
+    pursuit_points = {};
 
-    q1[0] = end_pushed_back.x;
-    q1[1] = end_pushed_back.y;
-    q1[2] = end_pushed_back.yaw;
+    path_valid = true;
 
-    path_valid = (dubins_shortest_path(&path, q0, q1, turning_radius) == EDUBOK);
-
-    if (path_valid)
+    // Iterate through the waypoints, and generate the path
+    for (size_t i = 0; i < waypoints.size() - 1; i++)
     {
-        t_max = dubins_path_length(&path);
-        step_size = t_max / num_segments;
 
-        pursuit_points = {};
+        // Start of sub-section
+        q0[0] = waypoints[i].x;
+        q0[1] = waypoints[i].y;
+        q0[2] = waypoints[i].yaw;
 
-        if (dubins_path_sample_many(&path, step_size, create_points_bridge, this) != EDUBOK)
+        // End of sub-section
+        q1[0] = waypoints[i + 1].x;
+        q1[1] = waypoints[i + 1].y;
+        q1[2] = waypoints[i + 1].yaw;
+
+        // Create shortest path and remember the status of the result
+        int creation_result = dubins_shortest_path(&path, q0, q1, turning_radius);
+
+        if (creation_result == EDUBOK)
+        { // If no error
+            if (i == 0)
+            { // If first path (NOTE the first path determines step_size)
+                t_max = dubins_path_length(&path);
+                step_size = t_max / num_segments;
+            }
+            else
+            { // Add on to path size
+                t_max += dubins_path_length(&path);
+            }
+
+            // Generate the sample
+            if (dubins_path_sample_many(&path, step_size, create_points_bridge, this) != EDUBOK)
+            {
+                path_valid = false;
+                return;
+            }
+        }
+        else
         {
+            std::cout << "Creation result error: " << creation_result << std::endl;
             path_valid = false;
+            return;
         }
+    }
 
-        // Create extrapolated forward steps
-        double dx = end.x - end_pushed_back.x;
-        double dy = end.y - end_pushed_back.y;
-        double distance = sqrt(dx * dx + dy * dy);
-        t_max += distance;
-        int n = static_cast<int>(distance / step_size); // Calculate the number of full steps
-        double fraction_step = step_size / distance;
+    // Create extrapolated forward steps that respect the pushed-back distance
+    double dx = end.x - end_translated_back.x;
+    double dy = end.y - end_translated_back.y;
+    double distance = sqrt(dx * dx + dy * dy);
+    t_max += distance;
+    int n = static_cast<int>(distance / step_size); // Calculate the number of full steps
+    double fraction_step = step_size / distance;
 
-        for (int i = 1; i < n; ++i)
-        {
-            double fraction = i * fraction_step;
-            barebonesPose intermediate;
-            intermediate.x = end_pushed_back.x + fraction * dx;
-            intermediate.y = end_pushed_back.y + fraction * dy;
-            pursuit_points.push_back(intermediate);
-        }
+    for (int i = 1; i < n; ++i)
+    {
+        double fraction = i * fraction_step;
+        barebonesPose intermediate;
+        intermediate.x = end_translated_back.x + fraction * dx;
+        intermediate.y = end_translated_back.y + fraction * dy;
+        pursuit_points.push_back(intermediate);
     }
 }
 
