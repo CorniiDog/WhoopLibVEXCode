@@ -10,6 +10,7 @@
 #include "whooplib/include/devices/WhoopOdomFusion.hpp"
 #include "whooplib/include/toolbox.hpp"
 #include <cmath>
+#include "whooplib/include/devices/WhoopDrivetrain.hpp"
 
 WhoopOdomFusion::WhoopOdomFusion(WhoopVision* whoop_vision, WhoopDriveOdomOffset* odom_offset, double min_confidence_threshold, FusionMode fusion_mode, double max_fusion_shift_meters, double max_fusion_shift_radians){
     this->odom_offset = odom_offset;

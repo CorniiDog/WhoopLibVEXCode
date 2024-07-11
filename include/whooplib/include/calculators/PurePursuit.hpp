@@ -42,6 +42,14 @@ struct barebonesPose
     barebonesPose(double x = 0, double y = 0, double yaw = 0) : x(x), y(y), yaw(yaw) {}
 };
 
+struct pursuitCheckpoint
+{
+    double i;
+    bool visited;
+    bool is_last;
+    pursuitCheckpoint(double i, bool visited=false, bool is_last = false): i(i), visited(visited), is_last(is_last){}
+};
+
 class PurePursuitPath
 {
 private:
@@ -71,6 +79,8 @@ private:
 
 public:
     std::vector<barebonesPose> pursuit_points;
+    std::vector<pursuitCheckpoint> pursuit_checkpoints;
+
 
     int create_points(double q[3], double x);
 

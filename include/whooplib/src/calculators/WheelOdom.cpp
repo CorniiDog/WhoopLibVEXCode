@@ -21,8 +21,7 @@ void WheelOdom::set_position(double x, double y, double orientation) {
     tare_angle = orientation;  // Set the tare angle to the initial orientation
 
     // Normalize the orientation_rad
-    while (orientation_rad > M_PI) orientation_rad -= 2 * M_PI;
-    while (orientation_rad < -M_PI) orientation_rad += 2 * M_PI;
+    orientation_rad = normalize_angle(orientation_rad);
 }
 
 void WheelOdom::set_physical_distances(double forward_distance, double sideways_distance) {

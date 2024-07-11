@@ -125,6 +125,8 @@ void PurePursuitConductor::generate_path(std::vector<TwoDPose> waypoints, double
     enabled = true;
 }
 
+size_t i = 0;
+
 PursuitResult PurePursuitConductor::step(TwoDPose current_pose)
 {
     if (!enabled)
@@ -139,12 +141,19 @@ PursuitResult PurePursuitConductor::step(TwoDPose current_pose)
         return PursuitResult(false, 0, 0, 0, 0, false);
     }
 
+    i++;
+    if(i%100==0){
+        std::cout << "Steering:" << estimate.steering_angle << std::endl;
+        std::cout << "Last Steering:" << estimate.last_steering << std::endl;
+    }
+
     double forward_power = linearize_voltage(forward_pid.step(estimate.distance));
     if (forward_pid.settling())
-    {
+    {   
         forward_power = 0;
         forward_pid.zeroize_accumulated();
         estimate.steering_angle = estimate.last_steering;
+        estimate.suggest_point_turn = true;
     }
 
     double turn_power = linearize_voltage(turn_pid.step(estimate.steering_angle));

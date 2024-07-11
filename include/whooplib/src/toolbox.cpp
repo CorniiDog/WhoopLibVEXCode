@@ -102,6 +102,10 @@ double linearize_voltage(double volt)
     }
 }
 
+int int_distance(int point_1, int point_2){
+    return std::abs(point_1 - point_2);
+}
+
 double deadband_inverse(double val, double deadband)
 {
     if (val > -deadband && val < 0)

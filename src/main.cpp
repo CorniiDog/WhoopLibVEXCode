@@ -136,14 +136,14 @@ PursuitParams pursuit_parameters(
     to_meters(5),    // Radius of the turns, in meters
     to_meters(5),    // Pure Pursuit look ahead distance, in meters
     8.0,             // Pure pursuit forward max motor voltage (0.0, 12.0]
-    11.0,            // Pure pursuit turning max motor voltage (0.0, 12.0]
+    12.0,            // Pure pursuit turning max motor voltage (0.0, 12.0]
     to_meters(1.25), // Settle Distance. Exits when within this distance of target, in meters
     to_rad(1),       // Settle Rotation. Exits when within this rotation of target, in radians
     0.4,             // Minimum time to be considered settled, in seconds
     0,               // Time after which to give up and move on, in seconds (set to 0 to disable)
     14,              // Turning (kP) Proportional Tuning
     0.1,             // Turning (kI) Integral Tuning
-    18,              // Turning (kD) Derivative Tuning
+    20,              // Turning (kD) Derivative Tuning
     to_rad(15),      // The rotation distance (error), in radians, to activate turning_ki
     55,              // Forward (kP) Proportional Tuning
     0.01,            // Forward (kI) Integral Tuning
@@ -210,9 +210,11 @@ void autonomous(void)
   robot_drivetrain.set_state(drivetrainState::mode_autonomous);
 
   wait(10, sec);
-  robot_drivetrain.drive_to_pose(15, 15, 0);
-  robot_drivetrain.drive_to_pose(0, 0, 90, false);
-  
+  while(1){
+  robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, waitUntilCompleted::yes_wait); 
+  robot_drivetrain.reverse_through_path({{15, 15, 180}, {0, 0, 180}}, waitUntilCompleted::yes_wait);
+  }
+  //robot_drivetrain.temp_disable = true; // temp disable the drive motors
   while (1)
   {
     robot_drivetrain.display_map();

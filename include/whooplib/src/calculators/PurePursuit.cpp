@@ -57,10 +57,12 @@ static int create_points_bridge(double q[3], double t, void *user_data)
     return static_cast<PurePursuitPath *>(user_data)->create_points(q, t);
 }
 
+// Pretty much generates the path to drive through
 void PurePursuitPath::computeDubinsPath()
 {
     // Wipe pursuit points
     pursuit_points = {};
+    pursuit_checkpoints = {};
 
     path_valid = true;
 
@@ -106,6 +108,14 @@ void PurePursuitPath::computeDubinsPath()
             path_valid = false;
             return;
         }
+
+        // Create a checkpoint at the halfway mark and append the checkpoint
+        pursuitCheckpoint halfway_checkpoint(pursuit_points.size() - 1 - floatToInt(num_segments/2));
+        pursuit_checkpoints.push_back(halfway_checkpoint);
+
+        // Create a checkpoint at the end and append the checkpoint
+        pursuitCheckpoint checkpoint(pursuit_points.size() - 1);
+        pursuit_checkpoints.push_back(checkpoint);
     }
 
     // Create extrapolated forward steps that respect the pushed-back distance
@@ -124,6 +134,11 @@ void PurePursuitPath::computeDubinsPath()
         intermediate.y = end_translated_back.y + fraction * dy;
         pursuit_points.push_back(intermediate);
     }
+
+    // Create a checkpoint at the end and append the checkpoint
+    pursuitCheckpoint checkpoint(pursuit_points.size() - 1);
+    checkpoint.is_last = true;
+    pursuit_checkpoints.push_back(checkpoint);
 }
 
 int PurePursuitPath::create_points(double q[3], double x)
@@ -140,6 +155,30 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
         return PursuitEstimate();
     }
 
+    // Figure out the travel locations between checkpoints
+    size_t start_i = 0;
+    size_t end_i = 0;
+    for (size_t i = 0; i < pursuit_checkpoints.size(); i++)
+    {
+        if (i == 0)
+        { // If first index
+            if (!pursuit_checkpoints[i].visited)
+            {
+                end_i = pursuit_checkpoints[i].i;
+                break;
+            }
+        }
+        else
+        { // If not, get the indexes in between what is allowed
+            if (!pursuit_checkpoints[i].visited || pursuit_checkpoints[i].is_last)
+            {
+                start_i = pursuit_checkpoints[i - 1].i;
+                end_i = pursuit_checkpoints[i].i;
+                break;
+            }
+        }
+    }
+
     barebonesPose look_ahead_position;
     barebonesPose closest_position;
     bool lookahead_found = false;
@@ -147,6 +186,7 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
 
     double point_ahead_distance = lookahead_distance; // Distance from the current position to lookahead position
     double closest_distance = std::numeric_limits<double>::max();
+    size_t closest_i = 0;
 
     double length_lookahead = 0; // The distance from the lookahead position to the point around the curve
     double length_closest = 0;
@@ -159,12 +199,19 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
     // Reverse iteration from points_size - 1 to 0 (via subtracting before compare)
     for (std::size_t i = points_size; i-- > 0;)
     {
+        // Ensure it's within a valid checkpoint bounds
+        if (i*step_size < start_i*step_size-lookahead_distance || i*step_size > end_i*step_size+lookahead_distance)
+        {
+            continue;
+        }
+
         // Rough distance first to avoid un-needed computational cost
         rough_distance = std::max(std::abs(pursuit_points[i].x - current_position.x), std::abs(pursuit_points[i].y - current_position.y));
         if (rough_distance > closest_distance)
         {
             continue;
         }
+
 
         distance = sqrt(pow(pursuit_points[i].x - current_position.x, 2) + pow(pursuit_points[i].y - current_position.y, 2));
         if (distance <= point_ahead_distance)
@@ -189,8 +236,19 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
                 closest_distance = distance;
                 closest_position = pursuit_points[i];
                 length_closest = (points_size - (i + 1)) * step_size;
+                closest_i = i;
                 closest_found = true;
+
             }
+        }
+    }
+
+    // Mark checkpoint as visited if reached
+    for (size_t j = 0; j < pursuit_checkpoints.size(); j++)
+    {
+        if (int_distance(pursuit_checkpoints[j].i, closest_i)*step_size < lookahead_distance)
+        {
+            pursuit_checkpoints[j].visited = true;
         }
     }
 
@@ -232,7 +290,7 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
         }
     }
 
-    double end_steering = end.yaw - current_position.yaw;
+    double end_steering = normalize_angle(end.yaw - current_position.yaw);
 
     bool suggest_point_turn = false; // Suggesting point turn if the robot is facing the opposite direction
     if (std::abs(steering_angle) > M_PI_2)

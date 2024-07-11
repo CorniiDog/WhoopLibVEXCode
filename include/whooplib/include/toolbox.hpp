@@ -160,6 +160,11 @@ double clamp(double val, double min, double max);
 double deadband_inverse(double val, double deadband);
 
 /**
+ * Gets the distance between point 1 and point 2
+ */
+int int_distance(int point_1, int point_2);
+
+/**
  * Attempts to linearize the motor power
  */
 double linearize_voltage(double volt);
