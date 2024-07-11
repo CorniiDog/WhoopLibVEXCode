@@ -99,9 +99,13 @@ private:
     void init_motor_groups(WhoopMotorGroup* leftGroup, WhoopMotorGroup* rightGroup);
     // Initializes motor groups from a vector of motors.
     void init_motor_groups(const std::vector<WhoopMotor*>& leftMotors, const std::vector<WhoopMotor*>& rightMotors);
+
+    bool using_inches();
+    bool using_degrees();
+    bool using_clockwise();
 public:
     bool temp_disable = false; // Set to true to temp disable drivetrain
-    
+
     vex::mutex thread_lock;  // Mutex for synchronizing access to drivetrain components.
     drivetrainState drive_state = drivetrainState::mode_disabled; // Current operational state of the drivetrain.
 
@@ -133,7 +137,7 @@ public:
      * @param y The y position to travel to, in specified units configured
      * @param wait_until_completed Set to false to set to non-blocking
      */
-    void drive_to_point(double x, double y, waitUntilCompleted wait_until_completed=yes_wait);
+    void drive_to_point(double x, double y, waitUntilCompleted wait_until_completed=yes_wait, double landing_strip = -1);
 
     /**
      * This drives to a designated point using pure pursuit on a dubins curve
@@ -142,7 +146,7 @@ public:
      * @param timeout_seconds The timeout of the movement, in seconds
      * @param wait_until_completed Set to false to set to non-blocking
      */
-    void drive_to_point(double x, double y, double timeout_seconds, waitUntilCompleted wait_until_completed=yes_wait);
+    void drive_to_point(double x, double y, double timeout_seconds, waitUntilCompleted wait_until_completed=yes_wait, double landing_strip = -1);
 
     /**
      * This drives to a designated pose using pure pursuit on a dubins curve
@@ -151,7 +155,7 @@ public:
      * @param yaw The yaw rotation to travel to, in specified units configured
      * @param wait_until_completed Set to false to set to non-blocking
      */
-    void drive_to_pose(double x, double y, double yaw, waitUntilCompleted wait_until_completed=yes_wait);
+    void drive_to_pose(double x, double y, double yaw, waitUntilCompleted wait_until_completed=yes_wait, double landing_strip = -1);
 
     /**
      * This drives to a designated pose using pure pursuit on a dubins curve
@@ -161,7 +165,7 @@ public:
      * @param timeout_seconds The timeout of the movement, in seconds
      * @param wait_until_completed Set to false to set to non-blocking
      */
-    void drive_to_pose(double x, double y, double yaw, double timeout_seconds, waitUntilCompleted wait_until_completed=yes_wait);
+    void drive_to_pose(double x, double y, double yaw, double timeout_seconds, waitUntilCompleted wait_until_completed=yes_wait, double landing_strip = -1);
 
     /**
      * This drives to a designated pose using pure pursuit on a dubins curve
@@ -172,7 +176,7 @@ public:
      * @param turning_radius The radius, in meters, of the turning
      * @param wait_until_completed Set to false to set to non-blocking
      */
-    void drive_to_pose(double x, double y, double yaw, double timeout_seconds, double turning_radius, waitUntilCompleted wait_until_completed=yes_wait);
+    void drive_to_pose(double x, double y, double yaw, double timeout_seconds, double turning_radius, waitUntilCompleted wait_until_completed=yes_wait, double landing_strip = -1);
 
     /**
      * This drives to a designated pose using pure pursuit on a dubins curve
@@ -180,7 +184,7 @@ public:
      * The yaw for each position in the list must be explicitly stated when using TwoDPose objects
      * @param wait_until_completed Set to false to set to non-blocking
      */
-    void drive_through_path(std::vector<std::vector<double>> waypoints, waitUntilCompleted wait_until_completed=yes_wait);
+    void drive_through_path(std::vector<std::vector<double>> waypoints, waitUntilCompleted wait_until_completed=yes_wait, double landing_strip = -1);
 
     /**
      * This drives to a designated pose using pure pursuit on a dubins curve
@@ -189,7 +193,7 @@ public:
      * @param timeout_seconds The timeout of the movement, in seconds
      * @param wait_until_completed Set to false to set to non-blocking
      */
-    void drive_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, waitUntilCompleted wait_until_completed=yes_wait);
+    void drive_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, waitUntilCompleted wait_until_completed=yes_wait, double landing_strip = -1);
 
     /**
      * This drives to a designated pose using pure pursuit on a dubins curve
@@ -199,7 +203,7 @@ public:
      * @param turning_radius The radius, in meters, of the turning
      * @param wait_until_completed Set to false to set to non-blocking
      */
-    void drive_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, double turning_radius, waitUntilCompleted wait_until_completed=yes_wait);
+    void drive_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, double turning_radius, waitUntilCompleted wait_until_completed=yes_wait, double landing_strip = -1);
 
     
     /**
@@ -208,7 +212,7 @@ public:
      * @param y The y position to travel to, in specified units configured
      * @param wait_until_completed Set to false to set to non-blocking
      */
-    void reverse_to_point(double x, double y, waitUntilCompleted wait_until_completed=yes_wait);
+    void reverse_to_point(double x, double y, waitUntilCompleted wait_until_completed=yes_wait, double landing_strip = -1);
 
     /**
      * This drives to a designated point using pure pursuit on a dubins curve, in reverse
@@ -217,7 +221,7 @@ public:
      * @param timeout_seconds The timeout of the movement, in seconds
      * @param wait_until_completed Set to false to set to non-blocking
      */
-    void reverse_to_point(double x, double y, double timeout_seconds, waitUntilCompleted wait_until_completed=yes_wait);
+    void reverse_to_point(double x, double y, double timeout_seconds, waitUntilCompleted wait_until_completed=yes_wait, double landing_strip = -1);
 
     /**
      * This drives to a designated pose using pure pursuit on a dubins curve, in reverse
@@ -226,7 +230,7 @@ public:
      * @param yaw The yaw rotation to travel to, in specified units configured
      * @param wait_until_completed Set to false to set to non-blocking
      */
-    void reverse_to_pose(double x, double y, double yaw, waitUntilCompleted wait_until_completed=yes_wait);
+    void reverse_to_pose(double x, double y, double yaw, waitUntilCompleted wait_until_completed=yes_wait, double landing_strip = -1);
 
     /**
      * This drives to a designated pose using pure pursuit on a dubins curve, in reverse
@@ -236,7 +240,7 @@ public:
      * @param timeout_seconds The timeout of the movement, in seconds
      * @param wait_until_completed Set to false to set to non-blocking
      */
-    void reverse_to_pose(double x, double y, double yaw, double timeout_seconds, waitUntilCompleted wait_until_completed=yes_wait);
+    void reverse_to_pose(double x, double y, double yaw, double timeout_seconds, waitUntilCompleted wait_until_completed=yes_wait, double landing_strip = -1);
 
     /**
      * This drives to a designated pose using pure pursuit on a dubins curve, in reverse
@@ -247,7 +251,7 @@ public:
      * @param turning_radius The radius, in meters, of the turning
      * @param wait_until_completed Set to false to set to non-blocking
      */
-    void reverse_to_pose(double x, double y, double yaw, double timeout_seconds, double turning_radius, waitUntilCompleted wait_until_completed=yes_wait);
+    void reverse_to_pose(double x, double y, double yaw, double timeout_seconds, double turning_radius, waitUntilCompleted wait_until_completed=yes_wait, double landing_strip = -1);
 
     /**
      * This drives to a designated pose using pure pursuit on a dubins curve, in reverse
@@ -255,7 +259,7 @@ public:
      * The yaw for each position in the list must be explicitly stated when using TwoDPose objects
      * @param wait_until_completed Set to false to set to non-blocking
      */
-    void reverse_through_path(std::vector<std::vector<double>> waypoints, waitUntilCompleted wait_until_completed=yes_wait);
+    void reverse_through_path(std::vector<std::vector<double>> waypoints, waitUntilCompleted wait_until_completed=yes_wait, double landing_strip = -1);
 
     /**
      * This drives to a designated pose using pure pursuit on a dubins curve, in reverse
@@ -264,7 +268,7 @@ public:
      * @param timeout_seconds The timeout of the movement, in seconds
      * @param wait_until_completed Set to false to set to non-blocking
      */
-    void reverse_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, waitUntilCompleted wait_until_completed=yes_wait);
+    void reverse_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, waitUntilCompleted wait_until_completed=yes_wait, double landing_strip = -1);
 
     /**
      * This drives to a designated pose using pure pursuit on a dubins curve, in reverse
@@ -273,8 +277,10 @@ public:
      * @param timeout_seconds The timeout of the movement, in seconds
      * @param turning_radius The radius, in meters, of the turning
      * @param wait_until_completed Set to false to set to non-blocking
+     * @param landing_strip Set to -1 to default to a landing strip of lookahead_distance. Set to 0 to have no landing strip for a movemnet. Set to a
+     * positive non-zero to 
      */
-    void reverse_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, double turning_radius, waitUntilCompleted wait_until_completed=yes_wait);
+    void reverse_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, double turning_radius, waitUntilCompleted wait_until_completed=yes_wait, double landing_strip = -1);
 
 
     /**

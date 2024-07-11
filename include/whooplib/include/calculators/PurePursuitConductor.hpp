@@ -164,7 +164,7 @@ public:
      * @param timeout The timeout of the movement, in seconds
      * @param turning_radius The radius, in meters, of the turning
      */
-    void generate_path(std::vector<std::vector<double>> waypoints, double timeout, double turning_radius);
+    void generate_path(std::vector<std::vector<double>> waypoints, double timeout, double turning_radius, double landing_strip = -1);
 
     /**
      * Generates the path
@@ -188,7 +188,7 @@ public:
      * @param timeout The timeout of the movement, in seconds
      * @param turning_radius The radius, in meters, of the turning
      */
-    void generate_path(std::vector<TwoDPose> waypoints, double timeout, double turning_radius);
+    void generate_path(std::vector<TwoDPose> waypoints, double timeout, double turning_radius, double landing_strip = -1);
 
     /**
      * Steps the conductor

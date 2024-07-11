@@ -74,6 +74,9 @@ private:
     double num_segments;
     double step_size;
 
+    double landing_strip;
+    double push_back_distance = 0;
+
     void initializeWaypoints(std::vector<TwoDPose> waypoints);
     void computeDubinsPath();
 
@@ -92,8 +95,9 @@ public:
      * @param turning_radius Turning radius of the dubin curve, in meters. You can see visual representations of the turning radius here: https://imgur.com/BahIst0
      * @param lookahead_distance The look-ahead distance for pure pursuit along a path, in meters. Visual representation of lookahead distance here: https://imgur.com/WT5G0Z1
      * @param num_segments The number of points when generating the path. More points mean higher detail of the path, but at a higher computational cost
+     * @param landing_strip The length of the landing strip of the robot, similar to that of an airport runway landing strip at the end of a move
      */
-    PurePursuitPath(const TwoDPose start, const TwoDPose end, double turning_radius, double lookahead_distance, double num_segments = 200);
+    PurePursuitPath(const TwoDPose start, const TwoDPose end, double turning_radius, double lookahead_distance, double num_segments = 200, double landing_strip=-1);
 
     /**
      * Creates a path for pure pursuit, using Dubin-Curves. NOTE: Yaw is ccw-positive
@@ -102,8 +106,9 @@ public:
      * @param turning_radius Turning radius of the dubin curve, in meters. You can see visual representations of the turning radius here: https://imgur.com/BahIst0
      * @param lookahead_distance The look-ahead distance for pure pursuit along a path, in meters. Visual representation of lookahead distance here: https://imgur.com/WT5G0Z1
      * @param num_segments The number of points when generating the path. More points mean higher detail of the path, but at a higher computational cost
+     * @param landing_strip The length of the landing strip of the robot, similar to that of an airport runway landing strip at the end of the move
      */
-    PurePursuitPath(std::vector<TwoDPose> waypoints, double turning_radius, double lookahead_distance, double num_segments = 200);
+    PurePursuitPath(std::vector<TwoDPose> waypoints, double turning_radius, double lookahead_distance, double num_segments = 200, double landing_strip = -1);
 
 
     /**

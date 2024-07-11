@@ -25,7 +25,14 @@ void PurePursuitPath::initializeWaypoints(std::vector<TwoDPose> waypoints)
 
     waypoints.pop_back(); // Remove last element
 
-    end_translated_back = end * TwoDPose(0, -lookahead_distance, 0); // Translate the end back so that the end of the path is a decent straight line for the look ahead
+    if(landing_strip < 0){
+        push_back_distance = lookahead_distance;
+    }
+    else{
+        push_back_distance = landing_strip;
+    }
+
+    end_translated_back = end * TwoDPose(0, -push_back_distance, 0); // Translate the end back so that the end of the path is a decent straight line for the look ahead
 
     waypoints.push_back(end_translated_back); // Add the translated back point to the waypoints
 
@@ -38,15 +45,15 @@ void PurePursuitPath::initializeWaypoints(std::vector<TwoDPose> waypoints)
     }
 }
 
-PurePursuitPath::PurePursuitPath(std::vector<TwoDPose> waypoints, double turning_radius, double lookahead_distance, double num_segments)
-    : turning_radius(turning_radius), lookahead_distance(lookahead_distance), num_segments(num_segments)
+PurePursuitPath::PurePursuitPath(std::vector<TwoDPose> waypoints, double turning_radius, double lookahead_distance, double num_segments, double landing_strip)
+    : turning_radius(turning_radius), lookahead_distance(lookahead_distance), num_segments(num_segments), landing_strip(landing_strip)
 {
     initializeWaypoints(waypoints);
     computeDubinsPath();
 }
 
-PurePursuitPath::PurePursuitPath(const TwoDPose start, const TwoDPose end, double turning_radius, double lookahead_distance, double num_segments)
-    : turning_radius(turning_radius), lookahead_distance(lookahead_distance), num_segments(num_segments)
+PurePursuitPath::PurePursuitPath(const TwoDPose start, const TwoDPose end, double turning_radius, double lookahead_distance, double num_segments, double landing_strip)
+    : turning_radius(turning_radius), lookahead_distance(lookahead_distance), num_segments(num_segments), landing_strip(landing_strip)
 {
     initializeWaypoints({start, end});
     computeDubinsPath();
@@ -118,27 +125,29 @@ void PurePursuitPath::computeDubinsPath()
         pursuit_checkpoints.push_back(checkpoint);
     }
 
-    // Create extrapolated forward steps that respect the pushed-back distance
-    double dx = end.x - end_translated_back.x;
-    double dy = end.y - end_translated_back.y;
-    double distance = sqrt(dx * dx + dy * dy);
-    t_max += distance;
-    int n = static_cast<int>(distance / step_size); // Calculate the number of full steps
-    double fraction_step = step_size / distance;
+    if(push_back_distance > 0){ // If the length of the landing strip 
+        // Create extrapolated forward steps that respect the pushed-back distance
+        double dx = end.x - end_translated_back.x;
+        double dy = end.y - end_translated_back.y;
+        double distance = sqrt(dx * dx + dy * dy);
+        t_max += distance;
+        int n = static_cast<int>(distance / step_size); // Calculate the number of full steps
+        double fraction_step = step_size / distance;
 
-    for (int i = 1; i < n; ++i)
-    {
-        double fraction = i * fraction_step;
-        barebonesPose intermediate;
-        intermediate.x = end_translated_back.x + fraction * dx;
-        intermediate.y = end_translated_back.y + fraction * dy;
-        pursuit_points.push_back(intermediate);
+        for (int i = 1; i < n; ++i)
+        {
+            double fraction = i * fraction_step;
+            barebonesPose intermediate;
+            intermediate.x = end_translated_back.x + fraction * dx;
+            intermediate.y = end_translated_back.y + fraction * dy;
+            pursuit_points.push_back(intermediate);
+        }
+
+        // Create a checkpoint at the end and append the checkpoint
+        pursuitCheckpoint checkpoint(pursuit_points.size() - 1);
+        pursuit_checkpoints.push_back(checkpoint);
     }
-
-    // Create a checkpoint at the end and append the checkpoint
-    pursuitCheckpoint checkpoint(pursuit_points.size() - 1);
-    checkpoint.is_last = true;
-    pursuit_checkpoints.push_back(checkpoint);
+    pursuit_checkpoints[pursuit_checkpoints.size()-1].is_last = true;
 }
 
 int PurePursuitPath::create_points(double q[3], double x)

@@ -43,7 +43,7 @@ void PurePursuitConductor::generate_path(std::vector<std::vector<double>> waypoi
     generate_path(waypoints, timeout, -1);
 }
 
-void PurePursuitConductor::generate_path(std::vector<std::vector<double>> waypoints, double timeout, double turning_radius)
+void PurePursuitConductor::generate_path(std::vector<std::vector<double>> waypoints, double timeout, double turning_radius, double landing_strip)
 {
     // Ensure that waypoints are 2 or greater
     size_t waypoints_size = waypoints.size();
@@ -63,7 +63,9 @@ void PurePursuitConductor::generate_path(std::vector<std::vector<double>> waypoi
         { // Size is 2
             if (i == waypoints_size - 1)
             { // If last element and size is 2. Use x and y of last element and yaw of first
-                constructed_waypoints.push_back(TwoDPose(waypoints[i][0], waypoints[i][1], waypoints[0][2]));
+                TwoDPose looker = TwoDPose(waypoints[i-1][0], waypoints[i-1][1], 0).lookAt(waypoints[i][0], waypoints[i][1]);
+
+                constructed_waypoints.push_back(TwoDPose(waypoints[i][0], waypoints[i][1], looker.yaw));
             }
             else
             {
@@ -73,7 +75,7 @@ void PurePursuitConductor::generate_path(std::vector<std::vector<double>> waypoi
         }
     }
 
-    generate_path(constructed_waypoints, timeout, turning_radius);
+    generate_path(constructed_waypoints, timeout, turning_radius, landing_strip);
 }
 
 /**
@@ -91,7 +93,7 @@ void PurePursuitConductor::generate_path(std::vector<TwoDPose> waypoints, double
     generate_path(waypoints, timeout, -1);
 }
 
-void PurePursuitConductor::generate_path(std::vector<TwoDPose> waypoints, double timeout, double turning_radius)
+void PurePursuitConductor::generate_path(std::vector<TwoDPose> waypoints, double timeout, double turning_radius, double landing_strip)
 {
     if (waypoints.size() < 2)
     {
@@ -121,7 +123,7 @@ void PurePursuitConductor::generate_path(std::vector<TwoDPose> waypoints, double
     forward_pid = PID(0, default_pursuit_parameters->forward_kp, default_pursuit_parameters->forward_ki, default_pursuit_parameters->forward_kp, default_pursuit_parameters->forward_i_activation, default_pursuit_parameters->settle_distance, default_pursuit_parameters->settle_time, t_out),
     turn_pid = PID(0, default_pursuit_parameters->turning_kp, default_pursuit_parameters->turning_ki, default_pursuit_parameters->turning_kd, default_pursuit_parameters->turning_i_activation, default_pursuit_parameters->settle_rotation, default_pursuit_parameters->settle_time, t_out),
     this->end_position = waypoints[waypoints.size() - 1]; // Last element of the waypoints list (as starting index is 0 instead of 1)
-    pursuit_path = PurePursuitPath(waypoints, turn_rad, default_pursuit_parameters->lookahead_distance, default_pursuit_parameters->num_path_segments);
+    pursuit_path = PurePursuitPath(waypoints, turn_rad, default_pursuit_parameters->lookahead_distance, default_pursuit_parameters->num_path_segments, landing_strip);
     enabled = true;
 }
 

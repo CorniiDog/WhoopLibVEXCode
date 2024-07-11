@@ -56,78 +56,87 @@ void WhoopDrivetrain::set_state(drivetrainState state)
     drive_state = state;
 }
 
-void WhoopDrivetrain::drive_to_point(double x, double y, waitUntilCompleted wait_until_completed)
+bool WhoopDrivetrain::using_inches(){
+    return (pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_ccw || pose_units == PoseUnits::in_rad_cw);
+}
+bool WhoopDrivetrain::using_degrees(){
+    return (pose_units == PoseUnits::m_deg_cw || pose_units == PoseUnits::m_deg_ccw || pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw);
+}
+bool WhoopDrivetrain::using_clockwise(){
+    return (pose_units == PoseUnits::m_deg_cw || pose_units == PoseUnits::m_rad_cw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_cw);
+}
+
+void WhoopDrivetrain::drive_to_point(double x, double y, waitUntilCompleted wait_until_completed, double landing_strip)
 {
-    drive_to_point(x, y, -1, wait_until_completed);
+    drive_to_point(x, y, -1, wait_until_completed, landing_strip);
 }
 
-void WhoopDrivetrain::drive_to_point(double x, double y, double timeout_seconds, waitUntilCompleted wait_until_completed)
+void WhoopDrivetrain::drive_to_point(double x, double y, double timeout_seconds, waitUntilCompleted wait_until_completed, double landing_strip)
 {
-    Pose robot_pose_respected_units = get_pose();
-    drive_through_path({{x, y, robot_pose_respected_units.yaw}}, timeout_seconds, -1, wait_until_completed);
+    drive_through_path({{x, y}}, timeout_seconds, -1, wait_until_completed, landing_strip);
 }
 
-void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, waitUntilCompleted wait_until_completed)
+void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, waitUntilCompleted wait_until_completed, double landing_strip)
 {
-    drive_to_pose(x, y, yaw, -1, -1, wait_until_completed);
+    drive_to_pose(x, y, yaw, -1, -1, wait_until_completed, landing_strip);
 }
 
-void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, double timeout_seconds, waitUntilCompleted wait_until_completed)
+void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, double timeout_seconds, waitUntilCompleted wait_until_completed, double landing_strip)
 {
-    drive_to_pose(x, y, yaw, timeout_seconds, -1, wait_until_completed);
+    drive_to_pose(x, y, yaw, timeout_seconds, -1, wait_until_completed, landing_strip);
 }
 
-void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, double timeout_seconds, double turning_radius, waitUntilCompleted wait_until_completed)
+void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, double timeout_seconds, double turning_radius, waitUntilCompleted wait_until_completed, double landing_strip)
 {
-    drive_through_path({{x, y, yaw}}, timeout_seconds, turning_radius, wait_until_completed);
+    drive_through_path({{x, y, yaw}}, timeout_seconds, turning_radius, wait_until_completed, landing_strip);
 }
 
-void WhoopDrivetrain::drive_through_path(std::vector<std::vector<double>> waypoints, waitUntilCompleted wait_until_completed)
+void WhoopDrivetrain::drive_through_path(std::vector<std::vector<double>> waypoints, waitUntilCompleted wait_until_completed, double landing_strip)
 {
-    drive_through_path(waypoints, -1, -1, wait_until_completed);
+    drive_through_path(waypoints, -1, -1, wait_until_completed, landing_strip);
 }
 
-void WhoopDrivetrain::drive_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, waitUntilCompleted wait_until_completed)
+void WhoopDrivetrain::drive_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, waitUntilCompleted wait_until_completed, double landing_strip)
 {
-    drive_through_path(waypoints, -1, -1, wait_until_completed);
+    drive_through_path(waypoints, -1, -1, wait_until_completed, landing_strip);
 }
 
-void WhoopDrivetrain::reverse_to_point(double x, double y, waitUntilCompleted wait_until_completed){
-    reverse_to_point(x, y, -1, wait_until_completed);
+void WhoopDrivetrain::reverse_to_point(double x, double y, waitUntilCompleted wait_until_completed, double landing_strip){
+    reverse_to_point(x, y, -1, wait_until_completed, landing_strip);
 }
 
-void WhoopDrivetrain::reverse_to_point(double x, double y, double timeout_seconds, waitUntilCompleted wait_until_completed){
+void WhoopDrivetrain::reverse_to_point(double x, double y, double timeout_seconds, waitUntilCompleted wait_until_completed, double landing_strip){
     request_reverse = true;
-    drive_to_point(x, y, timeout_seconds, wait_until_completed);
+    drive_to_point(x, y, timeout_seconds, wait_until_completed, landing_strip);
 }
 
-void WhoopDrivetrain::reverse_to_pose(double x, double y, double yaw, waitUntilCompleted wait_until_completed){
-    reverse_to_pose(x, y, yaw, -1, -1, wait_until_completed);
+void WhoopDrivetrain::reverse_to_pose(double x, double y, double yaw, waitUntilCompleted wait_until_completed, double landing_strip){
+    reverse_to_pose(x, y, yaw, -1, -1, wait_until_completed, landing_strip);
 }
 
-void WhoopDrivetrain::reverse_to_pose(double x, double y, double yaw, double timeout_seconds, waitUntilCompleted wait_until_completed){
-    reverse_to_pose(x, y, yaw, timeout_seconds, -1, wait_until_completed);
+void WhoopDrivetrain::reverse_to_pose(double x, double y, double yaw, double timeout_seconds, waitUntilCompleted wait_until_completed, double landing_strip){
+    reverse_to_pose(x, y, yaw, timeout_seconds, -1, wait_until_completed, landing_strip);
 }
 
-void WhoopDrivetrain::reverse_to_pose(double x, double y, double yaw, double timeout_seconds, double turning_radius, waitUntilCompleted wait_until_completed){
+void WhoopDrivetrain::reverse_to_pose(double x, double y, double yaw, double timeout_seconds, double turning_radius, waitUntilCompleted wait_until_completed, double landing_strip){
     request_reverse = true;
-    drive_to_pose(x, y, yaw, timeout_seconds, turning_radius, wait_until_completed);
+    drive_to_pose(x, y, yaw, timeout_seconds, turning_radius, wait_until_completed, landing_strip);
 }
 
-void WhoopDrivetrain::reverse_through_path(std::vector<std::vector<double>> waypoints, waitUntilCompleted wait_until_completed){
-    reverse_through_path(waypoints, -1, -1, wait_until_completed);
+void WhoopDrivetrain::reverse_through_path(std::vector<std::vector<double>> waypoints, waitUntilCompleted wait_until_completed, double landing_strip){
+    reverse_through_path(waypoints, -1, -1, wait_until_completed, landing_strip);
 }
 
-void WhoopDrivetrain::reverse_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, waitUntilCompleted wait_until_completed){
-    reverse_through_path(waypoints, timeout_seconds, -1, wait_until_completed);
+void WhoopDrivetrain::reverse_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, waitUntilCompleted wait_until_completed, double landing_strip){
+    reverse_through_path(waypoints, timeout_seconds, -1, wait_until_completed, landing_strip);
 }
 
-void WhoopDrivetrain::reverse_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, double turning_radius, waitUntilCompleted wait_until_completed){
+void WhoopDrivetrain::reverse_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, double turning_radius, waitUntilCompleted wait_until_completed, double landing_strip){
     request_reverse = true;
-    drive_through_path(waypoints, timeout_seconds, turning_radius, wait_until_completed);
+    drive_through_path(waypoints, timeout_seconds, turning_radius, wait_until_completed, landing_strip);
 }
 
-void WhoopDrivetrain::drive_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, double turning_radius, waitUntilCompleted wait_until_completed)
+void WhoopDrivetrain::drive_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds, double turning_radius, waitUntilCompleted wait_until_completed, double landing_strip)
 {
     std::cout << "Generating Path" << std::endl;
     if(request_reverse){
@@ -160,22 +169,23 @@ void WhoopDrivetrain::drive_through_path(std::vector<std::vector<double>> waypoi
 
     // Converting from inches to standardized meters
     bool convert_to_meters = false;
-    if (pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_ccw || pose_units == PoseUnits::in_rad_cw)
+    if (using_inches())
     {
         convert_to_meters = true;
         turning_radius = to_meters(turning_radius); // (inches -> meters)
+        landing_strip = to_meters(landing_strip); // (inches -> meters)
     }
 
     bool convert_to_radians = false;
     // Converting from degrees to standardized radians
-    if (pose_units == PoseUnits::m_deg_cw || pose_units == PoseUnits::m_deg_ccw || pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw)
+    if (using_degrees())
     {
         convert_to_radians = true;
     }
 
     bool reverse_rotation = false;
     // Flipping from clockwise to standardized counter-clockwise
-    if (pose_units == PoseUnits::m_deg_cw || pose_units == PoseUnits::m_rad_cw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_cw)
+    if (using_clockwise())
     {
         reverse_rotation = true;
     }
@@ -238,7 +248,7 @@ void WhoopDrivetrain::drive_through_path(std::vector<std::vector<double>> waypoi
         validated_waypoints[0][2] = normalize_angle(validated_waypoints[0][2] + M_PI);
     }
 
-    pursuit_conductor.generate_path(validated_waypoints, timeout_seconds, turning_radius);
+    pursuit_conductor.generate_path(validated_waypoints, timeout_seconds, turning_radius, landing_strip);
 
     auton_traveling = true;
 
@@ -301,7 +311,7 @@ Pose WhoopDrivetrain::get_pose()
     Pose p = odom_fusion->get_pose();
 
     // Converting from standardized meters to inches
-    if (pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_ccw || pose_units == PoseUnits::in_rad_cw)
+    if (using_inches())
     {
         p.x = to_inches(p.x); // (meters -> inches)
         p.y = to_inches(p.y); // (meters -> inches)
@@ -309,7 +319,7 @@ Pose WhoopDrivetrain::get_pose()
     }
 
     // Converting from standardized radians to degrees
-    if (pose_units == PoseUnits::m_deg_cw || pose_units == PoseUnits::m_deg_ccw || pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw)
+    if (using_degrees())
     {
         p.pitch = to_deg(p.pitch); // (radians -> degrees)
         p.roll = to_deg(p.roll);   // (radians -> degrees)
@@ -317,7 +327,7 @@ Pose WhoopDrivetrain::get_pose()
     }
 
     // Flipping from standardized counter-clockwise to clockwise
-    if (pose_units == PoseUnits::m_deg_cw || pose_units == PoseUnits::m_rad_cw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_cw)
+    if (using_clockwise())
     {
         p.yaw *= -1; // (counter-clockwise-positive -> degrees clockwise-positive)
     }
@@ -335,20 +345,20 @@ void WhoopDrivetrain::set_pose(double x, double y, double yaw)
 {
 
     // Converting from inches to standardized meters (in -> m)
-    if (pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_ccw || pose_units == PoseUnits::in_rad_cw)
+    if (using_inches())
     {
         x = to_meters(x); // (inches -> meters)
         y = to_meters(y); // (inches -> meters)
     }
 
     // Converting from degrees to standardized radians (deg -> rad)
-    if (pose_units == PoseUnits::m_deg_cw || pose_units == PoseUnits::m_deg_ccw || pose_units == PoseUnits::in_deg_ccw || pose_units == PoseUnits::in_deg_cw)
+    if (using_degrees())
     {
         yaw = to_rad(yaw); // (degrees -> radians)
     }
 
     // Flipping from clockwise to standardized counter-clockwise (cw -> ccw)
-    if (pose_units == PoseUnits::m_deg_cw || pose_units == PoseUnits::m_rad_cw || pose_units == PoseUnits::in_deg_cw || pose_units == PoseUnits::in_rad_cw)
+    if (using_clockwise())
     {
         yaw *= -1; // (counter-clockwise-positive -> clockwise-positive)
     }
