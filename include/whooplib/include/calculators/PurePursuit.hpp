@@ -47,7 +47,7 @@ struct pursuitCheckpoint
     double i;
     bool visited;
     bool is_last;
-    pursuitCheckpoint(double i, bool visited=false, bool is_last = false): i(i), visited(visited), is_last(is_last){}
+    pursuitCheckpoint(double i, bool visited = false, bool is_last = false) : i(i), visited(visited), is_last(is_last) {}
 };
 
 class PurePursuitPath
@@ -84,7 +84,6 @@ public:
     std::vector<barebonesPose> pursuit_points;
     std::vector<pursuitCheckpoint> pursuit_checkpoints;
 
-
     int create_points(double q[3], double x);
 
     /**
@@ -97,7 +96,7 @@ public:
      * @param num_segments The number of points when generating the path. More points mean higher detail of the path, but at a higher computational cost
      * @param landing_strip The length of the landing strip of the robot, similar to that of an airport runway landing strip at the end of a move
      */
-    PurePursuitPath(const TwoDPose start, const TwoDPose end, double turning_radius, double lookahead_distance, double num_segments = 200, double landing_strip=-1);
+    PurePursuitPath(const TwoDPose start, const TwoDPose end, double turning_radius, double lookahead_distance, double num_segments = 200, double landing_strip = -1);
 
     /**
      * Creates a path for pure pursuit, using Dubin-Curves. NOTE: Yaw is ccw-positive
@@ -109,7 +108,6 @@ public:
      * @param landing_strip The length of the landing strip of the robot, similar to that of an airport runway landing strip at the end of the move
      */
     PurePursuitPath(std::vector<TwoDPose> waypoints, double turning_radius, double lookahead_distance, double num_segments = 200, double landing_strip = -1);
-
 
     /**
      * Calculates the pure pursuit estimate relative to the path. NOTE: Yaw is ccw-positive

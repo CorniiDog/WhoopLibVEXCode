@@ -22,7 +22,8 @@
 #include <memory>
 
 // Enum for configuring odom
-enum class DriveOdomConfig {
+enum class DriveOdomConfig
+{
     DRIVE_ONLY,
     DRIVE_WITH_SIDEWAYS_TRACKER,
     DRIVE_WITH_BOTH_TRACKERS,
@@ -31,19 +32,20 @@ enum class DriveOdomConfig {
 /**
  * Class responsible for managing the odometry unit.
  */
-class WhoopDriveOdomUnit : public ComputeNode, public WheelOdom {
+class WhoopDriveOdomUnit : public ComputeNode, public WheelOdom
+{
 private:
     // Upon initialization
-    std::unique_ptr<WhoopMotorGroup> left_motor_group = nullptr; // Group of motors on the left side of the drivetrain.
+    std::unique_ptr<WhoopMotorGroup> left_motor_group = nullptr;  // Group of motors on the left side of the drivetrain.
     std::unique_ptr<WhoopMotorGroup> right_motor_group = nullptr; // Group of motors on the right side of the drivetrain.
-    WhoopRotation* forward_tracker = nullptr;
-    WhoopRotation* sideways_tracker = nullptr;
+    WhoopRotation *forward_tracker = nullptr;
+    WhoopRotation *sideways_tracker = nullptr;
     DriveOdomConfig drive_odom_config;
 
     // Initializes motor groups directly from pointers.
-    void init_motor_groups(WhoopMotorGroup* leftGroup, WhoopMotorGroup* rightGroup);
+    void init_motor_groups(WhoopMotorGroup *leftGroup, WhoopMotorGroup *rightGroup);
     // Initializes motor groups from a vector of motors.
-    void init_motor_groups(const std::vector<WhoopMotor*>& leftMotors, const std::vector<WhoopMotor*>& rightMotors);
+    void init_motor_groups(const std::vector<WhoopMotor *> &leftMotors, const std::vector<WhoopMotor *> &rightMotors);
     // Configures motor groups for diameter and gear ratio
     void set_motor_ratio_and_diameter(double wheel_diameter_meters, double gear_ratio);
 
@@ -59,12 +61,12 @@ private:
      * @param diameter_meters The wheel diameter in meters (i.e. 0.08255 for 3.25" wheels)
      */
     void set_motor_wheel_diameter(double diameter_meters);
+
 public:
+    WhoopInertial *inertial_sensor;
 
-    WhoopInertial* inertial_sensor;
-
-    TwoDPose pose = TwoDPose(0,0,0);
-    vex::mutex thread_lock;  // Mutex for synchronizing access to odometry components.
+    TwoDPose pose = TwoDPose(0, 0, 0);
+    vex::mutex thread_lock; // Mutex for synchronizing access to odometry components.
 
     /**
      * Constructor for Drive Odom.
@@ -77,7 +79,7 @@ public:
      * @param leftMotorGroup Pointer to the motor group controlling the left side.
      * @param rightMotorGroup Pointer to the motor group controlling the right side.
      */
-    WhoopDriveOdomUnit(double drive_width, double drive_wheel_diameter_meters, double drive_gear_ratio, WhoopInertial* inertialSensor, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup);
+    WhoopDriveOdomUnit(double drive_width, double drive_wheel_diameter_meters, double drive_gear_ratio, WhoopInertial *inertialSensor, WhoopMotorGroup *leftMotorGroup, WhoopMotorGroup *rightMotorGroup);
 
     /**
      * Constructor for Drive Odom.
@@ -93,8 +95,7 @@ public:
      * @param leftMotorGroup Pointer to the motor group controlling the left side.
      * @param rightMotorGroup Pointer to the motor group controlling the right side.
      */
-    WhoopDriveOdomUnit(double drive_center_distance, double drive_wheel_diameter_meters, double drive_gear_ratio, double sideways_tracker_distance, double sideways_tracker_wheel_diameter_meters, WhoopInertial* inertialSensor, WhoopRotation* sideways_tracker, WhoopMotorGroup* leftMotorGroup, WhoopMotorGroup* rightMotorGroup);
-    
+    WhoopDriveOdomUnit(double drive_center_distance, double drive_wheel_diameter_meters, double drive_gear_ratio, double sideways_tracker_distance, double sideways_tracker_wheel_diameter_meters, WhoopInertial *inertialSensor, WhoopRotation *sideways_tracker, WhoopMotorGroup *leftMotorGroup, WhoopMotorGroup *rightMotorGroup);
 
     /**
      * Constructor for Drive Odom.
@@ -108,8 +109,8 @@ public:
      * @param forward_tracker Pointer to the WhoopRotation sensor for the forward tracker.
      * @param sideways_tracker Pointer to the WhoopRotation sensor for the sideways tracker.
      */
-    WhoopDriveOdomUnit(double forward_tracker_distance, double forward_tracker_wheel_diameter_meters, double sideways_tracker_distance, double sideways_tracker_wheel_diameter_meters, WhoopInertial* inertialSensor, WhoopRotation* forward_tracker, WhoopRotation* sideways_tracker);
-    
+    WhoopDriveOdomUnit(double forward_tracker_distance, double forward_tracker_wheel_diameter_meters, double sideways_tracker_distance, double sideways_tracker_wheel_diameter_meters, WhoopInertial *inertialSensor, WhoopRotation *forward_tracker, WhoopRotation *sideways_tracker);
+
     /**
      * Constructor for Drive Odom.
      * The odom unit center is the virtual intercept of the perpendicular faces of the odometry trackers.
@@ -121,7 +122,7 @@ public:
      * @param leftMotors Vector of motors on the left side.
      * @param rightMotors Vector of motors on the right side.
      */
-    WhoopDriveOdomUnit(double drive_width, double drive_wheel_diameter_meters, double drive_gear_ratio, WhoopInertial* inertialSensor, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors);
+    WhoopDriveOdomUnit(double drive_width, double drive_wheel_diameter_meters, double drive_gear_ratio, WhoopInertial *inertialSensor, std::vector<WhoopMotor *> leftMotors, std::vector<WhoopMotor *> rightMotors);
 
     /**
      * Constructor for Drive Odom.
@@ -137,7 +138,7 @@ public:
      * @param leftMotors Vector of pointers to motors on the left side.
      * @param rightMotors Vector of pointers to motors on the right side.
      */
-    WhoopDriveOdomUnit(double drive_center_distance, double drive_wheel_diameter_meters, double drive_gear_ratio, double sideways_tracker_distance, double sideways_tracker_wheel_diameter_meters, WhoopInertial* inertialSensor, WhoopRotation* sideways_tracker, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors);
+    WhoopDriveOdomUnit(double drive_center_distance, double drive_wheel_diameter_meters, double drive_gear_ratio, double sideways_tracker_distance, double sideways_tracker_wheel_diameter_meters, WhoopInertial *inertialSensor, WhoopRotation *sideways_tracker, std::vector<WhoopMotor *> leftMotors, std::vector<WhoopMotor *> rightMotors);
 
     /**
      * Calibrates the IMU and tares all devices
@@ -147,22 +148,21 @@ public:
     // Taring (resetting) methods for the pose estimation.
     void tare(double x, double y, double yaw);
     void tare();
-    
+
     // Returns true if the system is moving
-    bool is_moving(double rads_s_threshold=0.02);
+    bool is_moving(double rads_s_threshold = 0.02);
 
     /**
      * Retrieves the corrected and computed pose.
      * @return The current pose of the system.
      */
     TwoDPose get_pose();
+
 public: // This is one of the ONLY exceptions to be public, as another module requires this step function.
     /**
      * Override of ComputeNode's __step method to update the drivetrain's operation each cycle.
      */
-    void __step() override;  // Protected helper function for processing steps
+    void __step() override; // Protected helper function for processing steps
 };
 
-
 #endif // WHOOP_DRIVE_ODOM_UNIT_HPP
-

@@ -21,7 +21,8 @@
  * +x is right-face direction, +y is front-face direction
  * The rest of the standardization is up to the end-user to decide.
  */
-class TwoDPose {
+class TwoDPose
+{
 public:
     double x, y, yaw; // X and Y positions, and yaw (orientation) in radians.
 
@@ -31,7 +32,7 @@ public:
      * @param y The y-coordinate of the pose, where positive values indicate forward movement.
      * @param yaw The orientation of the pose in radians, where positive values indicate counter-clockwise rotation.
      */
-    TwoDPose(double x=0, double y=0, double yaw=0);
+    TwoDPose(double x = 0, double y = 0, double yaw = 0);
 
     // Overloaded * operator to combine two poses
     // Think of it as Roblox's CF = CFrame1 * CFrame2
@@ -41,7 +42,7 @@ public:
      * @param other Another TwoDPose to combine with this pose.
      * @return A new TwoDPose representing the combined transformation.
      */
-    TwoDPose operator*(const TwoDPose& other) const;
+    TwoDPose operator*(const TwoDPose &other) const;
 
     // This allows for *= as well
     /**
@@ -49,9 +50,8 @@ public:
      * @param other Another TwoDPose whose transformation is applied to this pose.
      * @return A reference to this pose after the transformation.
      */
-    TwoDPose& operator*=(const TwoDPose& other);
+    TwoDPose &operator*=(const TwoDPose &other);
 
-    
     // Returns a TwoDPose that represents the delta change applied to the *=, relative to the first TwoDPose
     /**
      * Calculates the transformation required to go from this pose to another pose.
@@ -59,7 +59,7 @@ public:
      * @param other The pose to which the transformation is calculated.
      * @return A TwoDPose representing the required transformation.
      */
-    TwoDPose global_xy_delta_only(const TwoDPose& other) const;
+    TwoDPose global_xy_delta_only(const TwoDPose &other) const;
 
     // Method to compute the relative pose
     // Think of it as Roblox's CFrame1:ToObjectSpace(CFrame2)
@@ -71,7 +71,7 @@ public:
      * @param other The pose to transform into this pose's coordinate space.
      * @return A new TwoDPose representing the pose relative to this pose.
      */
-    TwoDPose toObjectSpace(const TwoDPose& other) const;
+    TwoDPose toObjectSpace(const TwoDPose &other) const;
 
     // Method to retreive world space from object space
     // Example of getting object space:
@@ -86,12 +86,11 @@ public:
      * @param other The pose in this object's local coordinate space to transform back to global space.
      * @return A new TwoDPose representing the pose in global coordinates.
      */
-    TwoDPose toWorldSpace(const TwoDPose& other) const;
-
+    TwoDPose toWorldSpace(const TwoDPose &other) const;
 
     // Unary negation operator
     TwoDPose operator-() const;
-    
+
     // Method to compute relative pose of just given x y and yaw.
     // This is useful for tare.
     /**
@@ -103,7 +102,7 @@ public:
      * @return A new TwoDPose representing the transformed coordinates.
      */
     TwoDPose toObjectSpace(double x, double y, double yaw) const;
-    
+
     /**
      * Returns a pose with the same x and y, but with the yaw turned to face the designated x and y
      * @param target_x the x position to look at
@@ -117,7 +116,7 @@ public:
      * @param decimal_places The number of decimal places to round to, or -1 for no rounding.
      * @return A string in the format "x y yaw".
      */
-    std::string to_string(int decimal_places=4);
+    std::string to_string(int decimal_places = 4);
 
     /**
      * Returns a string representation of the pose with the coordinates rounded to a specified number of decimal places.
@@ -126,7 +125,7 @@ public:
      * @param decimal_places The number of decimal places to round to, or -1 for no rounding.
      * @return A string in the format "x y yaw".
      */
-    std::string to_realsense_string(int decimal_places=4);
+    std::string to_realsense_string(int decimal_places = 4);
 };
 
 #endif // TWODPOSE_HPP

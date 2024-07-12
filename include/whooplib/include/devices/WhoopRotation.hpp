@@ -17,11 +17,13 @@
 /**
  * Represents a rotation sensor with control over its measurement capabilities.
  */
-class WhoopRotation {
+class WhoopRotation
+{
 protected:
-    double pos_offset = 0; // Offset applied to the position readings of the rotation sensor.
+    double pos_offset = 0;                   // Offset applied to the position readings of the rotation sensor.
     double wheel_diameter = to_meters(2.75); // Wheel Diameter in meters. For example, 0.06985 is 2.75 inches
     double wheel_circumference = circumference_from_diameter(wheel_diameter);
+
 public:
     // Upon initialization
     rotation vex_rotation; // VEX rotation sensor instance.
@@ -30,14 +32,14 @@ public:
      * Constructor to initialize a rotation sensor on a specified port.
      * @param port The port number where the rotation sensor is connected.
      */
-    WhoopRotation(std::int32_t port); 
+    WhoopRotation(std::int32_t port);
 
     /**
      * Constructor to initialize a rotation sensor with an option to reverse its direction.
      * @param port The port number where the rotation sensor is connected.
      * @param reversed Enum value to set the rotation sensor direction reversed or not.
      */
-    WhoopRotation(std::int32_t port, reversed reversed); 
+    WhoopRotation(std::int32_t port, reversed reversed);
 
     /**
      * Constructor to initialize a rotation sensor on a specified port with wheel diameter in meters.
@@ -45,7 +47,7 @@ public:
      * @param wheel_diameter_meters The diameter of the wheel, in meters, sharing the same axle as the rotation sensor
      * @param port The port number where the rotation sensor is connected.
      */
-    WhoopRotation(double wheel_diameter_meters, std::int32_t port); 
+    WhoopRotation(double wheel_diameter_meters, std::int32_t port);
 
     /**
      * Constructor to initialize a rotation sensor with an option to reverse its direction and with wheel diameter in meters.
@@ -54,7 +56,7 @@ public:
      * @param port The port number where the rotation sensor is connected.
      * @param reversed Enum value to set the rotation sensor direction reversed or not.
      */
-    WhoopRotation(double wheel_diameter_meters, std::int32_t port, reversed reversed); 
+    WhoopRotation(double wheel_diameter_meters, std::int32_t port, reversed reversed);
 
     /**
      * Sets the wheel diameter multiplier for the rotation sensor, in meters
@@ -64,33 +66,33 @@ public:
 
     /**
      * Gets the distance traveled by the rotation sensor in meters (use case would be for a drivetrain)
-     * @returns 
+     * @returns
      */
     double get_distance_meters(); // Gets distance traveled in meters
 
     // Receiving rotation
-    double get_rotation(); // Degrees is default
-    double get_rotation_degrees(); // Returns the current rotation sensor rotation in degrees.
-    double get_rotation_radians(); // Returns the current rotation sensor rotation in radians.
+    double get_rotation();           // Degrees is default
+    double get_rotation_degrees();   // Returns the current rotation sensor rotation in degrees.
+    double get_rotation_radians();   // Returns the current rotation sensor rotation in radians.
     double get_rotation_rotations(); // Returns the current rotation sensor rotation in full rotations.
 
     // Receiving velocity
     double get_velocity(vex::velocityUnits vel = vex::velocityUnits::dps); // degrees/sec is default
-    double get_velocity_deg_s(); // explicitly defining degrees/sec
-    double get_velocity_rad_s(); // explicitly defining rad/sec
-    double get_velocity_rpm(); // explicitly defining rpm
+    double get_velocity_deg_s();                                           // explicitly defining degrees/sec
+    double get_velocity_rad_s();                                           // explicitly defining rad/sec
+    double get_velocity_rpm();                                             // explicitly defining rpm
 
     /**
      * Gets the velocity of the rotation sensor in meters/sec
-     * @returns 
+     * @returns
      */
     double get_velocity_meters_s();
 
     // Tare (reset)
     void tare();
-    void tare(double degrees); // Degrees is default
-    void tare_degrees(double degrees); // Resets the rotation sensor encoder count to a specified degree.
-    void tare_radians(double radians); // Resets the rotation sensor encoder count to a specified radian.
+    void tare(double degrees);             // Degrees is default
+    void tare_degrees(double degrees);     // Resets the rotation sensor encoder count to a specified degree.
+    void tare_radians(double radians);     // Resets the rotation sensor encoder count to a specified radian.
     void tare_rotations(double rotations); // Resets the rotation sensor encoder count to a specified number of rotations.
 
     /**
@@ -100,6 +102,4 @@ public:
     void tare_meters(double meters); // For a drivetrain, to tare by meters
 };
 
-
 #endif // WHOOP_ROTATION_HPP
-

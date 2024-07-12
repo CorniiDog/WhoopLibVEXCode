@@ -10,11 +10,12 @@
 #ifndef LOW_PASS_FILTER_HPP
 #define LOW_PASS_FILTER_HPP
 
-class LowPassFilter {
+class LowPassFilter
+{
 private:
-    double alpha;  // Smoothing factor
-    double value;  // Filtered value
-    bool initialized;  // Indicates if the filter has received at least one data point
+    double alpha;     // Smoothing factor
+    double value;     // Filtered value
+    bool initialized; // Indicates if the filter has received at least one data point
 
 public:
     /**

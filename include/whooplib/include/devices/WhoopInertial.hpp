@@ -15,10 +15,12 @@
 /**
  * Manages an inertial sensor to provide orientation and motion-related data.
  */
-class WhoopInertial {
+class WhoopInertial
+{
 protected:
     double yaw_offset = 0; // Offset to adjust the yaw reading to account for initial orientation.
     double correction_multiplier = 1;
+
 public:
     inertial vex_inertial; // VEX Robotics Inertial Sensor object.
 
@@ -26,14 +28,14 @@ public:
      * Constructor to initialize an inertial sensor on a specified port.
      * @param port The port number where the inertial sensor is connected.
      */
-    WhoopInertial(std::int32_t port); 
-    
+    WhoopInertial(std::int32_t port);
+
     /**
      * Constructor to initialize an inertial sensor on a specified port with an option to reverse the readings.
      * @param port The port number where the inertial sensor is connected.
      * @param reversed enum to set if the sensor readings should be reversed (true) or not (false).
      */
-    WhoopInertial(std::int32_t port, double correction_multiplier); 
+    WhoopInertial(std::int32_t port, double correction_multiplier);
 
     /**
      * Retrieves the current yaw value with any applied offsets, in degrees by default.
@@ -118,6 +120,4 @@ public:
     void tare_radians(double radians);
 };
 
-
 #endif // WHOOP_INERTIAL_HPP
-

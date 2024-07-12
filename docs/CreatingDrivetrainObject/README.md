@@ -1,9 +1,57 @@
 # Creating Drivetrain Object
 
-Here we will be making the robot drivetrain object:
+Here we will be making the robot drivetrain object. First of all, we need to define pure pursuit parameters. These parameters will be not only used for pure pursuit but also for point turns and forward/backward movement commands too by slightly extrapolating the parameters beyond just the scope of pure pursuit.
+
+#### Using Default Pursuit Parameters
+
+If you want to use default parameters that WhoopLib uses, covering the vast majority of robot designs, just make the parameters object via:
+
+```cpp
+PursuitParams pursuit_parameters = PursuitParams();
+```
+
+#### Customizing Pursuit Parameters
+
+If you want to tune your own custom-parameters, you can do so via the following:
+
+```cpp
+PursuitParams pursuit_parameters(
+    to_meters(5),    // Radius of the turns, in meters
+    to_meters(5),    // Pure Pursuit look ahead distance, in meters
+    8.0,             // Pure pursuit forward max motor voltage (0.0, 12.0]
+    12.0,            // Pure pursuit turning max motor voltage (0.0, 12.0]
+    to_meters(1.25), // Settle Distance. Exits when within this distance of target, in meters
+    to_rad(1),       // Settle Rotation. Exits when within this rotation of target, in radians
+    0.4,             // Minimum time to be considered settled, in seconds
+    0,               // Time after which to give up and move on, in seconds (set to 0 to disable)
+    14,              // Turning (kP) Proportional Tuning
+    0.1,             // Turning (kI) Integral Tuning
+    20,              // Turning (kD) Derivative Tuning
+    to_rad(15),      // The rotation distance (error), in radians, to activate turning_ki
+    55,              // Forward (kP) Proportional Tuning
+    0.01,            // Forward (kI) Integral Tuning
+    250,             // Forward (kD) Derivative Tuning
+    to_meters(2),    // The forward distance (error), in meters, to activate forward_ki
+    200              // The number of points when generating a path. More points mean higher detail of the path, but at a higher computational cost
+);
+```
+
+The WhoopLib uses the entirety of PID for turning and pure pursuit forward motion. This means that the robots movements, if configured correctly, are extremely precise to roughly ±```1.25``` inches and ±```1``` degrees for the pure pursuit's end-position. The robot uses Dubins-Curves to generate the sub-paths. Therefore, the robot simultaneously acts as a car, which is why there is a variable for the radius of the turns. Additionally, the pure pursuit look ahead distance is how far to look ahead in the path. The number of points is how many points when generating a path. Default is 200.
+
+Visual representation of Dubins-Curves and turning radius:
+
+![Image](https://imgur.com/BahIst0)
+
+Visual representation of the pure pursuit look-ahead distance:
+
+![Image](https://imgur.com/WT5G0Z1)
+
+
+#### Creating the Drivetrain Class
 
 ```cpp
 WhoopDrivetrain robot_drivetrain(
+  &pursuit_parameters,  // The default pure pursuit parameters for operating the robot in autonomous
   &odom_fusion, // Odometry fusion module
   PoseUnits::in_deg_cw, // Set default pose units if not defined. "m_deg_cw" means "meters, degrees, clockwise-positive yaw", "in_deg_ccw" means "inches, degrees, counter-clockwise-positive yaw", and so forth.
   &controller1, // Pointer to the controller 

@@ -9,15 +9,18 @@
 
 #include "whooplib/include/calculators/LowPassFilter.hpp"
 
+LowPassFilter::LowPassFilter(double alpha) : alpha(alpha), value(0.0), initialized(false) {}
 
-LowPassFilter::LowPassFilter(double alpha): alpha(alpha), value(0.0), initialized(false) {}
-
-double LowPassFilter::process(double newMeasurement) {
-    if (!initialized) {
+double LowPassFilter::process(double newMeasurement)
+{
+    if (!initialized)
+    {
         // Initialize with the first data point
         value = newMeasurement;
         initialized = true;
-    } else {
+    }
+    else
+    {
         // Apply the low pass filter formula
         value = alpha * newMeasurement + (1 - alpha) * value;
     }

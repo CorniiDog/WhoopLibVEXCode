@@ -95,14 +95,9 @@ WhoopVision vision_system(
     "P"             // The subscribed stream name to receive the pose from the Jetson Nano
 );
 
-// This is the jetson commander. It sends keep-alive messages intermittently and also allows
-// Running the following functions (can be a touch screen confirmation button perhaps):
-// jetson_commander.shutdown_jetson();
-// jetson_commander.reboot_jetson();
-// jetson_commander.restart_vision_process();
-// bool is_connected_currently = jetson_commander.is_connected_to_jetson();
+// This is the jetson commander. It sends keep-alive messages intermittently and also commands the Jetson Nano.
 // This is essential to ensure that the nano starts its internal program, stop program, restarts program,
-// and can be told to reboot or shutdown
+// and can be told to reboot or shutdown.
 JetsonCommander jetson_commander(
     &controller1,                      // The controller to send messages to upon error
     &buffer_system,                    // Pointer to the buffer system (will be managed by the buffer system)
@@ -123,7 +118,7 @@ WhoopOdomFusion odom_fusion(
     0.9,                         // Minimum confidence threshold to apply vision system to odometry
     FusionMode::wheel_odom_only, // The method of fusing
     to_meters(50),               // If FusionMode is fusion_gradual, it is the maximum allowable lateral shift the vision camera can update in meters per second.
-    to_rad(500)                  // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
+    to_rad(300)                  // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
 );
 
 ////////////////////////////////////////////////////////////
@@ -208,11 +203,13 @@ void pre_auton(void)
 void autonomous(void)
 {
   robot_drivetrain.set_state(drivetrainState::mode_autonomous);
-
   wait(10, sec);
-  robot_drivetrain.set_pose(0,0,0);
 
-  //robot_drivetrain.turn_to_position(15, 15);
+  robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw);
+  robot_drivetrain.set_pose(0, 0, 0);
+
+  while(1){
+  // robot_drivetrain.turn_to_position(15, 15);
   robot_drivetrain.drive_forward(15);
 
   robot_drivetrain.turn_to(90);
@@ -225,11 +222,13 @@ void autonomous(void)
 
   robot_drivetrain.drive_forward(-15);
 
-  //robot_drivetrain.drive_to_point(15, 15);
-  //robot_drivetrain.reverse_to_point(0,0);
-  robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, waitUntilCompleted::yes_wait); 
-  robot_drivetrain.reverse_through_path({{15, 15, 180}, {0, 0, 180}}, waitUntilCompleted::no_wait);
-  //robot_drivetrain.temp_disable = true; // temp disable the drive motors
+  // robot_drivetrain.drive_to_point(15, 15);
+  // robot_drivetrain.reverse_to_point(0,0);
+  robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}});
+  robot_drivetrain.reverse_through_path({{15, 15, 180}, {0, 0, 180}});
+
+  }
+  // robot_drivetrain.temp_disable = true; // temp disable the drive motors
   while (1)
   {
     robot_drivetrain.display_map();

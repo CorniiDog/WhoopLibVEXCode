@@ -27,26 +27,29 @@
  * @param roll radians (counter-clockwise-positive)
  * @param confidence (non-zero with vision system) If for the vision system, it would output a value between [0,1] where 1 is the highest confidence. 0.3 or higher means it tracks, and 0.5 or higher means the tracking is good.
  */
-struct Pose{
-    double x=0, y=0, z=0;
-    double pitch=0, yaw=0, roll=0;
+struct Pose
+{
+    double x = 0, y = 0, z = 0;
+    double pitch = 0, yaw = 0, roll = 0;
     double confidence = 0; // If for the vision system, it would output a value between 0 and 1 where 1 is the highest confidence. 0.3 or higher means it tracks, and 0.5 or higher means the tracking is good.
-    Pose(){}
-    Pose(double x, double y, double z, double pitch, double yaw, double roll, double confidence=0): x(x), y(y), z(z), pitch(pitch), yaw(yaw), roll(roll), confidence(confidence){}
+    Pose() {}
+    Pose(double x, double y, double z, double pitch, double yaw, double roll, double confidence = 0) : x(x), y(y), z(z), pitch(pitch), yaw(yaw), roll(roll), confidence(confidence) {}
 };
 
 /**
  * Enum to control whether taring (resetting) operations should be applied.
  */
-enum tare_remaining_0{
-    do_tare=true,
-    dont_tare=false
+enum tare_remaining_0
+{
+    do_tare = true,
+    dont_tare = false
 };
 
 /**
  * Represents an offset used for vision-based calculations.
  */
-class RobotVisionOffset{
+class RobotVisionOffset
+{
 public:
     double x = 0;
     double y = 0;
@@ -56,16 +59,17 @@ public:
      * @param x Horizontal offset.
      * @param y Vertical offset.
      */
-    RobotVisionOffset(double x, double y); 
+    RobotVisionOffset(double x, double y);
 };
 
 /**
  * Manages vision processing for robotics, handling pose estimation and transformations based on vision sensor input.
  */
-class WhoopVision {
+class WhoopVision
+{
 public:
     Pose raw_pose = Pose(); // Raw pose data from vision sensor.
-    
+
 protected:
     // Upon initialization
     std::unique_ptr<Messenger> pose_messenger = nullptr; // Handles messaging for pose data from Jetson Nano
@@ -86,9 +90,9 @@ protected:
     double tared_pitch = this->raw_pose.pitch - tare_pitch;
     double tared_roll = this->raw_pose.roll - tare_roll;
     TwoDPose tared_position; // Position adjusted for tare.
-    TwoDPose offset_change; // Computed change due to offset adjustments.
+    TwoDPose offset_change;  // Computed change due to offset adjustments.
 
-    RobotVisionOffset* robot_offset; // Offset configuration for vision adjustments.
+    RobotVisionOffset *robot_offset; // Offset configuration for vision adjustments.
 
     std::vector<std::function<void(Pose)>> callback_functions; // Callbacks registered for incoming messages.
 
@@ -97,19 +101,20 @@ protected:
      * @param bufferSystem The buffer node system used for message handling.
      * @param pose_stream The stream identifier for pose data.
      */
-    void setup_messenger(BufferNode* bufferSystem, const std::string& pose_stream);
+    void setup_messenger(BufferNode *bufferSystem, const std::string &pose_stream);
 
     /**
      * Transforms the raw pose data based on the current configuration and tare settings.
      * @param apply_delta Flag to determine if delta adjustments should be applied.
      */
-    void _transform_pose(bool apply_delta=false);
+    void _transform_pose(bool apply_delta = false);
 
     /**
      * Updates the pose based on incoming data.
      * @param pose_data The string containing serialized pose data.
      */
     void _update_pose(std::string pose_data);
+
 public:
     vex::mutex thread_lock; // Mutex for synchronization of pose data updates.
 
@@ -121,7 +126,7 @@ public:
      * @param bufferSystem The buffer node system for data handling.
      * @param pose_stream The stream identifier for incoming pose data.
      */
-    WhoopVision(RobotVisionOffset* robotOffset, BufferNode* bufferSystem, std::string pose_stream); 
+    WhoopVision(RobotVisionOffset *robotOffset, BufferNode *bufferSystem, std::string pose_stream);
 
     // Taring (resetting) methods for the pose estimation.
     void tare(double x, double y, double z, double pitch, double yaw, double roll);
@@ -132,7 +137,7 @@ public:
     void on_update(std::function<void(Pose)> callback);
 
     bool vision_running();
-    
+
     /**
      * Retrieves the corrected and computed pose.
      * @return The current pose of the system.
@@ -140,6 +145,4 @@ public:
     Pose get_pose();
 };
 
-
 #endif // WHOOP_VISION_HPP
-

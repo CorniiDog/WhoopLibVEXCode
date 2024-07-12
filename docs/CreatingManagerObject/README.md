@@ -1,8 +1,8 @@
 # Creating Manager Object
 
-So, given that we have these objects, everything needs to be managed right? So that is what the manager object does.
+So, given that we have objects, everything needs to be managed right? So that is what the manager object does.
 
-Certain objects are nodes. That is that they are inherited from the ```ComputeNode``` class and can have a ```__step()``` method override. If this sounds a bit confusing, let me make it simpler to understand. Some objects need to be controlled and have their own sub-process in the background behind the scenes to function correctly. And that is why some objects are configured to be capable of ran by the manager.
+Certain objects are nodes. That is that they are inherited from the ```ComputeNode``` class and can have a ```__step()``` method override. If this sounds a bit confusing, let me make it simpler to understand. Some objects need to be controlled and have their own sub-process in the background behind the scenes to function correctly. And that is why some objects are configured to be capable of ran by the manager to provide functions their own independance but yet still have complete control over an object's functionality.
 
 #### To create the manager for the robot with a Vision Tesseract
 
@@ -117,3 +117,5 @@ int main() {
 
 
 ```
+
+Next, check out the [Drivetrain Commands](DrivetrainCommands/README.md).

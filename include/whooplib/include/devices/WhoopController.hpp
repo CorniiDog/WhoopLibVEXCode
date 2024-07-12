@@ -18,20 +18,22 @@
 /**
  * Enumerates the available joystick control modes.
  */
-enum joystickMode{
+enum joystickMode
+{
     joystickmode_tank = 1,
     joystickmode_split_arcade = 2,
     joystickmode_left_arcade = 3,
     joystickmode_right_arcade = 4
-}; 
+};
 
 /**
  * Controls and manages inputs from a VEX controller.
  */
-class WhoopController : public ComputeNode{
+class WhoopController : public ComputeNode
+{
 public:
     vex::controller vex_controller; // Instance of VEX controller.
-    joystickMode joystick_mode; // Current joystick mode.
+    joystickMode joystick_mode;     // Current joystick mode.
 
     int time_left_to_clear = 0;
 
@@ -39,14 +41,14 @@ public:
      * Constructor that initializes the controller with a specific joystick mode.
      * @param mode The joystick mode to be used.
      */
-    WhoopController(joystickMode mode=joystickMode::joystickmode_split_arcade); 
+    WhoopController(joystickMode mode = joystickMode::joystickmode_split_arcade);
 
     /**
      * Constructor that initializes the controller with a specific joystick mode and controller type.
      * @param mode The joystick mode to be used.
      * @param controller_type The type of controller (primary or partner).
      */
-    WhoopController(joystickMode mode, vex::controllerType controller_type); 
+    WhoopController(joystickMode mode, vex::controllerType controller_type);
 
     /**
      * Retrieves the horizontal axis value of the left joystick.
@@ -77,27 +79,27 @@ public:
      * @param message The message to send the notification
      * @param duration_seconds The duration to display the message
      */
-    void notify(std::string message, double duration_seconds=5);
+    void notify(std::string message, double duration_seconds = 5);
 
-    //UDLR
+    // UDLR
     bool up_pressing();
     bool down_pressing();
     bool left_pressing();
     bool right_pressing();
 
-    //ABXY
+    // ABXY
     bool a_pressing();
     bool b_pressing();
     bool x_pressing();
     bool y_pressing();
 
-    //Bumpers
+    // Bumpers
     bool right_top_bumper_pressing();
     bool right_bottom_bumper_pressing();
     bool left_top_bumper_pressing();
     bool left_bottom_bumper_pressing();
 
-    //UDLR Events
+    // UDLR Events
     void on_up_pressed_event(void (*callback)());
     void on_down_pressed_event(void (*callback)());
     void on_left_pressed_event(void (*callback)());
@@ -107,8 +109,8 @@ public:
     void on_down_released_event(void (*callback)());
     void on_left_released_event(void (*callback)());
     void on_right_released_event(void (*callback)());
-    
-    //ABXY Events
+
+    // ABXY Events
     void on_a_pressed_event(void (*callback)());
     void on_b_pressed_event(void (*callback)());
     void on_x_pressed_event(void (*callback)());
@@ -119,7 +121,7 @@ public:
     void on_x_released_event(void (*callback)());
     void on_y_released_event(void (*callback)());
 
-    //Bumper Events
+    // Bumper Events
     void on_right_top_bumper_pressed_event(void (*callback)());
     void on_right_bottom_bumper_pressed_event(void (*callback)());
     void on_left_top_bumper_pressed_event(void (*callback)());
@@ -131,10 +133,7 @@ public:
     void on_left_bottom_bumper_released_event(void (*callback)());
 
 public:
-    void __step() override;  // Protected helper function for processing steps
-
+    void __step() override; // Protected helper function for processing steps
 };
 
-
 #endif // WHOOP_CONTROLLER_HPP
-

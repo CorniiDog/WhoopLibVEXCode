@@ -45,6 +45,8 @@ protected:
 
     bool frame_rejected = true;
 
+    bool accepting_fuses = false;
+
 public:
     Pose pose = Pose(); // Current fused pose of the odometry system.
 
@@ -109,6 +111,9 @@ public:
 
     // Returns true if moving
     bool is_moving(double rads_s_threshold = 0.02);
+
+    void accept_fuses();
+    void reject_fuses();
 
 public: // Exceptionally public to allow access from another module.
     /**

@@ -11,3 +11,5 @@
 - [Creating Manager Object](CreatingManagerObject/README.md)
 - [WhoopLib Vision Hardware](WhoopLibVisionHardware/README.md)
 - [WhoopLib Vision OS Install](WhoopLibVisionInstall/README.md)
+- [Drivetrain Commands](DrivetrainCommands/README.md)
+- [Jetson Commands](JetsonCommands/README.md)

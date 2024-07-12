@@ -63,7 +63,7 @@ void PurePursuitConductor::generate_path(std::vector<std::vector<double>> waypoi
         { // Size is 2
             if (i == waypoints_size - 1)
             { // If last element and size is 2. Use x and y of last element and yaw of first
-                TwoDPose looker = TwoDPose(waypoints[i-1][0], waypoints[i-1][1], 0).lookAt(waypoints[i][0], waypoints[i][1]);
+                TwoDPose looker = TwoDPose(waypoints[i - 1][0], waypoints[i - 1][1], 0).lookAt(waypoints[i][0], waypoints[i][1]);
 
                 constructed_waypoints.push_back(TwoDPose(waypoints[i][0], waypoints[i][1], looker.yaw));
             }
@@ -129,7 +129,8 @@ void PurePursuitConductor::generate_path(std::vector<TwoDPose> waypoints, double
     enabled = true;
 }
 
-void PurePursuitConductor::generate_turn(TwoDPose turn_pose, double timeout){
+void PurePursuitConductor::generate_turn(TwoDPose turn_pose, double timeout)
+{
     this->turn_pose = turn_pose;
     is_turn = true;
     enabled = true;
@@ -155,11 +156,13 @@ PursuitResult PurePursuitConductor::step(TwoDPose current_pose)
     }
 
     PursuitEstimate estimate;
-    if(is_turn){ // If command is to turn
+    if (is_turn)
+    { // If command is to turn
         estimate = PursuitEstimate(true, normalize_angle(turn_pose.yaw - current_pose.yaw), 0, true, 0, true);
         estimate.last_steering = estimate.steering_angle;
     }
-    else{
+    else
+    {
         estimate = pursuit_path.calculate_pursuit_estimate(current_pose, true, forward_pid.settle_error);
     }
 
@@ -170,7 +173,7 @@ PursuitResult PurePursuitConductor::step(TwoDPose current_pose)
 
     double forward_power = linearize_voltage(forward_pid.step(estimate.distance));
     if (forward_pid.settling())
-    {   
+    {
         forward_power = 0;
         forward_pid.zeroize_accumulated();
         estimate.steering_angle = estimate.last_steering;

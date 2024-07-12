@@ -10,13 +10,14 @@
 #ifndef KALMAN_FILTER_HPP
 #define KALMAN_FILTER_HPP
 
-class KalmanFilter {
+class KalmanFilter
+{
 private:
-    double Q;  // Process noise covariance
-    double R;  // Measurement noise covariance
-    double x;  // Estimated state
-    double P;  // Estimation error covariance
-    double K;  // Kalman Gain
+    double Q; // Process noise covariance
+    double R; // Measurement noise covariance
+    double x; // Estimated state
+    double P; // Estimation error covariance
+    double K; // Kalman Gain
 
 public:
     /**

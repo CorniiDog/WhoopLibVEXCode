@@ -17,7 +17,8 @@
 /**
  * Rolling Average Filter Object
  */
-class RollingAverageFilter {
+class RollingAverageFilter
+{
 private:
     std::deque<Pose> buffer_pose;
     std::deque<double> buffer_double;
@@ -25,29 +26,28 @@ private:
     int capacity;
 
 public:
-
     /**
-   * Constructor for Rolling Average
-   * @param n Number of elements for rolling average
-   */
+     * Constructor for Rolling Average
+     * @param n Number of elements for rolling average
+     */
     RollingAverageFilter(int capacity);
 
     /**
-   * Processes pose into rolling average
-   * @return rolling average result
-   */
-    Pose process(const Pose& newMeasurement);
+     * Processes pose into rolling average
+     * @return rolling average result
+     */
+    Pose process(const Pose &newMeasurement);
 
     /**
-   * Processes double into rolling average
-   * @return rolling average result
-   */
+     * Processes double into rolling average
+     * @return rolling average result
+     */
     double process(double newMeasurement);
 
     /**
-   * Processes double into rolling average
-   * @return rolling average result
-   */
+     * Processes double into rolling average
+     * @return rolling average result
+     */
     int process(int newMeasurement);
 };
 
