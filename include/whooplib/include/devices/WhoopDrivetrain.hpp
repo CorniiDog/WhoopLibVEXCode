@@ -132,6 +132,68 @@ public:
     WhoopDrivetrain(PursuitParams* default_pursuit_parameters, WhoopOdomFusion* odom_fusion, PoseUnits pose_units, WhoopController* controller, std::vector<WhoopMotor*> leftMotors, std::vector<WhoopMotor*> rightMotors); 
 
     /**
+     * Turns the robot relative to its current yaw
+     * @param angle The angle, yaw rotation to rotate by from the robot's current position
+     * @param wait_until_completed Set to false to set to non-blocking
+     */
+    void turn(double angle, waitUntilCompleted wait_until_completed=yes_wait);
+
+    /**
+     * Turns the robot relative to its current yaw
+     * @param angle The angle, yaw rotation to rotate by from the robot's current position
+     * @param timeout_seconds The timeout of the movement, in seconds
+     * @param wait_until_completed Set to false to set to non-blocking
+     */
+    void turn(double angle, double timeout_seconds, waitUntilCompleted wait_until_completed=yes_wait);
+
+    /**
+     * Turns the robot to the world's yaw
+     * @param yaw The yaw rotation to rotate to
+     * @param wait_until_completed Set to false to set to non-blocking
+     */
+    void turn_to(double yaw, waitUntilCompleted wait_until_completed=yes_wait);
+
+    /**
+     * Turns the robot to the world's yaw
+     * @param yaw The yaw rotation to rotate to
+     * @param timeout_seconds The timeout of the movement, in seconds
+     * @param wait_until_completed Set to false to set to non-blocking
+     */
+    void turn_to(double yaw, double timeout_seconds, waitUntilCompleted wait_until_completed=yes_wait);
+
+    /**
+     * Turns the robot to face the given x and y
+     * @param x The x position to face
+     * @param y The y position to face
+     * @param wait_until_completed Set to false to set to non-blocking
+     */
+    void turn_to_position(double x, double y, waitUntilCompleted wait_until_completed=yes_wait);
+
+    /**
+     * Turns the robot to face the given x and y
+     * @param x The x position to face
+     * @param y The y position to face
+     * @param timeout_seconds The timeout of the movement, in seconds
+     * @param wait_until_completed Set to false to set to non-blocking
+     */
+    void turn_to_position(double x, double y, double timeout_seconds, waitUntilCompleted wait_until_completed=yes_wait);
+
+    /**
+     * Drive the robot forward the respectable distance
+     * @param distance The x position to travel to, in specified units configured
+     * @param wait_until_completed Set to false to set to non-blocking
+     */
+    void drive_forward(double distance, waitUntilCompleted wait_until_completed=yes_wait);
+
+    /**
+     * Drive the robot forward the respectable distance
+     * @param distance The x position to travel to, in specified units configured
+     * @param timeout_seconds The The timeout of the movement, in seconds
+     * @param wait_until_completed Set to false to set to non-blocking
+     */
+    void drive_forward(double distance, double timeout_seconds, waitUntilCompleted wait_until_completed=yes_wait);
+
+    /**
      * This drives to a designated point using pure pursuit on a dubins curve
      * @param x The x position to travel to, in specified units configured
      * @param y The y position to travel to, in specified units configured

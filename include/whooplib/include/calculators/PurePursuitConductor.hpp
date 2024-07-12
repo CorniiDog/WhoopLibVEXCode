@@ -106,6 +106,9 @@ public:
     TwoDPose end_position;
     PursuitParams *default_pursuit_parameters = nullptr;
 
+    bool is_turn = false;
+    TwoDPose turn_pose;
+    
 public:
     bool enabled = false;
 
@@ -189,6 +192,13 @@ public:
      * @param turning_radius The radius, in meters, of the turning
      */
     void generate_path(std::vector<TwoDPose> waypoints, double timeout, double turning_radius, double landing_strip = -1);
+
+    /**
+     * Generates the turn request
+     * @param turn_pose The pose of the desired turn
+     * @param timeout The timeout of the movement, in seconds
+     */
+    void generate_turn(TwoDPose turn_pose, double timeout);
 
     /**
      * Steps the conductor

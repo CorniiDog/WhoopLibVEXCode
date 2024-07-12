@@ -210,10 +210,25 @@ void autonomous(void)
   robot_drivetrain.set_state(drivetrainState::mode_autonomous);
 
   wait(10, sec);
-  robot_drivetrain.drive_to_point(15, 15);
-  robot_drivetrain.reverse_to_point(0,0);
-  //robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, waitUntilCompleted::yes_wait); 
-  //robot_drivetrain.reverse_through_path({{15, 15, 180}, {0, 0, 180}}, waitUntilCompleted::no_wait);
+  robot_drivetrain.set_pose(0,0,0);
+
+  //robot_drivetrain.turn_to_position(15, 15);
+  robot_drivetrain.drive_forward(15);
+
+  robot_drivetrain.turn_to(90);
+
+  robot_drivetrain.drive_forward(-15);
+
+  robot_drivetrain.drive_forward(15);
+
+  robot_drivetrain.turn_to(0);
+
+  robot_drivetrain.drive_forward(-15);
+
+  //robot_drivetrain.drive_to_point(15, 15);
+  //robot_drivetrain.reverse_to_point(0,0);
+  robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, waitUntilCompleted::yes_wait); 
+  robot_drivetrain.reverse_through_path({{15, 15, 180}, {0, 0, 180}}, waitUntilCompleted::no_wait);
   //robot_drivetrain.temp_disable = true; // temp disable the drive motors
   while (1)
   {

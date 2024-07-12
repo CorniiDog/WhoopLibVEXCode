@@ -100,6 +100,8 @@ void PurePursuitConductor::generate_path(std::vector<TwoDPose> waypoints, double
         Brain.Screen.print("A path requires at least 2 waypoints");
         std::cout << "A path requires at least 2 waypoints" << std::endl;
     }
+
+    is_turn = false;
     double turn_rad;
     if (turning_radius >= 0)
     {
@@ -127,6 +129,22 @@ void PurePursuitConductor::generate_path(std::vector<TwoDPose> waypoints, double
     enabled = true;
 }
 
+void PurePursuitConductor::generate_turn(TwoDPose turn_pose, double timeout){
+    this->turn_pose = turn_pose;
+    is_turn = true;
+    enabled = true;
+
+    double t_out;
+    if (timeout >= 0)
+    {
+        t_out = timeout;
+    }
+    else
+    {
+        t_out = default_pursuit_parameters->timeout;
+    }
+}
+
 size_t i = 0;
 
 PursuitResult PurePursuitConductor::step(TwoDPose current_pose)
@@ -136,17 +154,18 @@ PursuitResult PurePursuitConductor::step(TwoDPose current_pose)
         return PursuitResult(true, 0, 0, 0, 0, true);
     }
 
-    PursuitEstimate estimate = pursuit_path.calculate_pursuit_estimate(current_pose, true, forward_pid.settle_error);
+    PursuitEstimate estimate;
+    if(is_turn){ // If command is to turn
+        estimate = PursuitEstimate(true, normalize_angle(turn_pose.yaw - current_pose.yaw), 0, true, 0, true);
+        estimate.last_steering = estimate.steering_angle;
+    }
+    else{
+        estimate = pursuit_path.calculate_pursuit_estimate(current_pose, true, forward_pid.settle_error);
+    }
 
     if (!estimate.is_valid)
     { // If error or something, return is_valid as false
         return PursuitResult(false, 0, 0, 0, 0, false);
-    }
-
-    i++;
-    if(i%100==0){
-        std::cout << "Steering:" << estimate.steering_angle << std::endl;
-        std::cout << "Last Steering:" << estimate.last_steering << std::endl;
     }
 
     double forward_power = linearize_voltage(forward_pid.step(estimate.distance));
