@@ -144,7 +144,7 @@ PursuitParams pursuit_parameters(
     0.01,            // Forward (kI) Integral Tuning
     250,             // Forward (kD) Derivative Tuning
     to_meters(2),    // The forward distance (error), in meters, to activate forward_ki
-    200              // The number of points when generating the path. More points mean higher detail of the path, but at a higher computational cost
+    100              // The number of points when generating the path. More points mean higher detail of the path, but at a higher computational cost
 );
 
 ////////////////////////////////////////////////////////////
@@ -224,8 +224,8 @@ void autonomous(void)
 
   // robot_drivetrain.drive_to_point(15, 15);
   // robot_drivetrain.reverse_to_point(0,0);
-  robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}});
-  robot_drivetrain.reverse_through_path({{15, 15, 180}, {0, 0, 180}});
+  robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, 7);
+  robot_drivetrain.reverse_through_path({{15, 15, 180}, {0, 0, 180}}, 7);
 
   }
   // robot_drivetrain.temp_disable = true; // temp disable the drive motors

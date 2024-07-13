@@ -23,7 +23,7 @@ Hopefully this creates a good understanding and pretense as to how the robot ope
 
 #### wait_until_completed
 
-If the robot is given a movement command, and is structured to be non-yielding, then you may need this to wait until a movement completes properly before giving additional movement commands.
+If the robot is given a movement command, and you want to do an action after a move completes, there is a wait_until_completed command:
 
 ```
 /**
