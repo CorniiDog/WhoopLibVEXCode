@@ -14,6 +14,8 @@ If we move the robot to ```(24, 43)``` with a yaw of ```-130```, the position of
 
 Hopefully this creates a good understanding and pretense as to how the robot operates whenever given a command.
 
+---
+
 ## turn
 
 This turns the robot respective to its current orientation
@@ -42,6 +44,8 @@ for example, ```3.5``` seconds if the target position is not yet reached:
 robot_drivetrain.turn(25, 3.5);
 ```
 
+---
+
 ## turn_to
 
 This turns the robot to the world-space yaw.
@@ -69,6 +73,8 @@ for example, ```3.5``` seconds if the target position is not yet reached:
 ```cpp
 robot_drivetrain.turn_to(55, 3.5);
 ```
+
+---
 
 ## turn_to_position
 
@@ -99,6 +105,8 @@ for example, ```3.5``` seconds if the target position is not yet reached:
 robot_drivetrain.turn_to_position(25, 30, 3.5);
 ```
 
+---
+
 ## drive_forward
 
 The following function makes the robot drive forward a specific amount of distance the robot is currently facing.
@@ -126,6 +134,8 @@ for example, ```3.5``` seconds if the target position is not yet reached:
 ```cpp
 robot_drivetrain.drive_forward(25, 3.5);
 ```
+
+---
 
 ## drive_to_point
 
@@ -166,6 +176,8 @@ is moving decently fast it may overshoot if set to ```0``` and either freeze or 
 ```cpp
 robot_drivetrain.drive_to_point(-10, 25, -1, 5); // Set a landing strip to 5 inches, while having timeout_seconds use the default.
 ```
+
+---
 
 ## drive_to_pose
 
@@ -217,6 +229,8 @@ is moving decently fast it may overshoot if set to ```0``` and either freeze or 
 robot_drivetrain.drive_to_pose(-10, 25, -30, -1, 6, 5); // Set a landing strip to 5 inches, turning radius of 6 inches, while having timeout_seconds use default (via setting to -1)
 ```
 
+---
+
 ## drive_through_path
 
 Instead of doing multiple driving to poses, which will make the robot stop and go repeatedly, you can instead provide these same poses as "waypoints" in an array/vector.
@@ -266,6 +280,8 @@ is moving decently fast it may overshoot if set to ```0``` and either freeze or 
 robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, -1, 6, 5); // Set a landing strip to 5 inches, turning radius of 6 inches, while having timeout_seconds use default (via setting to -1)
 ```
 
+---
+
 ## reverse_backward
 
 This does similar to drive_forwards however in reverse.
@@ -293,6 +309,8 @@ for example, ```3.5``` seconds if the target position is not yet reached:
 ```cpp
 robot_drivetrain.reverse_backward(25, 3.5);
 ```
+
+---
 
 ## reverse_to_point
 
@@ -333,6 +351,8 @@ is moving decently fast it may overshoot if set to ```0``` and either freeze or 
 ```cpp
 robot_drivetrain.reverse_to_point(-10, 25, -1, 5); // Set a landing strip to 5 inches, while having timeout_seconds use the default.
 ```
+
+---
 
 ## reverse_to_pose
 
@@ -385,6 +405,8 @@ is moving decently fast it may overshoot if set to ```0``` and either freeze or 
 robot_drivetrain.reverse_to_point(-10, 25, -30, -1, 6, 5); // Set a landing strip to 5 inches, turning radius of 6 inches, while having timeout_seconds use default (via setting to -1)
 ```
 
+---
+
 ## reverse_through_path
 
 This function is the equivalent of reverse_through_path, but in reverse. Note that the backside of the robot becomes the temporary "front" of the robot for the duration of the reversal.
@@ -435,6 +457,8 @@ is moving decently fast it may overshoot if set to ```0``` and either freeze or 
 robot_drivetrain.reverse_through_path({{15, 15, 0}, {0, 0, 90}}, -1, 6, 5); // Set a landing strip to 5 inches, turning radius of 6 inches, while having timeout_seconds use default (via setting to -1)
 ```
 
+---
+
 ## wait_until_completed
 
 If the robot is given a movement command, and you want to do an action after a move completes, there is a wait_until_completed command:
@@ -458,6 +482,8 @@ robot_drivetrain.wait_until_completed(); // Wait until the last command is compl
 // Your code here to run after the robot finished turning
 robot_drivetrain.reverse_to_point(-12, 5, 3.5);
 ```
+
+---
 
 ## set_state
 
@@ -506,6 +532,8 @@ void usercontrol(void)
 }
 ```
 
+---
+
 ## calibrate
 
 Calibrates the IMU, tares all rotation sensors used in the drivetrain, and tares the IMU.
@@ -530,6 +558,8 @@ void pre_auton(void) {
     robot_drivetrain.calibrate();
 }
 ```
+
+---
 
 ## set_pose_units
 
@@ -566,6 +596,8 @@ void autonomous(void)
 }
 ```
 
+---
+
 ## get_pose
 
 ```
@@ -597,6 +629,8 @@ void usercontrol(void)
 }
 
 ```
+
+---
 
 ## set_pose
 

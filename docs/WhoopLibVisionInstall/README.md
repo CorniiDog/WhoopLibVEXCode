@@ -62,3 +62,8 @@ With "your_jetson_ip" as the ip address of the jetson on the network.
 
   sudo systemctl restart whooplibpython.service
 ```
+
+If you have not yet configured your odometry, proceed to [Configuring Odometry](ConfiguringOdometry/README.md)
+
+If you have configured your odometry and need to setup the fusion, proceed to [Configuring Vision Odometry](ConfiguringVisionOdom/README.md)
+

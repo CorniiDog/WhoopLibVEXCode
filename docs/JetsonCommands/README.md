@@ -17,6 +17,8 @@ void reboot_jetson();
 jetson_commander.reboot_jetson();
 ```
 
+---
+
 ## shutdown_jetson
 
 ```
@@ -31,6 +33,8 @@ void shutdown_jetson();
 ```cpp
 jetson_commander.shutdown_jetson();
 ```
+
+---
 
 ## restart_vision_process
 
@@ -48,6 +52,8 @@ void restart_vision_process();
 ```cpp
 jetson_commander.restart_vision_process();
 ```
+
+---
 
 ## initialize
 
@@ -74,6 +80,8 @@ void pre_auton(void)
   jetson_commander.initialize(); // Initialize Jetson Commander
 }
 ```
+
+---
 
 ## is_connected_to_jetson
 

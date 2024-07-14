@@ -40,11 +40,11 @@ The WhoopLib uses the entirety of PID for turning and pure pursuit forward motio
 
 Visual representation of Dubins-Curves and turning radius:
 
-![Image](https://imgur.com/BahIst0)
+![Image](../images/Dubins.png)
 
 Visual representation of the pure pursuit look-ahead distance:
 
-![Image](https://imgur.com/WT5G0Z1)
+![Image](../images/PurePursuit.png)
 
 
 #### Creating the Drivetrain Class
