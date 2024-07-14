@@ -36,7 +36,7 @@ robot_drivetrain.turn(25);
 ```
 
 Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
-for example, 3.5 seconds if the target position is not yet reached:
+for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
 robot_drivetrain.turn(25, 3.5);
@@ -64,7 +64,7 @@ robot_drivetrain.turn_to(55);
 ```
 
 Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
-for example, 3.5 seconds if the target position is not yet reached:
+for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
 robot_drivetrain.turn_to(55, 3.5);
@@ -93,7 +93,7 @@ robot_drivetrain.turn_to_position(25, 30);
 ```
 
 Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
-for example, 3.5 seconds if the target position is not yet reached:
+for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
 robot_drivetrain.turn_to_position(25, 30, 3.5);
@@ -114,14 +114,14 @@ void drive_forward(double distance, double timeout_seconds=-1);
 
 #### Example:
 
-To make the robot drive forward 25 inches:
+To make the robot drive forward ```25``` inches:
 
 ```cpp
 robot_drivetrain.drive_forward(25);
 ```
 
 Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
-for example, 3.5 seconds if the target position is not yet reached:
+for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
 robot_drivetrain.drive_forward(25, 3.5);
@@ -145,14 +145,14 @@ void drive_to_point(double x, double y, double timeout_seconds=-1, double landin
 
 #### Example:
 
-To make the robot drive to location -10, 25
+To make the robot drive to location ```-10, 25```
 
 ```cpp
 robot_drivetrain.drive_to_point(-10, 25);
 ```
 
 Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
-for example, 3.5 seconds if the target position is not yet reached:
+for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
 robot_drivetrain.drive_to_point(-10, 25, 3.5);
@@ -187,14 +187,14 @@ void drive_to_pose(double x, double y, double yaw, double timeout_seconds=-1, do
 
 #### Example:
 
-To make the robot drive to location -10, 25, and face a yaw of -30 degrees
+To make the robot drive to location ```-10, 25```, and face a yaw of ```-30``` degrees
 
 ```cpp
 robot_drivetrain.drive_to_pose(-10, 25, -30);
 ```
 
 Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
-for example, 3.5 seconds if the target position is not yet reached:
+for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
 robot_drivetrain.drive_to_pose(-10, 25, -30, 3.5);
@@ -236,14 +236,14 @@ void drive_through_path(std::vector<std::vector<double>> waypoints, double timeo
 
 #### Example:
 
-To have the robot drive to point 15, 15 at yaw 0 and then drive to the destination of 0,0 at yaw 90:
+To have the robot drive to point ```15, 15``` at yaw ```0``` and then drive to the destination of ```0,0``` at yaw ```90```:
 
 ```cpp
 robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}});
 ```
 
 Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
-for example, 3.5 seconds if the target position is not yet reached:
+for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
 robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, 3.5);
@@ -281,14 +281,14 @@ void reverse_backward(double distance, double timeout_seconds=-1);
 
 #### Example:
 
-To make the robot drive backwards 25 inches:
+To make the robot drive backwards ```25``` inches:
 
 ```cpp
 robot_drivetrain.reverse_backward(25);
 ```
 
 Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
-for example, 3.5 seconds if the target position is not yet reached:
+for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
 robot_drivetrain.reverse_backward(25, 3.5);
@@ -312,7 +312,7 @@ void reverse_to_point(double x, double y, double timeout_seconds=-1, double land
 
 #### Example:
 
-To make the robot drive to location -10, 25 in reverse
+To make the robot drive to location ```-10, 25``` in reverse
 
 ```cpp
 robot_drivetrain.reverse_to_point(-10, 25);
@@ -355,14 +355,14 @@ void reverse_to_pose(double x, double y, double yaw, double timeout_seconds=-1, 
 
 #### Example:
 
-To make the robot drive to location -10, 25, and have the back of the robot face a yaw of -30 degrees
+To make the robot drive to location ```-10, 25```, and have the back of the robot face a yaw of ```-30``` degrees
 
 ```cpp
 robot_drivetrain.reverse_to_point(-10, 25, -30);
 ```
 
 Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
-for example, 3.5 seconds if the target position is not yet reached:
+for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
 robot_drivetrain.reverse_to_point(-10, 25, -30, 3.5);
@@ -405,14 +405,14 @@ void reverse_through_path(std::vector<std::vector<double>> waypoints, double tim
 
 #### Example:
 
-To have the robot drive to point 15, 15 with the back of the robot facing a yaw 0 and then drive to the destination of 0,0 with the backside of the robot face yaw 90:
+To have the robot drive to point ```15, 15``` with the back of the robot facing a yaw ```0``` and then drive to the destination of ```0,0``` with the backside of the robot face yaw ```90```:
 
 ```cpp
 robot_drivetrain.reverse_through_path({{15, 15, 0}, {0, 0, 90}});
 ```
 
 Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
-for example, 3.5 seconds if the target position is not yet reached:
+for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
 robot_drivetrain.reverse_through_path({{15, 15, 0}, {0, 0, 90}}, 3.5);
