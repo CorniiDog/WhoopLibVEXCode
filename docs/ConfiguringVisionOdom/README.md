@@ -23,7 +23,7 @@ BufferNode buffer_system(
 ); 
 ```
 
-The buffer size is 256. That means that all incoming messages together may not exceed 256 characters. If it does, increase this size, but at the expense of computational cost.
+The buffer size is ```256```. That means that all incoming messages together may not exceed ```256``` characters. If it does, increase this size, but at the expense of computational cost.
 
 ```/dev/serial1``` is the micro-usb serial connection on the V5 Brain. But if you want to use the Micro-USB port on the controller do ```/dev/serial2```. 
 
@@ -85,7 +85,7 @@ JetsonCommander jetson_commander(
 
 Okay this seems like quite a bit but take a deep breath we will get through this.
 
-```"C"``` is for Communication stream, which was also configured jetson-side. This stream is where the robot communicates "Hey, I'm here" pretty much to the Jetson Nano. And the number after, ```60```, is how many seconds to be kept alive. If the Jetson Nano does not receive any message after that time, it enters the idle state to be more battery efficient. The ```2``` is the step time for keep-alive. So it would say "Hey, I'm here" every 2 seconds upon robot code start.
+```"C"``` is for Communication stream, which was also configured jetson-side. This stream is where the robot communicates "Hey, I'm here" pretty much to the Jetson Nano. And the number after, ```60```, is how many seconds to be kept alive. If the Jetson Nano does not receive any message after that time, it enters the idle state to be more battery efficient. The ```2``` is the step time for keep-alive. So it would say "Hey, I'm here" every ```2``` seconds upon robot code start.
 
 There are two modes for ```jetsonCommunication```:
 

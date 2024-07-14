@@ -96,7 +96,7 @@ The following illustration shows the center of the odometry unit. The odom unit 
 
 The forward tracker is always offset right/left from the center of the odometry unit center, while the sideways tracker is always forward/backwards from the center of the odometry unit. The measurements are in **meters**. If you measured in inches, you can wrap it with ```to_meters(inches)``` and it would be converted to meters.
 
-Based upon the following illustration above, with 2.5189 inch wheels, the forward tracker being offset to the right, and sideways tracker being offset back of the odometry unit:
+Based upon the following illustration above, with ```2.5189``` inch wheels, the forward tracker being offset to the right, and sideways tracker being offset back of the odometry unit:
 
 ```cpp
 WhoopDriveOdomUnit odom_unit(
@@ -127,7 +127,7 @@ WhoopDriveOdomOffset odom_offset(
 );
 ```
 
-NOTE: If your Odom Unit's Center IS the center of the robot, set to 0,0.
+NOTE: If your Odom Unit's Center IS the center of the robot, set to ```0``` and ```0```.
 
 #### Configure With One Tracker
 
@@ -149,7 +149,7 @@ WhoopDriveOdomUnit odom_unit(
 );
 ```
 
-Next is configuring the offsets. Since the forward/backwards location for the wheels is the same as the center of the robot, the forwards/backwards offset would be 0.
+Next is configuring the offsets. Since the forward/backwards location for the wheels is the same as the center of the robot, the forwards/backwards offset would be ```0```.
 
 ![Image](../images/OneWheelOdomOffsets.png)
 

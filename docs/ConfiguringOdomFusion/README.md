@@ -15,7 +15,7 @@ WhoopOdomFusion odom_fusion(
 );
 ```
 
-This odometry fusion object has some unique features. First of all the ```0.9``` you see is the minimum confidence threshold to accept the T265 pose into the fusion object. If the T265 is not as confident about its tracking, the odometry fusion would reject the pose below the given threshold. This confidence number is a range between 0.0 and 1.0, where around 0.0 implies accepting even failing poses, 0.3 accepts all at around low confidence, 0.6 at respectable confidence, and 1.0 at really high (near-impossible) confidence.
+This odometry fusion object has some unique features. First of all the ```0.9``` you see is the minimum confidence threshold to accept the T265 pose into the fusion object. If the T265 is not as confident about its tracking, the odometry fusion would reject the pose below the given threshold. This confidence number is a range between ```0.0``` and ```1.0```, where around ```0.0``` implies accepting even failing poses, ```0.3``` accepts all at around low confidence, ```0.6``` at respectable confidence, and ```1.0``` at really high (near-impossible) confidence.
 
 There are multiple fusion modes:
 
@@ -26,7 +26,7 @@ There are multiple fusion modes:
 | ```vision_only```    | Only accept odometry from the vision system, ignoring wheel odometry     |
 | ```wheel_odom_only```    | Only accepts wheel odometry, ignoring vision odometry     |
 
-If ```FusionMode``` is set to ```fusion_gradual``` you can adjust the maximum amount of xy and yaw shift in meters/second and radians/second, hence the last two variables ```to_meters(50)``` and ```to_rad(500)```. The ```to_rad(500)``` pretty much means maximum rotational shift of 500 degrees/second (and then we convert to radians/second for the constructor). The ```to_meters(50)``` means maximum lateral shift of 50 inches/second (then converted to meters/second for the constructor).
+If ```FusionMode``` is set to ```fusion_gradual``` you can adjust the maximum amount of xy and yaw shift in meters/second and radians/second, hence the last two variables ```to_meters(50)``` and ```to_rad(500)```. The ```to_rad(500)``` pretty much means maximum rotational shift of ```500``` degrees/second (and then we convert to radians/second for the constructor). The ```to_meters(50)``` means maximum lateral shift of ```50``` inches/second (then converted to meters/second for the constructor).
 
 #### If you do not have a Vision Tesseract
 
