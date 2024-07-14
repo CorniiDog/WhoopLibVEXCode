@@ -27,7 +27,7 @@ WhoopLibPython Github: https://github.com/ConnorAtmos/WhoopLibPython
 
 ## Features
 
-- Visual Odometry/Pose Estimation with FeedForward
+- Visual Odometry/Pose Estimation
 - Wheel Odometry/Pose Estimation, inspired by JAR-Template
 - Communication between V5 Brain and Jetson Nano
 - Fusion Odometry between Visual Odometry and Wheel Odometry
@@ -38,12 +38,19 @@ WhoopLibPython Github: https://github.com/ConnorAtmos/WhoopLibPython
 - Moving between Point A and Point B
 - Rolling Average, Kalman, and Low-Pass Filters
 - General PID, modified from JAR-Template
+- Turning by degrees, Turning to degrees, Turning to Face x and y Coordinates
+- Moving Forward and Reverse Functions, alongside Remembering Previous Movement Positions for Improved Resilience
+- Generated Paths with Waypoints to Navigate around the VEX Robotics Field in One Fell Swoop
+- Well-Rounded and Continuously Updated Documentation for a Low Floor yet High Ceiling
 
 ## Roadmap
 
-- Turning, Moving Forward Functions, and Remembering Previous Movement Positions
 - Object Detection and Gridded Permanence system
 - Detecting other robots that impede the path of the robot, and drive around
+- Implementation of a Jetson Orion Nano instead of the End-Of-Line (EOL) Jetson Nano
+- Implementation of a better SLAM solution instead of relying on the EOL Realsense T265 Camera
+- Capability to Use Different Devices like Oak-D, etc. for Visual Odometry
+- Capability to Use Lidar
 - Virtual Highway system
 
 ## Downloading WhoopLibVEXCode Template for V5 Brain

@@ -14,14 +14,428 @@ If we move the robot to ```(24, 43)``` with a yaw of ```-130```, the position of
 
 Hopefully this creates a good understanding and pretense as to how the robot operates whenever given a command.
 
-## Turning Functions
+## turn
 
+This turns the robot respective to its current orientation
 
+```
+/**
+* Turns the robot relative to its current yaw
+* @param angle The angle, yaw rotation to rotate by from the robot's current position
+* @param timeout_seconds The timeout of the movement, in seconds
+*/
+void turn(double angle, double timeout_seconds=-1);
+```
 
+#### Example:
 
-## Additional Functions
+If the robot is facing a yaw of ```30``` degrees, the following will make it turn to a yaw of ```55``` degrees:
 
-#### wait_until_completed
+```cpp
+robot_drivetrain.turn(25);
+```
+
+Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
+for example, 3.5 seconds if the target position is not yet reached:
+
+```cpp
+robot_drivetrain.turn(25, 3.5);
+```
+
+## turn_to
+
+This turns the robot to the world-space yaw.
+
+```
+/**
+* Turns the robot to the world's yaw
+* @param yaw The yaw rotation to rotate to
+* @param timeout_seconds The timeout of the movement, in seconds
+*/
+void turn_to(double yaw, double timeout_seconds=-1);
+```
+
+#### Example:
+
+If the robot is facing a yaw of ```30``` degrees, the following will make it turn to a yaw of ```55``` degrees, as the current yaw of the robot has no effect on the command:
+
+```cpp
+robot_drivetrain.turn_to(55);
+```
+
+Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
+for example, 3.5 seconds if the target position is not yet reached:
+
+```cpp
+robot_drivetrain.turn_to(55, 3.5);
+```
+
+## turn_to_position
+
+This function makes the robot turn to face world-space coordinates.
+
+```
+/**
+* Turns the robot to face the given x and y
+* @param x The x position to face
+* @param y The y position to face
+* @param timeout_seconds The timeout of the movement, in seconds
+*/
+void turn_to_position(double x, double y, double timeout_seconds=-1);
+```
+
+#### Example:
+
+If the robot has a shooter, and the goal is at ```25, 30``` on the field, you can make the robot face the goal via:
+
+```cpp
+robot_drivetrain.turn_to_position(25, 30);
+```
+
+Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
+for example, 3.5 seconds if the target position is not yet reached:
+
+```cpp
+robot_drivetrain.turn_to_position(25, 30, 3.5);
+```
+
+## drive_forward
+
+The following function makes the robot drive forward a specific amount of distance the robot is currently facing.
+
+```
+/**
+* Drive the robot forward the respectable distance
+* @param distance The x position to travel to, in specified units configured
+* @param timeout_seconds The The timeout of the movement, in seconds
+*/
+void drive_forward(double distance, double timeout_seconds=-1);
+```
+
+#### Example:
+
+To make the robot drive forward 25 inches:
+
+```cpp
+robot_drivetrain.drive_forward(25);
+```
+
+Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
+for example, 3.5 seconds if the target position is not yet reached:
+
+```cpp
+robot_drivetrain.drive_forward(25, 3.5);
+```
+
+## drive_to_point
+
+This function makes the robot drive to a particular x and y point on the field.
+
+```
+/**
+* This drives to a designated point using pure pursuit on a dubins curve
+* @param x The x position to travel to, in specified units configured
+* @param y The y position to travel to, in specified units configured
+* @param timeout_seconds The timeout of the movement, in seconds
+* @param landing_strip Set to -1 to default to a landing strip of lookahead_distance. Set to 0 to have no landing strip for a movemnet. Set to a
+* positive non-zero to change the length
+*/
+void drive_to_point(double x, double y, double timeout_seconds=-1, double landing_strip = -1);
+```
+
+#### Example:
+
+To make the robot drive to location -10, 25
+
+```cpp
+robot_drivetrain.drive_to_point(-10, 25);
+```
+
+Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
+for example, 3.5 seconds if the target position is not yet reached:
+
+```cpp
+robot_drivetrain.drive_to_point(-10, 25, 3.5);
+```
+
+The landing strip is a straight line allocation near the end of the path. Think of this as a runway that a plane lands on before it goes to a screetching halt. In this case, the runway is a
+virtual strip, in inches (for this example, due to ```in_deg_cw```) that allows the robot to straighten out before stopping at its destination. Setting it to ```-1``` defaults to the pursuit
+lookahead distance from the pure pursuit parameters. Setting to ```0``` can allow the robot to move more freely in very close movements by not having a landing strip, however if the robot
+is moving decently fast it may overshoot if set to ```0``` and either freeze or oscillate a bit.
+
+```cpp
+robot_drivetrain.drive_to_point(-10, 25, -1, 5); // Set a landing strip to 5 inches, while having timeout_seconds use the default.
+```
+
+## drive_to_pose
+
+This function drives the robot to a pose. That is an x, y, and yaw. This should be the standard method for driving for the vast majority of cases.
+
+```
+/**
+* This drives to a designated pose using pure pursuit on a dubins curve
+* @param x The x position to travel to, in specified units configured
+* @param y The y position to travel to, in specified units configured
+* @param yaw The yaw rotation to travel to, in specified units configured
+* @param timeout_seconds The timeout of the movement, in seconds
+* @param turning_radius The radius, in meters, of the turning
+* @param landing_strip Set to -1 to default to a landing strip of lookahead_distance. Set to 0 to have no landing strip for a movemnet. Set to a
+* positive non-zero to change the length
+*/
+void drive_to_pose(double x, double y, double yaw, double timeout_seconds=-1, double turning_radius=-1, double landing_strip = -1);
+```
+
+#### Example:
+
+To make the robot drive to location -10, 25, and face a yaw of -30 degrees
+
+```cpp
+robot_drivetrain.drive_to_pose(-10, 25, -30);
+```
+
+Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
+for example, 3.5 seconds if the target position is not yet reached:
+
+```cpp
+robot_drivetrain.drive_to_pose(-10, 25, -30, 3.5);
+```
+
+The turning radius is like the equivalent of the turning radius of a car. A tighter radius can be more space efficient, but it can cause the robot to yank itself really quickly around a corner. 
+However, a larger turning radius would be less space efficient but the robot would not yank itself as dramatically. You can set it to ```-1``` to use the default turning radius parameter of the
+pure pursuit defaults, or you can set to a non-zero positive number in inches (as the example is in ```in_deg_cw```):
+
+```cpp
+robot_drivetrain.drive_to_pose(-10, 25, -30, 3.5, 6); // Set turning radius to 6 inches
+```
+
+The landing strip is a straight line allocation near the end of the path. Think of this as a runway that a plane lands on before it goes to a screetching halt. In this case, the runway is a
+virtual strip, in inches (for this example, due to ```in_deg_cw```) that allows the robot to straighten out before stopping at its destination. Setting it to ```-1``` defaults to the pursuit
+lookahead distance from the pure pursuit parameters. Setting to ```0``` can allow the robot to move more freely in very close movements by not having a landing strip, however if the robot
+is moving decently fast it may overshoot if set to ```0``` and either freeze or oscillate a bit.
+
+```cpp
+robot_drivetrain.drive_to_pose(-10, 25, -30, -1, 6, 5); // Set a landing strip to 5 inches, turning radius of 6 inches, while having timeout_seconds use default (via setting to -1)
+```
+
+## drive_through_path
+
+Instead of doing multiple driving to poses, which will make the robot stop and go repeatedly, you can instead provide these same poses as "waypoints" in an array/vector.
+
+```
+/**
+* This drives to a designated pose using pure pursuit on a dubins curve
+* @param waypoints The waypoints for generating the path. Example would be {TwoDPose(0,0,0), TwoDPose(20,10,M_PI_2)}
+* The yaw for each position in the list must be explicitly stated when using TwoDPose objects
+* @param timeout_seconds The timeout of the movement, in seconds
+* @param turning_radius The radius, in meters, of the turning
+* @param landing_strip Set to -1 to default to a landing strip of lookahead_distance. Set to 0 to have no landing strip for a movemnet. Set to a
+* positive non-zero to change the length
+*/
+void drive_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds=-1, double turning_radius=-1, double landing_strip = -1);
+```
+
+#### Example:
+
+To have the robot drive to point 15, 15 at yaw 0 and then drive to the destination of 0,0 at yaw 90:
+
+```cpp
+robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}});
+```
+
+Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
+for example, 3.5 seconds if the target position is not yet reached:
+
+```cpp
+robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, 3.5);
+```
+
+The turning radius is like the equivalent of the turning radius of a car. A tighter radius can be more space efficient, but it can cause the robot to yank itself really quickly around a corner. 
+However, a larger turning radius would be less space efficient but the robot would not yank itself as dramatically. You can set it to ```-1``` to use the default turning radius parameter of the
+pure pursuit defaults, or you can set to a non-zero positive number in inches (as the example is in ```in_deg_cw```):
+
+```cpp
+robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, 3.5, 6); // Set turning radius to 6 inches
+```
+
+The landing strip is a straight line allocation near the end of the path. Think of this as a runway that a plane lands on before it goes to a screetching halt. In this case, the runway is a
+virtual strip, in inches (for this example, due to ```in_deg_cw```) that allows the robot to straighten out before stopping at its destination. Setting it to ```-1``` defaults to the pursuit
+lookahead distance from the pure pursuit parameters. Setting to ```0``` can allow the robot to move more freely in very close movements by not having a landing strip, however if the robot
+is moving decently fast it may overshoot if set to ```0``` and either freeze or oscillate a bit.
+
+```cpp
+robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, -1, 6, 5); // Set a landing strip to 5 inches, turning radius of 6 inches, while having timeout_seconds use default (via setting to -1)
+```
+
+## reverse_backward
+
+This does similar to drive_forwards however in reverse.
+
+```
+/**
+* Drive the robot backward the respectable distance
+* @param distance The x position to travel to, in specified units configured
+* @param timeout_seconds The The timeout of the movement, in seconds
+*/
+void reverse_backward(double distance, double timeout_seconds=-1);
+```
+
+#### Example:
+
+To make the robot drive backwards 25 inches:
+
+```cpp
+robot_drivetrain.reverse_backward(25);
+```
+
+Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
+for example, 3.5 seconds if the target position is not yet reached:
+
+```cpp
+robot_drivetrain.reverse_backward(25, 3.5);
+```
+
+## reverse_to_point
+
+Drives the robot backwards to a given point. Same thing as drive_to_point but in reverse.
+
+```
+/**
+* This drives to a designated point using pure pursuit on a dubins curve, in reverse
+* @param x The x position to travel to, in specified units configured
+* @param y The y position to travel to, in specified units configured
+* @param timeout_seconds The timeout of the movement, in seconds
+* @param landing_strip Set to -1 to default to a landing strip of lookahead_distance. Set to 0 to have no landing strip for a movemnet. Set to a
+* positive non-zero to change the length
+*/
+void reverse_to_point(double x, double y, double timeout_seconds=-1, double landing_strip = -1);
+```
+
+#### Example:
+
+To make the robot drive to location -10, 25 in reverse
+
+```cpp
+robot_drivetrain.reverse_to_point(-10, 25);
+```
+
+Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
+for example, 3.5 seconds if the target position is not yet reached:
+
+```cpp
+robot_drivetrain.reverse_to_point(-10, 25, 3.5);
+```
+
+The landing strip is a straight line allocation near the end of the path. Think of this as a runway that a plane lands on before it goes to a screetching halt. In this case, the runway is a
+virtual strip, in inches (for this example, due to ```in_deg_cw```) that allows the robot to straighten out before stopping at its destination. Setting it to ```-1``` defaults to the pursuit
+lookahead distance from the pure pursuit parameters. Setting to ```0``` can allow the robot to move more freely in very close movements by not having a landing strip, however if the robot
+is moving decently fast it may overshoot if set to ```0``` and either freeze or oscillate a bit.
+
+```cpp
+robot_drivetrain.reverse_to_point(-10, 25, -1, 5); // Set a landing strip to 5 inches, while having timeout_seconds use the default.
+```
+
+## reverse_to_pose
+
+This function is the equivalent of drive_to_pose, but in reverse. Note that the backside of the robot becomes the temporary "front" of the robot for the duration of the reversal.
+So driving to ```10, 25, -80``` in reverse would result in the robot's pose to be at ```10, 25, ```(-80+180)=```100``` degrees
+
+```
+/**
+* This drives to a designated pose using pure pursuit on a dubins curve, in reverse
+* @param x The x position to travel to, in specified units configured
+* @param y The y position to travel to, in specified units configured
+* @param yaw The yaw rotation to travel to, in specified units configured
+* @param timeout_seconds The timeout of the movement, in seconds
+* @param turning_radius The radius, in meters, of the turning
+* @param landing_strip Set to -1 to default to a landing strip of lookahead_distance. Set to 0 to have no landing strip for a movemnet. Set to a
+* positive non-zero to change the length
+*/
+void reverse_to_pose(double x, double y, double yaw, double timeout_seconds=-1, double turning_radius=-1, double landing_strip = -1);
+```
+
+#### Example:
+
+To make the robot drive to location -10, 25, and have the back of the robot face a yaw of -30 degrees
+
+```cpp
+robot_drivetrain.reverse_to_point(-10, 25, -30);
+```
+
+Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
+for example, 3.5 seconds if the target position is not yet reached:
+
+```cpp
+robot_drivetrain.reverse_to_point(-10, 25, -30, 3.5);
+```
+
+The turning radius is like the equivalent of the turning radius of a car. A tighter radius can be more space efficient, but it can cause the robot to yank itself really quickly around a corner. 
+However, a larger turning radius would be less space efficient but the robot would not yank itself as dramatically. You can set it to ```-1``` to use the default turning radius parameter of the
+pure pursuit defaults, or you can set to a non-zero positive number in inches (as the example is in ```in_deg_cw```):
+
+```cpp
+robot_drivetrain.reverse_to_point(-10, 25, -30, 3.5, 6); // Set turning radius to 6 inches
+```
+
+The landing strip is a straight line allocation near the end of the path. Think of this as a runway that a plane lands on before it goes to a screetching halt. In this case, the runway is a
+virtual strip, in inches (for this example, due to ```in_deg_cw```) that allows the robot to straighten out before stopping at its destination. Setting it to ```-1``` defaults to the pursuit
+lookahead distance from the pure pursuit parameters. Setting to ```0``` can allow the robot to move more freely in very close movements by not having a landing strip, however if the robot
+is moving decently fast it may overshoot if set to ```0``` and either freeze or oscillate a bit.
+
+```cpp
+robot_drivetrain.reverse_to_point(-10, 25, -30, -1, 6, 5); // Set a landing strip to 5 inches, turning radius of 6 inches, while having timeout_seconds use default (via setting to -1)
+```
+
+## reverse_through_path
+
+This function is the equivalent of reverse_through_path, but in reverse. Note that the backside of the robot becomes the temporary "front" of the robot for the duration of the reversal.
+So driving to ```10, 25, -80``` in reverse would result in the robot's pose to be at ```10, 25, ```(-80+180)=```100``` degrees
+
+```
+/**
+* This drives to a designated pose using pure pursuit on a dubins curve, in reverse
+* @param waypoints The waypoints for generating the path. Example would be {TwoDPose(0,0,0), TwoDPose(20,10,M_PI_2)}
+* The yaw for each position in the list must be explicitly stated when using TwoDPose objects
+* @param timeout_seconds The timeout of the movement, in seconds
+* @param turning_radius The radius, in meters, of the turning
+* @param landing_strip Set to -1 to default to a landing strip of lookahead_distance. Set to 0 to have no landing strip for a movemnet. Set to a
+* positive non-zero to change the length
+*/
+void reverse_through_path(std::vector<std::vector<double>> waypoints, double timeout_seconds=-1, double turning_radius=-1, double landing_strip = -1);
+```
+
+#### Example:
+
+To have the robot drive to point 15, 15 with the back of the robot facing a yaw 0 and then drive to the destination of 0,0 with the backside of the robot face yaw 90:
+
+```cpp
+robot_drivetrain.reverse_through_path({{15, 15, 0}, {0, 0, 90}});
+```
+
+Note that timeout_seconds by default is the pure pursuit default by setting to ```-1``` (or otherwise ignoring the parameter). However, you can set a timeout so that the robot can move after, 
+for example, 3.5 seconds if the target position is not yet reached:
+
+```cpp
+robot_drivetrain.reverse_through_path({{15, 15, 0}, {0, 0, 90}}, 3.5);
+```
+
+The turning radius is like the equivalent of the turning radius of a car. A tighter radius can be more space efficient, but it can cause the robot to yank itself really quickly around a corner. 
+However, a larger turning radius would be less space efficient but the robot would not yank itself as dramatically. You can set it to ```-1``` to use the default turning radius parameter of the
+pure pursuit defaults, or you can set to a non-zero positive number in inches (as the example is in ```in_deg_cw```):
+
+```cpp
+robot_drivetrain.reverse_through_path({{15, 15, 0}, {0, 0, 90}}, 3.5, 6); // Set turning radius to 6 inches
+```
+
+The landing strip is a straight line allocation near the end of the path. Think of this as a runway that a plane lands on before it goes to a screetching halt. In this case, the runway is a
+virtual strip, in inches (for this example, due to ```in_deg_cw```) that allows the robot to straighten out before stopping at its destination. Setting it to ```-1``` defaults to the pursuit
+lookahead distance from the pure pursuit parameters. Setting to ```0``` can allow the robot to move more freely in very close movements by not having a landing strip, however if the robot
+is moving decently fast it may overshoot if set to ```0``` and either freeze or oscillate a bit.
+
+```cpp
+robot_drivetrain.reverse_through_path({{15, 15, 0}, {0, 0, 90}}, -1, 6, 5); // Set a landing strip to 5 inches, turning radius of 6 inches, while having timeout_seconds use default (via setting to -1)
+```
+
+## wait_until_completed
 
 If the robot is given a movement command, and you want to do an action after a move completes, there is a wait_until_completed command:
 
@@ -32,20 +446,20 @@ If the robot is given a movement command, and you want to do an action after a m
 void wait_until_completed();
 ```
 
-Example:
+#### Example:
 
 ```cpp
 robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw);
 robot_drivetrain.set_pose(0,0,0); // Set the robot's starting position
 
-robot_drivetrain.reverse_through_path({{15, 15, 0}, {0, 0, 90}}, 3.5, waitUntilCompleted::no_wait);
+robot_drivetrain.reverse_through_path({{15, 15, 0}, {0, 0, 90}}, 3.5);
 // Your code here to run while the robot is turning
 robot_drivetrain.wait_until_completed(); // Wait until the last command is complete before continuing
-
+// Your code here to run after the robot finished turning
 robot_drivetrain.reverse_to_point(-12, 5, 3.5);
 ```
 
-#### set_state
+## set_state
 
 Sets the state of the robot (usually to be handled upon startup)
 
@@ -63,7 +477,7 @@ void set_state(drivetrainState state);
 | ```mode_autonomous```    | Allows autonomous functions, and prohibits controller control for the drivetrain     |
 | ```mode_usercontrol```    | Allows controller control for the drivetrain, and prohibits autonomous functions  |
 
-Example:
+#### Example:
 
 ```cpp
 void pre_auton(void)
@@ -92,7 +506,7 @@ void usercontrol(void)
 }
 ```
 
-#### calibrate
+## calibrate
 
 Calibrates the IMU, tares all rotation sensors used in the drivetrain, and tares the IMU.
 
@@ -103,7 +517,7 @@ Calibrates the IMU, tares all rotation sensors used in the drivetrain, and tares
 void calibrate();
 ```
 
-Example:
+#### Example:
 
 
 ```cpp
@@ -117,7 +531,7 @@ void pre_auton(void) {
 }
 ```
 
-#### set_pose_units
+## set_pose_units
 
 ```
 /**
@@ -137,7 +551,7 @@ void set_pose_units(PoseUnits units);
 | ```m_rad_cw```    | Meters, Radians, Clockwise-Positive     |
 | ```m_rad_ccw```    | Meters, Radians, Counter-Clockwise-Positive     |
 
-Example:
+#### Example:
 
 ```cpp
 void autonomous(void)
@@ -152,7 +566,7 @@ void autonomous(void)
 }
 ```
 
-#### get_pose
+## get_pose
 
 ```
 /**
@@ -162,7 +576,7 @@ void autonomous(void)
 Pose get_pose();
 ```
 
-Example:
+#### Example:
 
 ```cpp
 void usercontrol(void)
@@ -184,7 +598,7 @@ void usercontrol(void)
 
 ```
 
-#### set_pose
+## set_pose
 
 ```
 /**
@@ -196,7 +610,7 @@ void usercontrol(void)
 void set_pose(double x_in, double y_in, double yaw_deg);
 ```
 
-Example (setting pose to 15, 5 at yaw 45 degrees):
+#### Example (setting pose to 15, 5 at yaw 45 degrees):
 
 ```cpp
 void autonomous(void)

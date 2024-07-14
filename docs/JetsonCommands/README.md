@@ -1,8 +1,6 @@
 # Jetson Commands
 
-## Commander Commands
-
-#### reboot_jetson
+## reboot_jetson
 
 This function would reboot the Jetson Nano
 
@@ -13,13 +11,13 @@ This function would reboot the Jetson Nano
 void reboot_jetson();
 ```
 
-Example:
+#### Example:
 
 ```cpp
 jetson_commander.reboot_jetson();
 ```
 
-#### shutdown_jetson
+## shutdown_jetson
 
 ```
 /**
@@ -28,13 +26,13 @@ jetson_commander.reboot_jetson();
 void shutdown_jetson();
 ```
 
-Example:
+#### Example:
 
 ```cpp
 jetson_commander.shutdown_jetson();
 ```
 
-#### restart_vision_process
+## restart_vision_process
 
 This restarts the processes for the Jetson Nano. It is quicker than shutting down, but may take a bit to initialize.
 
@@ -44,9 +42,14 @@ This restarts the processes for the Jetson Nano. It is quicker than shutting dow
 */
 void restart_vision_process();
 ```
-jetson_commander.restart_vision_process();
 
-#### initialize
+#### Example:
+
+```cpp
+jetson_commander.restart_vision_process();
+```
+
+## initialize
 
 This is to be used at the start of the robot's program to send an initialization message to the Jetson Nano.
 
@@ -56,6 +59,8 @@ This is to be used at the start of the robot's program to send an initialization
 */
 void initialize();
 ```
+
+#### Example:
 
 ```cpp
 void pre_auton(void)
@@ -70,7 +75,7 @@ void pre_auton(void)
 }
 ```
 
-#### is_connected_to_jetson
+## is_connected_to_jetson
 
 Returns true if the V5 Brain is connected to the Jetson Nano and established positive contact
 
@@ -82,7 +87,7 @@ Returns true if the V5 Brain is connected to the Jetson Nano and established pos
 bool is_connected_to_jetson();
 ```
 
-Example:
+#### Example:
 
 ```cpp
 bool is_connected = jetson_commander.is_connected_to_jetson();
