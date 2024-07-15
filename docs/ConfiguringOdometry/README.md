@@ -191,7 +191,3 @@ WhoopDriveOdomOffset odom_offset(
 ```
 
 Now you are ready to continue to the next step!
-
-If you have a Vision Tesseract, go to the following step: [Configuring Vision Odometry](ConfiguringVisionOdom/README.md)
-
-If you do not have a Vision Tesseract, proceed to the following step: [Configuring Odometry Fusion](ConfiguringOdomFusion/README.md)

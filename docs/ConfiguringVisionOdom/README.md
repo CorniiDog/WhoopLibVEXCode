@@ -2,13 +2,19 @@
 
 The Vision Odometry Requires the Whooplib Tesseract and the Whooplib OS installed. 
 
+#### If you do not wish to use vision odometry with Jetson Nano, skip this step and move on to:  [Configuring Odometry Fusion](ConfiguringOdomFusion/README.md)
+
+---
+
+## Jetson Nano Pretense
+
+As soon as the Jetson Nano receives power, it immediately boots up. Make sure that the OS is updated to the latest version before continuing the following steps.
+
 The order sheet for these items and 3D models can be found here: [WhoopLib Vision Hardware](WhoopLibVisionHardware/README.md)
 
 To install the Vision Hardware on the Jetson Nano: [WhoopLib Vision OS Install](WhoopLibVisionInstall/README.md)
 
-As soon as the Jetson Nano receives power, it immediately boots up. Make sure that the OS is updated to the latest version before continuing the following steps.
-
-**If you do not wish to use vision odometry or use the vision system, skip this step and move on to** [Configuring Odometry Fusion](ConfiguringOdomFusion/README.md).
+---
 
 ## Configuring Communication Protol
 
@@ -96,5 +102,4 @@ There are two modes for ```jetsonCommunication```:
 
 Now, you are ready to fuse the odometry! Proceed to the next step.
 
-[Configuring Odometry Fusion](ConfiguringOdomFusion/README.md)
 

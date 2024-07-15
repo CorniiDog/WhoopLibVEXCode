@@ -84,5 +84,3 @@ If we move the robot to ```(24, 43)``` with a yaw of ```-130```, the position of
 ![Image](../images/OdomUnitsExample.png)
 
 You can see that the robot moved counter-clockwise. Since the drivetrain object is configured to be clockwise-positive, that is why the yaw is negative.
-
-Now, you are ready to move on to [Creating Manager Object](CreatingManagerObject/README.md).

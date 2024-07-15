@@ -63,7 +63,3 @@ With "your_jetson_ip" as the ip address of the jetson on the network.
   sudo systemctl restart whooplibpython.service
 ```
 
-If you have not yet configured your Wheel Odometry, proceed to [Configuring Odometry](ConfiguringOdometry/README.md)
-
-If you have configured your Wheel Odometry already, proceed to [Configuring Vision Odometry](ConfiguringVisionOdom/README.md)
-

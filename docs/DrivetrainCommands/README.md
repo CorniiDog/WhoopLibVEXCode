@@ -20,7 +20,7 @@ Hopefully this creates a good understanding and pretense as to how the robot ope
 
 This turns the robot respective to its current orientation
 
-```
+```clike
 /**
 * Turns the robot relative to its current yaw
 * @param angle The angle, yaw rotation to rotate by from the robot's current position
@@ -51,7 +51,7 @@ robot_drivetrain.turn(25, 3.5);
 
 This turns the robot to the world-space yaw.
 
-```
+```clike
 /**
 * Turns the robot to the world's yaw
 * @param yaw The yaw rotation to rotate to
@@ -82,7 +82,7 @@ robot_drivetrain.turn_to(55, 3.5);
 
 This function makes the robot turn to face world-space coordinates.
 
-```
+```clike
 /**
 * Turns the robot to face the given x and y
 * @param x The x position to face
@@ -114,7 +114,7 @@ robot_drivetrain.turn_to_position(25, 30, 3.5);
 
 The following function makes the robot drive forward a specific amount of distance the robot is currently facing.
 
-```
+```clike
 /**
 * Drive the robot forward the respectable distance
 * @param distance The x position to travel to, in specified units configured
@@ -145,7 +145,7 @@ robot_drivetrain.drive_forward(25, 3.5);
 
 This function makes the robot drive to a particular x and y point on the field.
 
-```
+```clike
 /**
 * This drives to a designated point using pure pursuit on a dubins curve
 * @param x The x position to travel to, in specified units configured
@@ -189,7 +189,7 @@ robot_drivetrain.drive_to_point(-10, 25, -1, 5);
 
 This function drives the robot to a pose. That is an x, y, and yaw. This should be the standard method for driving for the vast majority of cases.
 
-```
+```clike
 /**
 * This drives to a designated pose using pure pursuit on a dubins curve
 * @param x The x position to travel to, in specified units configured
@@ -244,7 +244,7 @@ robot_drivetrain.drive_to_pose(-10, 25, -30, -1, 6, 5);
 
 Instead of doing multiple driving to poses, which will make the robot stop and go repeatedly, you can instead provide these same poses as "waypoints" in an array/vector.
 
-```
+```clike
 /**
 * This drives to a designated pose using pure pursuit on a dubins curve
 * @param waypoints The waypoints for generating the path. Example would be {TwoDPose(0,0,0), TwoDPose(20,10,M_PI_2)}
@@ -298,7 +298,7 @@ robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, -1, 6, 5);
 
 This does similar to drive_forwards however in reverse.
 
-```
+```clike
 /**
 * Drive the robot backward the respectable distance
 * @param distance The x position to travel to, in specified units configured
@@ -329,7 +329,7 @@ robot_drivetrain.reverse_backward(25, 3.5);
 
 Drives the robot backwards to a given point. Same thing as drive_to_point but in reverse.
 
-```
+```clike
 /**
 * This drives to a designated point using pure pursuit on a dubins curve, in reverse
 * @param x The x position to travel to, in specified units configured
@@ -374,7 +374,7 @@ robot_drivetrain.reverse_to_point(-10, 25, -1, 5);
 This function is the equivalent of drive_to_pose, but in reverse. Note that the backside of the robot becomes the temporary "front" of the robot for the duration of the reversal.
 So driving to ```10, 25, -80``` in reverse would result in the robot's pose to be at ```10, 25, ```(-80+180)=```100``` degrees
 
-```
+```clike
 /**
 * This drives to a designated pose using pure pursuit on a dubins curve, in reverse
 * @param x The x position to travel to, in specified units configured
@@ -430,7 +430,7 @@ robot_drivetrain.reverse_to_point(-10, 25, -30, -1, 6, 5);
 This function is the equivalent of reverse_through_path, but in reverse. Note that the backside of the robot becomes the temporary "front" of the robot for the duration of the reversal.
 So driving to ```10, 25, -80``` in reverse would result in the robot's pose to be at ```10, 25, ```(-80+180)=```100``` degrees
 
-```
+```clike
 /**
 * This drives to a designated pose using pure pursuit on a dubins curve, in reverse
 * @param waypoints The waypoints for generating the path. Example would be {TwoDPose(0,0,0), TwoDPose(20,10,M_PI_2)}
@@ -484,7 +484,7 @@ robot_drivetrain.reverse_through_path({{15, 15, 0}, {0, 0, 90}}, -1, 6, 5);
 
 If the robot is given a movement command, and you want to do an action after a move completes, there is a wait_until_completed command:
 
-```
+```clike
 /**
 * Waits until a drivetrain action during auton is complete.
 */
@@ -510,7 +510,7 @@ robot_drivetrain.reverse_to_point(-12, 5, 3.5);
 
 Sets the state of the robot (usually to be handled upon startup)
 
-```
+```clike
 /**
 * Sets the operational state of the drivetrain.
 * @param state The new state to set (disabled, autonomous, or user control).
@@ -559,7 +559,7 @@ void usercontrol(void)
 
 Calibrates the IMU, tares all rotation sensors used in the drivetrain, and tares the IMU.
 
-```
+```clike
 /**
 * Calibrates the robot drivetrain
 */
@@ -584,7 +584,7 @@ void pre_auton(void) {
 
 ## set_pose_units
 
-```
+```clike
 /**
 * Sets the pose units for the system. This can be changed at any point in time, even mid-autonomous
 */
@@ -621,7 +621,7 @@ void autonomous(void)
 
 ## get_pose
 
-```
+```clike
 /**
 * Gets the x, y, z, pitch, yaw, roll of the robot
 * @return Pose object. With Pose.x, Pose.y, etc...
@@ -655,7 +655,7 @@ void usercontrol(void)
 
 ## set_pose
 
-```
+```clike
 /**
 * Sets the pose of the robot
 * @param x_in the location, in inches, parallel to the width of the driver station
@@ -676,6 +676,3 @@ void autonomous(void)
     robot_drivetrain.set_pose(15,5,45);
 }
 ```
-
-
-Checkout [Jetson Commands](JetsonCommands/README.md).

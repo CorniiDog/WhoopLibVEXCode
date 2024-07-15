@@ -117,5 +117,3 @@ int main() {
 
 
 ```
-
-Next, check out the [Drivetrain Commands](DrivetrainCommands/README.md).

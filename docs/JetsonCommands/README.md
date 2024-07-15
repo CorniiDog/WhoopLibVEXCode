@@ -4,7 +4,7 @@
 
 This function would reboot the Jetson Nano
 
-```
+```clike
 /**
 * Restarts Jetson Nano
 */
@@ -21,7 +21,7 @@ jetson_commander.reboot_jetson();
 
 ## shutdown_jetson
 
-```
+```clike
 /**
 * Shuts down Jetson Nano
 */
@@ -40,7 +40,7 @@ jetson_commander.shutdown_jetson();
 
 This restarts the processes for the Jetson Nano. It is quicker than shutting down, but may take a bit to initialize.
 
-```
+```clike
 /**
 * Restarts the vision process on Jetson Nano
 */
@@ -59,7 +59,7 @@ jetson_commander.restart_vision_process();
 
 This is to be used at the start of the robot's program to send an initialization message to the Jetson Nano.
 
-```
+```clike
 /**
 * Sends initialization message to Jetson Nano
 */
@@ -87,7 +87,7 @@ void pre_auton(void)
 
 Returns true if the V5 Brain is connected to the Jetson Nano and established positive contact
 
-```
+```clike
 /**
 * Returns true if connected to Jetson Nano
 * @returns true if connected, false otherwise (delay 5-6 seconds)
@@ -108,5 +108,3 @@ else{
 }
 
 ```
-
-Checkout [Drivetrain Commands](DrivetrainCommands/README.md).

@@ -2,7 +2,21 @@
 
 This will probably be one of the simplest tutorials out there. The odometry fusion is a module that manages the vision odometry and the wheel odometry to fuse them together as one odometry unit. It also acts as a simpleton for just wheel odometry only if necessary 
 
-#### If you have a Vision Tesseract
+## Choose One:
+
+## If you do not have a Vision Tesseract
+
+This is super difficult, so take a breather before starting.
+
+Are you ready?
+
+```cpp
+WhoopOdomFusion odom_fusion(&odom_offset);
+```
+
+Now you are ready for the next step: [Creating Drivetrain Object](CreatingDrivetrainObject/README.md)
+
+## If you have a Vision Tesseract
 
 ```cpp
 WhoopOdomFusion odom_fusion(
@@ -27,17 +41,3 @@ There are multiple fusion modes:
 | ```wheel_odom_only```    | Only accepts wheel odometry, ignoring vision odometry     |
 
 If ```FusionMode``` is set to ```fusion_gradual``` you can adjust the maximum amount of xy and yaw shift in meters/second and radians/second, hence the last two variables ```to_meters(50)``` and ```to_rad(500)```. The ```to_rad(500)``` pretty much means maximum rotational shift of ```500``` degrees/second (and then we convert to radians/second for the constructor). The ```to_meters(50)``` means maximum lateral shift of ```50``` inches/second (then converted to meters/second for the constructor).
-
-#### If you do not have a Vision Tesseract
-
-This is super difficult, so take a breather before starting.
-
-Are you ready?
-
-```cpp
-WhoopOdomFusion odom_fusion(&odom_offset);
-```
-
-That was really difficult. Dang, I'm impressed you got through.
-
-Next would be [Creating Drivetrain Object](CreatingDrivetrainObject/README.md).
