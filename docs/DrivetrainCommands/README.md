@@ -41,6 +41,7 @@ Note that timeout_seconds by default is the pure pursuit default by setting to `
 for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
+// Set timeout to 3.5 seconds
 robot_drivetrain.turn(25, 3.5);
 ```
 
@@ -71,6 +72,7 @@ Note that timeout_seconds by default is the pure pursuit default by setting to `
 for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
+// Set timeout to 3.5 seconds
 robot_drivetrain.turn_to(55, 3.5);
 ```
 
@@ -102,6 +104,7 @@ Note that timeout_seconds by default is the pure pursuit default by setting to `
 for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
+// Set timeout to 3.5 seconds
 robot_drivetrain.turn_to_position(25, 30, 3.5);
 ```
 
@@ -132,6 +135,7 @@ Note that timeout_seconds by default is the pure pursuit default by setting to `
 for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
+// Set timeout to 3.5 seconds
 robot_drivetrain.drive_forward(25, 3.5);
 ```
 
@@ -165,6 +169,7 @@ Note that timeout_seconds by default is the pure pursuit default by setting to `
 for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
+// Set timeout to 3.5 seconds
 robot_drivetrain.drive_to_point(-10, 25, 3.5);
 ```
 
@@ -174,7 +179,8 @@ lookahead distance from the pure pursuit parameters. Setting to ```0``` can allo
 is moving decently fast it may overshoot if set to ```0``` and either freeze or oscillate a bit.
 
 ```cpp
-robot_drivetrain.drive_to_point(-10, 25, -1, 5); // Set a landing strip to 5 inches, while having timeout_seconds use the default.
+// Set timeout_seconds to use default (via setting to -1), while having a landing strip of 5 inches
+robot_drivetrain.drive_to_point(-10, 25, -1, 5);
 ```
 
 ---
@@ -209,6 +215,7 @@ Note that timeout_seconds by default is the pure pursuit default by setting to `
 for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
+// Set timeout to 3.5 seconds
 robot_drivetrain.drive_to_pose(-10, 25, -30, 3.5);
 ```
 
@@ -217,7 +224,8 @@ However, a larger turning radius would be less space efficient but the robot wou
 pure pursuit defaults, or you can set to a non-zero positive number in inches (as the example is in ```in_deg_cw```):
 
 ```cpp
-robot_drivetrain.drive_to_pose(-10, 25, -30, 3.5, 6); // Set turning radius to 6 inches
+// Set timeout to 3.5 seconds and turning radius to 6 inches
+robot_drivetrain.drive_to_pose(-10, 25, -30, 3.5, 6);
 ```
 
 The landing strip is a straight line allocation near the end of the path. Think of this as a runway that a plane lands on before it goes to a screetching halt. In this case, the runway is a
@@ -226,7 +234,8 @@ lookahead distance from the pure pursuit parameters. Setting to ```0``` can allo
 is moving decently fast it may overshoot if set to ```0``` and either freeze or oscillate a bit.
 
 ```cpp
-robot_drivetrain.drive_to_pose(-10, 25, -30, -1, 6, 5); // Set a landing strip to 5 inches, turning radius of 6 inches, while having timeout_seconds use default (via setting to -1)
+// Set timeout_seconds to use default (via setting to -1), turning radius of 6 inches, while having a landing strip of 5 inches
+robot_drivetrain.drive_to_pose(-10, 25, -30, -1, 6, 5);
 ```
 
 ---
@@ -260,6 +269,7 @@ Note that timeout_seconds by default is the pure pursuit default by setting to `
 for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
+// Set timeout to 3.5 seconds
 robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, 3.5);
 ```
 
@@ -268,7 +278,8 @@ However, a larger turning radius would be less space efficient but the robot wou
 pure pursuit defaults, or you can set to a non-zero positive number in inches (as the example is in ```in_deg_cw```):
 
 ```cpp
-robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, 3.5, 6); // Set turning radius to 6 inches
+// Set timeout to 3.5 seconds and turning radius to 6 inches
+robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, 3.5, 6);
 ```
 
 The landing strip is a straight line allocation near the end of the path. Think of this as a runway that a plane lands on before it goes to a screetching halt. In this case, the runway is a
@@ -277,7 +288,8 @@ lookahead distance from the pure pursuit parameters. Setting to ```0``` can allo
 is moving decently fast it may overshoot if set to ```0``` and either freeze or oscillate a bit.
 
 ```cpp
-robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, -1, 6, 5); // Set a landing strip to 5 inches, turning radius of 6 inches, while having timeout_seconds use default (via setting to -1)
+// Set timeout_seconds to use default (via setting to -1), turning radius of 6 inches, while having a landing strip of 5 inches
+robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, -1, 6, 5); 
 ```
 
 ---
@@ -307,6 +319,7 @@ Note that timeout_seconds by default is the pure pursuit default by setting to `
 for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
+// Set timeout to 3.5 seconds
 robot_drivetrain.reverse_backward(25, 3.5);
 ```
 
@@ -340,6 +353,7 @@ Note that timeout_seconds by default is the pure pursuit default by setting to `
 for example, 3.5 seconds if the target position is not yet reached:
 
 ```cpp
+// Set timeout to 3.5 seconds
 robot_drivetrain.reverse_to_point(-10, 25, 3.5);
 ```
 
@@ -349,7 +363,8 @@ lookahead distance from the pure pursuit parameters. Setting to ```0``` can allo
 is moving decently fast it may overshoot if set to ```0``` and either freeze or oscillate a bit.
 
 ```cpp
-robot_drivetrain.reverse_to_point(-10, 25, -1, 5); // Set a landing strip to 5 inches, while having timeout_seconds use the default.
+// Set timeout_seconds to use default (via setting to -1), while having a landing strip of 5 inches
+robot_drivetrain.reverse_to_point(-10, 25, -1, 5); 
 ```
 
 ---
@@ -385,6 +400,7 @@ Note that timeout_seconds by default is the pure pursuit default by setting to `
 for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
+// Set timeout to 3.5 seconds
 robot_drivetrain.reverse_to_point(-10, 25, -30, 3.5);
 ```
 
@@ -393,7 +409,8 @@ However, a larger turning radius would be less space efficient but the robot wou
 pure pursuit defaults, or you can set to a non-zero positive number in inches (as the example is in ```in_deg_cw```):
 
 ```cpp
-robot_drivetrain.reverse_to_point(-10, 25, -30, 3.5, 6); // Set turning radius to 6 inches
+// Set timeout to 3.5 seconds and turning radius to 6 inches
+robot_drivetrain.reverse_to_point(-10, 25, -30, 3.5, 6); 
 ```
 
 The landing strip is a straight line allocation near the end of the path. Think of this as a runway that a plane lands on before it goes to a screetching halt. In this case, the runway is a
@@ -402,7 +419,8 @@ lookahead distance from the pure pursuit parameters. Setting to ```0``` can allo
 is moving decently fast it may overshoot if set to ```0``` and either freeze or oscillate a bit.
 
 ```cpp
-robot_drivetrain.reverse_to_point(-10, 25, -30, -1, 6, 5); // Set a landing strip to 5 inches, turning radius of 6 inches, while having timeout_seconds use default (via setting to -1)
+// Set timeout_seconds to use default (via setting to -1), turning radius of 6 inches, while having a landing strip of 5 inches
+robot_drivetrain.reverse_to_point(-10, 25, -30, -1, 6, 5);
 ```
 
 ---
@@ -437,6 +455,7 @@ Note that timeout_seconds by default is the pure pursuit default by setting to `
 for example, ```3.5``` seconds if the target position is not yet reached:
 
 ```cpp
+// Set timeout to 3.5 seconds
 robot_drivetrain.reverse_through_path({{15, 15, 0}, {0, 0, 90}}, 3.5);
 ```
 
@@ -445,7 +464,8 @@ However, a larger turning radius would be less space efficient but the robot wou
 pure pursuit defaults, or you can set to a non-zero positive number in inches (as the example is in ```in_deg_cw```):
 
 ```cpp
-robot_drivetrain.reverse_through_path({{15, 15, 0}, {0, 0, 90}}, 3.5, 6); // Set turning radius to 6 inches
+// Set timeout to 3.5 seconds and turning radius to 6 inches
+robot_drivetrain.reverse_through_path({{15, 15, 0}, {0, 0, 90}}, 3.5, 6);
 ```
 
 The landing strip is a straight line allocation near the end of the path. Think of this as a runway that a plane lands on before it goes to a screetching halt. In this case, the runway is a
@@ -454,7 +474,8 @@ lookahead distance from the pure pursuit parameters. Setting to ```0``` can allo
 is moving decently fast it may overshoot if set to ```0``` and either freeze or oscillate a bit.
 
 ```cpp
-robot_drivetrain.reverse_through_path({{15, 15, 0}, {0, 0, 90}}, -1, 6, 5); // Set a landing strip to 5 inches, turning radius of 6 inches, while having timeout_seconds use default (via setting to -1)
+// Set timeout_seconds to use default (via setting to -1), turning radius of 6 inches, while having a landing strip of 5 inches
+robot_drivetrain.reverse_through_path({{15, 15, 0}, {0, 0, 90}}, -1, 6, 5);
 ```
 
 ---
@@ -476,7 +497,7 @@ void wait_until_completed();
 robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw);
 robot_drivetrain.set_pose(0,0,0); // Set the robot's starting position
 
-robot_drivetrain.reverse_through_path({{15, 15, 0}, {0, 0, 90}}, 3.5);
+robot_drivetrain.reverse_through_path({{15, 15, 0}, {0, 0, 90}}, 3.5); // Timeout of 3.5 seconds
 // Your code here to run while the robot is turning
 robot_drivetrain.wait_until_completed(); // Wait until the last command is complete before continuing
 // Your code here to run after the robot finished turning
