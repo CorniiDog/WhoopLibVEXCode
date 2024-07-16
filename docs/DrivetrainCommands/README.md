@@ -31,7 +31,7 @@ void turn(double angle, double timeout_seconds=-1);
 
 #### Example:
 
-If the robot is facing a yaw of ```30``` degrees, the following will make it turn to a yaw of ```55``` degrees:
+If the robot is at ```0,0```, and facing a yaw of ```30``` degrees, the following will make it turn to a yaw of ```55``` degrees:
 
 
 
@@ -42,6 +42,8 @@ If the robot is facing a yaw of ```30``` degrees, the following will make it tur
 ```cpp
 robot_drivetrain.turn(25);
 ```
+
+![Image](../images/TurnExample.png)
 
 <!-- tabs:end -->
 
@@ -76,15 +78,17 @@ void turn_to(double yaw, double timeout_seconds=-1);
 
 #### Example:
 
-If the robot is facing a yaw of ```30``` degrees, the following will make it turn to a yaw of ```55``` degrees, as the current yaw of the robot has no effect on the command:
+If the robot is at ```0,0```, and facing a yaw of ```20``` degrees, the following will make it turn to a yaw of ```80``` degrees, as the current yaw of the robot has no effect on the command:
 
 <!-- tabs:start -->
 
 #### **VEXCode**
 
 ```cpp
-robot_drivetrain.turn_to(55);
+robot_drivetrain.turn_to(80);
 ```
+
+![Image](../images/TurnToExample.png)
 
 <!-- tabs:end -->
 
@@ -120,14 +124,14 @@ void turn_to_position(double x, double y, double timeout_seconds=-1);
 
 #### Example:
 
-If the robot has a shooter, and the goal is at ```25, 30``` on the field, you can make the robot face the goal via:
+If the robot has a shooter, at ```0,0``` and the goal is at ```70, 30``` on the field, you can make the robot face the goal via:
 
 <!-- tabs:start -->
 
 #### **VEXCode**
 
 ```cpp
-robot_drivetrain.turn_to_position(25, 30);
+robot_drivetrain.turn_to_position(70, 30);
 ```
 
 <!-- tabs:end -->
