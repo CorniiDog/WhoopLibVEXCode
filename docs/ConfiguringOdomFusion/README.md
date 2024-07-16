@@ -1,6 +1,6 @@
 # Configuring Odometry Fusion
 
-This will probably be one of the simplest tutorials out there. The odometry fusion is a module that manages the vision odometry and the wheel odometry to fuse them together as one odometry unit. It also acts as a simpleton for just wheel odometry only if necessary 
+This will probably be one of the simplest tutorials out there. The odometry fusion is a module that manages the vision odometry and the wheel odometry to fuse them together as one odometry unit. It also acts as a singleton for just wheel odometry only if necessary 
 
 <!-- tabs:start -->
 
