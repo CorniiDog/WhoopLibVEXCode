@@ -28,9 +28,9 @@ In order to create the communication protocol, create the buffer_system object:
 ```cpp
 // Serial communication module
 BufferNode buffer_system(
-  256, // The buffer size, in characters.
-  debugMode::debug_disabled, // debugMode::debug_disabled for competition use, debugMode::debug_enabled to allow the code to pass errors through
-  "/dev/serial1"
+    256,                       // The buffer size, in characters. Increase if necessary, but at the cost of computational efficiency.
+    debugMode::debug_disabled, // debugMode::debug_disabled for competition use, debugMode::debug_enabled to allow the code to pass errors through
+    "/dev/serial1"             // The serial connection of the Jetson Nano ("/dev/serial1" is the micro-usb serial connection on the V5 Brain, "/dev/serial2" is controller)
 ); 
 ```
 
@@ -80,9 +80,9 @@ Then, we create the vision system object and subscribe to the stream ```"P"``` f
 ```cpp
 // Jetson Nano pose retreival object (also configured on Nano-side) 
 WhoopVision vision_system(
-  &vision_offset, // pointer to the vision offset
-  &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
-  "P" // The subscribed stream name to receive the pose from the Jetson Nano
+    &vision_offset, // pointer to the vision offset
+    &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
+    "P"             // The subscribed stream name to receive the pose from the Jetson Nano
 );
 ```
 
@@ -105,12 +105,12 @@ Next, we want to create a jetson commander so that the robot can communicate whe
 // This is essential to ensure that the nano starts its internal program, stop program, restarts program, 
 // and can be told to reboot or shutdown
 JetsonCommander jetson_commander(
-  &controller1, // The controller to send messages to upon error
-  &buffer_system, // Pointer to the buffer system (will be managed by the buffer system)
-  "C", // The subscribed stream name for keep-alive, shutdown, and reboot
-  60, // In seconds. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this time before it shuts off
-  2, // How many seconds to wait before sending anoter keep alive message to Jetson (suggested 2)
-  jetsonCommunication::enable_comms // If you don't have a Vision Tesseract on your robot, set to disable_comms
+    &controller1,                      // The controller to send messages to upon error
+    &buffer_system,                    // Pointer to the buffer system (will be managed by the buffer system)
+    "C",                               // The subscribed stream name for keep-alive, shutdown, and reboot
+    60,                                // In seconds. When the V5 Brain shuts down or disconnects, the Jetson Nano will keep the program running for this time before it shuts off
+    2,                                 // How many seconds to wait before sending anoter keep alive message to Jetson (suggested 2)
+    jetsonCommunication::disable_comms // If you don't have a Vision Tesseract on your robot, set to disable_comms
 );
 ```
 

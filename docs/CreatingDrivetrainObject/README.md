@@ -33,6 +33,7 @@ PursuitParams pursuit_parameters(
     to_meters(5),    // Pure Pursuit look ahead distance, in meters
     8.0,             // Pure pursuit forward max motor voltage (0.0, 12.0]
     12.0,            // Pure pursuit turning max motor voltage (0.0, 12.0]
+    50.0,            // The maximum voltage acceleration in voltage/second^2 of speeding up, as a slew rate
     to_meters(1.25), // Settle Distance. Exits when within this distance of target, in meters
     to_rad(1),       // Settle Rotation. Exits when within this rotation of target, in radians
     0.4,             // Minimum time to be considered settled, in seconds
@@ -45,8 +46,9 @@ PursuitParams pursuit_parameters(
     0.01,            // Forward (kI) Integral Tuning
     250,             // Forward (kD) Derivative Tuning
     to_meters(2),    // The forward distance (error), in meters, to activate forward_ki
-    100              // The number of points when generating a path. More points mean higher detail of the path, but at a higher computational cost
+    100              // The number of points when generating the path. More points mean higher detail of the path, but at a higher computational cost
 );
+
 ```
 
 <!-- tabs:end -->
@@ -61,6 +63,16 @@ Visual representation of the pure pursuit look-ahead distance:
 
 ![Image](../images/PurePursuit.png)
 
+The reason why Dubins Curves are superior than just point-to-point is because of Pure Pursuit under-shooting the target when applied:
+
+![Image](../images/PurePursuitP2P.png)
+
+However, by having a turning radius for Dubins-Curves, it is more accurate, as shown in the comparison between the two:
+
+![Image](../images/DubinsvsEuclidian.png)
+
+That is why WhoopLib uses Dubins-Curves for path generation
+
 <!-- tabs:end -->
 
 #### Creating the Drivetrain Class
@@ -71,12 +83,12 @@ Visual representation of the pure pursuit look-ahead distance:
 
 ```cpp
 WhoopDrivetrain robot_drivetrain(
-  &pursuit_parameters,  // The default pure pursuit parameters for operating the robot in autonomous
-  &odom_fusion, // Odometry fusion module
-  PoseUnits::in_deg_cw, // Set default pose units if not defined. "m_deg_cw" means "meters, degrees, clockwise-positive yaw", "in_deg_ccw" means "inches, degrees, counter-clockwise-positive yaw", and so forth.
-  &controller1, // Pointer to the controller 
-  &left_motors, // Pointer to the left motor group (optionally can be a list of motors as well)
-  &right_motors // Pointer to the right motor group (optionally can be a list of motors as well)
+    &pursuit_parameters,  // The default pure pursuit parameters for operating the robot in autonomous
+    &odom_fusion,         // Odometry fusion module
+    PoseUnits::in_deg_cw, // Set default pose units if not defined. "m_deg_cw" means "meters, degrees, clockwise-positive yaw", "in_deg_ccw" means "inches, degrees, counter-clockwise-positive yaw", and so forth.
+    &controller1,         // Pointer to the controller
+    &left_motors,         // Pointer to the left motor group (optionally can be a list of motors as well)
+    &right_motors         // Pointer to the right motor group (optionally can be a list of motors as well)
 );
 ```
 

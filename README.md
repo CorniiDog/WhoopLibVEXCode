@@ -45,6 +45,7 @@ WhoopLibPython Github: https://github.com/ConnorAtmos/WhoopLibPython
 
 ## Roadmap
 
+- Slew Up but no Slew Down for Motor Movements
 - Object Detection and Gridded Permanence system
 - Detecting other robots that impede the path of the robot, and drive around
 - Implementation of a Jetson Orion Nano instead of the End-Of-Line (EOL) Jetson Nano

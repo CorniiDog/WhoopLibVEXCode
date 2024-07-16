@@ -12,12 +12,12 @@ This will probably be one of the simplest tutorials out there. The odometry fusi
 
 ```cpp
 WhoopOdomFusion odom_fusion(
-  &vision_system, // Pointer to the vision system
-  &odom_offset, // Pointer to the odometry offset
-  0.9, // Minimum confidence threshold to apply vision system to odometry
-  FusionMode::fusion_gradual, // The method of fusing
-  to_meters(50), // If FusionMode is fusion_gradual, it is the maximum allowable lateral shift the vision camera can update in meters per second.
-  to_rad(500) // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
+    &vision_system,              // Pointer to the vision system
+    &odom_offset,                // Pointer to the odometry offset
+    0.9,                         // Minimum confidence threshold to apply vision system to odometry
+    FusionMode::wheel_odom_only, // The method of fusing
+    to_meters(50),               // If FusionMode is fusion_gradual, it is the maximum allowable lateral shift the vision camera can update in meters per second.
+    to_rad(500)                  // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
 );
 ```
 

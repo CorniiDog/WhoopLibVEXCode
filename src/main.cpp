@@ -118,7 +118,7 @@ WhoopOdomFusion odom_fusion(
     0.9,                         // Minimum confidence threshold to apply vision system to odometry
     FusionMode::wheel_odom_only, // The method of fusing
     to_meters(50),               // If FusionMode is fusion_gradual, it is the maximum allowable lateral shift the vision camera can update in meters per second.
-    to_rad(300)                  // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
+    to_rad(500)                  // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
 );
 
 ////////////////////////////////////////////////////////////
@@ -132,6 +132,7 @@ PursuitParams pursuit_parameters(
     to_meters(5),    // Pure Pursuit look ahead distance, in meters
     8.0,             // Pure pursuit forward max motor voltage (0.0, 12.0]
     12.0,            // Pure pursuit turning max motor voltage (0.0, 12.0]
+    50.0,            // The maximum voltage acceleration in voltage/second^2 of speeding up, as a slew rate
     to_meters(1.25), // Settle Distance. Exits when within this distance of target, in meters
     to_rad(1),       // Settle Rotation. Exits when within this rotation of target, in radians
     0.4,             // Minimum time to be considered settled, in seconds
@@ -208,25 +209,25 @@ void autonomous(void)
   robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw);
   robot_drivetrain.set_pose(0, 0, 0);
 
-  while(1){
-  // robot_drivetrain.turn_to_position(15, 15);
-  robot_drivetrain.drive_forward(15);
+  while (1)
+  {
+    // robot_drivetrain.turn_to_position(15, 15);
+    robot_drivetrain.drive_forward(15);
 
-  robot_drivetrain.turn_to(90);
+    robot_drivetrain.turn_to(90);
 
-  robot_drivetrain.drive_forward(-15);
+    robot_drivetrain.drive_forward(-15);
 
-  robot_drivetrain.drive_forward(15);
+    robot_drivetrain.drive_forward(15);
 
-  robot_drivetrain.turn_to(0);
+    robot_drivetrain.turn_to(0);
 
-  robot_drivetrain.drive_forward(-15);
+    robot_drivetrain.drive_forward(-15);
 
-  // robot_drivetrain.drive_to_point(15, 15);
-  // robot_drivetrain.reverse_to_point(0,0);
-  robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, 7);
-  robot_drivetrain.reverse_through_path({{15, 15, 180}, {0, 0, 180}}, 7);
-
+    // robot_drivetrain.drive_to_point(15, 15);
+    // robot_drivetrain.reverse_to_point(0,0);
+    robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, 7);
+    robot_drivetrain.reverse_through_path({{15, 15, 180}, {0, 0, 180}}, 7);
   }
   // robot_drivetrain.temp_disable = true; // temp disable the drive motors
   while (1)

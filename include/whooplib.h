@@ -27,6 +27,7 @@
 #include "whooplib/include/calculators/PurePursuit.hpp"
 #include "whooplib/include/calculators/PurePursuitConductor.hpp"
 #include "whooplib/include/calculators/Dubins.hpp"
+#include "whooplib/include/calculators/Slew.hpp"
 
 // Nodes
 #include "whooplib/include/toolbox.hpp"
