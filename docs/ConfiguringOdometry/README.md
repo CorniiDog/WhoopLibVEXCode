@@ -202,6 +202,8 @@ Next is configuring the offsets. Since the forward/backwards location for the wh
 
 ![Image](../images/OneWheelOdomOffsets.png)
 
+The black dot is the center of the odometry unit, while the purple dot is the center of the robot. Keep in mind that traction wheels **will** shift the center of the robot towards the traction wheels.
+
 <!-- tabs:start -->
 
 #### **VEXCode**
@@ -216,6 +218,7 @@ WhoopDriveOdomOffset odom_offset(
 ```
 
 <!-- tabs:end -->
+
 
 #### **Configure With No Tracker**
 
@@ -251,7 +254,7 @@ And then configure offset
 ```cpp
 WhoopDriveOdomOffset odom_offset(
   &odom_unit, // Pointer to the odometry unit (will manage the odom unit)
-  to_meters(0), // Zero offset as no tracker.
+  to_meters(0), // Zero offset as no tracker
   to_meters(0) // Zero offset as no tracker
 );
 ```
