@@ -2,17 +2,30 @@
 
 Here we will be making the robot drivetrain object. First of all, we need to define pure pursuit parameters. These parameters will be not only used for pure pursuit but also for point turns and forward/backward movement commands too by slightly extrapolating the parameters beyond just the scope of pure pursuit.
 
-#### Using Default Pursuit Parameters
+<!-- tabs:start -->
+
+#### **Using Default Pursuit Parameters**
+
 
 If you want to use default parameters that WhoopLib uses, covering the vast majority of robot designs, just make the parameters object via:
+
+<!-- tabs:start -->
+
+#### **VEXCode**
 
 ```cpp
 PursuitParams pursuit_parameters = PursuitParams();
 ```
 
-#### Customizing Pursuit Parameters
+<!-- tabs:end -->
+
+#### **Customizing Pursuit Parameters**
 
 If you want to tune your own custom-parameters, you can do so via the following:
+
+<!-- tabs:start -->
+
+#### **VEXCode**
 
 ```cpp
 PursuitParams pursuit_parameters(
@@ -36,6 +49,8 @@ PursuitParams pursuit_parameters(
 );
 ```
 
+<!-- tabs:end -->
+
 The WhoopLib uses the entirety of PID for turning and pure pursuit forward motion. This means that the robots movements, if configured correctly, are extremely precise to roughly ±```1.25``` inches and ±```1``` degrees for the pure pursuit's end-position. The robot uses Dubins-Curves to generate the sub-paths. Therefore, the robot simultaneously acts as a car, which is why there is a variable for the radius of the turns. Additionally, the pure pursuit look ahead distance is how far to look ahead in the path. The number of points is how many points when generating a path. Default is ```200```.
 
 Visual representation of Dubins-Curves and turning radius:
@@ -46,8 +61,13 @@ Visual representation of the pure pursuit look-ahead distance:
 
 ![Image](../images/PurePursuit.png)
 
+<!-- tabs:end -->
 
 #### Creating the Drivetrain Class
+
+<!-- tabs:start -->
+
+#### **VEXCode**
 
 ```cpp
 WhoopDrivetrain robot_drivetrain(
@@ -59,6 +79,8 @@ WhoopDrivetrain robot_drivetrain(
   &right_motors // Pointer to the right motor group (optionally can be a list of motors as well)
 );
 ```
+
+<!-- tabs:end -->
 
 There are different types of pose units you can use:
 

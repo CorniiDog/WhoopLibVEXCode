@@ -2,7 +2,9 @@
 
 The Vision Odometry Requires the Whooplib Tesseract and the Whooplib OS installed. 
 
-#### If you do not wish to use vision odometry with Jetson Nano, skip this step and move on to:  [Configuring Odometry Fusion](ConfiguringOdomFusion/README.md)
+<!-- tabs:start -->
+
+#### **If You Have a Vision Tesseract**
 
 ---
 
@@ -20,6 +22,10 @@ To install the Vision Hardware on the Jetson Nano: [WhoopLib Vision OS Install](
 
 In order to create the communication protocol, create the buffer_system object:
 
+<!-- tabs:start -->
+
+#### **VEXCode**
+
 ```cpp
 // Serial communication module
 BufferNode buffer_system(
@@ -28,6 +34,8 @@ BufferNode buffer_system(
   "/dev/serial1"
 ); 
 ```
+
+<!-- tabs:end -->
 
 The buffer size is ```256```. That means that all incoming messages together may not exceed ```256``` characters. If it does, increase this size, but at the expense of computational cost.
 
@@ -49,6 +57,10 @@ With this information, we will determine the necessary offsets of the camera fro
 
 ![Image](../images/VisionOdomOffset.png)
 
+<!-- tabs:start -->
+
+#### **VEXCode**
+
 ```cpp
 // Vision Offset of the Vision Tesseract from the Center of Robot
 RobotVisionOffset vision_offset(
@@ -57,7 +69,14 @@ RobotVisionOffset vision_offset(
 );
 ```
 
+<!-- tabs:end -->
+
+
 Then, we create the vision system object and subscribe to the stream ```"P"``` for Pose (which was configured jetson-nano side, by default).
+
+<!-- tabs:start -->
+
+#### **VEXCode**
 
 ```cpp
 // Jetson Nano pose retreival object (also configured on Nano-side) 
@@ -68,7 +87,14 @@ WhoopVision vision_system(
 );
 ```
 
+<!-- tabs:end -->
+
+
 Next, we want to create a jetson commander so that the robot can communicate when it is idling or not
+
+<!-- tabs:start -->
+
+#### **VEXCode**
 
 ```cpp
 // This is the jetson commander. It sends keep-alive messages intermittently and also allows
@@ -89,6 +115,8 @@ JetsonCommander jetson_commander(
 );
 ```
 
+<!-- tabs:end -->
+
 Okay this seems like quite a bit but take a deep breath we will get through this.
 
 ```"C"``` is for Communication stream, which was also configured jetson-side. This stream is where the robot communicates "Hey, I'm here" pretty much to the Jetson Nano. And the number after, ```60```, is how many seconds to be kept alive. If the Jetson Nano does not receive any message after that time, it enters the idle state to be more battery efficient. The ```2``` is the step time for keep-alive. So it would say "Hey, I'm here" every ```2``` seconds upon robot code start.
@@ -102,4 +130,8 @@ There are two modes for ```jetsonCommunication```:
 
 Now, you are ready to fuse the odometry! Proceed to the next step.
 
+#### **If You Do Not Have a Vision Tesseract**
 
+#### If you do not wish to use vision odometry with Jetson Nano, skip this step and move on to:  [Configuring Odometry Fusion](ConfiguringOdomFusion/README.md)
+
+<!-- tabs:end -->

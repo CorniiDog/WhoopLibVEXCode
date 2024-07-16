@@ -9,10 +9,18 @@ the most essential part of your robot.
 
 Before anything, we need to configure the controller we want to use alongside the mode.
 
+<!-- tabs:start -->
+
+#### **VEXCode**
+
 ```cpp
 // Primary controller
 WhoopController controller1(joystickMode::joystickmode_split_arcade, controllerType::primary);
 ```
+
+
+<!-- tabs:end -->
+
 As you see, we have initialized the primary controller. If you wish to use the second controller, change controllerType to ```controllerType::partner```.
 
 There are several joystick modes:
@@ -27,6 +35,10 @@ There are several joystick modes:
 Next step is configuring the motors and drive groups using WhoopMotors
 
 #### Setting Up Motors
+
+<!-- tabs:start -->
+
+#### **VEXCode**
 
 ```cpp
 // Left drive motors
@@ -43,6 +55,9 @@ WhoopMotor r3(PORT3, gearSetting::ratio6_1, reversed::yes_reverse);
 WhoopMotor r4(PORT4, gearSetting::ratio6_1, reversed::yes_reverse);
 WhoopMotorGroup right_motors({&r1, &r2, &r3, &r4});
 ```
+
+<!-- tabs:end -->
+
 
 PORT1 is well... Port 1 on the V5 Brain. You can assume the rest for ports 1 through 21.
 
@@ -69,18 +84,31 @@ Next, we want to configure an inertial sensor and additional sensors that we pla
 
 You are pretty much required to have an inertial sensor with the robot.
 
+<!-- tabs:start -->
+
+#### **VEXCode**
+
 ```cpp
 WhoopInertial inertial_sensor(PORT7);
 ```
+
+<!-- tabs:end -->
+
 
 Skadoosh
 
 However, forward and sideways trackers are recommended (but optional). These are rotation sensors (encoders are not supported for the meantime):
 
+<!-- tabs:start -->
+
+#### **VEXCode**
+
 ```cpp
 WhoopRotation forward_tracker(PORT6, reversed::yes_reverse);
 WhoopRotation sideways_tracker(PORT9, reversed::yes_reverse);
 ```
+
+<!-- tabs:end -->
 
 The forward tracker is the tracker that tracks forwards/backwards movement of the robot, while the sideways tracker is the tracker that tracks sideways movement of the robot.
 
@@ -88,7 +116,9 @@ The forward tracker is the tracker that tracks forwards/backwards movement of th
 
 Now we are ready for the nitty-gritty. It is time to setup the odometry unit. There are three configurations (pick one):
 
-#### Configure With Two Trackers
+<!-- tabs:start -->
+
+#### **Configure With Two Trackers**
 
 ![Image](../images/OdomUnitCenter.png)
 
@@ -97,6 +127,10 @@ The following illustration shows the center of the odometry unit. The odom unit 
 The forward tracker is always offset right/left from the center of the odometry unit center, while the sideways tracker is always forward/backwards from the center of the odometry unit. The measurements are in **meters**. If you measured in inches, you can wrap it with ```to_meters(inches)``` and it would be converted to meters.
 
 Based upon the following illustration above, with ```2.5189``` inch wheels, the forward tracker being offset to the right, and sideways tracker being offset back of the odometry unit:
+
+<!-- tabs:start -->
+
+#### **VEXCode**
 
 ```cpp
 WhoopDriveOdomUnit odom_unit(
@@ -108,8 +142,10 @@ WhoopDriveOdomUnit odom_unit(
   &forward_tracker, // Pointer to the forward tracker, as a WhoopRotation sensor
   &sideways_tracker // Pointer to the sideways tracker, as a WhoopRotation sensor
 );
-
 ```
+
+<!-- tabs:end -->
+
 
 Next is to configure an offset of the odometry unit's center to the center of the robot:
 
@@ -119,6 +155,10 @@ The black dot is the center of the odometry unit, while the purple dot is the ce
 
 Based upon the image, the odometry offset would be:
 
+<!-- tabs:start -->
+
+#### **VEXCode**
+
 ```cpp
 WhoopDriveOdomOffset odom_offset(
   &odom_unit, // Pointer to the odometry unit (will manage the odom unit)
@@ -127,13 +167,19 @@ WhoopDriveOdomOffset odom_offset(
 );
 ```
 
+<!-- tabs:end -->
+
 NOTE: If your Odom Unit's Center IS the center of the robot, set to ```0``` and ```0```.
 
-#### Configure With One Tracker
+#### **Configure With One Tracker**
 
 ![Image](../images/OneWheelOdomCenter.png)
 
 For this, you assume that the right wheels is the forwards tracker.
+
+<!-- tabs:start -->
+
+#### **VEXCode**
 
 ```cpp
 WhoopDriveOdomUnit odom_unit(
@@ -149,9 +195,16 @@ WhoopDriveOdomUnit odom_unit(
 );
 ```
 
+<!-- tabs:end -->
+
+
 Next is configuring the offsets. Since the forward/backwards location for the wheels is the same as the center of the robot, the forwards/backwards offset would be ```0```.
 
 ![Image](../images/OneWheelOdomOffsets.png)
+
+<!-- tabs:start -->
+
+#### **VEXCode**
 
 ```cpp
 
@@ -162,12 +215,18 @@ WhoopDriveOdomOffset odom_offset(
 );
 ```
 
-#### Configure With No Tracker
+<!-- tabs:end -->
+
+#### **Configure With No Tracker**
 
 ![Image](../images/NoWheelOdom.png)
 
 If you are not using any trackers, this is very clear-cut.
 
+
+<!-- tabs:start -->
+
+#### **VEXCode**
 
 ```cpp
 WhoopDriveOdomUnit odom_unit(
@@ -180,7 +239,14 @@ WhoopDriveOdomUnit odom_unit(
 );
 ```
 
+<!-- tabs:end -->
+
+
 And then configure offset
+
+<!-- tabs:start -->
+
+#### **VEXCode**
 
 ```cpp
 WhoopDriveOdomOffset odom_offset(
@@ -189,5 +255,9 @@ WhoopDriveOdomOffset odom_offset(
   to_meters(0) // Zero offset as no tracker
 );
 ```
+
+<!-- tabs:end -->
+
+<!-- tabs:end -->
 
 Now you are ready to continue to the next step!

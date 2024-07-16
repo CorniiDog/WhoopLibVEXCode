@@ -4,21 +4,42 @@ So, given that we have objects, everything needs to be managed right? So that is
 
 Certain objects are nodes. That is that they are inherited from the ```ComputeNode``` class and can have a ```__step()``` method override. If this sounds a bit confusing, let me make it simpler to understand. Some objects need to be controlled and have their own sub-process in the background behind the scenes to function correctly. And that is why some objects are configured to be capable of ran by the manager to provide functions their own independance but yet still have complete control over an object's functionality.
 
-#### To create the manager for the robot with a Vision Tesseract
+<!-- tabs:start -->
+
+#### **If You Have a Vision Tesseract**
+
+<!-- tabs:start -->
+
+#### **VEXCode**
 
 ```cpp
 ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &controller1});
 ```
 
-#### To create the manager if the robot does not have a Vision Tesseract
+<!-- tabs:end -->
+
+#### **If You Do Not Have a Vision Tesseract**
+
+<!-- tabs:start -->
+
+#### **VEXCode**
 
 ```cpp
 ComputeManager manager({&robot_drivetrain, &controller1});
 ```
 
+<!-- tabs:end -->
+
+<!-- tabs:end -->
+
+
 Pretty straightforward, right?
 
 Then, in your main.cpp add the following to your ```pre_auton``` function:
+
+<!-- tabs:start -->
+
+#### **VEXCode**
 
 ```cpp
 void pre_auton(void) {
@@ -32,14 +53,29 @@ void pre_auton(void) {
 }
 ```
 
+<!-- tabs:end -->
+
 Add the following to your ```autonomous``` function:
+
+<!-- tabs:start -->
+
+#### **VEXCode**
+
 ```cpp
 void autonomous(void) {
   robot_drivetrain.set_state(drivetrainState::mode_autonomous);
 }
 ```
 
+<!-- tabs:end -->
+
+
 Add the following to your ```usercontrol``` function:
+
+<!-- tabs:start -->
+
+#### **VEXCode**
+
 ```cpp
 void usercontrol(void) {
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
@@ -50,7 +86,13 @@ void usercontrol(void) {
 }
 ```
 
+<!-- tabs:end -->
+
 So, just a run-down. Your main.cpp may contain something like:
+
+<!-- tabs:start -->
+
+#### **VEXCode**
 
 ```cpp
 
@@ -117,3 +159,6 @@ int main() {
 
 
 ```
+
+<!-- tabs:end -->
+

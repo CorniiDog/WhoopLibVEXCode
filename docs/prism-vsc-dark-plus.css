@@ -19,6 +19,7 @@ code[class*="language-"] {
 	hyphens: none;
 }
 
+
 pre[class*="language-"]::selection,
 code[class*="language-"]::selection,
 pre[class*="language-"] *::selection,

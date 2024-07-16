@@ -4,12 +4,22 @@
 
 2. Open up command prompt/terminal on your computer and download the VEXCode template via:
 
+    <!-- tabs:start -->
+
+    #### **For WhoopLib VEXCode**
+
     ```bash
     cd Desktop
 
     git clone https://github.com/ConnorAtmos/WhoopLibVEXCode
+
     ```
-    And now you are ready to configure and jump into the action with the most powerful SLAM solution in VEX!
+
+    #### **For WhoopLib PROS**
+
+    Coming soon
+
+    <!-- tabs:end -->
 
 3. Open the project in VSCode
 

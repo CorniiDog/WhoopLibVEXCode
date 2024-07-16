@@ -13,9 +13,15 @@ void reboot_jetson();
 
 #### Example:
 
+<!-- tabs:start -->
+
+#### **VEXCode**
+
 ```cpp
 jetson_commander.reboot_jetson();
 ```
+
+<!-- tabs:end -->
 
 ---
 
@@ -30,9 +36,15 @@ void shutdown_jetson();
 
 #### Example:
 
+<!-- tabs:start -->
+
+#### **VEXCode**
+
 ```cpp
 jetson_commander.shutdown_jetson();
 ```
+
+<!-- tabs:end -->
 
 ---
 
@@ -49,9 +61,15 @@ void restart_vision_process();
 
 #### Example:
 
+<!-- tabs:start -->
+
+#### **VEXCode**
+
 ```cpp
 jetson_commander.restart_vision_process();
 ```
+
+<!-- tabs:end -->
 
 ---
 
@@ -66,7 +84,12 @@ This is to be used at the start of the robot's program to send an initialization
 void initialize();
 ```
 
+
 #### Example:
+
+<!-- tabs:start -->
+
+#### **VEXCode**
 
 ```cpp
 void pre_auton(void)
@@ -80,6 +103,8 @@ void pre_auton(void)
   jetson_commander.initialize(); // Initialize Jetson Commander
 }
 ```
+
+<!-- tabs:end -->
 
 ---
 
@@ -97,6 +122,10 @@ bool is_connected_to_jetson();
 
 #### Example:
 
+<!-- tabs:start -->
+
+#### **VEXCode**
+
 ```cpp
 bool is_connected = jetson_commander.is_connected_to_jetson();
 
@@ -108,3 +137,5 @@ else{
 }
 
 ```
+
+<!-- tabs:end -->
