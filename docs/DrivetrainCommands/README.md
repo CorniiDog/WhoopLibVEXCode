@@ -1,4 +1,4 @@
-# Drivetrain Commands
+# WhoopDrivetrain Commands
 
 WhoopLib is a library heavily specialized in autonomous functionality. Therefore there are a plethora of autonomous commands available. For this documentation, we will be using the pose units Inches, Degrees, Clockwise-Positive (```in_deg_cw```).
 
