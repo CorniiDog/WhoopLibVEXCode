@@ -15,7 +15,10 @@ You will require a MicroSD card with at least 64GB of memory. 32GB will not cut 
 
 #### You have two options to setup the Jetson Nano (select one):
 
-- ###### Install from Image:
+<!-- tabs:start -->
+
+#### **Install from Image**
+
 > 1. Download the compressed .img from here:\
 > For Jetson Nano: [File Link](https://drive.google.com/file/d/1dwa_KmGzVp8BOQCDQ5cHc-nW-zZzIjw9/view?usp=sharing)\
 > For Jetson Nano Orion: Not Available Yet
@@ -30,9 +33,11 @@ You will require a MicroSD card with at least 64GB of memory. 32GB will not cut 
 > 6. Connect a monitor to the Nano and power it\
 > It may take a while (5-10 minutes), but you should expect it to display the desktop.
 
-- ###### Build From Source:
+#### **Build From Source**
 > For Jetson Nano: [Instructions](https://docs.google.com/document/d/1R466WGGEFfLnCq74Ui_tFQveaQ1RHnSQTE2j4t9e8I4/edit?usp=sharing)\
 > For Jetson Nano Orion: Not Available Yet
+
+<!-- tabs:end -->
 
 ## Connect Jetson Nano to WiFi
 
