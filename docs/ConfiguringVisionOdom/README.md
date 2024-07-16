@@ -6,7 +6,6 @@ The Vision Odometry Requires the Whooplib Tesseract and the Whooplib OS installe
 
 #### **If You Have a Vision Tesseract**
 
----
 
 ## Jetson Nano Pretense
 
@@ -14,7 +13,7 @@ As soon as the Jetson Nano receives power, it immediately boots up. Make sure th
 
 The order sheet for these items and 3D models can be found here: [WhoopLib Vision Hardware](WhoopLibVisionHardware/README.md)
 
-To install the Vision Hardware on the Jetson Nano: [WhoopLib Vision OS Install](WhoopLibVisionInstall/README.md)
+To install the Vision Software and **Update To the Latest Version** on the Jetson Nano: [WhoopLib Vision OS Install](WhoopLibVisionInstall/README.md)
 
 ---
 
