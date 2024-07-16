@@ -86,15 +86,15 @@ double clamp(double val, double min, double max)
     return val;
 }
 
-double linearize_voltage(double volt)
+double linearize_voltage(double volt, double c)
 {
     if (volt < 0)
     {
-        return -std::sqrt(std::pow(std::abs(volt) / 12.0, 1.5)) * 12.0;
+        return -std::sqrt(std::pow(std::abs(volt) / 12.0, c)) * 12.0;
     }
     else if (volt > 0)
     {
-        return std::sqrt(std::pow(std::abs(volt) / 12.0, 1.5)) * 12.0;
+        return std::sqrt(std::pow(std::abs(volt) / 12.0, c)) * 12.0;
     }
     else
     {

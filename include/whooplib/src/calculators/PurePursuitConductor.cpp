@@ -173,7 +173,7 @@ PursuitResult PurePursuitConductor::step(TwoDPose current_pose)
         return PursuitResult(false, 0, 0, 0, 0, false);
     }
 
-    double forward_power = linearize_voltage(forward_slew.step(forward_pid.step(estimate.distance)));
+    double forward_power = forward_slew.step(forward_pid.step(estimate.distance));
     if (forward_pid.settling())
     {
         forward_power = 0;
@@ -182,7 +182,7 @@ PursuitResult PurePursuitConductor::step(TwoDPose current_pose)
         estimate.suggest_point_turn = true;
     }
 
-    double turn_power = linearize_voltage(turn_slew.step(turn_pid.step(estimate.steering_angle)));
+    double turn_power = turn_slew.step(turn_pid.step(estimate.steering_angle));
     if (turn_pid.settling())
     {
         turn_power = 0;

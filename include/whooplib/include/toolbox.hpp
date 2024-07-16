@@ -166,6 +166,9 @@ int int_distance(int point_1, int point_2);
 
 /**
  * Attempts to linearize the motor power
+ * Voltage is from [-12.0, 12.0]. You can modify c to make 
+ * the curve less or more agressive.
+ * Visual representation of curving: https://www.desmos.com/calculator/anyejul5wg
  */
-double linearize_voltage(double volt);
+double linearize_voltage(double volt, double c=1.5);
 #endif // TOOLBOX_HPP

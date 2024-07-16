@@ -42,10 +42,11 @@ WhoopLibPython Github: https://github.com/ConnorAtmos/WhoopLibPython
 - Moving Forward and Reverse Functions, alongside Remembering Previous Movement Positions for Improved Resilience
 - Generated Paths with Waypoints to Navigate around the VEX Robotics Field in One Fell Swoop
 - Well-Rounded and Continuously Updated Documentation for a Low Floor yet High Ceiling
+- Slew for Motor Movements
+- Motor Voltage to Speed Linearization
 
 ## Roadmap
 
-- Slew Up but no Slew Down for Motor Movements
 - Object Detection and Gridded Permanence system
 - Detecting other robots that impede the path of the robot, and drive around
 - Implementation of a Jetson Orion Nano instead of the End-Of-Line (EOL) Jetson Nano

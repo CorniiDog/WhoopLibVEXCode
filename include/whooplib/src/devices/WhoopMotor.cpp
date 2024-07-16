@@ -21,7 +21,9 @@ WhoopMotor::WhoopMotor(std::int32_t port, vex::gearSetting gearRatio, reversed r
 
 void WhoopMotor::spin(double volts)
 {
-    vex_motor.spin(fwd, volts, voltageUnits::volt);
+    // Linearizes the voltage. Visual representation of the linearization: https://www.desmos.com/calculator/anyejul5wg
+    // It attempts to make the voltage and motor power more linearly proportional
+    vex_motor.spin(fwd, linearize_voltage(volts), voltageUnits::volt);
 }
 
 void WhoopMotor::spin_unit(double unit)
