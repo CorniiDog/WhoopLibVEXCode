@@ -17,14 +17,6 @@ SRC_C += $(wildcard src/*/*/*.cpp)
 SRC_C += $(wildcard src/*/*/*/*.cpp) 
 SRC_C += $(wildcard src/*.c)
 
-# Build within include if there are any api's within
-SRC_C += $(wildcard include/*.cpp)
-SRC_C += $(wildcard include/*/*.cpp) 
-SRC_C += $(wildcard include/*/*/*.cpp) 
-SRC_C += $(wildcard include/*/*/*/*.cpp) 
-SRC_C += $(wildcard include/*.c)
-SRC_C += $(wildcard include/*/*.c)
-
 
 OBJ = $(addprefix $(BUILD)/, $(addsuffix .o, $(basename $(SRC_C))) )
 
