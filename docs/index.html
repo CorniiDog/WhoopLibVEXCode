@@ -98,7 +98,14 @@
         theme      : 'classic', // default
         tabComments: true,      // default
         tabHeadings: true       // default
-      }
+      },
+
+
+      timeUpdater: {
+        text: ">Published {docsify-updated}",
+        formatUpdated: "{MM}/{DD}/{YYYY}",
+        whereToPlace: "bottom",  // "top" or "bottom", default to "bottom"
+      },
     }
   </script>
 
@@ -112,14 +119,13 @@
   <script src="https://cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
 
   <!-- Custom Prism JS and Plugins -->
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autolinker/prism-autolinker.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-updated/src/time-updater.min.js"></script>
 
   <script src="accordify-index.js"></script>
-
-
 
   
 </body>

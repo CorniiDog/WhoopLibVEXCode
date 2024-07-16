@@ -52,7 +52,7 @@ With "your_jetson_ip" as the ip address of the jetson on the network.
 
 2. Password should be "```jetson```"
 
-3. Run the following to update to the latest version of the WhoopLibPython and reboot.\
+3. Run the following to update to the latest version of the WhoopLibPython and restart the subsystem:
 ```bash
   cd ~/Desktop/WhoopLibPython
 
