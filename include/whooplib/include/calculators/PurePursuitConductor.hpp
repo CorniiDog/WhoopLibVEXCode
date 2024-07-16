@@ -25,7 +25,7 @@ struct PursuitParams
     double forward_max_voltage;
     double turning_max_voltage;
 
-    double max_voltage_acceleration;
+    double max_voltage_change;
 
     double settle_distance;
     double settle_rotation;
@@ -49,7 +49,7 @@ struct PursuitParams
      * @param lookahead_distance Pure Pursuit look ahead distance, in meters
      * @param forward_max_voltage The maximum voltage the motors can spin while going forward
      * @param turning_max_voltage The maximum voltage the motors can spin while turning
-     * @param max_voltage_acceleration The maximum voltage acceleration in voltage/second of speeding up
+     * @param max_voltage_change The maximum voltage change in voltage/second of speeding up
      * @param settle_distance Exits when within this distance of target, in meters
      * @param settle_rotation Exits when within this rotation of target, in radians
      * @param settle_time Minimum time to be considered settled, in seconds
@@ -66,14 +66,14 @@ struct PursuitParams
      */
     PursuitParams(double turning_radius = to_meters(5), double lookahead_distance = to_meters(5),
                   double forward_max_voltage = 8.0, double turning_max_voltage = 12.0,
-                  double max_voltage_acceleration = 50,
+                  double max_voltage_change = 50,
                   double settle_distance = to_meters(1.25), double settle_rotation = to_rad(1),
                   double settle_time = 0.4, double timeout = 0,
                   double turning_kp = 14, double turning_ki = 0.1, double turning_kd = 20, double turning_i_activation = to_meters(15),
                   double forward_kp = 55, double forward_ki = 0.01, double forward_kd = 250, double forward_i_activation = to_meters(2),
                   int num_path_segments = 100) : turning_radius(turning_radius), lookahead_distance(lookahead_distance),
                                                  forward_max_voltage(forward_max_voltage), turning_max_voltage(turning_max_voltage),
-                                                 max_voltage_acceleration(max_voltage_acceleration),
+                                                 max_voltage_change(max_voltage_change),
                                                  settle_distance(settle_distance), settle_rotation(settle_rotation),
                                                  settle_time(settle_time), timeout(timeout),
                                                  turning_kp(turning_kp), turning_ki(turning_ki), turning_kd(turning_kd), turning_i_activation(turning_i_activation),

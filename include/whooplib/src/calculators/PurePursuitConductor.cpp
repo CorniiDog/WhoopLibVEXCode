@@ -13,8 +13,8 @@
 
 PurePursuitConductor::PurePursuitConductor(PursuitParams *default_pursuit_parameters) : turn_pid(0, default_pursuit_parameters->turning_kp, default_pursuit_parameters->turning_ki, default_pursuit_parameters->turning_kd, default_pursuit_parameters->turning_i_activation, default_pursuit_parameters->settle_rotation, default_pursuit_parameters->settle_time, default_pursuit_parameters->timeout),
                                                                                         forward_pid(0, default_pursuit_parameters->forward_kp, default_pursuit_parameters->forward_ki, default_pursuit_parameters->forward_kp, default_pursuit_parameters->forward_i_activation, default_pursuit_parameters->settle_distance, default_pursuit_parameters->settle_time, default_pursuit_parameters->timeout),
-                                                                                        turn_slew(default_pursuit_parameters->max_voltage_acceleration, false, 10),
-                                                                                        forward_slew(default_pursuit_parameters->max_voltage_acceleration, false, 10),
+                                                                                        turn_slew(default_pursuit_parameters->max_voltage_change, false, 10),
+                                                                                        forward_slew(default_pursuit_parameters->max_voltage_change, false, 10),
                                                                                         pursuit_path(TwoDPose(), TwoDPose(), default_pursuit_parameters->turning_radius, default_pursuit_parameters->lookahead_distance, default_pursuit_parameters->num_path_segments),
                                                                                         default_pursuit_parameters(default_pursuit_parameters)
 {

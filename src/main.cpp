@@ -132,7 +132,7 @@ PursuitParams pursuit_parameters(
     to_meters(5),    // Pure Pursuit look ahead distance, in meters
     8.0,             // Pure pursuit forward max motor voltage (0.0, 12.0]
     12.0,            // Pure pursuit turning max motor voltage (0.0, 12.0]
-    50.0,            // The maximum voltage acceleration in voltage/second of speeding up, as a slew rate
+    50.0,            // The maximum voltage change in voltage/second of speeding up, as a slew rate
     to_meters(1.25), // Settle Distance. Exits when within this distance of target, in meters
     to_rad(1),       // Settle Rotation. Exits when within this rotation of target, in radians
     0.4,             // Minimum time to be considered settled, in seconds
