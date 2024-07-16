@@ -49,7 +49,7 @@ struct PursuitParams
      * @param lookahead_distance Pure Pursuit look ahead distance, in meters
      * @param forward_max_voltage The maximum voltage the motors can spin while going forward
      * @param turning_max_voltage The maximum voltage the motors can spin while turning
-     * @param max_voltage_acceleration The maximum voltage acceleration in voltage/second^2 of speeding up
+     * @param max_voltage_acceleration The maximum voltage acceleration in voltage/second of speeding up
      * @param settle_distance Exits when within this distance of target, in meters
      * @param settle_rotation Exits when within this rotation of target, in radians
      * @param settle_time Minimum time to be considered settled, in seconds
