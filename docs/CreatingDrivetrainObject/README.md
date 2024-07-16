@@ -36,7 +36,7 @@ PursuitParams pursuit_parameters(
     50.0,            // The maximum voltage change per second, as a slew rate (only applies speeding up)
     to_meters(1.25), // Settle Distance. Exits when within this distance of target, in meters
     to_rad(1),       // Settle Rotation. Exits when within this rotation of target, in radians
-    0.4,             // Minimum time to be considered settled, in seconds
+    0.3,             // Minimum time to be considered settled, in seconds
     0,               // Time after which to give up and move on, in seconds (set to 0 to disable)
     14,              // Turning (kP) Proportional Tuning
     0.1,             // Turning (kI) Integral Tuning

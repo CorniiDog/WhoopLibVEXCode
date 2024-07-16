@@ -68,7 +68,7 @@ struct PursuitParams
                   double forward_max_voltage = 8.0, double turning_max_voltage = 12.0,
                   double max_voltage_change = 50,
                   double settle_distance = to_meters(1.25), double settle_rotation = to_rad(1),
-                  double settle_time = 0.4, double timeout = 0,
+                  double settle_time = 0.3, double timeout = 0,
                   double turning_kp = 14, double turning_ki = 0.1, double turning_kd = 20, double turning_i_activation = to_meters(15),
                   double forward_kp = 55, double forward_ki = 0.01, double forward_kd = 250, double forward_i_activation = to_meters(2),
                   int num_path_segments = 100) : turning_radius(turning_radius), lookahead_distance(lookahead_distance),
