@@ -199,7 +199,7 @@ void WhoopDrivetrain::drive_to_pose(double x, double y, double yaw, double timeo
 
 void WhoopDrivetrain::reverse_backward(double distance, double timeout_seconds)
 {
-    drive_forward(distance * -1, timeout_seconds);
+    drive_forward(-distance, timeout_seconds);
 }
 
 void WhoopDrivetrain::reverse_to_point(double x, double y, double timeout_seconds, double landing_strip)

@@ -11,9 +11,8 @@
 #define SLEW_HPP
 
 /**
- * General-use PID class for drivetrains. It includes both
- * control calculation and settling calculation. The default
- * update period is 10ms or 100Hz
+ * General-use Slew class for motor voltage. 
+ * The default update period is 10ms or 100Hz
  */
 
 class Slew
@@ -27,12 +26,7 @@ public:
 
 public:
     /**
-     * PID constructor with settling inputs
-     * The settling system works like this: The robot is settled
-     * when error is less than settle_error for a duration of settle_time,
-     * or if the function has gone on for longer than timeout. Otherwise
-     * it is not settled. Starti keeps the I term at 0 until error is less
-     * than starti
+     * Slew Constructor
      *
      * @param error Difference in desired and current position
      * @param can_slew_down Set to false to disable slewing if slowing down. But set to true to slew downwards too
