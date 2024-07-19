@@ -21,6 +21,9 @@
  * +x is right-face direction, +y is front-face direction
  * The rest of the standardization is up to the end-user to decide, 
  * but is highly recommended ro stick to meters.
+ *
+ * If you know CFrames in Roblox, this library should be very easy to understand:
+ * https://create.roblox.com/docs/reference/engine/datatypes/CFrame
  */
 class TwoDPose
 {
