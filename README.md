@@ -46,6 +46,7 @@ The most advanced SLAM solution in VEX.
 - Well-Rounded and Continuously Updated Documentation for a Low Floor yet High Ceiling
 - Slew for Motor Movements
 - Motor Voltage to Speed Linearization
+- TwoDPose Class which Handles and Simplifies Linear Algebra Mathematics, Following Similarities to Roblox's CFrames for Ease of Use
 
 ## Roadmap
 
