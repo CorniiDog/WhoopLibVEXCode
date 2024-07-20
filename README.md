@@ -1,4 +1,4 @@
-![WhoopLib Logo](/docs/images/WhoopLibWhite.png)
+![WhoopLib Logo](/.img/WhoopLibWhite.png)
 
 <!-- PROJECT SHIELDS -->
 <!--
@@ -11,6 +11,8 @@
 
 The most advanced SLAM solution in VEX.
 
+**WhoopLib VEXCode Source Code
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -19,70 +21,13 @@ The most advanced SLAM solution in VEX.
 
 ## Links
 
-[WhoopLib Zero - Learn C++ From Zero](https://connoratmos.github.io/WhoopLibZero/#/)
+[WhoopLib Documentation](https://connoratmos.github.io/WhoopLib/)
 
-[WhoopLib Documentation](https://connoratmos.github.io/WhoopLibVEXCode/#/)
+[WhoopLib Zero - Learn C++ From Zero](https://connoratmos.github.io/WhoopLibZero/)
 
-[hoopLibVEXCode Github](https://github.com/ConnorAtmos/WhoopLibVEXCode)
+[WhoopLibVEXCode Github](https://github.com/ConnorAtmos/WhoopLibVEXCode)
 
 [WhoopLibPython Github](https://github.com/ConnorAtmos/WhoopLibPython)
-
-## Features
-
-- Visual Odometry/Pose Estimation
-- Wheel Odometry/Pose Estimation, inspired by JAR-Template
-- Communication between V5 Brain and Jetson Nano
-- Fusion Odometry between Visual Odometry and Wheel Odometry
-- Rolling Average Filter for Fusion Odometry
-- WhoopController Class with auto-configuration for Split Arcade, Tank, Left Stick Arcade, and Right Stick Arcade
-- Dubins-Curves Path Creation, thanks to Andrew Walker
-- Pure Pursuit Algorithm
-- Moving between Point A and Point B
-- Rolling Average, Kalman, and Low-Pass Filters
-- General PID, modified from JAR-Template
-- Turning by degrees, Turning to degrees, Turning to Face x and y Coordinates
-- Moving Forward and Reverse Functions, alongside Remembering Previous Movement Positions for Improved Resilience
-- Generated Paths with Waypoints to Navigate around the VEX Robotics Field in One Fell Swoop
-- Well-Rounded and Continuously Updated Documentation for a Low Floor yet High Ceiling
-- Slew for Motor Movements
-- Motor Voltage to Speed Linearization
-- TwoDPose Class which Handles and Simplifies Linear Algebra Mathematics, Following Similarities to Roblox's CFrames for Ease of Use
-
-## Roadmap
-
-- Object Detection and Gridded Permanence system
-- Detecting other robots that impede the path of the robot, and drive around
-- Implementation of a Jetson Orion Nano instead of the End-Of-Line (EOL) Jetson Nano
-- Implementation of a better SLAM solution instead of relying on the EOL Realsense T265 Camera
-- Capability to Use Different Devices like Oak-D, etc. for Visual Odometry
-- Capability to Use Lidar
-- Virtual Highway system
-
-## Downloading WhoopLibVEXCode Template for V5 Brain
-
-On your computer (separate device) Install VSCode
-
-Open up command prompt or terminal (On your computer):
-
-```bash
-  cd Desktop
-
-  git clone https://github.com/ConnorAtmos/WhoopLibVEXCode
-```
-
-Open the project in VSCode
-
-Install "VEX Robotics" Extension in VSCode
-
-You should be prompted to install the C++ extension by Microsoft. This would be using Intellisense (clangd may not work with the VEXCode extension)
-
-## Acknowledgements
-
- - [E-Bots πLons](http://thepilons.ca/wp-content/uploads/2018/10/Tracking.pdf): Odometry Documentation
- - [JAR-Template](https://github.com/JacksonAreaRobotics/JAR-Template): Odometry Inspiration
- - [Librealsense](https://github.com/IntelRealSense/librealsense): Depth Capturing
- - [VEX Robotics](https://github.com/VEX-Robotics-AI)
- - [Andrew Walker](https://github.com/AndrewWalker/Dubins-Curves/tree/master): Path Generation with Dubins-Curves
 
 <!-- LICENSE -->
 ## License
