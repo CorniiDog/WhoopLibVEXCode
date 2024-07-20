@@ -11,7 +11,7 @@
 
 The most advanced SLAM solution in VEX.
 
-**WhoopLib VEXCode Source Code
+**WhoopLib VEXCode Source Code**
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
