@@ -22,8 +22,6 @@
 #include "whooplib/include/calculators/TwoDPose.hpp"
 #include "whooplib/include/calculators/WheelOdom.hpp"
 #include "whooplib/include/calculators/RollingAverage.hpp"
-#include "whooplib/include/calculators/LowPassFilter.hpp"
-#include "whooplib/include/calculators/KalmanFilter.hpp"
 #include "whooplib/include/calculators/PurePursuit.hpp"
 #include "whooplib/include/calculators/PurePursuitConductor.hpp"
 #include "whooplib/include/calculators/Dubins.hpp"
