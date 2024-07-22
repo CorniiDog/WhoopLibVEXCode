@@ -203,13 +203,14 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
     double length_lookahead = 0; // The distance from the lookahead position to the point around the curve
     double length_closest = 0;
 
-    int points_size = pursuit_points.size();
+    int last_element = pursuit_points.size() - 1;
 
     double rough_distance;
     double distance;
 
-    // Reverse iteration from points_size - 1 to 0 (via subtracting before compare)
-    for (std::size_t i = points_size; i-- > 0;)
+    // Reverse iteration from last_element (which is size - 1) to index 1 
+    // We omit the first index 0 intentionally as that is the start location
+    for (std::size_t i = last_element; i > 0; i--)
     {
         // Ensure it's within a valid checkpoint bounds
         if (i * step_size < start_i * step_size - lookahead_distance || i * step_size > end_i * step_size + lookahead_distance)
@@ -231,7 +232,7 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
             {
                 point_ahead_distance = distance;
                 look_ahead_position = pursuit_points[i];
-                length_lookahead = (points_size - (i + 1)) * step_size;
+                length_lookahead = (last_element - i) * step_size;
                 lookahead_found = true;
             }
             if (!find_closest_if_off_course)
@@ -246,7 +247,7 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
             {
                 closest_distance = distance;
                 closest_position = pursuit_points[i];
-                length_closest = (points_size - (i + 1)) * step_size;
+                length_closest = (last_element - i) * step_size;
                 closest_i = i;
                 closest_found = true;
             }
