@@ -10,6 +10,7 @@
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
+#include "vex.h"
 #include "whooplib.h"
 #include <iostream>
 #include <sstream>
@@ -26,20 +27,20 @@ competition Competition;
 ////////////////////////////////////////////////////////////
 
 // Primary controller
-WhoopController controller1(joystickMode::joystickmode_tank, controllerType::primary);
+WhoopController controller1(joystickmode::joystickmode_tank, controllertype::controller_primary);
 
 // Left drive motors
-WhoopMotor l1(PORT12, gearSetting::ratio6_1, reversed::no_reverse);
-WhoopMotor l2(PORT13, gearSetting::ratio6_1, reversed::no_reverse);
-WhoopMotor l3(PORT14, gearSetting::ratio6_1, reversed::no_reverse);
-WhoopMotor l4(PORT15, gearSetting::ratio6_1, reversed::no_reverse);
+WhoopMotor l1(PORT12, cartridge::blue, reversed::no_reverse);
+WhoopMotor l2(PORT13, cartridge::blue, reversed::no_reverse);
+WhoopMotor l3(PORT14, cartridge::blue, reversed::no_reverse);
+WhoopMotor l4(PORT15, cartridge::blue, reversed::no_reverse);
 WhoopMotorGroup left_motors({&l1, &l2, &l3, &l4});
 
 // Right drive motors
-WhoopMotor r1(PORT1, gearSetting::ratio6_1, reversed::yes_reverse);
-WhoopMotor r2(PORT2, gearSetting::ratio6_1, reversed::yes_reverse);
-WhoopMotor r3(PORT3, gearSetting::ratio6_1, reversed::yes_reverse);
-WhoopMotor r4(PORT4, gearSetting::ratio6_1, reversed::yes_reverse);
+WhoopMotor r1(PORT1, cartridge::blue, reversed::yes_reverse);
+WhoopMotor r2(PORT2, cartridge::blue, reversed::yes_reverse);
+WhoopMotor r3(PORT3, cartridge::blue, reversed::yes_reverse);
+WhoopMotor r4(PORT4, cartridge::blue, reversed::yes_reverse);
 WhoopMotorGroup right_motors({&r1, &r2, &r3, &r4});
 
 // Sensors
@@ -78,8 +79,7 @@ WhoopDriveOdomOffset odom_offset(
 // Serial communication module
 BufferNode buffer_system(
     256,                       // The buffer size, in characters. Increase if necessary, but at the cost of computational efficiency.
-    debugMode::debug_disabled, // debugMode::debug_disabled for competition use, debugMode::debug_enabled to allow the code to pass errors through
-    "/dev/serial1"             // The serial connection of the Jetson Nano ("/dev/serial1" is the micro-usb serial connection on the V5 Brain, "/dev/serial2" is controller)
+    debugmode::debug_disabled // debugMode::debug_disabled for competition use, debugMode::debug_enabled to allow the code to pass errors through
 );
 
 // Vision Offset of the Vision Tesseract from the Center of Robot
@@ -116,7 +116,7 @@ WhoopOdomFusion odom_fusion(
     &vision_system,              // Pointer to the vision system
     &odom_offset,                // Pointer to the odometry offset
     0.9,                         // Minimum confidence threshold to apply vision system to odometry
-    FusionMode::wheel_odom_only, // The method of fusing
+    fusionmode::wheel_odom_only, // The method of fusing
     to_meters(50),               // If FusionMode is fusion_gradual, it is the maximum allowable lateral shift the vision camera can update in meters per second.
     to_rad(500)                  // If FusionMode is fusion_gradual, it is the maximum allowable yaw rotational shift the vision camera can update in radians per second.
 );
@@ -233,7 +233,6 @@ void autonomous(void)
   // robot_drivetrain.temp_disable = true; // temp disable the drive motors
   while (1)
   {
-    robot_drivetrain.display_map();
     wait(100, msec);
   }
 }

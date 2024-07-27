@@ -10,14 +10,20 @@
 #include "whooplib/include/calculators/PurePursuit.hpp"
 #include "whooplib/include/calculators/Dubins.hpp"
 #include "whooplib/include/toolbox.hpp"
+#include "whooplib/includer.hpp"
 #include <iostream>
-#include "vex.h"
+
+namespace whoop{
 
 void PurePursuitPath::initializeWaypoints(std::vector<TwoDPose> waypoints)
 {
     if (waypoints.size() < 2)
     {
+        #if USE_VEXCODE
         Brain.Screen.print("Error. Waypoints must have 2 or more points.");
+        #else
+        pros::lcd::print(1, "Error. Waypoints must have 2 or more points.");
+        #endif
         std::cout << "Error. Waypoints must have 2 or more points." << std::endl;
     }
 
@@ -313,3 +319,6 @@ PursuitEstimate PurePursuitPath::calculate_pursuit_estimate(TwoDPose current_pos
     // length_lookahead is the path distance from target (like a racecar track length to finish line)
     return PursuitEstimate(true, steering_angle, point_ahead_distance + length_lookahead, is_past_point, end_steering, suggest_point_turn);
 }
+
+
+} // namespace whoop

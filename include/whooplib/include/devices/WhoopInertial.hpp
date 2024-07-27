@@ -10,7 +10,9 @@
 #ifndef WHOOP_INERTIAL_HPP
 #define WHOOP_INERTIAL_HPP
 
-#include "vex.h"
+#include "whooplib/includer.hpp"
+
+namespace whoop{
 
 /**
  * Manages an inertial sensor to provide orientation and motion-related data.
@@ -22,7 +24,11 @@ protected:
     double correction_multiplier = 1;
 
 public:
+    #if USE_VEXCODE
     inertial vex_inertial; // VEX Robotics Inertial Sensor object.
+    #else
+    pros::IMU pros_inertial; // PROS inertial sensor
+    #endif
 
     /**
      * Constructor to initialize an inertial sensor on a specified port.
@@ -119,5 +125,7 @@ public:
      */
     void tare_radians(double radians);
 };
+
+} // namespace whoop
 
 #endif // WHOOP_INERTIAL_HPP

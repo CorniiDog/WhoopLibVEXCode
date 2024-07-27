@@ -8,10 +8,12 @@
 /*----------------------------------------------------------------------------*/
 
 #include "whooplib/include/devices/WhoopDriveOdomUnit.hpp"
-#include "vex.h"
+#include "whooplib/includer.hpp"
 #include <vector>
 #include <memory>
 #include <cmath>
+
+namespace whoop{
 
 WhoopDriveOdomUnit::WhoopDriveOdomUnit(double drive_width, double drive_wheel_diameter_meters, double drive_gear_ratio, WhoopInertial *inertialSensor, WhoopMotorGroup *leftMotorGroup, WhoopMotorGroup *rightMotorGroup) : inertial_sensor(inertialSensor)
 {
@@ -159,3 +161,5 @@ void WhoopDriveOdomUnit::__step()
     pose.yaw = orientation_rad;
     thread_lock.unlock();
 }
+
+} // namespace whoop

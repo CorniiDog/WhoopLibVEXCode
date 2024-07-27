@@ -34,10 +34,8 @@
 #ifndef WHOOP_LIB_H
 #define WHOOP_LIB_H
 
-#ifndef VEX_H
-#define VEX_H
-#include "vex.h"
-#endif // VEX_H
+#include "whooplib/includer.hpp"
+
 
 // Toolbox
 #include "whooplib/include/toolbox.hpp"
@@ -50,6 +48,7 @@
 #include "whooplib/include/calculators/PurePursuitConductor.hpp"
 #include "whooplib/include/calculators/Dubins.hpp"
 #include "whooplib/include/calculators/Slew.hpp"
+#include "whooplib/include/calculators/WhoopMutex.hpp"
 
 // Nodes
 #include "whooplib/include/toolbox.hpp"
@@ -68,5 +67,7 @@
 #include "whooplib/include/devices/WhoopDriveOdomUnit.hpp"
 #include "whooplib/include/devices/WhoopDriveOdomOffset.hpp"
 #include "whooplib/include/devices/WhoopOdomFusion.hpp"
+
+using namespace whoop; // This is to help newer teams get used to C/C++. If you want to be more explicit, remove this and use whoop::abc instead
 
 #endif // WHOOP_LIB_H

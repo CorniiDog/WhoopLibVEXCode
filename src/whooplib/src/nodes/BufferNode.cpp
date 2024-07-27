@@ -19,19 +19,21 @@
 #include <string>
 #include <functional>
 
+namespace whoop{
+
 ////////////////////////////////////////////////////////////////////////////////
 // Buffer Node Class For Receiving Jetson Nano Stream
 ////////////////////////////////////////////////////////////////////////////////
 
 // BufferNode class methods
-BufferNode::BufferNode(int maxBufferSize, debugMode debugMode, std::string connection) : max_buffer_size(maxBufferSize), serial_conn(connection), debug_mode(debugMode) {}
+BufferNode::BufferNode(int maxBufferSize, debugmode debugMode) : max_buffer_size(maxBufferSize), debug_mode(debugMode) {}
 
 void BufferNode::__step()
 {
     ////////////////////////////////////////////////////////////////////////
     // Acquiring data
     // FILE *fp = fopen(serial_conn.c_str(), "r");
-    FILE *fp = fopen(serial_conn.c_str(), "r");
+    FILE *fp = fopen(serial_conn_in.c_str(), "r");
     // If serial connection not established, don't continue
     if (!fp)
     {
@@ -119,9 +121,14 @@ void BufferNode::__step()
                     }
                     catch (const std::exception &e)
                     {
+                        #if USE_VEXCODE
                         Brain.Screen.clearLine(1);
                         Brain.Screen.setCursor(1, 1);
                         Brain.Screen.print("Error: %s", e.what());
+                        #else
+                        pros::lcd::clear_line(1);
+                        pros::lcd::print(1, "Error: %s", e.what());
+                        #endif
                     }
                 }
             }
@@ -158,7 +165,7 @@ int BufferNode::send_message(std::string stream, std::string message, std::strin
     if (lock_ptr)
         lock_ptr->lock(); // Acquire the mutex
 
-    FILE *fp = fopen(serial_conn.c_str(), "w");
+    FILE *fp = fopen(serial_conn_out.c_str(), "w");
 
     // If serial connection not established, don't continue
     if (!fp)
@@ -193,7 +200,7 @@ int BufferNode::send_message(std::string stream, std::string message, std::strin
 // Messenger Class for Simplified Functionality
 ////////////////////////////////////////////////////////////////////////////////
 
-Messenger::Messenger(BufferNode *bufferSystem, std::string stream, deleteAfterRead deleteAfterRead) : messenger_stream(stream), delete_after_read(deleteAfterRead)
+Messenger::Messenger(BufferNode *bufferSystem, std::string stream, deleteafterread deleteAfterRead) : messenger_stream(stream), delete_after_read(deleteAfterRead)
 {
     buffer_system = bufferSystem;
     buffer_system->register_stream(this);
@@ -213,3 +220,5 @@ void Messenger::on_message(std::function<void(std::string)> callback)
 {
     callback_functions.push_back(callback);
 }
+
+} // namespace whoop

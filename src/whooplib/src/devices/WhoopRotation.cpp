@@ -7,14 +7,30 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-#include "vex.h"
+#include "whooplib/includer.hpp"
 #include "whooplib/include/devices/WhoopRotation.hpp"
 #include "whooplib/include/toolbox.hpp"
 #include <stdexcept>
 
-WhoopRotation::WhoopRotation(std::int32_t port) : vex_rotation(vex::rotation(port, false)) {}
+namespace whoop{
 
-WhoopRotation::WhoopRotation(std::int32_t port, reversed reversed) : vex_rotation(vex::rotation(port, reversed)) {}
+WhoopRotation::WhoopRotation(std::int32_t port) : 
+#if USE_VEXCODE
+vex_rotation(vex::rotation(port, false)) 
+#else
+pros_rotation(pros::Rotation(port))
+#endif
+{}
+
+WhoopRotation::WhoopRotation(std::int32_t port, reversed reversed) : 
+#if USE_VEXCODE
+vex_rotation(vex::rotation(port, reversed)) {}
+#else
+pros_rotation(pros::Rotation(port))
+{
+    pros_rotation.set_reversed(reversed);
+}
+#endif
 
 WhoopRotation::WhoopRotation(double wheel_diameter_meters, std::int32_t port) : WhoopRotation(port)
 {
@@ -34,7 +50,11 @@ void WhoopRotation::set_wheel_diameter(double diameter_meters)
 
 double WhoopRotation::get_rotation()
 {
+    #if USE_VEXCODE
     return vex_rotation.position(rotationUnits::deg) + pos_offset;
+    #else
+    return pros_rotation.get_position()/100.0; // Position in centidegrees, so we convert
+    #endif
 }
 
 double WhoopRotation::get_rotation_rotations()
@@ -52,9 +72,13 @@ double WhoopRotation::get_rotation_radians()
     return to_rad(this->get_rotation());
 }
 
-double WhoopRotation::get_velocity(vex::velocityUnits vel)
-{
+double WhoopRotation::get_velocity()
+{   
+    #if USE_VEXCODE
     return vex_rotation.velocity(velocityUnits::dps);
+    #else
+    return pros_rotation.get_velocity() / 100.0; // Convert from centidegrees/s to degrees/s
+    #endif
 }
 double WhoopRotation::get_velocity_deg_s()
 {
@@ -66,7 +90,7 @@ double WhoopRotation::get_velocity_rad_s()
 }
 double WhoopRotation::get_velocity_rpm()
 {
-    return get_velocity(velocityUnits::rpm);
+    return get_velocity() / 8.0; // Converts degree/s to rpm
 }
 
 double WhoopRotation::get_velocity_meters_s()
@@ -82,7 +106,11 @@ double WhoopRotation::get_distance_meters()
 void WhoopRotation::tare(double degrees)
 {
     pos_offset = degrees;
+    #if USE_VEXCODE
     vex_rotation.resetPosition();
+    #else
+    pros_rotation.reset_position();
+    #endif
 }
 
 void WhoopRotation::tare()
@@ -115,3 +143,5 @@ void WhoopRotation::tare_meters(double meters)
     double rotations_needed = meters / wheel_circumference;
     tare_rotations(rotations_needed);
 }
+
+} // namespace whoop

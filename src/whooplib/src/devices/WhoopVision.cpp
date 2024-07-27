@@ -7,7 +7,7 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-#include "vex.h"
+#include "whooplib/includer.hpp"
 #include "whooplib/include/devices/WhoopVision.hpp"
 #include "whooplib/include/toolbox.hpp"
 #include <cmath>
@@ -15,6 +15,8 @@
 #include <sstream>
 #include <string>
 #include <memory> // For std::unique_ptr
+
+namespace whoop{
 
 RobotVisionOffset::RobotVisionOffset(double x, double y)
 {
@@ -24,7 +26,7 @@ RobotVisionOffset::RobotVisionOffset(double x, double y)
 
 void WhoopVision::setup_messenger(BufferNode *bufferSystem, const std::string &pose_stream)
 {
-    pose_messenger = std::make_unique<Messenger>(bufferSystem, pose_stream, deleteAfterRead::no_delete);
+    pose_messenger = std::make_unique<Messenger>(bufferSystem, pose_stream, deleteafterread::no_delete);
     pose_messenger->on_message(std::bind(&WhoopVision::_update_pose, this, std::placeholders::_1));
 }
 
@@ -51,7 +53,7 @@ void WhoopVision::_transform_pose(bool apply_delta)
 
     // Apply robot offset to transformation
     transformed *= offset;
-
+    
     thread_lock.lock();
     this->pose.x = transformed.x + tare_x + this->offset_change.x;
     this->pose.y = transformed.y + tare_y + this->offset_change.y;
@@ -135,7 +137,12 @@ void WhoopVision::_update_pose(std::string pose_data)
         return; // Reject malformed data
     }
 
+    
+    #if USE_VEXCODE
     last_vision_message_time = Brain.Timer.time(msec);
+    #else
+    last_vision_message_time = pros::c::millis();
+    #endif
 
     thread_lock.lock();
     confidence = unscaled_confidence / 3.0; // Scale from 0 to 1
@@ -158,7 +165,11 @@ void WhoopVision::_update_pose(std::string pose_data)
 
 bool WhoopVision::vision_running()
 {
+    #if USE_VEXCODE
     return (Brain.Timer.time(msec) - last_vision_message_time) < 500;
+    #else
+    return (pros::c::millis() - last_vision_message_time) < 500;
+    #endif
 }
 
 Pose WhoopVision::get_pose()
@@ -168,3 +179,5 @@ Pose WhoopVision::get_pose()
     thread_lock.unlock();
     return p;
 }
+
+} // namespace whoop

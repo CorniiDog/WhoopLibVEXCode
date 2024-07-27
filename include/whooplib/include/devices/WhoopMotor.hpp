@@ -10,15 +10,27 @@
 #ifndef WHOOP_MOTOR_HPP
 #define WHOOP_MOTOR_HPP
 
-#include "vex.h"
+#include "whooplib/includer.hpp"
+
+namespace whoop{
 
 /**
  * Enum to specify whether the motor should be reversed.
  */
 enum reversed
 {
-    no_reverse = true,
-    yes_reverse = false
+    yes_reverse = true,
+    no_reverse = false
+};
+
+/**
+ * Enum to specify which gear ratio to use
+ */
+enum cartridge
+{
+    red = 0, // 100 RPM
+    green = 1, // 200 RPM
+    blue = 2 // 600 RPM
 };
 
 /**
@@ -30,7 +42,11 @@ protected:
     double pos_offset = 0; // Offset applied to the position readings of the motor.
 public:
     // Upon initialization
-    motor vex_motor; // VEX motor instance.
+    #if USE_VEXCODE
+    vex::motor vex_motor; // VEX motor instance.
+    #else
+    pros::Motor pros_motor; // PROS motor instance.
+    #endif
 
     /**
      * Constructor to initialize a motor on a specified port.
@@ -48,17 +64,17 @@ public:
     /**
      * Constructor to initialize a motor with a specified gear ratio.
      * @param port The port number where the motor is connected.
-     * @param gearRatio The gear setting of the motor.
+     * @param motorCartridge The cartridge of the motor (red, green, blue).
      */
-    WhoopMotor(std::int32_t port, vex::gearSetting gearRatio);
+    WhoopMotor(std::int32_t port, cartridge motorCartridge);
 
     /**
      * Constructor to initialize a motor with a gear ratio and an option to reverse its direction.
      * @param port The port number where the motor is connected.
-     * @param gearRatio The gear setting of the motor.
+     * @param motorCartridge The cartridge of the motor (red, green, blue).
      * @param reversed Enum value to set the motor direction reversed or not.
      */
-    WhoopMotor(std::int32_t port, vex::gearSetting gearRatio, reversed reversed);
+    WhoopMotor(std::int32_t port, cartridge motorCartridge, reversed reversed);
 
     // Motor commands
     void spin(double volts);                 // Commands the motor to spin at a voltage (-12.0 to 12.0, with 0.0 being stopped).
@@ -75,7 +91,7 @@ public:
     double get_rotation_rotations(); // Returns the current motor rotation in full rotations.
 
     // Receiving velocity
-    double get_velocity(vex::velocityUnits vel = vex::velocityUnits::dps); // degrees/sec is default
+    double get_velocity(); // degrees/sec is default
     double get_velocity_deg_s();                                           // explicitly defining degrees/sec
     double get_velocity_rad_s();                                           // explicitly defining rad/sec
     double get_velocity_rpm();                                             // explicitly defining rpm
@@ -87,5 +103,7 @@ public:
     void tare_radians(double radians);     // Resets the motor encoder count to a specified radian.
     void tare_rotations(double rotations); // Resets the motor encoder count to a specified number of rotations.
 };
+
+} // namespace whoop
 
 #endif // WHOOP_MOTOR_HPP

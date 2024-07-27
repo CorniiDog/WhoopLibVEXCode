@@ -10,12 +10,14 @@
 #ifndef WHOOP_VISION_HPP
 #define WHOOP_VISION_HPP
 
+#include "whooplib/includer.hpp"
 #include "whooplib/include/nodes/NodeManager.hpp"
 #include "whooplib/include/nodes/BufferNode.hpp"
 #include "whooplib/include/calculators/TwoDPose.hpp"
-#include "vex.h"
 #include <vector>
 #include <memory>
+
+namespace whoop{
 
 /**
  * Struct representing a three-dimensional pose with orientation.
@@ -116,7 +118,7 @@ protected:
     void _update_pose(std::string pose_data);
 
 public:
-    vex::mutex thread_lock; // Mutex for synchronization of pose data updates.
+    WhoopMutex thread_lock; // Mutex for synchronization of pose data updates.
 
     Pose pose; // The corrected and computed pose of the robot.
 
@@ -144,5 +146,7 @@ public:
      */
     Pose get_pose();
 };
+
+} // namespace whoop
 
 #endif // WHOOP_VISION_HPP

@@ -7,24 +7,36 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-#include "vex.h"
+#include "whooplib/includer.hpp"
 #include "whooplib/include/devices/WhoopInertial.hpp"
 #include "whooplib/include/toolbox.hpp"
 
 #include "whooplib/include/devices/WhoopMotor.hpp"
 
-// Initialization Constructors
-WhoopInertial::WhoopInertial(std::int32_t port) : vex_inertial(inertial(port)) {}
+namespace whoop{
 
-WhoopInertial::WhoopInertial(std::int32_t port, double correction_multiplier) : vex_inertial(inertial(port))
+// Initialization Constructors
+WhoopInertial::WhoopInertial(std::int32_t port) : 
+#if USE_VEXCODE
+vex_inertial(inertial(port))
+#else
+pros_inertial(pros::IMU(port))
+#endif
+{}
+
+WhoopInertial::WhoopInertial(std::int32_t port, double correction_multiplier) : WhoopInertial(port)
 {
     this->correction_multiplier = correction_multiplier;
 }
 
 // Receiving rotation
 double WhoopInertial::get_yaw()
-{
+{   
+    #if USE_VEXCODE
     double yaw = -(vex_inertial.heading(rotationUnits::deg) * correction_multiplier);
+    #else
+    double yaw = -(pros_inertial.get_heading() * correction_multiplier);
+    #endif
 
     yaw += yaw_offset;
 
@@ -51,7 +63,11 @@ double WhoopInertial::get_yaw_radians()
 
 double WhoopInertial::get_roll()
 {
+    #if USE_VEXCODE
     return vex_inertial.roll();
+    #else
+    return pros_inertial.get_roll();
+    #endif
 }
 
 double WhoopInertial::get_roll_degrees()
@@ -66,7 +82,11 @@ double WhoopInertial::get_roll_radians()
 
 double WhoopInertial::get_pitch()
 {
+    #if USE_VEXCODE
     return vex_inertial.pitch();
+    #else
+    return pros_inertial.get_roll();
+    #endif
 }
 
 double WhoopInertial::get_pitch_degrees()
@@ -82,7 +102,11 @@ double WhoopInertial::get_pitch_radians()
 // Calibrate
 void WhoopInertial::calibrate()
 {
+    #if USE_VEXCODE
     vex_inertial.calibrate();
+    #else
+    pros_inertial.reset();
+    #endif
 }
 
 // Tare (reset)
@@ -93,7 +117,11 @@ void WhoopInertial::tare()
 void WhoopInertial::tare(double degrees)
 {
     yaw_offset = degrees;
+    #if USE_VEXCODE
     vex_inertial.resetHeading();
+    #else
+    pros_inertial.tare_heading();
+    #endif
 }
 void WhoopInertial::tare_degrees(double degrees)
 {
@@ -103,3 +131,5 @@ void WhoopInertial::tare_radians(double radians)
 {
     this->tare(to_deg(radians));
 }
+
+} // namespace whoop

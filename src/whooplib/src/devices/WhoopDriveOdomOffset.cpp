@@ -10,10 +10,12 @@
 #include "whooplib/include/nodes/NodeManager.hpp"
 #include "whooplib/include/calculators/TwoDPose.hpp"
 #include "whooplib/include/devices/WhoopDriveOdomOffset.hpp"
-#include "vex.h"
+#include "whooplib/includer.hpp"
 #include <vector>
 #include <memory>
 #include <iostream>
+
+namespace whoop{
 
 WhoopDriveOdomOffset::WhoopDriveOdomOffset(WhoopDriveOdomUnit *odom_unit, double x_offset, double y_offset) : offset(x_offset, -y_offset, 0)
 { // The x and y offsets are flipped... Idk why it just is.
@@ -127,3 +129,5 @@ void WhoopDriveOdomOffset::__step()
     }
     thread_lock.unlock();
 }
+
+} // namespace whoop

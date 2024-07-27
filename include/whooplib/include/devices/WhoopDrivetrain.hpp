@@ -18,9 +18,12 @@
 #include "whooplib/include/calculators/WheelOdom.hpp"
 #include "whooplib/include/calculators/PurePursuitConductor.hpp"
 #include "whooplib/include/devices/WhoopOdomFusion.hpp"
-#include "vex.h"
+#include "whooplib/include/calculators/WhoopMutex.hpp"
+#include "whooplib/includer.hpp"
 #include <vector>
 #include <memory>
+
+namespace whoop{
 
 /**
  * Enum representing the possible states of the drivetrain.
@@ -112,7 +115,7 @@ private:
 public:
     bool temp_disable = false; // Set to true to temp disable drivetrain
 
-    vex::mutex thread_lock;                                       // Mutex for synchronizing access to drivetrain components.
+    WhoopMutex thread_lock;                                       // Mutex for synchronizing access to drivetrain components.
     drivetrainState drive_state = drivetrainState::mode_disabled; // Current operational state of the drivetrain.
 
     /**
@@ -294,11 +297,6 @@ public:
      */
     PoseUnits get_units();
 
-    /**
-     * Displays the map onto the screen that the robot consides itself to be
-     */
-    void display_map();
-
     void fuse(double seconds);
 
 protected:
@@ -307,5 +305,7 @@ protected:
      */
     void __step() override; // Protected helper function for processing steps
 };
+
+} // namespace whoop
 
 #endif // WHOOP_DRIVETRAIN_HPP

@@ -14,6 +14,8 @@
 #include <algorithm>
 #include <stdexcept>
 
+namespace whoop{
+
 ////////////////////////////////////////////////////////////////////////////////
 // Node Class Manager
 ////////////////////////////////////////////////////////////////////////////////
@@ -74,17 +76,30 @@ int ComputeNode::task_runner(void *param)
             {
                 if (node->initial_computational_time == -1)
                 { // Try to accomodate process time to improve accuracy
+                    #if USE_VEXCODE
                     start_time = Brain.timer(timeUnits::msec);
+                    #else
+                    start_time = pros::c::millis();
+                    #endif
                 }
 
                 node->__step();
 
                 if (node->initial_computational_time == -1)
                 {
+                    #if USE_VEXCODE
                     int end_time = Brain.timer(timeUnits::msec) - start_time;
+                    #else
+                    int end_time = pros::c::millis(); - start_time;
+                    #endif
+
                     if (end_time < node->step_time_ms)
                     { // Accept if only within acceptable threshold.
+                        #if USE_VEXCODE
                         node->initial_computational_time = Brain.timer(timeUnits::msec) - start_time;
+                        #else
+                        node->initial_computational_time = pros::c::millis(); - start_time;
+                        #endif
                     }
                     else
                     { // Assume it takes same processing time as step_time_ms
@@ -94,9 +109,14 @@ int ComputeNode::task_runner(void *param)
             }
             catch (const std::exception &e)
             {
+                #if USE_VEXCODE
                 Brain.Screen.clearLine(1);
                 Brain.Screen.setCursor(1, 1);
                 Brain.Screen.print("Error: %s", e.what());
+                #else
+                pros::lcd::clear_line(1);
+                pros::lcd::print(1, "Error: %s", e.what());
+                #endif
             }
         }
         else
@@ -106,18 +126,34 @@ int ComputeNode::task_runner(void *param)
 
         if (node->initial_computational_time > 0 && node->initial_computational_time < node->step_time_ms)
         {
+            #if USE_VEXCODE
             vex::wait(node->step_time_ms - node->initial_computational_time, vex::timeUnits::msec);
+            #else
+            pros::delay(node->step_time_ms - node->initial_computational_time);
+            #endif
         }
         else if (node->initial_computational_time >= node->step_time_ms)
-        {
+        {   
+            #if USE_VEXCODE
             vex::wait(0, vex::timeUnits::msec);
+            #else
+            pros::delay(0);
+            #endif
         }
         else
         { // Omit and just wait using step_time_ms
+            #if USE_VEXCODE
             vex::wait(node->step_time_ms, vex::timeUnits::msec);
+            #else
+            pros::delay(node->step_time_ms);
+            #endif
         }
     }
     return 1;
+}
+
+void ComputeNode::task_runner_void(void *param){
+    task_runner(param);
 }
 
 void ComputeNode::start_pipeline(bool debug_mode)
@@ -128,8 +164,11 @@ void ComputeNode::start_pipeline(bool debug_mode)
     }
     node_debug = debug_mode;
     node_running = true;
-
-    vex::task myTask(ComputeNode::task_runner, this);
+    #if USE_VEXCODE
+    vex::task myTask(ComputeNode::task_runner, this); // VEXCode requires an int return variable
+    #else
+    pros::Task myTask(ComputeNode::task_runner_void, this, ""); // PROS requires no return variable
+    #endif
 }
 
 void ComputeNode::stop_pipeline()
@@ -156,3 +195,5 @@ void ComputeNode::__step()
         lock_ptr->unlock(); // Release the mutex
     }
 }
+
+} // namespace whoop

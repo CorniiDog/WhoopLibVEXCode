@@ -7,12 +7,14 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-#ifndef KALMAN_FILTER_HPP
-#define KALMAN_FILTER_HPP
+#ifndef ROLLING_AVERAGE_HPP
+#define ROLLING_AVERAGE_HPP
 
-#include "vex.h"
+#include "whooplib/includer.hpp"
 #include "whooplib/include/devices/WhoopVision.hpp"
 #include <deque>
+
+namespace whoop{
 
 /**
  * Rolling Average Filter Object
@@ -51,4 +53,6 @@ public:
     int process(int newMeasurement);
 };
 
-#endif
+} // namespace whoop
+
+#endif // ROLLING_AVERAGE_HPP

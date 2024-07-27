@@ -32,7 +32,9 @@
 #ifndef WHEEL_ODOM_HPP
 #define WHEEL_ODOM_HPP
 
-#include "vex.h"
+#include "whooplib/includer.hpp"
+
+namespace whoop{
 
 /**
  * Wheel Odometry Object
@@ -40,8 +42,6 @@
 class WheelOdom
 {
 private:
-  vex::mutex vex_mutex;
-
   double tare_angle{0.0}; // Stores the initial gyro angle for taring
   double last_forward_tracker_pos{0.0};
   double last_sideways_tracker_pos{0.0};
@@ -94,5 +94,7 @@ public:
   void set_physical_distances(double forward_distance, double sideways_distance);
   ;
 };
+
+} // namespace whoop
 
 #endif // WHEEL_ODOM_HPP

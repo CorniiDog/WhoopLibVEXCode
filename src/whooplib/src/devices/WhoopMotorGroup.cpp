@@ -7,13 +7,15 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-#include "vex.h"
+#include "whooplib/includer.hpp"
 #include "whooplib/include/devices/WhoopMotor.hpp"
 #include "whooplib/include/devices/WhoopMotorGroup.hpp"
 #include "whooplib/include/toolbox.hpp"
 #include <cmath>
 #include <stdexcept>
 #include <algorithm> // Needed for std::max_element
+
+namespace whoop{
 
 void WhoopMotorGroup::add_motor(WhoopMotor *motor)
 {
@@ -150,7 +152,7 @@ double WhoopMotorGroup::get_distance_meters()
 }
 
 // Receiving velocity
-double WhoopMotorGroup::get_velocity(vex::velocityUnits vel)
+double WhoopMotorGroup::get_velocity()
 {
     if (whoop_motors.empty())
         return 0; // Prevent divide by zero error
@@ -158,7 +160,7 @@ double WhoopMotorGroup::get_velocity(vex::velocityUnits vel)
     std::vector<double> velocities;
     for (auto &motor : whoop_motors)
     {
-        double velocity = motor->get_velocity(vel);
+        double velocity = motor->get_velocity();
         velocities.push_back(velocity);
         total += velocity;
     }
@@ -186,7 +188,7 @@ double WhoopMotorGroup::get_velocity_rad_s()
 }
 double WhoopMotorGroup::get_velocity_rpm()
 {
-    return get_velocity(velocityUnits::rpm);
+    return get_velocity() / 6.0; // Converts to rpm
 }
 
 double WhoopMotorGroup::get_velocity_meters_s()
@@ -229,3 +231,5 @@ void WhoopMotorGroup::tare_meters(double meters)
     double rotations_needed = meters / wheel_circumference;
     tare_rotations(rotations_needed);
 }
+
+} // namespace whoop

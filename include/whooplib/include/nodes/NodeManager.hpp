@@ -10,8 +10,11 @@
 #ifndef NODE_MANAGER_HPP
 #define NODE_MANAGER_HPP
 
-#include "vex.h"
+#include "whooplib/includer.hpp"
+#include "whooplib/include/calculators/WhoopMutex.hpp"
 #include <vector>
+
+namespace whoop{
 
 enum omitStepCompensation
 {
@@ -27,7 +30,7 @@ class ComputeNode; // Forward declaration to allow references in ComputeManager
 class ComputeManager
 {
 public:
-    vex::mutex thread_lock;              // Mutex for synchronizing access to compute nodes
+    WhoopMutex thread_lock;              // Mutex for synchronizing access to compute nodes
     std::vector<ComputeNode *> computes; // Vector storing pointers to compute nodes
     bool debug_mode;                     // Flag to enable debug mode for additional logging and diagnostics
 
@@ -62,7 +65,7 @@ public:
 class ComputeNode
 {
 public:
-    vex::mutex *lock_ptr = nullptr; // Pointer to a mutex for synchronization, typically shared with a ComputeManager
+    WhoopMutex *lock_ptr = nullptr; // Pointer to a mutex for synchronization, typically shared with a ComputeManager
     bool node_running = false;      // Flag indicating whether the node's computation task is active
     bool node_debug = false;        // Flag to enable debug mode for this specific node
     int step_time_ms = 10;          // time between each computational activity
@@ -103,6 +106,16 @@ protected:
      * @return Returns an integer status code, generally used for debugging or error handling.
      */
     static int task_runner(void *param); // Static task runner function for VEX
+
+    /**
+     * Static function that serves as a task runner for a computation process, compatible with the VEX task management.
+     * @param param Generic pointer to any data needed for the task, typically pointing to an instance of ComputeNode.
+     * @return Returns an integer status code, generally used for debugging or error handling.
+     */
+    static void task_runner_void(void *param); // Static task runner function for VEX
 };
+
+} // namespace whoop
+
 
 #endif // NODE_MANAGER_HPP

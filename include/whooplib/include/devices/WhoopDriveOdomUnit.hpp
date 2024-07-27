@@ -17,9 +17,12 @@
 #include "whooplib/include/devices/WhoopRotation.hpp"
 #include "whooplib/include/nodes/NodeManager.hpp"
 #include "whooplib/include/calculators/WheelOdom.hpp"
-#include "vex.h"
+#include "whooplib/include/calculators/WhoopMutex.hpp"
+#include "whooplib/includer.hpp"
 #include <vector>
 #include <memory>
+
+namespace whoop{
 
 // Enum for configuring odom
 enum class DriveOdomConfig
@@ -66,7 +69,7 @@ public:
     WhoopInertial *inertial_sensor;
 
     TwoDPose pose = TwoDPose(0, 0, 0);
-    vex::mutex thread_lock; // Mutex for synchronizing access to odometry components.
+    WhoopMutex thread_lock; // Mutex for synchronizing access to odometry components.
 
     /**
      * Constructor for Drive Odom.
@@ -164,5 +167,7 @@ public: // This is one of the ONLY exceptions to be public, as another module re
      */
     void __step() override; // Protected helper function for processing steps
 };
+
+} // namespace whoop
 
 #endif // WHOOP_DRIVE_ODOM_UNIT_HPP

@@ -8,8 +8,10 @@
 /*----------------------------------------------------------------------------*/
 
 #include "whooplib/include/calculators/PurePursuitConductor.hpp"
-#include "vex.h"
+#include "whooplib/includer.hpp"
 #include <iostream>
+
+namespace whoop{
 
 PurePursuitConductor::PurePursuitConductor(PursuitParams *default_pursuit_parameters) : turn_pid(0, default_pursuit_parameters->turning_kp, default_pursuit_parameters->turning_ki, default_pursuit_parameters->turning_kd, default_pursuit_parameters->turning_i_activation, default_pursuit_parameters->settle_rotation, default_pursuit_parameters->settle_time, default_pursuit_parameters->timeout),
                                                                                         forward_pid(0, default_pursuit_parameters->forward_kp, default_pursuit_parameters->forward_ki, default_pursuit_parameters->forward_kp, default_pursuit_parameters->forward_i_activation, default_pursuit_parameters->settle_distance, default_pursuit_parameters->settle_time, default_pursuit_parameters->timeout),
@@ -99,7 +101,11 @@ void PurePursuitConductor::generate_path(std::vector<TwoDPose> waypoints, double
 {
     if (waypoints.size() < 2)
     {
+        #if USE_VEXCODE
         Brain.Screen.print("A path requires at least 2 waypoints");
+        #else
+        pros::lcd::print(1, "A path requires at least 2 waypoints");
+        #endif
         std::cout << "A path requires at least 2 waypoints" << std::endl;
     }
 
@@ -205,3 +211,5 @@ PursuitResult PurePursuitConductor::step(TwoDPose current_pose)
 
     return result;
 }
+
+} // namespace whoop

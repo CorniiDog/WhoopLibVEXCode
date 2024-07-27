@@ -10,9 +10,11 @@
 #ifndef WHOOP_ROTATION_HPP
 #define WHOOP_ROTATION_HPP
 
-#include "vex.h"
+#include "whooplib/includer.hpp"
 #include "whooplib/include/devices/WhoopMotor.hpp"
 #include "whooplib/include/toolbox.hpp"
+
+namespace whoop{
 
 /**
  * Represents a rotation sensor with control over its measurement capabilities.
@@ -25,8 +27,12 @@ protected:
     double wheel_circumference = circumference_from_diameter(wheel_diameter);
 
 public:
-    // Upon initialization
-    rotation vex_rotation; // VEX rotation sensor instance.
+// Upon initialization
+#if USE_VEXCODE
+    vex::rotation vex_rotation; // VEX rotation sensor instance.
+#else
+    pros::Rotation pros_rotation; // PROS rotation sensor instance.
+#endif
 
     /**
      * Constructor to initialize a rotation sensor on a specified port.
@@ -77,10 +83,10 @@ public:
     double get_rotation_rotations(); // Returns the current rotation sensor rotation in full rotations.
 
     // Receiving velocity
-    double get_velocity(vex::velocityUnits vel = vex::velocityUnits::dps); // degrees/sec is default
-    double get_velocity_deg_s();                                           // explicitly defining degrees/sec
-    double get_velocity_rad_s();                                           // explicitly defining rad/sec
-    double get_velocity_rpm();                                             // explicitly defining rpm
+    double get_velocity();       // degree/s
+    double get_velocity_deg_s(); // explicitly defining degrees/sec
+    double get_velocity_rad_s(); // explicitly defining rad/sec
+    double get_velocity_rpm();   // explicitly defining rpm
 
     /**
      * Gets the velocity of the rotation sensor in meters/sec
@@ -89,7 +95,7 @@ public:
     double get_velocity_meters_s();
 
     // Tare (reset)
-    void tare();
+    void tare();                           // Resets to zero
     void tare(double degrees);             // Degrees is default
     void tare_degrees(double degrees);     // Resets the rotation sensor encoder count to a specified degree.
     void tare_radians(double radians);     // Resets the rotation sensor encoder count to a specified radian.
@@ -101,5 +107,7 @@ public:
      */
     void tare_meters(double meters); // For a drivetrain, to tare by meters
 };
+
+} // namespace whoop
 
 #endif // WHOOP_ROTATION_HPP

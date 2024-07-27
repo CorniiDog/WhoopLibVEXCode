@@ -7,7 +7,7 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-#include "vex.h"
+#include "whooplib/includer.hpp"
 #include "whooplib/include/devices/WhoopDrivetrain.hpp"
 #include "whooplib/include/devices/WhoopOdomFusion.hpp"
 #include "whooplib/include/toolbox.hpp"
@@ -16,6 +16,8 @@
 #include <sstream>
 #include <string>
 #include <memory> // For std::unique_ptr
+
+namespace whoop{
 
 void WhoopDrivetrain::init_motor_groups(WhoopMotorGroup *leftGroup, WhoopMotorGroup *rightGroup)
 {
@@ -239,7 +241,11 @@ void WhoopDrivetrain::drive_through_path(std::vector<std::vector<double>> waypoi
     size_t waypoints_size = waypoints.size();
     if (waypoints_size < 1)
     {
+        #if USE_VEXCODE
         Brain.Screen.print("A path requires at least 1 waypoint");
+        #else
+        pros::lcd::print(1, "A path requires at least 1 waypoint");
+        #endif
         std::cout << "A path requires at least 1 waypoint" << std::endl;
     }
 
@@ -250,7 +256,11 @@ void WhoopDrivetrain::drive_through_path(std::vector<std::vector<double>> waypoi
         size_of = waypoints[i].size();
         if (size_of != 2 && size_of != 3)
         { // If regular waypoint, must be either 2 or 3 variables
+            #if USE_VEXCODE
             Brain.Screen.print("Waypoints must consist of either 3 variables {x, y, yaw}, or 2 variables {x, y}");
+            #else
+            pros::lcd::print(1, "Waypoints must consist of either 3 variables {x, y, yaw}, or 2 variables {x, y}");
+            #endif
             std::cout << "Waypoints must consist of either 3 variables {x, y, yaw}, or 2 variables {x, y}" << std::endl;
         }
     }
@@ -461,14 +471,26 @@ void WhoopDrivetrain::wait_until_completed(double additional_time_msec)
 {
     while (auton_traveling)
     {
+        #if USE_VEXCODE
         wait(5, msec);
+        #else
+        pros::delay(5);
+        #endif
     }
+    #if USE_VEXCODE
     wait(additional_time_msec, msec);
+    #else
+    pros::delay(additional_time_msec);
+    #endif 
 }
 
 void WhoopDrivetrain::fuse(double seconds){
     odom_fusion->accept_fuses();
+    #if USE_VEXCODE
     wait(seconds, sec);
+    #else
+    pros::delay(seconds*1000);
+    #endif
     odom_fusion->reject_fuses();
 }
 
@@ -476,19 +498,19 @@ void WhoopDrivetrain::step_usercontrol()
 {
     switch (whoop_controller->joystick_mode)
     {
-    case joystickMode::joystickmode_tank:
+    case joystickmode::joystickmode_tank:
         left_motor_group->spin_percentage(whoop_controller->get_left_joystick_y());
         right_motor_group->spin_percentage(whoop_controller->get_right_joystick_y());
         break;
-    case joystickMode::joystickmode_split_arcade:
+    case joystickmode::joystickmode_split_arcade:
         left_motor_group->spin_percentage(whoop_controller->get_left_joystick_y() + whoop_controller->get_right_joystick_x());
         right_motor_group->spin_percentage(whoop_controller->get_left_joystick_y() - whoop_controller->get_right_joystick_x());
         break;
-    case joystickMode::joystickmode_left_arcade:
+    case joystickmode::joystickmode_left_arcade:
         left_motor_group->spin_percentage(whoop_controller->get_left_joystick_y() + whoop_controller->get_left_joystick_x());
         right_motor_group->spin_percentage(whoop_controller->get_left_joystick_y() - whoop_controller->get_left_joystick_x());
         break;
-    case joystickMode::joystickmode_right_arcade:
+    case joystickmode::joystickmode_right_arcade:
         left_motor_group->spin_percentage(whoop_controller->get_right_joystick_y() + whoop_controller->get_right_joystick_x());
         right_motor_group->spin_percentage(whoop_controller->get_right_joystick_y() - whoop_controller->get_right_joystick_x());
         break;
@@ -584,56 +606,6 @@ void WhoopDrivetrain::__step()
     }
 }
 
-void WhoopDrivetrain::display_map()
-{
-    double m_to_pixels = 30;
-    double screen_offset = 3.6 * 30;
-    Brain.Screen.clearScreen();
-    Brain.Screen.setPenColor(color(0, 255, 0));
-    Brain.Screen.setFillColor(color::transparent);
-    if (pursuit_conductor.enabled)
-    {
-        int size = pursuit_conductor.pursuit_path.pursuit_points.size();
-        for (int i = 0; i < size; ++i)
-        {
-            barebonesPose pose = pursuit_conductor.pursuit_path.pursuit_points[i];
-            TwoDPose pose_on_screen(pose.x * m_to_pixels + screen_offset, -pose.y * m_to_pixels + screen_offset, pose.yaw);
-            Brain.Screen.drawPixel(pose_on_screen.x, pose_on_screen.y);
-        }
-    }
-
-    // Display robot position
-    TwoDPose robot_pose = odom_fusion->get_pose_2d();
-    TwoDPose robot_pose_on_screen(robot_pose.x * m_to_pixels + screen_offset, -robot_pose.y * m_to_pixels + screen_offset, robot_pose.yaw);
-    Brain.Screen.setPenColor(color(255, 0, 0));
-    Brain.Screen.drawCircle(robot_pose_on_screen.x, robot_pose_on_screen.y, 2);
-    Brain.Screen.drawLine(robot_pose_on_screen.x, robot_pose_on_screen.y, robot_pose_on_screen.x + 10 * cos(robot_pose_on_screen.yaw), robot_pose_on_screen.y - 10 * sin(robot_pose_on_screen.yaw));
-
-    // Draw robot lookahead radius
-    Brain.Screen.setPenColor(color(255, 150, 0));
-    Brain.Screen.drawCircle(robot_pose_on_screen.x, robot_pose_on_screen.y, pursuit_conductor.pursuit_path.lookahead_distance * m_to_pixels);
-
-    // Draw lookahead point
-    Brain.Screen.setPenColor(color(255, 255, 255));
-    barebonesPose lookahead_pos = pursuit_conductor.pursuit_path.lookahead_pos;
-    TwoDPose lookahead_pose_on_screen(lookahead_pos.x * m_to_pixels + screen_offset, -lookahead_pos.y * m_to_pixels + screen_offset, 0);
-    Brain.Screen.drawCircle(lookahead_pose_on_screen.x, lookahead_pose_on_screen.y, 2);
-
-    Brain.Screen.setPenColor(color(255, 255, 255));
-
-    Brain.Screen.setCursor(1, 1);
-    Brain.Screen.print("Distance: %.1f | Distance Power %.1f", pursuit_result.distance, pursuit_result.forward_power);
-    Brain.Screen.setCursor(2, 1);
-    Brain.Screen.print("Turn: %.1f | Turn Power: %.1f", pursuit_result.steering_angle, pursuit_result.steering_power);
-
-    TwoDPose current_pose = odom_fusion->get_pose_2d();
-    Brain.Screen.setCursor(3, 1);
-    Brain.Screen.print("Position: %.2f %.2f %.2f", current_pose.x, current_pose.y, current_pose.yaw);
-
-    Brain.Screen.setCursor(4, 1);
-    Brain.Screen.print("Lookahead Point: %.2f %.2f %.2f", get_units_str().c_str(), lookahead_pos.x, lookahead_pos.y, lookahead_pos.yaw);
-}
-
 /**
  * Gets units that the odometry is using
  * @returns units desciber, as a string
@@ -676,3 +648,5 @@ void WhoopDrivetrain::set_pose_units(PoseUnits units)
 {
     pose_units = units;
 }
+
+} // namespace whoop

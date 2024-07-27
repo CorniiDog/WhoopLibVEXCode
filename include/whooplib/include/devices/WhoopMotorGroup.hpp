@@ -12,8 +12,10 @@
 
 #include "whooplib/include/devices/WhoopMotor.hpp"
 #include "whooplib/include/toolbox.hpp"
-#include "vex.h"
+#include "whooplib/includer.hpp"
 #include <vector>
+
+namespace whoop{
 
 /**
  * Manages a group of WhoopMotors, allowing synchronized control over multiple motors.
@@ -99,10 +101,10 @@ public:
     double get_rotation_rotations(); // Returns the average rotation across all motors in full rotations.
 
     // Receiving velocity
-    double get_velocity(vex::velocityUnits vel = vex::velocityUnits::dps); // degrees/sec is default
-    double get_velocity_deg_s();                                           // explicitly defining degrees/sec
-    double get_velocity_rad_s();                                           // explicitly defining rad/sec
-    double get_velocity_rpm();                                             // explicitly defining rpm
+    double get_velocity();       // degrees/sec
+    double get_velocity_deg_s(); // explicitly defining degrees/sec
+    double get_velocity_rad_s(); // explicitly defining rad/sec
+    double get_velocity_rpm();   // explicitly defining rpm
 
     /**
      * Gets the velocity of the motor group in meters/sec
@@ -129,5 +131,7 @@ public:
      */
     void tare_meters(double meters); // For a drivetrain, to tare by meters
 };
+
+} // namespace whoop
 
 #endif // WHOOP_MOTOR_GROUP_HPP

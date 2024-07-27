@@ -13,9 +13,11 @@
 #include "whooplib/include/devices/WhoopDriveOdomUnit.hpp"
 #include "whooplib/include/nodes/NodeManager.hpp"
 #include "whooplib/include/calculators/TwoDPose.hpp"
-#include "vex.h"
+#include "whooplib/includer.hpp"
 #include <vector>
 #include <memory>
+
+namespace whoop{
 
 struct velocityVector
 {
@@ -44,7 +46,7 @@ public:
     TwoDPose pose = TwoDPose(0, 0, 0);
     TwoDPose last_pose = TwoDPose(0, 0, 0);
     TwoDPose offset;
-    vex::mutex thread_lock; // Mutex for synchronizing access to odometry components.
+    WhoopMutex thread_lock; // Mutex for synchronizing access to odometry components.
 
     bool is_clean = false;
 
@@ -100,5 +102,7 @@ public: // This is one of the ONLY exceptions to be public, as another module re
     void __step_down();     // This steps down to the Odom Unit (meant to be managed by drivetrain or fusion object)
     void __step() override; // Protected helper function for processing steps
 };
+
+} // namespace whoop
 
 #endif // WHOOP_DRIVE_ODOM_OFFSET_HPP
