@@ -25,7 +25,7 @@ pros_motor(pros::Motor(port))
 
 WhoopMotor::WhoopMotor(std::int32_t port, reversed reversed) : 
 #if USE_VEXCODE
-vex_motor(vex::motor(port, gear_ratios::green, reversed)) {}
+vex_motor(vex::motor(port, gearSetting(cartridge::green), reversed)) {}
 #else
 pros_motor(pros::Motor(port))
 {
@@ -55,7 +55,7 @@ pros_motor(pros::Motor(port))
 
 WhoopMotor::WhoopMotor(std::int32_t port, cartridge motorCartridge, reversed reversed) : 
 #if USE_VEXCODE
-vex_motor(vex::motor(port, motorCartridge, reversed)) {}
+vex_motor(vex::motor(port, gearSetting(cartridge::green), reversed)) {}
 #else
 pros_motor(pros::Motor(port))
 {
@@ -154,7 +154,7 @@ double WhoopMotor::get_rotation_radians()
 double WhoopMotor::get_velocity()
 {
     #if USE_VEXCODE
-    return vex_motor.velocity(vel);
+    return vex_motor.velocity(velocityUnits::dps);
     #else
     return pros_motor.get_actual_velocity() * 6.0; // In RPM, so we multiply it by 6 to convert to deg/s
     #endif
