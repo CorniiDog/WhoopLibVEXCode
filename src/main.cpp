@@ -27,20 +27,20 @@ competition Competition;
 ////////////////////////////////////////////////////////////
 
 // Primary controller
-WhoopController controller1(joystickmode::joystickmode_tank, controllertype::controller_primary);
+WhoopController controller1(joystickmode::joystickmode_split_arcade, controllertype::controller_primary);
 
 // Left drive motors
-WhoopMotor l1(PORT12, cartridge::blue, reversed::no_reverse);
-WhoopMotor l2(PORT13, cartridge::blue, reversed::no_reverse);
-WhoopMotor l3(PORT14, cartridge::blue, reversed::no_reverse);
-WhoopMotor l4(PORT15, cartridge::blue, reversed::no_reverse);
+WhoopMotor l1(PORT12, cartridge::blue, reversed::yes_reverse);
+WhoopMotor l2(PORT13, cartridge::blue, reversed::yes_reverse);
+WhoopMotor l3(PORT14, cartridge::blue, reversed::yes_reverse);
+WhoopMotor l4(PORT15, cartridge::blue, reversed::yes_reverse);
 WhoopMotorGroup left_motors({&l1, &l2, &l3, &l4});
 
 // Right drive motors
-WhoopMotor r1(PORT1, cartridge::blue, reversed::yes_reverse);
-WhoopMotor r2(PORT2, cartridge::blue, reversed::yes_reverse);
-WhoopMotor r3(PORT3, cartridge::blue, reversed::yes_reverse);
-WhoopMotor r4(PORT4, cartridge::blue, reversed::yes_reverse);
+WhoopMotor r1(PORT1, cartridge::blue, reversed::no_reverse);
+WhoopMotor r2(PORT2, cartridge::blue, reversed::no_reverse);
+WhoopMotor r3(PORT3, cartridge::blue, reversed::no_reverse);
+WhoopMotor r4(PORT4, cartridge::blue, reversed::no_reverse);
 WhoopMotorGroup right_motors({&r1, &r2, &r3, &r4});
 
 // Sensors
@@ -184,11 +184,6 @@ void pre_auton(void)
   wait(0.5, sec);
   jetson_commander.initialize();
   robot_drivetrain.calibrate();
-
-  wait(5, sec);
-
-  robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw); // Inches, degrees, clockwise-positive
-  robot_drivetrain.set_pose(0, 0, 0);                    // Note: Yaw of 0 implies looking towards +X direction. This is VERY important
 }
 
 /*---------------------------------------------------------------------------*/
@@ -249,7 +244,7 @@ void autonomous(void)
 void usercontrol(void)
 {
 
-  autonomous();
+  //autonomous();
 
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 

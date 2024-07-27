@@ -9,28 +9,28 @@
 
 #include "whooplib/include/calculators/WhoopMutex.hpp"
 
-namespace whoop{
+namespace whoop
+{
 
-/**
- * This locks the mutex
- */
+#if USE_VEXCODE
+
 void WhoopMutex::lock(){
-    #if USE_VEXCODE
-    vexcode_mutex.lock();
-    #else
-    pros_mutex.take();
-    #endif
+        vex::mutex::lock();
 }
 
-/**
- * This unlocks the mutex
- */
 void WhoopMutex::unlock(){
-    #if USE_VEXCODE
-    vexcode_mutex.unlock();
-    #else
-    pros_mutex.give();
-    #endif
+        vex::mutex::unlock();
 }
+
+#else
+
+void WhoopMutex::lock(){
+        pros::Mutex::take();
+}
+
+void WhoopMutex::unlock(){
+        pros::Mutex::give();
+}
+#endif
 
 } // namespace whoop

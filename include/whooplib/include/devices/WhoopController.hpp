@@ -15,107 +15,109 @@
 #include <functional>
 #include "whooplib/include/nodes/NodeManager.hpp"
 
-namespace whoop{
-/**
- * Enumerates the available joystick control modes.
- */
-enum joystickmode
+namespace whoop
 {
-    joystickmode_tank = 1,
-    joystickmode_split_arcade = 2,
-    joystickmode_left_arcade = 3,
-    joystickmode_right_arcade = 4
-};
+    /**
+     * Enumerates the available joystick control modes.
+     */
+    enum joystickmode
+    {
+        joystickmode_tank = 1,
+        joystickmode_split_arcade = 2,
+        joystickmode_left_arcade = 3,
+        joystickmode_right_arcade = 4
+    };
 
-/*
- * VEX Controller type for primary and partner
-*/
-enum controllertype
-{
-    controller_primary,
-    controller_partner
-};
-
-/**
- * Controls and manages inputs from a VEX controller.
- */
-class WhoopController : public ComputeNode
-{
-public:
-    #if USE_VEXCODE
-    vex::controller vex_controller; // Instance of VEX controller.
-    #else
-    pros::Controller pros_controller; // Instance of PROS controller.
-    #endif
-    joystickmode joystick_mode;     // Current joystick mode.
-
-    int time_left_to_clear = 0;
+    /*
+     * VEX Controller type for primary and partner
+     */
+    enum controllertype
+    {
+        controller_primary,
+        controller_partner
+    };
 
     /**
-     * Constructor that initializes the controller with a specific joystick mode.
-     * @param mode The joystick mode to be used.
+     * Controls and manages inputs from a VEX controller.
      */
-    WhoopController(joystickmode mode = joystickmode::joystickmode_split_arcade);
+#if USE_VEXCODE
+    class WhoopController : public ComputeNode, private vex::controller
+    {
+#else
+    class WhoopController : public ComputeNode, private pros::Controller
+    {
+#endif
+    public:
 
-    /**
-     * Constructor that initializes the controller with a specific joystick mode and controller type.
-     * @param mode The joystick mode to be used.
-     * @param controller_type The type of controller (primary or partner).
-     */
-    WhoopController(joystickmode mode, controllertype controller_type);
+        joystickmode joystick_mode; // Current joystick mode.
 
-    /**
-     * Retrieves the horizontal axis value of the left joystick.
-     * @return The x-coordinate value from the left joystick [-100, 100].
-     */
-    double get_left_joystick_x();
+        int time_left_to_clear = 0;
 
-    /**
-     * Retrieves the vertical axis value of the left joystick.
-     * @return The y-coordinate value from the left joystick [-100, 100].
-     */
-    double get_left_joystick_y();
+        /**
+         * Constructor that initializes the controller with a specific joystick mode.
+         * @param mode The joystick mode to be used.
+         */
+        WhoopController(joystickmode mode = joystickmode::joystickmode_split_arcade);
 
-    /**
-     * Retrieves the horizontal axis value of the right joystick.
-     * @return The x-coordinate value from the right joystick [-100, 100].
-     */
-    double get_right_joystick_x();
+        /**
+         * Constructor that initializes the controller with a specific joystick mode and controller type.
+         * @param mode The joystick mode to be used.
+         * @param controller_type The type of controller (primary or partner).
+         */
+        WhoopController(joystickmode mode, controllertype controller_type);
 
-    /**
-     * Retrieves the vertical axis value of the right joystick.
-     * @return The y-coordinate value from the right joystick [-100, 100].
-     */
-    double get_right_joystick_y();
+        /**
+         * Retrieves the horizontal axis value of the left joystick.
+         * @return The x-coordinate value from the left joystick [-100, 100].
+         */
+        double get_left_joystick_x();
 
-    /**
-     * Notifies for a set period of time
-     * @param message The message to send the notification
-     * @param duration_seconds The duration to display the message
-     */
-    void notify(std::string message, double duration_seconds = 5);
+        /**
+         * Retrieves the vertical axis value of the left joystick.
+         * @return The y-coordinate value from the left joystick [-100, 100].
+         */
+        double get_left_joystick_y();
 
-    // UDLR
-    bool up_pressing();
-    bool down_pressing();
-    bool left_pressing();
-    bool right_pressing();
+        /**
+         * Retrieves the horizontal axis value of the right joystick.
+         * @return The x-coordinate value from the right joystick [-100, 100].
+         */
+        double get_right_joystick_x();
 
-    // ABXY
-    bool a_pressing();
-    bool b_pressing();
-    bool x_pressing();
-    bool y_pressing();
+        /**
+         * Retrieves the vertical axis value of the right joystick.
+         * @return The y-coordinate value from the right joystick [-100, 100].
+         */
+        double get_right_joystick_y();
 
-    // Bumpers
-    bool right_top_bumper_pressing();
-    bool right_bottom_bumper_pressing();
-    bool left_top_bumper_pressing();
-    bool left_bottom_bumper_pressing();
+        /**
+         * Notifies for a set period of time
+         * @param message The message to send the notification
+         * @param duration_seconds The duration to display the message
+         */
+        void notify(std::string message, double duration_seconds = 5);
 
-public:
-    void __step() override; // Protected helper function for processing steps
-};
+        // UDLR
+        bool up_pressing();
+        bool down_pressing();
+        bool left_pressing();
+        bool right_pressing();
+
+        // ABXY
+        bool a_pressing();
+        bool b_pressing();
+        bool x_pressing();
+        bool y_pressing();
+
+        // Bumpers
+        bool right_top_bumper_pressing();
+        bool right_bottom_bumper_pressing();
+        bool left_top_bumper_pressing();
+        bool left_bottom_bumper_pressing();
+
+    public:
+        void __step() override; // Protected helper function for processing steps
+    };
 
 } // Namespace whoop
 
