@@ -178,12 +178,12 @@ void pre_auton(void)
 
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
+  controller1.notify("Initializing");
   manager.start();
-  robot_drivetrain.set_state(drivetrainState::mode_disabled);
-  controller1.notify("Initializing", 2);
-  wait(0.5, sec);
-  jetson_commander.initialize();
+  jetson_commander.initialize(); // If you don't have Tesseract, omit this line
   robot_drivetrain.calibrate();
+
+  robot_drivetrain.set_state(drivetrainState::mode_disabled);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -199,37 +199,27 @@ void pre_auton(void)
 void autonomous(void)
 {
   robot_drivetrain.set_state(drivetrainState::mode_autonomous);
-  wait(5, sec);
 
   robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw);
   robot_drivetrain.set_pose(0, 0, 0);
 
-  while (1)
-  {
+  // robot_drivetrain.turn_to_position(15, 15);
+  robot_drivetrain.drive_forward(15);
 
-    // robot_drivetrain.turn_to_position(15, 15);
-    robot_drivetrain.drive_forward(15);
+  robot_drivetrain.turn_to(90);
 
-    robot_drivetrain.turn_to(90);
+  robot_drivetrain.drive_forward(-15);
 
-    robot_drivetrain.drive_forward(-15);
+  robot_drivetrain.drive_forward(15);
 
-    robot_drivetrain.drive_forward(15);
+  robot_drivetrain.turn_to(0);
 
-    robot_drivetrain.turn_to(0);
+  robot_drivetrain.drive_forward(-15);
 
-    robot_drivetrain.drive_forward(-15);
-
-    // robot_drivetrain.drive_to_point(15, 15);
-    // robot_drivetrain.reverse_to_point(0,0);
-    robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, 7);
-    robot_drivetrain.reverse_through_path({{15, 15, 180}, {0, 0, 180}}, 7);
-  }
-  // robot_drivetrain.temp_disable = true; // temp disable the drive motors
-  while (1)
-  {
-    wait(100, msec);
-  }
+  // robot_drivetrain.drive_to_point(15, 15);
+  // robot_drivetrain.reverse_to_point(0,0);
+  robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, 7);
+  robot_drivetrain.reverse_through_path({{15, 15, 180}, {0, 0, 180}}, 7);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -244,50 +234,17 @@ void autonomous(void)
 void usercontrol(void)
 {
 
-  autonomous();
-
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 
   // User control code here, inside the loop
-  while (1)
+  while (true)
   {
-    Brain.Screen.clearLine(1);
-    Brain.Screen.setCursor(1, 1);
-    Brain.Screen.print("Approving Frames: %s", boolToString(odom_fusion.approving_frames()).c_str());
-
-    Brain.Screen.clearLine(2);
-    Brain.Screen.setCursor(2, 1);
-    Brain.Screen.print("Vision Running: %s", boolToString(vision_system.vision_running()).c_str());
-
-    Brain.Screen.clearLine(3);
-    Brain.Screen.setCursor(3, 1);
-    Brain.Screen.print("Jetson Connected: %s", boolToString(jetson_commander.is_connected_to_jetson()).c_str());
-
-    // Fusion Odometry
     Pose current_pose = robot_drivetrain.get_pose();
     Brain.Screen.clearLine(4);
     Brain.Screen.setCursor(4, 1);
     Brain.Screen.print("FO (%s): %.1f %.1f %.1f %.1f %.1f %.1f", robot_drivetrain.get_units_str().c_str(), current_pose.x, current_pose.y, current_pose.z, current_pose.pitch, current_pose.yaw, current_pose.roll);
 
-    // Vision Odometry
-    Pose vision_pose = vision_system.get_pose();
-    Brain.Screen.clearLine(5);
-    Brain.Screen.setCursor(5, 1);
-    Brain.Screen.print("VO (m_rad_ccw): %.2f %.2f %.2f %.2f %.2f %.2f", vision_pose.x, vision_pose.y, vision_pose.z, vision_pose.pitch, vision_pose.yaw, vision_pose.roll);
-
-    // Wheel Odometry
-    TwoDPose wheel_pose = odom_offset.get_pose(); // Wheel odometry (translated) readings
-    Brain.Screen.clearLine(6);
-    Brain.Screen.setCursor(6, 1);
-    Brain.Screen.print("WO (m_rad_ccw): %.2f %.2f %.2f", wheel_pose.x, wheel_pose.y, wheel_pose.yaw);
-
-    // Wheel Odometry offset
-    TwoDPose unt_pose = odom_unit.get_pose(); // raw odometry (untranslated) readings
-    Brain.Screen.clearLine(7);
-    Brain.Screen.setCursor(7, 1);
-    Brain.Screen.print("WU (m_rad_ccw): %.2f %.2f %.2f", unt_pose.x, unt_pose.y, unt_pose.yaw);
-
-    wait(100, msec);
+    wait(20, msec);
   }
 }
 
