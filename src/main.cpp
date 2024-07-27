@@ -45,8 +45,8 @@ WhoopMotorGroup right_motors({&r1, &r2, &r3, &r4});
 
 // Sensors
 WhoopInertial inertial_sensor(PORT7);
-WhoopRotation forward_tracker(PORT6, reversed::yes_reverse);
-WhoopRotation sideways_tracker(PORT9, reversed::yes_reverse);
+WhoopRotation forward_tracker(PORT6, reversed::no_reverse);
+WhoopRotation sideways_tracker(PORT9, reversed::no_reverse);
 
 ////////////////////////////////////////////////////////////
 /**
@@ -199,7 +199,7 @@ void pre_auton(void)
 void autonomous(void)
 {
   robot_drivetrain.set_state(drivetrainState::mode_autonomous);
-  wait(10, sec);
+  wait(5, sec);
 
   robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw);
   robot_drivetrain.set_pose(0, 0, 0);
@@ -244,7 +244,7 @@ void autonomous(void)
 void usercontrol(void)
 {
 
-  //autonomous();
+  autonomous();
 
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 
