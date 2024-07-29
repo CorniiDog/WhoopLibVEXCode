@@ -170,7 +170,6 @@ WhoopDrivetrain robot_drivetrain(
 
 ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &controller1});
 
-
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
 /*                                                                           */
