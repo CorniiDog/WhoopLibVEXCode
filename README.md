@@ -13,6 +13,9 @@ The most advanced SLAM solution in VEX.
 
 **WhoopLib VEXCode Source Code**
 
+>[!NOTE] 
+> WhoopLib Uses Google C++ Style
+
 ## Links
 
 [WhoopLib Documentation](https://connoratmos.github.io/WhoopLib/)
