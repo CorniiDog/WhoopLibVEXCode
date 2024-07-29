@@ -9,19 +9,19 @@
 
 /**
  * MIT License
- * 
+ *
  * Copyright (c) 2024 Connor White
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -36,7 +36,6 @@
 
 #include "whooplib/includer.hpp"
 
-
 // Toolbox
 #include "whooplib/include/toolbox.hpp"
 
@@ -48,7 +47,7 @@
 #include "whooplib/include/calculators/PurePursuitConductor.hpp"
 #include "whooplib/include/calculators/Dubins.hpp"
 #include "whooplib/include/calculators/Slew.hpp"
-#include "whooplib/include/calculators/WhoopMutex.hpp"
+#include "whooplib/include/calculators/Units.hpp"
 
 // Nodes
 #include "whooplib/include/toolbox.hpp"
@@ -67,6 +66,8 @@
 #include "whooplib/include/devices/WhoopDriveOdomUnit.hpp"
 #include "whooplib/include/devices/WhoopDriveOdomOffset.hpp"
 #include "whooplib/include/devices/WhoopOdomFusion.hpp"
+#include "whooplib/include/devices/WhoopMutex.hpp"
+
 
 using namespace whoop; // This is to help newer teams get used to C/C++. If you want to be more explicit, remove this and use whoop::abc instead
 
