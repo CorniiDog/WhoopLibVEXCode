@@ -18,10 +18,6 @@
 /*        https://www.learncpp.com/                                           */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
-
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// ---- END VEXCODE CONFIGURED DEVICES ----
-
 #include "vex.h"
 #include "whooplib.h"
 
