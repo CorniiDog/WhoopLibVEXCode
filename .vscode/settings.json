@@ -8,4 +8,9 @@
 "C_Cpp.vcFormat.indent.preserveComments": true,
 "C_Cpp.intelliSenseEngineFallback": "disabled",
 "C_Cpp.intelliSenseEngine": "default",
+"C_Cpp.inlayHints.parameterNames.enabled": true,
+"C_Cpp.inlayHints.referenceOperator.showSpace": true,
+"C_Cpp.inlayHints.referenceOperator.enabled": true,
+"C_Cpp.inlayHints.autoDeclarationTypes.enabled": true,
+"C_Cpp.inlayHints.autoDeclarationTypes.showOnLeft": true,
 }
