@@ -7,8 +7,10 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
+#include "whooplib/include/toolbox.hpp"
 #include <algorithm>
 #include <cmath>
+#include <cstdarg> // Needed for va_list and related operations
 #include <iomanip> // Include for std::setprecision
 #include <memory>
 #include <sstream>
@@ -240,8 +242,6 @@ double area_from_diameter(double diameter) {
   return M_PI * radius * radius;
 }
 
-const double SMALL_NUMBER_THRESHOLD = 1e-10;
-
 double safeDivide(double numerator, double denominator,
                   double max_possible_number) {
   if (std::abs(denominator) < SMALL_NUMBER_THRESHOLD) {
@@ -273,6 +273,12 @@ double safeDivide(double numerator, double denominator,
   }
 
   return result;
+}
+
+std::string format_string(const char* format, va_list args) {
+    char buffer[1024]; // Adjust size as necessary
+    vsnprintf(buffer, sizeof(buffer), format, args);
+    return std::string(buffer);
 }
 
 } // namespace whoop
