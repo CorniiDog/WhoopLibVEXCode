@@ -37,8 +37,8 @@ INC_F  = include
 
 # set compiler flags after including the environment to ensure they are not overridden
 CXX_FLAGS += -fexceptions
-CXX_FLAGS += -std=gnu++17 #-std=c++17
-CXX_FLAGS += -Wc++17-extensions
+CXX_FLAGS += -std=gnu++2a
+CXX_FLAGS += -Wc++2a-extensions
 
 # build targets
 #all: $(BUILD)/$(PROJECT).bin # removed and replaced with build
