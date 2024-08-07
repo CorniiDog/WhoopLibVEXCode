@@ -8,7 +8,6 @@
 /*----------------------------------------------------------------------------*/
 
 #include "whooplib/include/calculators/PurePursuitConductor.hpp"
-#include "whooplib/include/whoopgl/MainScreen.hpp"
 #include "whooplib/includer.hpp"
 #include <iostream>
 

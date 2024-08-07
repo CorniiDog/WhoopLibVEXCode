@@ -10,7 +10,6 @@
 #include "whooplib/include/devices/WhoopDrivetrain.hpp"
 #include "whooplib/include/devices/WhoopOdomFusion.hpp"
 #include "whooplib/include/toolbox.hpp"
-#include "whooplib/include/whoopgl/MainScreen.hpp"
 #include "whooplib/includer.hpp"
 #include <cmath>
 #include <iostream>
@@ -66,7 +65,11 @@ void WhoopDrivetrain::set_state(drivetrainState state) {
     // Calibration logic to ensure that the robot is calibrated properly before anything else
     if(is_calibrating){
       while(is_calibrating){
+#if USE_VEXCODE
+        wait(5, msec);
+#else
         pros::delay(5);
+#endif
       }
     }
     else if(!is_calibrated){
