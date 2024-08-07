@@ -156,7 +156,7 @@ PursuitParams pursuit_parameters(
     // Pure pursuit turning max motor voltage (0.0, 12.0]
     ,12.0_volts
     // The maximum voltage change per second, as a slew rate (only applies speeding up)
-    ,50.0_volts
+    ,200.0_volts
 
     /////////////////////////
     // Settling
@@ -164,9 +164,9 @@ PursuitParams pursuit_parameters(
     // Settle Distance. Exits when within this distance of target
     ,1.25_in
     // Settle Rotation. Exits when within this rotation of target
-    ,1_deg
+    ,1.1_deg
     // Minimum time to be considered settled, in seconds
-    ,0.4_sec
+    ,0.35_sec
     // Time after which to give up and move on, in seconds (set to 0 to disable)
     ,0_sec
     
@@ -174,21 +174,21 @@ PursuitParams pursuit_parameters(
     // Turning PID
     /////////////////////////
     // Turning (kP) Proportional Tuning
-    ,14.0_kp
+    ,12_kp
     // Turning (kI) Integral Tuning
-    ,0.2_ki
+    ,0.4_ki
     // Turning (kD) Derivative Tuning
-    ,20.0_kd
+    ,50.0_kd
     // The rotation distance (error) to activate turning_ki
-    ,15.0_deg
+    ,20.0_deg
 
     /////////////////////////
     // Forward PID
     /////////////////////////
     // Forward (kP) Proportional Tuning
-    ,55.0_kp
+    ,50.0_kp
     // Forward (kI) Integral Tuning
-    ,0.01_ki
+    ,0.1_ki
     // Forward (kD) Derivative Tuning
     ,250.0_kd
     // The forward distance (error) to activate forward_ki
@@ -220,7 +220,7 @@ ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &c
 /*  function is only called once after the V5 has been powered on and        */
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
-void pre_auton(void)
+void pre_auton()
 {
 
   // Initializing Robot Configuration. DO NOT REMOVE!
@@ -241,30 +241,32 @@ void pre_auton(void)
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-void autonomous(void)
+void autonomous()
 {
-  robot_drivetrain.set_state(drivetrainState::mode_autonomous);
+    robot_drivetrain.set_state(drivetrainState::mode_autonomous);
+    
+    robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw);
+    robot_drivetrain.set_pose(0, 0, 0);
 
-  robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw);
-  robot_drivetrain.set_pose(0, 0, 0);
+    // robot_drivetrain.turn_to_position(15, 15);
+    robot_drivetrain.drive_forward(15);
 
-  // robot_drivetrain.turn_to_position(15, 15);
-  robot_drivetrain.drive_forward(15);
+    robot_drivetrain.turn_to(90);
 
-  robot_drivetrain.turn_to(90);
+    robot_drivetrain.drive_forward(-15);
 
-  robot_drivetrain.drive_forward(-15);
+    robot_drivetrain.drive_forward(15);
 
-  robot_drivetrain.drive_forward(15);
+    robot_drivetrain.turn_to(0);
 
-  robot_drivetrain.turn_to(0);
+    robot_drivetrain.drive_forward(-15);
 
-  robot_drivetrain.drive_forward(-15);
+    
 
-  // robot_drivetrain.drive_to_point(15, 15);
-  // robot_drivetrain.reverse_to_point(0,0);
-  robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, 7);
-  robot_drivetrain.reverse_through_path({{15, 15, 180}, {0, 0, 180}}, 7);
+    // robot_drivetrain.drive_to_point(15, 15);
+    // robot_drivetrain.reverse_to_point(0,0);
+    robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, 7);
+    robot_drivetrain.reverse_through_path({{15, 15, 180}, {0, 0, 180}}, 7);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -276,9 +278,9 @@ void autonomous(void)
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
-void usercontrol(void)
+void usercontrol()
 {
-
+  autonomous();
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 
   // User control code here, inside the loop

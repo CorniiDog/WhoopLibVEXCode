@@ -70,7 +70,7 @@ void WhoopDrivetrain::set_state(drivetrainState state) {
 #else
         pros::delay(5);
 #endif
-      }
+      }   
     }
     else if(!is_calibrated){
       calibrate();
@@ -412,7 +412,11 @@ void WhoopDrivetrain::calibrate() {
 
   is_calibrating = true;
   odom_fusion->calibrate();
-
+#if USE_VEXCODE
+  wait(2800, msec);
+#else
+  pros::delay(2800);
+#endif
   whoop_controller->notify("Calibration Finished.", 2);
   // Update desired position to 0,0,0
   desired_position = TwoDPose(0, 0, 0);
@@ -561,10 +565,14 @@ void WhoopDrivetrain::step_autonomous() {
 
     if (pursuit_result.is_completed) {
       auton_traveling = false;
+      left_motor_group->spin(0);
+      right_motor_group->spin(0);
       return;
     }
 
     if (!pursuit_result.is_valid) {
+      left_motor_group->spin(0);
+      right_motor_group->spin(0);
       auton_traveling = false;
       return;
     }
