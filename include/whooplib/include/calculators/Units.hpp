@@ -95,6 +95,11 @@ constexpr long double operator"" _kd(long double kd) { return kd; }
 
 constexpr long double operator"" _kd(unsigned long long kd) { return kd; }
 
+// Integral anti-windup constant
+constexpr long double operator"" _ka(long double ka) { return ka; }
+
+constexpr long double operator"" _ka(unsigned long long ka) { return ka; }
+
 // Points remains the same
 constexpr unsigned int operator"" _points(unsigned long long points) {
     return static_cast<unsigned int>(points);
