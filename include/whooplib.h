@@ -44,7 +44,7 @@
 #include "whooplib/include/calculators/PurePursuit.hpp"
 #include "whooplib/include/calculators/PurePursuitConductor.hpp"
 #include "whooplib/include/calculators/RollingAverage.hpp"
-#include "whooplib/include/calculators/Slew.hpp"
+#include "whooplib/include/calculators/SlewRateLimiter.hpp"
 #include "whooplib/include/calculators/TwoDPose.hpp"
 #include "whooplib/include/calculators/Units.hpp"
 #include "whooplib/include/calculators/WheelOdom.hpp"
