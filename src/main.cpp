@@ -299,7 +299,6 @@ void autonomous()
 {
     robot_drivetrain.set_state(drivetrainState::mode_autonomous);
     auton_selector.run_autonomous();
-    
 }
 
 /*---------------------------------------------------------------------------*/
@@ -313,17 +312,11 @@ void autonomous()
 /*---------------------------------------------------------------------------*/
 void usercontrol()
 {
-  //autonomous();
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 
   // User control code here, inside the loop
   while (true)
   {
-    Pose current_pose = robot_drivetrain.get_pose();
-    Brain.Screen.clearLine(4);
-    Brain.Screen.setCursor(4, 1);
-    Brain.Screen.print("FO (%s): %.1f %.1f %.1f %.1f %.1f %.1f", robot_drivetrain.get_units_str().c_str(), current_pose.x, current_pose.y, current_pose.z, current_pose.pitch, current_pose.yaw, current_pose.roll);
-
     wait(20, msec);
   }
 }
