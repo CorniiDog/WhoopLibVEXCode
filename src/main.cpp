@@ -217,42 +217,10 @@ WhoopDrivetrain robot_drivetrain(
     &right_motors         // Pointer to the right motor group (optionally can be a list of motors as well)
 );
 
-ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &controller1});
-
-/*---------------------------------------------------------------------------*/
-/*                          Pre-Autonomous Functions                         */
-/*                                                                           */
-/*  You may want to perform some actions before the competition starts.      */
-/*  Do them in the following function.  You must return from this function   */
-/*  or the autonomous and usercontrol tasks will not be started.  This       */
-/*  function is only called once after the V5 has been powered on and        */
-/*  not every time that the robot is disabled.                               */
-/*---------------------------------------------------------------------------*/
-void pre_auton()
-{
-
-  // Initializing Robot Configuration. DO NOT REMOVE!
-  vexcodeInit();
-  controller1.notify("Initializing");
-  manager.start();
-
-  robot_drivetrain.set_state(drivetrainState::mode_disabled);
-}
-
-/*---------------------------------------------------------------------------*/
-/*                                                                           */
-/*                              Autonomous Task                              */
-/*                                                                           */
-/*  This task is used to control your robot during the autonomous phase of   */
-/*  a VEX Competition.                                                       */
-/*                                                                           */
-/*  You must modify the code to add your own robot specific commands here.   */
-/*---------------------------------------------------------------------------*/
-
-void autonomous()
-{
-    robot_drivetrain.set_state(drivetrainState::mode_autonomous);
-    
+/**
+ * My first autonomous routine
+ */
+void auton_1(){
     robot_drivetrain.set_pose_units(PoseUnits::in_deg_cw);
     robot_drivetrain.set_pose(0, 0, 0);
 
@@ -269,12 +237,69 @@ void autonomous()
 
     robot_drivetrain.drive_forward(-15);
 
-    
-
     // robot_drivetrain.drive_to_point(15, 15);
     // robot_drivetrain.reverse_to_point(0,0);
     robot_drivetrain.drive_through_path({{15, 15, 0}, {0, 0, 90}}, 7);
     robot_drivetrain.reverse_through_path({{15, 15, 180}, {0, 0, 180}}, 7);
+}
+
+/**
+ * My second autonomous routine
+ */
+void auton_2(){
+
+}
+
+/**
+ * My third autonomous routine
+ */
+void auton_3(){
+
+}
+
+WhoopAutonSelector auton_selector(&controller1, {
+    AutonRoutine("First Auton", auton_1),
+    AutonRoutine("Second Auton", auton_2),
+    AutonRoutine("Third Auton", auton_3)
+}, "auton.txt");
+
+ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &controller1, &auton_selector});
+
+/*---------------------------------------------------------------------------*/
+/*                          Pre-Autonomous Functions                         */
+/*                                                                           */
+/*  You may want to perform some actions before the competition starts.      */
+/*  Do them in the following function.  You must return from this function   */
+/*  or the autonomous and usercontrol tasks will not be started.  This       */
+/*  function is only called once after the V5 has been powered on and        */
+/*  not every time that the robot is disabled.                               */
+/*---------------------------------------------------------------------------*/
+void pre_auton()
+{
+    robot_drivetrain.set_state(drivetrainState::mode_disabled);
+    auton_selector.run_selector();
+
+    // Initializing Robot Configuration. DO NOT REMOVE!
+    vexcodeInit();
+    controller1.notify("Initializing");
+    manager.start();
+}
+
+/*---------------------------------------------------------------------------*/
+/*                                                                           */
+/*                              Autonomous Task                              */
+/*                                                                           */
+/*  This task is used to control your robot during the autonomous phase of   */
+/*  a VEX Competition.                                                       */
+/*                                                                           */
+/*  You must modify the code to add your own robot specific commands here.   */
+/*---------------------------------------------------------------------------*/
+
+void autonomous()
+{
+    robot_drivetrain.set_state(drivetrainState::mode_autonomous);
+    auton_selector.run_autonomous();
+    
 }
 
 /*---------------------------------------------------------------------------*/
@@ -288,7 +313,7 @@ void autonomous()
 /*---------------------------------------------------------------------------*/
 void usercontrol()
 {
-  autonomous();
+  //autonomous();
   robot_drivetrain.set_state(drivetrainState::mode_usercontrol);
 
   // User control code here, inside the loop
