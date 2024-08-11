@@ -34,6 +34,9 @@
 #ifndef WHOOP_LIB_H
 #define WHOOP_LIB_H
 
+// Include iostream
+#include <iostream>
+
 #include "whooplib/includer.hpp"
 
 // Toolbox
@@ -67,6 +70,7 @@
 #include "whooplib/include/devices/WhoopOdomFusion.hpp"
 #include "whooplib/include/devices/WhoopRotation.hpp"
 #include "whooplib/include/devices/WhoopVision.hpp"
+#include "whooplib/include/devices/WhoopAutonSelector.hpp"
 
 using namespace units; // This is for units system such as "1.5_in"
 using namespace whoop; // This is to help newer teams get used to C/C++. If you
