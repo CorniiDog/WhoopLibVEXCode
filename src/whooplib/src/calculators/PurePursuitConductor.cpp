@@ -18,7 +18,7 @@ PurePursuitConductor::PurePursuitConductor(
     : turn_pid(0, default_pursuit_parameters->turning_kp,
                default_pursuit_parameters->turning_ki,
                default_pursuit_parameters->turning_kd,
-               default_pursuit_parameters->turning_ka,
+               default_pursuit_parameters->turning_kr,
                default_pursuit_parameters->turning_i_activation,
                default_pursuit_parameters
                    ->turning_max_voltage, // For clamping total_error. Doesn't
@@ -29,7 +29,7 @@ PurePursuitConductor::PurePursuitConductor(
       forward_pid(0, default_pursuit_parameters->forward_kp,
                   default_pursuit_parameters->forward_ki,
                   default_pursuit_parameters->forward_kd,
-                  default_pursuit_parameters->forward_ka,
+                  default_pursuit_parameters->forward_kr,
                   default_pursuit_parameters->forward_i_activation,
                   default_pursuit_parameters
                       ->forward_max_voltage, // For clamping total_error.
@@ -154,7 +154,7 @@ void PurePursuitConductor::generate_path(std::vector<TwoDPose> waypoints,
   forward_pid = PID(0, default_pursuit_parameters->forward_kp,
                     default_pursuit_parameters->forward_ki,
                     default_pursuit_parameters->forward_kd,
-                    default_pursuit_parameters->forward_ka,
+                    default_pursuit_parameters->forward_kr,
                     default_pursuit_parameters->forward_i_activation,
                     default_pursuit_parameters
                         ->turning_max_voltage, // For clamping total_error.
@@ -164,7 +164,7 @@ void PurePursuitConductor::generate_path(std::vector<TwoDPose> waypoints,
   turn_pid = PID(0, default_pursuit_parameters->turning_kp,
                  default_pursuit_parameters->turning_ki,
                  default_pursuit_parameters->turning_kd,
-                 default_pursuit_parameters->turning_ka,
+                 default_pursuit_parameters->turning_kr,
                  default_pursuit_parameters->turning_i_activation,
                  default_pursuit_parameters
                      ->forward_max_voltage, // For clamping total_error. Doesn't

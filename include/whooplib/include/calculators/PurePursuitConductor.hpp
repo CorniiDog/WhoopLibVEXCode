@@ -36,14 +36,14 @@ struct PursuitParams {
   double turning_kp;
   double turning_ki;
   double turning_kd;
-  double turning_ka;
+  double turning_kr;
   double turning_i_activation;
   double max_turn_voltage_change;
 
   double forward_kp;
   double forward_ki;
   double forward_kd;
-  double forward_ka;
+  double forward_kr;
   double forward_i_activation;
   double max_forward_voltage_change;
 
@@ -65,7 +65,7 @@ struct PursuitParams {
    * @param turning_kp Turning Proportional Tuning
    * @param turning_ki Turning Integral Tuning
    * @param turning_kd Turning Derivative Tuning
-   * @param turning_ka Turning Integral anti-windup constant
+   * @param turning_kr Turning Integral anti-windup constant
    * @param turning_i_activation The rotation distance (error), in radians, to
    * activate turning_ki
    * @param max_turn_voltage_change The maximum turning voltage change per
@@ -74,7 +74,7 @@ struct PursuitParams {
    * @param forward_kp Forward Proportional Tuning
    * @param forward_ki Forward Integral Tuning
    * @param forward_kd Forward Derivative Tuning
-   * @param forward_ka Forward Integral anti-windup constant
+   * @param forward_kr Forward Integral anti-windup constant
    * @param forward_i_activation The forward distance (error), in meters, to
    * activate forward_ki
    * @param max_forward_voltage_change The maximum forward voltage change per
@@ -88,10 +88,10 @@ struct PursuitParams {
                 double settle_rotation = to_rad(1.1), double settle_time = 0.0,
                 double timeout = 0, double turning_kp = 14,
                 double turning_ki = 0.2, double turning_kd = 95,
-                double turning_ka = 1.0, double turning_i_activation = to_rad(20),
+                double turning_kr = 1.0, double turning_i_activation = to_rad(20),
                 double max_turn_voltage_change = 250, double forward_kp = 50,
                 double forward_ki = 0.1, double forward_kd = 250,
-                double forward_ka = 0,
+                double forward_kr = 0,
                 double forward_i_activation = to_meters(2),
                 double max_forward_voltage_change = 150)
       : turning_radius(turning_radius), lookahead_distance(lookahead_distance),
@@ -100,11 +100,11 @@ struct PursuitParams {
         turning_max_voltage(turning_max_voltage),
         settle_distance(settle_distance), settle_rotation(settle_rotation),
         settle_time(settle_time), timeout(timeout), turning_kp(turning_kp),
-        turning_ki(turning_ki), turning_kd(turning_kd), turning_ka(turning_ka),
+        turning_ki(turning_ki), turning_kd(turning_kd), turning_kr(turning_kr),
         turning_i_activation(turning_i_activation),
         max_turn_voltage_change(max_turn_voltage_change),
         forward_kp(forward_kp), forward_ki(forward_ki), forward_kd(forward_kd),
-        forward_ka(forward_ka), forward_i_activation(forward_i_activation),
+        forward_kr(forward_kr), forward_i_activation(forward_i_activation),
         max_forward_voltage_change(max_forward_voltage_change) {}
 };
 
