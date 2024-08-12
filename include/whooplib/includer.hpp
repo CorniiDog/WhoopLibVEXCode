@@ -18,8 +18,6 @@
 #define VEX_H
 #include "vex.h"
 #define USE_PROS false
-#define MICRO_USB_SERIAL_CONNECTION_OUT "/dev/serial1"
-#define MICRO_USB_SERIAL_CONNECTION_IN "/dev/serial1"
 #endif // VEX_H
 
 #else // !USE_VEXCODE (PROS)
@@ -28,8 +26,6 @@
 #define API_H
 #include "api.h"
 #define USE_PROS true
-#define MICRO_USB_SERIAL_CONNECTION_OUT "sout"
-#define MICRO_USB_SERIAL_CONNECTION_IN "sinp"
 
 enum smart_ports {
   PORT1 = 1,

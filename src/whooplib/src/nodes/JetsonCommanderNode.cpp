@@ -12,6 +12,7 @@
 #include <functional>
 #include <string>
 #include <unordered_map>
+#include <iostream>
 
 namespace whoop {
 
@@ -101,7 +102,6 @@ void JetsonCommander::__step() {
   }
 
   raw_connected -= 1;
-
   keepalive_messenger->send(intToString(keep_alive_time_seconds));
 }
 
