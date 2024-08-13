@@ -11,17 +11,17 @@
  * MIT License
  *
  * Copyright (c) 2023 2775Josh
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- * 
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,9 +29,11 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
- * Reference to original work: https://github.com/JacksonAreaRobotics/JAR-Template/blob/main/include/JAR-Template/PID.h 
- * Reference to license: https://github.com/JacksonAreaRobotics/JAR-Template/blob/main/LICENSE.md
+ *
+ * Reference to original work:
+ * https://github.com/JacksonAreaRobotics/JAR-Template/blob/main/include/JAR-Template/PID.h
+ * Reference to license:
+ * https://github.com/JacksonAreaRobotics/JAR-Template/blob/main/LICENSE.md
  */
 
 #ifndef PID_HPP
@@ -51,7 +53,7 @@ public:
   double kp = 0;
   double ki = 0;
   double kd = 0;
-  double ka = 0;
+  double kr = 0;
   double starti = 0;
   double settle_error = 0;
 
@@ -87,14 +89,12 @@ public:
    * @param kp Proportional constant
    * @param ki Integral constant
    * @param kd Derivative constant
-   * @param ka Integral anti-windup constant
+   * @param kr Integral anti-windup constant
    * @param starti Maximum error to start integrating
-   * @param settle_error Maximum error to be considered settled
-   * @param settle_time Minimum time to be considered settled
-   * @param timeout Time after which to give up and move on
    * @param max_integral_power The maximum integral power, clamped
    */
-  PID(double error, double kp, double ki, double kd, double ka, double starti, double max_integral_power);
+  PID(double error, double kp, double ki, double kd, double kr, double starti,
+      double max_integral_power);
 
   /**
    * PID constructor with custom update period
@@ -105,15 +105,16 @@ public:
    * @param kp Proportional constant
    * @param ki Integral constant
    * @param kd Derivative constant
-   * @param ka Integral anti-windup constant
+   * @param kr Integral anti-windup constant
    * @param starti Maximum error to start integrating
+   * @param max_integral_power The maximum integral power, clamped
    * @param settle_error Maximum error to be considered settled
    * @param settle_time Minimum time to be considered settled, in seconds
    * @param timeout Time after which to give up and move on, in seconds
-   * @param max_integral_power The maximum integral power, clamped
    */
-  PID(double error, double kp, double ki, double kd, double ka, double starti, double max_integral_power,
-      double settle_error, double settle_time, double timeout);
+  PID(double error, double kp, double ki, double kd, double kr, double starti,
+      double max_integral_power, double settle_error, double settle_time,
+      double timeout);
 
   /**
    * Computes the output power based on the error

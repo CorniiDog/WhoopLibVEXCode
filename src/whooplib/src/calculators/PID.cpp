@@ -20,21 +20,21 @@ namespace whoop {
  * @param kp Proportional constant
  * @param ki Integral constant
  * @param kd Derivative constant
- * @param ka Integral anti-windup constant
+ * @param kr Integral anti-windup constant
  * @param starti Maximum error to start integrating
  */
 
-PID::PID(double error, double kp, double ki, double kd, double ka, double starti,
-         double max_integral_power)
-    : error(error), kp(kp), ki(ki), kd(kd), ka(ka), starti(starti),
+PID::PID(double error, double kp, double ki, double kd, double kr,
+         double starti, double max_integral_power)
+    : error(error), kp(kp), ki(ki), kd(kd), kr(kr), starti(starti),
       max_integral_power(max_integral_power) {
   max_integral_power_scaled = max_integral_power / ki;
 }
 
-PID::PID(double error, double kp, double ki, double kd, double ka, double starti,
-         double max_integral_power, double settle_error, double settle_time,
-         double timeout)
-    : error(error), kp(kp), ki(ki), kd(kd), ka(ka), starti(starti),
+PID::PID(double error, double kp, double ki, double kd, double kr,
+         double starti, double max_integral_power, double settle_error,
+         double settle_time, double timeout)
+    : error(error), kp(kp), ki(ki), kd(kd), kr(kr), starti(starti),
       settle_error(settle_error), settle_time(settle_time), timeout(timeout),
       max_integral_power(max_integral_power) {
   max_integral_power_scaled = max_integral_power / ki;
@@ -51,8 +51,8 @@ double PID::step(double error) {
     if (error_abs < starti) {
       accumulated_error += error;
 
-      // Anti-Windup 
-      accumulated_error -= derivative * (1 - error_abs / starti) * ka;
+      // Anti-Windup
+      accumulated_error -= derivative * (1 - error_abs / starti) * kr;
     } else {
       accumulated_error = 0;
     }
@@ -60,7 +60,8 @@ double PID::step(double error) {
 
   // Checks if the error has crossed 0, and if it has, it eliminates the
   // integral term
-  // if ((error > 0 && previous_error < 0) || (error < 0 && previous_error > 0)) {
+  // if ((error > 0 && previous_error < 0) || (error < 0 && previous_error > 0))
+  // {
   //   accumulated_error = 0;
   // }
 
