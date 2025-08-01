@@ -221,7 +221,7 @@ WhoopAutonSelector auton_selector(&controller1, {
     AutonRoutine("Third Auton", auton_3)
 }, "auton.txt");
 
-ComputeManager manager({&buffer_system, &jetson_commander, &robot_drivetrain, &controller1, &auton_selector});
+ComputeManager manager({&robot_drivetrain, &controller1, &auton_selector});
 
 /*---------------------------------------------------------------------------*/
 /*                          Pre-Autonomous Functions                         */
