@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       main.cpp                                                  */
-/*    Author:       Connor White -> Aggie Robotics                            */
+/*    Author:       Connor White -> Connor White                            */
 /*    Created:      Thu Jun 21 2024                                           */
 /*    Description:  Whooplib Template                                         */
 /*                                                                            */
