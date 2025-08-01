@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       WhoopDriveOdomOffset.hpp                                  */
-/*    Author:       Connor White (WHOOP)                                      */
+/*    Author:       Connor White                                              */
 /*    Created:      Thu Jun 21 2024                                           */
 /*    Description:  Odometry Offset Module for Pose Estimation                */
 /*                                                                            */
@@ -18,6 +18,20 @@
 #include <vector>
 
 namespace whoop {
+
+struct velocityVector {
+  double x = 0;
+  double y = 0;
+  double yaw = 0;
+  bool is_clean = false;
+
+  velocityVector(double x, double y, double yaw, bool is_clean) {
+    this->x = x;
+    this->y = y;
+    this->yaw = yaw;
+    this->is_clean = is_clean;
+  }
+};
 
 /**
  * Class responsible for managing the odometry unit.
@@ -65,6 +79,20 @@ public:
    * @return The current pose of the system.
    */
   TwoDPose get_pose();
+
+  /**
+   * Returns a velocity vector of the odometry. Note: Is if fusion make sure
+   * it's a clean velocity vector before applying
+   * @returns velocity vector, in m/s and rad/s (counter-clockwise-positive)
+   */
+  velocityVector get_velocity_vector();
+
+  /**
+   * Returns a velocity vector of the odometry, with an offset of the positions.
+   * Note: Is if fusion make sure it's a clean velocity vector before applying
+   * @returns velocity vector, in m/s and rad/s (counter-clockwise-positive)
+   */
+  velocityVector get_velocity_vector(TwoDPose offset);
 
   /**
    * Retrieves the previous pose from a last step

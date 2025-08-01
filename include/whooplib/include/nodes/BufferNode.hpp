@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       BufferNode.hpp                                       */
-/*    Author:       Connor White (WHOOP)                                      */
+/*    Author:       Connor White                                              */
 /*    Created:      Thu Jun 21 2024                                           */
 /*    Description:  A Streamlined Communication System (like for Jetson nano) */
 /*                                                                            */
@@ -36,18 +36,10 @@ class Messenger; // Forward declaration to allow reference within BufferNode
 class BufferNode : public ComputeNode {
 protected:
   int max_buffer_size; // Maximum buffer size for storing messages.
-#if USE_VEXCODE
   std::string serial_conn_out =
-      "/dev/serial1"; // Serial connection identifier for OUT.
+      MICRO_USB_SERIAL_CONNECTION_OUT; // Serial connection identifier for OUT.
   std::string serial_conn_in =
-      "/dev/serial1"; // Serial connection identifier for IN.
-#else
-std::string serial_conn_out =
-      "sout"; // Serial connection identifier for OUT.
-  std::string serial_conn_in =
-      "sinp"; // Serial connection identifier for IN.
-
-#endif
+      MICRO_USB_SERIAL_CONNECTION_IN; // Serial connection identifier for IN.
 
   // Additional modifiables
   std::string my_buffer = ""; // Global buffer to store USB input data

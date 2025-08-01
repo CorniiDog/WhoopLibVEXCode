@@ -1,14 +1,13 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       BufferNode.cpp                                       */
-/*    Author:       Connor White (WHOOP)                                      */
+/*    Author:       Connor White                                              */
 /*    Created:      Thu Jun 21 2024                                           */
 /*    Description:  A Streamlined Communication System (like for Jetson nano) */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
 #include "whooplib/include/nodes/BufferNode.hpp"
-#include "whooplib/includer.hpp"
 #include "whooplib/include/toolbox.hpp"
 #include <cerrno>
 #include <cstdio>
@@ -144,13 +143,12 @@ int BufferNode::send_message(std::string stream, std::string message,
                              std::string end) {
 
   std::string msg = ("[<" + stream + ">]" + message + "&=" + stream + "*$");
-
   const int msg_size = msg.size();
 
   if (lock_ptr)
     lock_ptr->lock(); // Acquire the mutex
-  FILE *fp = fopen(serial_conn_out.c_str(), "w");
 
+  FILE *fp = fopen(serial_conn_out.c_str(), "w");
   // If serial connection not established, don't continue
   if (!fp)
     if (lock_ptr)
